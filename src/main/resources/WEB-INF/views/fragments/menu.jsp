@@ -21,6 +21,7 @@
 		<acme:menu-option code="master.menu.anonymous" access="isAnonymous()">
 			<acme:menu-suboption code="master.menu.anonymous.favourite-link" action="http://www.example.com/"/>
 			<acme:menu-suboption code="master.menu.anonymous.favourite-link-Candela" action="https://www.frivclassic.com/fc-es.html"/>
+			<acme:menu-suboption code="master.menu.anonymous.favourite-link-Cristina" action="https://oldgameshelf.com/es/games/nes/elevator-action-314"/>
 		</acme:menu-option>
 
 		<acme:menu-option code="master.menu.administrator" access="hasRealm('Administrator')">
