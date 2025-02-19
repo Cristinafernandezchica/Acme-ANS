@@ -31,3 +31,4 @@ If you encounter any errors or have questions, feel free to post a message in th
 Below we are going to provide the links referring to the dashboards of each team member and the entire team.
 
 - **Team's dashboard**: https://github.com/users/Cristinafernandezchica/projects/1/views/1
+- **Student #2** Ángel Amo Sánchez: https://github.com/users/Cristinafernandezchica/projects/1/views/8
