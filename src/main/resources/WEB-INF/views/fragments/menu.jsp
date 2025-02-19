@@ -24,6 +24,7 @@
 			<acme:menu-suboption code="master.menu.anonymous.favourite-link-Cristina" action="https://oldgameshelf.com/es/games/nes/elevator-action-314"/>
 			<acme:menu-suboption code="master.menu.anonymous.favourite-link-Emmanuel" action="https://www.crunchyroll.com/es-es/series/GRE5K3NQ6/91-days"/>
 			<acme:menu-suboption code="master.menu.anonymous.favourite-link-Marta" action="https://www.sevilla.org/fiestas-de-la-ciudad/feria-de-sevilla"/>
+			<acme:menu-suboption code="master.menu.anonymous.favourite-link-Angel" action="https://www.duolingo.com/learn"/>
 		</acme:menu-option>
 
 		<acme:menu-option code="master.menu.administrator" access="hasRealm('Administrator')">
