@@ -25,3 +25,9 @@ For its development, **"Hello-World-25.1.0"** was used as a base, which is struc
 
 Please follow the installation guide provided in the course slides.  
 If you encounter any errors or have questions, feel free to post a message in the forum.  
+
+## Dashboard Links
+
+Below we are going to provide the links referring to the dashboards of each team member and the entire team.
+
+- **Team's dashboard**: https://github.com/users/Cristinafernandezchica/projects/1/views/1
