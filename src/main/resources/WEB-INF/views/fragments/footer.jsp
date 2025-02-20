@@ -20,6 +20,8 @@
 	<acme:footer-subpanel code="master.footer.title.about">
 		<acme:footer-option icon="fa fa-building" code="master.footer.label.company" action="/any/system/company"/>
 		<acme:footer-option icon="fa fa-file" code="master.footer.label.license" action="/any/system/license"/>
+		<acme:print var="$gitHubRepository$url" code="master.footer.url.gitHubRepository"/>
+		<acme:footer-option icon="fab fa-github" code="master.footer.label.gitHubRepository" action="${$gitHubRepository$url}" newTab="true"/>
 	</acme:footer-subpanel>
 
 	<acme:footer-subpanel code="master.footer.title.social">
