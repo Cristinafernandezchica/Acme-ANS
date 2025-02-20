@@ -10,6 +10,7 @@
 
 master.welcome.title = ¡Bienvenidos!
 master.welcome.text = \
-	¡Hola mundo!  Nunca antes ha sido tan sencillo desarrollar un \
-	proyecto y hacerlo funcionar.
-﻿
+	Nos especializamos en herramientas de desarrollo software en coordinación de operaciones \
+	aeroportuarias para el manejo de recursos, la programación de vuelos y gestión de reservas. 
+	
+master.welcome.text2 =	¡Descubre cómo podemos ayudarte!

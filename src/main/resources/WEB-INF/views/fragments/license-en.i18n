@@ -10,10 +10,11 @@
 
 master.license.title = License
 master.license.text = \
-	You may use this system free of charge, as long as you carefully observe the \
-	existing applicable laws.  Please, note that we do not share any information \
-	about you with any other company.  We store the following items in your computer: \
-	"JSESSIONID" to identify your work session, "remember" to let you authenticate \
-	automatically, "language" to store your language preferences, "XSRF-TOKEN" to \
-	deal with CSRF attacks, and "returnStack" to know where to return when your press \
-	some buttons.
+	This project has been developed from an original template licensed by Rafael Corchuelo.
+
+master.license.text2 = \
+	The development team has made modifications and extensions based on this software.
+	
+master.license.text3 = \
+	Any changes, improvements or extensions made to this project are the responsibility of \
+	its authors and must comply with the conditions of the original license. 

@@ -10,5 +10,8 @@
 
 master.welcome.title = Welcome!
 master.welcome.text = \
-	Hello World! Never before has it been easier to get your \
-	project up and running!
+	We specialize in software development tools in coordination of airport operations for resource management, \
+	flight scheduling and reservation management.
+
+master.welcome.text2 = \
+	Find out how we can help you!	

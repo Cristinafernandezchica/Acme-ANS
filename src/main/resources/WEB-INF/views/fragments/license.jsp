@@ -17,3 +17,5 @@
 
 <h1><acme:print code="master.license.title"/></h1>
 <p><acme:print code="master.license.text"/></p>
+<p><acme:print code="master.license.text2"/></p>
+<p><acme:print code="master.license.text3"/></p>
