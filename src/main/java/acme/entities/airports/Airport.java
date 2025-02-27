@@ -1,6 +1,7 @@
 
 package acme.entities.airports;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -33,7 +34,7 @@ public class Airport extends AbstractEntity {
 
 	@ValidString(pattern = "^[A-Z]{3}$")
 	@Mandatory
-	@Automapped()
+	@Column(unique = true)
 	private String					iataCode;
 
 	@Mandatory
