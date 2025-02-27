@@ -34,7 +34,7 @@ public class Service extends AbstractEntity {
 	@Mandatory
 	@ValidNumber(min = 0)
 	@Automapped
-	private Integer				averageDwellTime;
+	private Double				averageDwellTime;
 
 	@Optional
 	@ValidString(pattern = "^[A-Z]{4}-[0-9]{2}$")
