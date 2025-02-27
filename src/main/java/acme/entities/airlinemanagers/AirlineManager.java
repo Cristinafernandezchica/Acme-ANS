@@ -32,7 +32,7 @@ public class AirlineManager extends AbstractEntity {
 	@ValidNumber
 	@Mandatory
 	@Automapped
-	private Integer				yerasExperience;
+	private Integer				yearsExperience;
 
 	@Temporal(TemporalType.DATE)
 	@ValidMoment(past = true)
