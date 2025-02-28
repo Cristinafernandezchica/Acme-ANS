@@ -18,8 +18,7 @@ import acme.client.components.validation.ValidMoment;
 import acme.client.components.validation.ValidNumber;
 import acme.client.components.validation.ValidString;
 import acme.entities.customer.Customer;
-import acme.entities.flight.Flight;
-
+import acme.entities.flights.Flight;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -28,38 +27,40 @@ import lombok.Setter;
 @Setter
 public class Booking extends AbstractEntity {
 
+	private static final long	serialVersionUID	= 1L;
+
 	@Mandatory
 	@Column(unique = true)   //Preguntar a esta gente
 	@ValidString(pattern = "^[A-Z0-9]{6,8}$")
 	@Automapped
-	private String		locatorCode;
+	private String				locatorCode;
 
 	@Mandatory
 	@ValidMoment(past = true)
 	@Automapped
-	private Date		purchaseMoment;
+	private Date				purchaseMoment;
 
 	@Mandatory
 	@Enumerated(EnumType.STRING)
 	@Automapped
-	private TravelClass	travelClass;
+	private TravelClass			travelClass;
 
 	@Mandatory
 	@ValidNumber
 	@Automapped
-	private Double		price;
+	private Double				price;
 
 	@Optional
 	@ValidString(pattern = "^\\d{4}$")
 	@Automapped
-	private String		lastCardNibble;
+	private String				lastCardNibble;
 
 	@ManyToOne
 	@JoinColumn(name = "customer_id")
-	private Customer	customer;
+	private Customer			customer;
 
 	@ManyToOne
 	@JoinColumn(name = "flight_id")
-	private Flight		flight;
+	private Flight				flight;
 
 }
