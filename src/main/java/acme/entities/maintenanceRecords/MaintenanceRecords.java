@@ -1,5 +1,5 @@
 
-package acme.entities.maitenanceRecords;
+package acme.entities.maintenanceRecords;
 
 import java.util.Date;
 
@@ -22,18 +22,9 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-public class MaitenanceRecords extends AbstractEntity {
+public class MaintenanceRecords extends AbstractEntity {
 
 	private static final long	serialVersionUID	= 1L;
-
-	/*
-	 * @Mandatory
-	 * 
-	 * @ManyToOne(optional=false)
-	 * 
-	 * @Automapped
-	 * private Aircraft aircraft;
-	 */
 
 	@Temporal(TemporalType.DATE)
 	@ValidMoment(past = true)

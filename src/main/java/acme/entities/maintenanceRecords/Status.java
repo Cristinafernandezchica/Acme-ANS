@@ -1,5 +1,5 @@
 
-package acme.entities.maitenanceRecords;
+package acme.entities.maintenanceRecords;
 
 public enum Status {
 
