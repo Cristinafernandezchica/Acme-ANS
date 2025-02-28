@@ -1,5 +1,5 @@
 
-package acme.entities.Technicians;
+package acme.entities.technicians;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
