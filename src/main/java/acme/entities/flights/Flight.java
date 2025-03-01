@@ -7,15 +7,12 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import acme.client.components.basis.AbstractEntity;
 import acme.client.components.datatypes.Money;
 import acme.client.components.mappings.Automapped;
 import acme.client.components.validation.Mandatory;
 import acme.client.components.validation.Optional;
-import acme.client.components.validation.ValidMoment;
 import acme.client.components.validation.ValidMoney;
 import acme.client.components.validation.ValidNumber;
 import acme.client.components.validation.ValidString;
@@ -57,26 +54,23 @@ public class Flight extends AbstractEntity {
 	private List<Leg>			legs;
 
 	@Mandatory
-	@Automapped
-	@ValidMoment(past = false)
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date				scheduledDeparture;
-
-	@Mandatory
-	@Automapped
-	@ValidMoment(past = false)
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date				scheduledArrival;
-
-	@Mandatory
-	@ValidString
-	private String				originCity;
-
-	@Mandatory
-	@ValidString
-	private String				destinationCity;
-
-	@Mandatory
 	@ValidNumber(min = 0)
 	private Integer				layovers;
+
+
+	private Date getScheduledDeparture() {
+		return this.legs.getFirst().getScheduledDeparture();
+	}
+
+	private Date getScheduledArrival() {
+		return this.legs.get(this.legs.size() - 1).getScheduledArrival();
+	}
+
+	private String originCity() {
+		return this.legs.getFirst().getDepartureAirport().getCity();
+	}
+
+	private String destinationCity() {
+		return this.legs.getLast().getArrivalAirport().getCity();
+	}
 }
