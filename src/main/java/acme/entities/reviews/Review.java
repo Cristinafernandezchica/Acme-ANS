@@ -49,7 +49,7 @@ public class Review extends AbstractEntity {
 	@Optional
 	@ValidNumber(min = 0, max = 10)
 	@Automapped
-	private Double				score;
+	private double				score;
 
 	@Optional
 	@Valid
