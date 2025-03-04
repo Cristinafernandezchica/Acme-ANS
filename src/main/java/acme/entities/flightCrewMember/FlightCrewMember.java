@@ -4,6 +4,7 @@ package acme.entities.flightCrewMember;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
+import acme.client.components.basis.AbstractEntity;
 import acme.client.components.datatypes.Money;
 import acme.client.components.validation.Mandatory;
 import acme.client.components.validation.Optional;
@@ -16,7 +17,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class FlightCrewMember {
+public class FlightCrewMember extends AbstractEntity {
 
 	@ValidString(pattern = "^[A-Z]{2-3}\\d{6}$")
 	@Column(unique = true)
