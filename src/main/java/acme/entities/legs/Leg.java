@@ -68,13 +68,11 @@ public class Leg extends AbstractEntity {
 	@Mandatory
 	@ManyToOne
 	@Valid
-	@JoinColumn(name = "airport_id", nullable = false)
 	private Airport				departureAirport;
 
 	@Mandatory
 	@ManyToOne
 	@Valid
-	@JoinColumn(name = "airport_id", nullable = false)
 	private Airport				arrivalAirport;
 
 	@ManyToOne(optional = false)
