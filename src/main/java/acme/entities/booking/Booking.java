@@ -9,6 +9,8 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import acme.client.components.basis.AbstractEntity;
 import acme.client.components.mappings.Automapped;
@@ -30,13 +32,14 @@ public class Booking extends AbstractEntity {
 	private static final long	serialVersionUID	= 1L;
 
 	@Mandatory
-	@Column(unique = true)   //Preguntar a esta gente
+	@Column(unique = true)
 	@ValidString(pattern = "^[A-Z0-9]{6,8}$")
 	@Automapped
 	private String				locatorCode;
 
 	@Mandatory
 	@ValidMoment(past = true)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Automapped
 	private Date				purchaseMoment;
 

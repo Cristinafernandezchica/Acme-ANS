@@ -1,6 +1,7 @@
 
 package acme.entities.customer;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 
 import acme.client.components.basis.AbstractEntity;
@@ -21,6 +22,7 @@ public class Customer extends AbstractEntity {
 
 	@Mandatory
 	@ValidString(pattern = "^[A-Z]{2,3}\\d{6}$")
+	@Column(unique = true)
 	@Automapped
 	private String				identifier;
 
