@@ -35,7 +35,7 @@ public class AirlineManager extends AbstractEntity {
 	@Mandatory
 	private String				identifierNumber;
 
-	@ValidNumber
+	@ValidNumber(min = 0)
 	@Mandatory
 	@Automapped
 	private Integer				yearsExperience;

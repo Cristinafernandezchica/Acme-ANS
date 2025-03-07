@@ -9,6 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.Valid;
 
 import acme.client.components.basis.AbstractEntity;
 import acme.client.components.mappings.Automapped;
@@ -34,7 +35,7 @@ public class Leg extends AbstractEntity {
 
 	@Column(unique = true)
 	@Mandatory
-	@ValidString(pattern = "^[A-Z]{2}\\d{4}$")
+	@ValidString(pattern = "^[A-Z]{2}X\\d{4}$")
 	private String				flightNumber;
 
 	@ValidMoment(past = false)
@@ -58,17 +59,23 @@ public class Leg extends AbstractEntity {
 	@Automapped
 	private LegStatus			status;
 
-	@Mandatory
-	private Airport				departureAirport;
-
-	@Mandatory
-	private Airport				arrivalAirport;
-
 	// Comentada hasta tener la clase Aircraft
 	// @Mandatory
 	// private Aircraft aircraft;
 
 	// Relationships
+
+	@Mandatory
+	@ManyToOne
+	@Valid
+	@JoinColumn(name = "airport_id", nullable = false)
+	private Airport				departureAirport;
+
+	@Mandatory
+	@ManyToOne
+	@Valid
+	@JoinColumn(name = "airport_id", nullable = false)
+	private Airport				arrivalAirport;
 
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "flight_id", nullable = false)
