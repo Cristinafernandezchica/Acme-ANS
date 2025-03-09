@@ -11,6 +11,7 @@ import acme.client.components.validation.Mandatory;
 import acme.client.components.validation.Optional;
 import acme.client.components.validation.ValidNumber;
 import acme.client.components.validation.ValidString;
+import acme.constraints.ValidService;
 import acme.entities.airports.Airport;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,6 +19,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
+@ValidService
 public class Service extends AbstractEntity {
 
 	private static final long	serialVersionUID	= 1L;
