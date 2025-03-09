@@ -9,6 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.Valid;
 
 import acme.client.components.basis.AbstractRole;
 import acme.client.components.datatypes.Money;
@@ -42,6 +43,7 @@ public class AssistanceAgent extends AbstractRole {
 
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "airline_id", nullable = false)
+	@Valid
 	private Airline				airline;
 
 	@Mandatory
