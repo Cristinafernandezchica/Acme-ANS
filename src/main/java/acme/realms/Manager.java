@@ -1,5 +1,5 @@
 
-package acme.entities.airlinemanagers;
+package acme.realms;
 
 import java.util.Date;
 
@@ -8,7 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import acme.client.components.basis.AbstractEntity;
+import acme.client.components.basis.AbstractRealm;
 import acme.client.components.mappings.Automapped;
 import acme.client.components.validation.Mandatory;
 import acme.client.components.validation.Optional;
@@ -22,7 +22,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class AirlineManager extends AbstractEntity {
+public class Manager extends AbstractRealm {
 
 	// Serialisation version --------------------------------------------------
 
@@ -40,7 +40,7 @@ public class AirlineManager extends AbstractEntity {
 	@Automapped
 	private Integer				yearsExperience;
 
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@ValidMoment(past = true)
 	@Mandatory
 	@Automapped
