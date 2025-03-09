@@ -10,7 +10,6 @@ import acme.client.components.mappings.Automapped;
 import acme.client.components.validation.Mandatory;
 import acme.client.components.validation.ValidNumber;
 import acme.client.components.validation.ValidString;
-import acme.entities.maintenanceRecords.MaintenanceRecords;
 import acme.entities.technicians.Technicians;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,15 +21,6 @@ public class Tasks extends AbstractEntity {
 
 	private static final long	serialVersionUID	= 1L;
 
-	/*
-	 * @Mandatory
-	 * 
-	 * @ManyToOne(optional=false)
-	 * 
-	 * @Automapped
-	 * private Aircraft aircraft;
-	 */
-
 	@Mandatory
 	@ManyToOne(optional = false)
 	@Valid
@@ -38,18 +28,12 @@ public class Tasks extends AbstractEntity {
 	private Technicians			technician;
 
 	@Mandatory
-	@ManyToOne(optional = false)
-	@Valid
-	@Automapped
-	private MaintenanceRecords	maintenanceRecord;
-
-	@Mandatory
 	@Valid
 	@Automapped
 	private Type				type;
 
 	@Mandatory
-	@ValidString(max = 255)
+	@ValidString(max = 255, min = 1)
 	@Automapped
 	private String				description;
 
@@ -59,7 +43,7 @@ public class Tasks extends AbstractEntity {
 	private Integer				priority;
 
 	@Mandatory
-	@ValidNumber(min = 0)
+	@ValidNumber(min = 0, max = 1000)
 	@Automapped
-	private Double				estimatedDuration;
+	private Integer				estimatedDuration;
 }
