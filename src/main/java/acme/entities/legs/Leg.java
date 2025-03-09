@@ -15,6 +15,7 @@ import javax.validation.Valid;
 import acme.client.components.basis.AbstractEntity;
 import acme.client.components.mappings.Automapped;
 import acme.client.components.validation.Mandatory;
+import acme.client.components.validation.ValidString;
 import acme.constraints.ValidLeg;
 import acme.entities.aircrafts.Aircraft;
 import acme.entities.airports.Airport;
@@ -36,6 +37,7 @@ public class Leg extends AbstractEntity {
 
 	@Column(unique = true)
 	@Mandatory
+	@ValidString(pattern = "^[A-Z]{2-3}\\d{6}$")
 	private String				flightNumber;
 
 	@Temporal(TemporalType.TIMESTAMP)
