@@ -1,5 +1,5 @@
 
-package acme.entities.assistanceAgents;
+package acme.realms;
 
 import java.util.Date;
 
@@ -10,7 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import acme.client.components.basis.AbstractEntity;
+import acme.client.components.basis.AbstractRole;
 import acme.client.components.datatypes.Money;
 import acme.client.components.mappings.Automapped;
 import acme.client.components.validation.Mandatory;
@@ -26,25 +26,19 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class AssistanceAgent extends AbstractEntity {
+public class AssistanceAgent extends AbstractRole {
 
 	private static final long	serialVersionUID	= 1L;
 
 	@Mandatory
-	@ValidString(pattern = "^[A-Z]{2-3}\\d{6}$")
+	@ValidString(min = 8, max = 9, pattern = "^[A-Z]{2-3}\\d{6}$")
 	@Column(unique = true)
 	private String				employeeCode;
 
-	/*
-	 * @Mandatory
-	 * 
-	 * @Valid
-	 * 
-	 * @Automapped
-	 * 
-	 * @OneToMany(mappedBy = "assistanceAgent", cascade = CascadeType.ALL, orphanRemoval = true)
-	 * private List<Language> spokenLanguages;
-	 */
+	@Mandatory
+	@ValidString(min = 1, max = 255)
+	@Automapped
+	private String				spokenLanguages;
 
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "airline_id", nullable = false)
@@ -54,7 +48,7 @@ public class AssistanceAgent extends AbstractEntity {
 	@Automapped
 	@ValidMoment(past = false)
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date				employmentMoment;
+	private Date				moment;
 
 	@Optional
 	@ValidString(max = 255)
@@ -69,6 +63,6 @@ public class AssistanceAgent extends AbstractEntity {
 	@Optional
 	@ValidUrl
 	@Automapped
-	private String				photo;
+	private String				picture;
 
 }
