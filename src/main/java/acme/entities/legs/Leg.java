@@ -16,6 +16,7 @@ import acme.client.components.basis.AbstractEntity;
 import acme.client.components.mappings.Automapped;
 import acme.client.components.validation.Mandatory;
 import acme.client.components.validation.ValidString;
+import acme.entities.aircrafts.Aircraft;
 import acme.entities.airports.Airport;
 import acme.entities.flights.Flight;
 import lombok.Getter;
@@ -65,11 +66,14 @@ public class Leg extends AbstractEntity {
 
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "flight_id", nullable = false)
+	@Valid
 	private Flight				flight;
 
-	// Comentada hasta tener la clase Aircraft
-	// @Mandatory
-	// private Aircraft aircraft;
+	@Mandatory
+	@Valid
+	@ManyToOne
+	@JoinColumn(name = "aircraft_id", nullable = false)
+	private Aircraft			aircraft;
 
 	// Derived attributes ---------------------------
 
