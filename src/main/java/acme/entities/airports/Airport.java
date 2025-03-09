@@ -29,7 +29,7 @@ public class Airport extends AbstractEntity {
 
 	// Attributes -------------------------------------------------------------
 
-	@ValidString(max = 50)
+	@ValidString(min = 1, max = 50)
 	@Mandatory
 	@Automapped
 	private String					name;
@@ -44,23 +44,24 @@ public class Airport extends AbstractEntity {
 	@Automapped
 	private OperationalScopeType	operationalScope;
 
-	@ValidString(max = 50)
+	@ValidString(min = 1, max = 50)
 	@Mandatory
 	@Automapped
 	private String					city;
 
-	@ValidString(max = 50)
+	@ValidString(min = 1, max = 50)
 	@Mandatory
 	@Automapped
 	private String					country;
 
-	@ValidUrl
+	@ValidUrl()
 	@Optional
 	@Automapped
 	private String					website;
 
 	@Optional
 	@Automapped
+	@ValidString(min = 0, max = 50)
 	private String					address;
 
 	@ValidEmail
@@ -70,6 +71,7 @@ public class Airport extends AbstractEntity {
 
 	@Optional
 	@ValidPhoneNumber
+	@Automapped
 	private String					phoneNumber;
 
 }

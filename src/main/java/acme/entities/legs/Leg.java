@@ -9,13 +9,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.Valid;
 
 import acme.client.components.basis.AbstractEntity;
 import acme.client.components.mappings.Automapped;
 import acme.client.components.validation.Mandatory;
-import acme.client.components.validation.ValidMoment;
-import acme.client.components.validation.ValidNumber;
 import acme.client.components.validation.ValidString;
 import acme.entities.airports.Airport;
 import acme.entities.flights.Flight;
@@ -38,45 +37,46 @@ public class Leg extends AbstractEntity {
 	@ValidString(pattern = "^[A-Z]{2}X\\d{4}$")
 	private String				flightNumber;
 
-	@ValidMoment(past = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	@Mandatory
 	@Automapped
 	private Date				scheduledDeparture;
 
-	@ValidMoment(past = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	@Mandatory
 	@Automapped
 	private Date				scheduledArrival;
 
-	@ValidNumber
-	@Mandatory
-	@Automapped
-	private Integer				duration;
-
 	@Mandatory
 	@Automapped
 	private LegStatus			status;
 
-	// Comentada hasta tener la clase Aircraft
-	// @Mandatory
-	// private Aircraft aircraft;
-
-	// Relationships
+	// Relationships ----------------------------------------
 
 	@Mandatory
-	@ManyToOne
+	@ManyToOne(optional = false)
 	@Valid
 	private Airport				departureAirport;
 
 	@Mandatory
-	@ManyToOne
+	@ManyToOne(optional = false)
 	@Valid
 	private Airport				arrivalAirport;
 
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "flight_id", nullable = false)
 	private Flight				flight;
+
+	// Comentada hasta tener la clase Aircraft
+	// @Mandatory
+	// private Aircraft aircraft;
+
+	// Derived attributes ---------------------------
+
+
+	@Transient
+	private double getDuration() {
+		return (double) (this.getScheduledArrival().getTime() - this.getScheduledDeparture().getTime()) * (1000 * 60 * 60);
+	}
 
 }
