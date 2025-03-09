@@ -9,13 +9,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
+import javax.validation.Valid;
 
 import acme.client.components.basis.AbstractEntity;
 import acme.client.components.mappings.Automapped;
 import acme.client.components.validation.Mandatory;
-import acme.client.components.validation.ValidMoment;
-import acme.client.components.validation.ValidNumber;
 import acme.client.components.validation.ValidString;
+import acme.entities.aircrafts.Aircraft;
 import acme.entities.airports.Airport;
 import acme.entities.flights.Flight;
 import lombok.Getter;
@@ -34,44 +35,52 @@ public class Leg extends AbstractEntity {
 
 	@Column(unique = true)
 	@Mandatory
-	@ValidString(pattern = "^[A-Z]{2}\\d{4}$")
+	@ValidString(pattern = "^[A-Z]{2}X\\d{4}$")
 	private String				flightNumber;
 
-	@ValidMoment(past = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	@Mandatory
 	@Automapped
 	private Date				scheduledDeparture;
 
-	@ValidMoment(past = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	@Mandatory
 	@Automapped
 	private Date				scheduledArrival;
 
-	@ValidNumber
-	@Mandatory
-	@Automapped
-	private Integer				duration;
-
 	@Mandatory
 	@Automapped
 	private LegStatus			status;
 
+	// Relationships ----------------------------------------
+
 	@Mandatory
+	@ManyToOne(optional = false)
+	@Valid
 	private Airport				departureAirport;
 
 	@Mandatory
+	@ManyToOne(optional = false)
+	@Valid
 	private Airport				arrivalAirport;
-
-	// Comentada hasta tener la clase Aircraft
-	// @Mandatory
-	// private Aircraft aircraft;
-
-	// Relationships
 
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "flight_id", nullable = false)
+	@Valid
 	private Flight				flight;
+
+	@Mandatory
+	@Valid
+	@ManyToOne
+	@JoinColumn(name = "aircraft_id", nullable = false)
+	private Aircraft			aircraft;
+
+	// Derived attributes ---------------------------
+
+
+	@Transient
+	private double getDuration() {
+		return (double) (this.getScheduledArrival().getTime() - this.getScheduledDeparture().getTime()) * (1000 * 60 * 60);
+	}
 
 }
