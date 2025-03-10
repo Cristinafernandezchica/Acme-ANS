@@ -10,15 +10,17 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.Valid;
 
 import acme.client.components.basis.AbstractEntity;
 import acme.client.components.mappings.Automapped;
 import acme.client.components.validation.Mandatory;
-import acme.client.components.validation.ValidEmail;
+import acme.client.components.validation.Optional;
 import acme.client.components.validation.ValidMoment;
 import acme.client.components.validation.ValidString;
-import acme.entities.assistanceAgents.AssistanceAgent;
+import acme.entities.passenger.Passenger;
+import acme.realms.AssistanceAgent;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -31,6 +33,7 @@ public class Claim extends AbstractEntity {
 
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "assistanceAgent_id", nullable = false)
+	@Valid
 	private AssistanceAgent		assistanceAgent;
 
 	@Mandatory
@@ -39,10 +42,10 @@ public class Claim extends AbstractEntity {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date				registrationMoment;
 
-	@Mandatory
-	@ValidEmail
-	@Automapped
-	private String				passengerEmail;
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "passenger_id", nullable = false)
+	@Valid
+	private Passenger			passenger;
 
 	@Mandatory
 	@ValidString(max = 255)
@@ -54,9 +57,15 @@ public class Claim extends AbstractEntity {
 	@Automapped
 	private ClaimType			type;
 
-	@Mandatory
+	@Optional
 	@Valid
 	@Automapped
 	private Boolean				accepted;
+
+
+	@Transient
+	private String getPassengerEmail() {
+		return this.getPassenger().getEmail();
+	}
 
 }

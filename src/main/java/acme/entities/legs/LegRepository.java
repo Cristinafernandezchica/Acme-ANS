@@ -15,4 +15,7 @@ public interface LegRepository extends AbstractRepository {
 	@Query("SELECT l FROM Leg l WHERE l.flight.id = :flightId")
 	List<Leg> findLegsByFlighId(@Param("flightId") int flighId);
 
+	@Query("SELECT l FROM Leg l WHERE l.flightNumber = :flightNumber")
+	List<Leg> findLegsByFlighNumber(@Param("flightNumber") String flighNumber);
+
 }

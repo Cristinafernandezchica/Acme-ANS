@@ -4,6 +4,7 @@ package acme.entities.maintenanceRecords;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.Valid;
@@ -16,6 +17,8 @@ import acme.client.components.validation.Optional;
 import acme.client.components.validation.ValidMoment;
 import acme.client.components.validation.ValidMoney;
 import acme.client.components.validation.ValidString;
+import acme.entities.aircrafts.Aircraft;
+import acme.entities.technicians.Technicians;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,6 +28,18 @@ import lombok.Setter;
 public class MaintenanceRecords extends AbstractEntity {
 
 	private static final long	serialVersionUID	= 1L;
+
+	@Mandatory
+	@ManyToOne(optional = false)
+	@Valid
+	@Automapped
+	private Technicians			technician;
+
+	@Mandatory
+	@ManyToOne(optional = false)
+	@Valid
+	@Automapped
+	private Aircraft			aircraft;
 
 	@Temporal(TemporalType.DATE)
 	@ValidMoment(past = true)
@@ -49,7 +64,7 @@ public class MaintenanceRecords extends AbstractEntity {
 	private Money				estimatedCost;
 
 	@Optional
-	@ValidString(max = 255)
+	@ValidString(max = 255, min = 1)
 	@Automapped
 	private String				notes;
 }

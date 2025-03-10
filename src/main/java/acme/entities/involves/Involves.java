@@ -1,30 +1,34 @@
 
-package acme.entities.technicians;
+package acme.entities.involves;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.validation.Valid;
 
 import acme.client.components.basis.AbstractEntity;
 import acme.client.components.mappings.Automapped;
 import acme.client.components.validation.Mandatory;
-import acme.client.components.validation.ValidString;
+import acme.entities.maintenanceRecords.MaintenanceRecords;
+import acme.entities.technicians.Technicians;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
 @Entity
-public class certifications extends AbstractEntity {
+public class Involves extends AbstractEntity {
 
 	private static final long	serialVersionUID	= 1L;
 
 	@Mandatory
 	@ManyToOne(optional = false)
+	@Valid
 	@Automapped
-	private Technicians			technicians;
+	private Technicians			technician;
 
 	@Mandatory
-	@ValidString(max = 255)
+	@ManyToOne(optional = false)
+	@Valid
 	@Automapped
-	private String				certification;
+	private MaintenanceRecords	maintenanceRecords;
 }
