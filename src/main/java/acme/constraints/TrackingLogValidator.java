@@ -6,9 +6,11 @@ import javax.validation.ConstraintValidatorContext;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import acme.client.components.validation.AbstractValidator;
+import acme.client.components.validation.Validator;
 import acme.entities.trackingLogs.TrackingLog;
 import acme.entities.trackingLogs.TrackingLogRepository;
 
+@Validator
 public class TrackingLogValidator extends AbstractValidator<ValidTrackingLog, TrackingLog> {
 
 	@Autowired
@@ -23,17 +25,16 @@ public class TrackingLogValidator extends AbstractValidator<ValidTrackingLog, Tr
 	@Override
 	public boolean isValid(final TrackingLog trackingLog, final ConstraintValidatorContext context) {
 		assert context != null;
-		boolean result;
-		if (trackingLog == null)
-			super.state(context, false, "*", "javax.validation.constraints.NotNull.message");
-		else {
-			boolean correctResolution;
-			if (this.repository.findClaimIndicator(trackingLog.getId()) != null) {
-				correctResolution = trackingLog.getResolution() != null;
-				super.state(context, correctResolution, "resolution", "acme.validation.trackingLog.resolution.message");
-			}
+		boolean result = true;
+		if (trackingLog == null) {
+			result = false;
+			context.disableDefaultConstraintViolation();
+			context.buildConstraintViolationWithTemplate("A Tracking Log can't be a null").addConstraintViolation();
+		} else if (this.repository.findClaimIndicator(trackingLog.getId()) != null && trackingLog.getResolution() == null) {
+			result = false;
+			context.disableDefaultConstraintViolation();
+			context.buildConstraintViolationWithTemplate("If a claim is accepted or rejected, the system must store its resolution").addConstraintViolation();
 		}
-		result = !super.hasErrors(context);
 		return result;
 	}
 
