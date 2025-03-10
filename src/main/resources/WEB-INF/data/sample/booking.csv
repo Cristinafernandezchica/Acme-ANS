@@ -1,3 +1,3 @@
-locatorCode,purchaseMoment,travelClass,price,lastCardNibble,customer_id,flight_id
-ID88888,2025/01/28 21:00,ECONOMY,19.00 EUR,2025,1,1
-ID12345,2024/11/01 1:00,ECONOMY,500.00 USD,1708,2,2
+key,locatorCode,purchaseMoment,travelClass,price,lastCardNibble,key:customer,key:flight
+booking-01,ID88888,2025/01/28 21:00,ECONOMY,19.00 EUR,2025,customer-01,flight-01
+booking-02,ID12345,2024/11/01 1:00,ECONOMY,500.00 USD,1708,customer-02,flight-02

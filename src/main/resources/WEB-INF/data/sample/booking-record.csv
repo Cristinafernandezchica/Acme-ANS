@@ -1,3 +1,3 @@
-booking_id,passenger_id
-1,1
-2,2
+key,key:booking,key:passenger
+relation-01,booking-01,passenger-01
+relation-02,booking-02,passenger-02
