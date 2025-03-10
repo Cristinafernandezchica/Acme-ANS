@@ -17,27 +17,33 @@ import lombok.Setter;
 @Setter
 public class Aircraft extends AbstractEntity {
 
+	// Serialisation version --------------------------------------------------
+
+	private static final long	serialVersionUID	= 1L;
+
+	// Attributes -------------------------------------------------------------
+
 	@Mandatory
 	@ValidString(max = 50)
-	private String	model;
+	private String				model;
 
 	@Mandatory
 	@Column(unique = true)
 	@ValidString(max = 50)
-	private String	registrationNumber;
+	private String				registrationNumber;
 
 	@Mandatory
-	private Integer	numberPassengers;
+	private Integer				numberPassengers;
 
 	@Mandatory
 	@ValidNumber(min = 2000, max = 50000)
-	private Integer	cargoWeight;
+	private Integer				cargoWeight;
 
 	@Mandatory
-	private Status	status;
+	private Status				status;
 
 	@Optional
 	@ValidString(max = 255)
-	private String	details;
+	private String				details;
 
 }
