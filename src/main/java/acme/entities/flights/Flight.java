@@ -65,7 +65,7 @@ public class Flight extends AbstractEntity {
 		List<Leg> orderedWrapper;
 
 		repository = SpringHelper.getBean(LegRepository.class);
-		wrapper = repository.findLegsByFlighId(this.getId());
+		wrapper = repository.findLegsByFlightId(this.getId());
 		orderedWrapper = wrapper.stream().sorted(Comparator.comparing(Leg::getScheduledDeparture)).toList();
 		res = orderedWrapper.getFirst().getScheduledDeparture();
 
@@ -80,7 +80,7 @@ public class Flight extends AbstractEntity {
 		List<Leg> orderedWrapper;
 
 		repository = SpringHelper.getBean(LegRepository.class);
-		wrapper = repository.findLegsByFlighId(this.getId());
+		wrapper = repository.findLegsByFlightId(this.getId());
 		orderedWrapper = wrapper.stream().sorted(Comparator.comparing(Leg::getScheduledArrival)).toList();
 		res = orderedWrapper.getLast().getScheduledArrival();
 
@@ -95,7 +95,7 @@ public class Flight extends AbstractEntity {
 		List<Leg> orderedWrapper;
 
 		repository = SpringHelper.getBean(LegRepository.class);
-		wrapper = repository.findLegsByFlighId(this.getId());
+		wrapper = repository.findLegsByFlightId(this.getId());
 		orderedWrapper = wrapper.stream().sorted(Comparator.comparing(Leg::getScheduledDeparture)).toList();
 		res = orderedWrapper.getFirst().getDepartureAirport().getCity();
 
@@ -110,7 +110,7 @@ public class Flight extends AbstractEntity {
 		List<Leg> orderedWrapper;
 
 		repository = SpringHelper.getBean(LegRepository.class);
-		wrapper = repository.findLegsByFlighId(this.getId());
+		wrapper = repository.findLegsByFlightId(this.getId());
 		orderedWrapper = wrapper.stream().sorted(Comparator.comparing(Leg::getScheduledArrival)).toList();
 		res = orderedWrapper.getLast().getArrivalAirport().getCity();
 
@@ -124,7 +124,7 @@ public class Flight extends AbstractEntity {
 		List<Leg> wrapper;
 
 		repository = SpringHelper.getBean(LegRepository.class);
-		wrapper = repository.findLegsByFlighId(this.getId());
+		wrapper = repository.findLegsByFlightId(this.getId());
 		res = wrapper.size();
 
 		return res;

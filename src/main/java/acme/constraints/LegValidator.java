@@ -43,7 +43,7 @@ public class LegValidator extends AbstractValidator<ValidLeg, Leg> {
 				result = true;
 
 			// Doesn't overlap with another leg of the same flight
-			List<Leg> flightsLegs = this.repository.findLegsByFlighId(leg.getFlight().getId());
+			List<Leg> flightsLegs = this.repository.findLegsByFlightId(leg.getFlight().getId());
 			for (Leg l : flightsLegs) {
 				if (leg.getId() == l.getId())
 					continue;
