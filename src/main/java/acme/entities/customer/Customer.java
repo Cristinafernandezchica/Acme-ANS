@@ -1,6 +1,7 @@
 
 package acme.entities.customer;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 
 import acme.client.components.basis.AbstractEntity;
@@ -9,6 +10,7 @@ import acme.client.components.validation.Mandatory;
 import acme.client.components.validation.Optional;
 import acme.client.components.validation.ValidNumber;
 import acme.client.components.validation.ValidString;
+import acme.constraints.ValidPhoneNumber;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,11 +23,12 @@ public class Customer extends AbstractEntity {
 
 	@Mandatory
 	@ValidString(pattern = "^[A-Z]{2,3}\\d{6}$")
+	@Column(unique = true)
 	@Automapped
 	private String				identifier;
 
 	@Mandatory
-	@ValidString(pattern = "^\\+?\\d{6,15}$")
+	@ValidPhoneNumber
 	@Automapped
 	private String				phoneNumber;
 
@@ -47,5 +50,5 @@ public class Customer extends AbstractEntity {
 	@Optional
 	@ValidNumber(max = 500000)
 	@Automapped
-	private Integer				earnedPoints;
+	private Double				earnedPoints;
 }
