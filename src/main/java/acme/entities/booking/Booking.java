@@ -13,11 +13,12 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import acme.client.components.basis.AbstractEntity;
+import acme.client.components.datatypes.Money;
 import acme.client.components.mappings.Automapped;
 import acme.client.components.validation.Mandatory;
 import acme.client.components.validation.Optional;
 import acme.client.components.validation.ValidMoment;
-import acme.client.components.validation.ValidNumber;
+import acme.client.components.validation.ValidMoney;
 import acme.client.components.validation.ValidString;
 import acme.entities.customer.Customer;
 import acme.entities.flights.Flight;
@@ -49,9 +50,9 @@ public class Booking extends AbstractEntity {
 	private TravelClass			travelClass;
 
 	@Mandatory
-	@ValidNumber
+	@ValidMoney
 	@Automapped
-	private Double				price;
+	private Money				price;
 
 	@Optional
 	@ValidString(pattern = "^\\d{4}$")
