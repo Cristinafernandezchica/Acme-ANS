@@ -5,6 +5,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 
 import acme.client.components.basis.AbstractEntity;
+import acme.client.components.mappings.Automapped;
 import acme.client.components.validation.Mandatory;
 import acme.client.components.validation.Optional;
 import acme.client.components.validation.ValidNumber;
@@ -24,26 +25,32 @@ public class Aircraft extends AbstractEntity {
 	// Attributes -------------------------------------------------------------
 
 	@Mandatory
-	@ValidString(max = 50)
+	@ValidString(min = 1, max = 50)
+	@Automapped
 	private String				model;
 
 	@Mandatory
 	@Column(unique = true)
-	@ValidString(max = 50)
+	@ValidString(min = 1, max = 50)
 	private String				registrationNumber;
 
 	@Mandatory
+	@Automapped
+	@ValidNumber(min = 1, max = 255)
 	private Integer				numberPassengers;
 
 	@Mandatory
 	@ValidNumber(min = 2000, max = 50000)
+	@Automapped
 	private Integer				cargoWeight;
 
 	@Mandatory
+	@Automapped
 	private Status				status;
 
 	@Optional
 	@ValidString(max = 255)
+	@Automapped
 	private String				details;
 
 }
