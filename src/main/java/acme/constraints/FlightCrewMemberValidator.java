@@ -5,29 +5,27 @@ import javax.validation.ConstraintValidatorContext;
 
 import acme.client.components.principals.DefaultUserIdentity;
 import acme.client.components.validation.AbstractValidator;
-import acme.client.components.validation.Validator;
-import acme.realms.AssistanceAgent;
+import acme.realms.flightCrewMember.FlightCrewMember;
 
-@Validator
-public class AssistanceAgentValidator extends AbstractValidator<ValidAssistanceAgent, AssistanceAgent> {
+public class FlightCrewMemberValidator extends AbstractValidator<ValidFlightCrewMember, FlightCrewMember> {
 
 	@Override
-	protected void initialise(final ValidAssistanceAgent annotation) {
+	protected void initialise(final ValidFlightCrewMember annotation) {
 		assert annotation != null;
 	}
 
 	@Override
-	public boolean isValid(final AssistanceAgent assistanceAgent, final ConstraintValidatorContext context) {
+	public boolean isValid(final FlightCrewMember flightCrewMember, final ConstraintValidatorContext context) {
 
 		boolean result = false;
 
-		if (assistanceAgent == null || assistanceAgent.getEmployeeCode() == null) {
+		if (flightCrewMember == null || flightCrewMember.getEmployeeCode() == null) {
 			result = false;
 			context.disableDefaultConstraintViolation();
 			context.buildConstraintViolationWithTemplate("An assistance agent can't be a null").addConstraintViolation();
 		} else {
-			DefaultUserIdentity identity = assistanceAgent.getIdentity();
-			String identifierNumber = assistanceAgent.getEmployeeCode();
+			DefaultUserIdentity identity = flightCrewMember.getIdentity();
+			String identifierNumber = flightCrewMember.getEmployeeCode();
 			String name = identity.getName();
 			String surname = identity.getSurname();
 

@@ -24,7 +24,6 @@ public class Customer extends AbstractRole {
 	@Mandatory
 	@ValidString(pattern = "^[A-Z]{2,3}\\d{6}$")
 	@Column(unique = true)
-	@Automapped
 	private String				identifier;
 
 	@Mandatory

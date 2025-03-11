@@ -4,8 +4,6 @@ package acme.entities.airline;
 import java.util.Date;
 
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -30,7 +28,7 @@ public class Airline extends AbstractEntity {
 	private static final long	serialVersionUID	= 1L;
 
 	@Mandatory
-	@ValidString(max = 50)
+	@ValidString(min = 1, max = 50)
 	@Automapped
 	private String				name;
 
@@ -45,14 +43,12 @@ public class Airline extends AbstractEntity {
 	private String				website;
 
 	@Mandatory
-	@Enumerated(EnumType.STRING)
 	@Automapped
 	private AirlineType			type;
 
 	@Mandatory
-	@ValidMoment(past = true)
+	@ValidMoment(min = "2000/01/01 00:00:00", past = true)
 	@Temporal(TemporalType.TIMESTAMP)
-	@Automapped
 	private Date				foundationMoment;
 
 	@Optional
