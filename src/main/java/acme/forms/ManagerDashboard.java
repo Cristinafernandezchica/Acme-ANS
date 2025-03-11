@@ -6,7 +6,11 @@ import java.util.Map;
 
 import acme.client.components.basis.AbstractForm;
 import acme.client.components.datatypes.Money;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class ManagerDashboard extends AbstractForm {
 
 	// Serialisation version --------------------------------
