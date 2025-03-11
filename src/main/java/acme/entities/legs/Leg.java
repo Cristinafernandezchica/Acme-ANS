@@ -5,8 +5,6 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -16,6 +14,7 @@ import javax.validation.Valid;
 import acme.client.components.basis.AbstractEntity;
 import acme.client.components.mappings.Automapped;
 import acme.client.components.validation.Mandatory;
+import acme.client.components.validation.ValidMoment;
 import acme.client.components.validation.ValidString;
 import acme.constraints.ValidLeg;
 import acme.entities.aircrafts.Aircraft;
@@ -36,24 +35,23 @@ public class Leg extends AbstractEntity {
 
 	// Attributes -------------------------------------------------------------
 
-	@Column(unique = true)
+	@ValidString(pattern = "^[A-Z]{3}\\d{4}$")
 	@Mandatory
-	@ValidString(pattern = "^[A-Z]{2,3}\\d{4}$")
+	@Column(unique = true)
 	private String				flightNumber;
 
+	@ValidMoment
 	@Temporal(TemporalType.TIMESTAMP)
 	@Mandatory
-	@Automapped
 	private Date				scheduledDeparture;
 
+	@ValidMoment
 	@Temporal(TemporalType.TIMESTAMP)
 	@Mandatory
-	@Automapped
 	private Date				scheduledArrival;
 
 	@Mandatory
 	@Automapped
-	@Enumerated(EnumType.STRING)
 	private LegStatus			status;
 
 	// Relationships ----------------------------------------
@@ -68,16 +66,14 @@ public class Leg extends AbstractEntity {
 	@Valid
 	private Airport				arrivalAirport;
 
-	@ManyToOne(optional = false)
-	// @JoinColumn(name = "flight_id", nullable = false)
-	@Valid
 	@Mandatory
+	@ManyToOne(optional = false)
+	@Valid
 	private Flight				flight;
 
 	@Mandatory
-	@Valid
 	@ManyToOne(optional = false)
-	// @JoinColumn(name = "aircraft_id", nullable = false)
+	@Valid
 	private Aircraft			aircraft;
 
 	// Derived attributes ---------------------------

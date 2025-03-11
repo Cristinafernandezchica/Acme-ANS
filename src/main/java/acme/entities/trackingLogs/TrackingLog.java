@@ -35,8 +35,7 @@ public class TrackingLog extends AbstractEntity {
 	private Claim				claim;
 
 	@Mandatory
-	@Automapped
-	@ValidMoment(past = false)
+	@ValidMoment(past = true)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date				lastUpdateMoment;
 
@@ -48,7 +47,7 @@ public class TrackingLog extends AbstractEntity {
 	@Mandatory
 	@ValidScore
 	@Automapped
-	private double				resolutionPercentage;
+	private Double				resolutionPercentage;
 
 	@Optional
 	@ValidString(max = 255)

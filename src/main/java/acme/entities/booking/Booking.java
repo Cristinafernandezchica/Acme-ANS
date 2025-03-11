@@ -5,8 +5,6 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
@@ -35,22 +33,19 @@ public class Booking extends AbstractEntity {
 	@Mandatory
 	@Column(unique = true)
 	@ValidString(pattern = "^[A-Z0-9]{6,8}$")
-	@Automapped
 	private String				locatorCode;
 
 	@Mandatory
-	@ValidMoment(past = true)
+	@ValidMoment(min = "2000/01/01 00:00", past = true)
 	@Temporal(TemporalType.TIMESTAMP)
-	@Automapped
 	private Date				purchaseMoment;
 
 	@Mandatory
-	@Enumerated(EnumType.STRING)
 	@Automapped
 	private TravelClass			travelClass;
 
 	@Mandatory
-	@ValidMoney
+	@ValidMoney(min = 0, max = 50000.00)
 	@Automapped
 	private Money				price;
 

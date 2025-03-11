@@ -21,8 +21,10 @@ public class ManagerValidator extends AbstractValidator<ValidManager, Manager> {
 
 		boolean result = false;
 
-		if (manager == null || manager.getIdentifierNumber() == null)
-			super.state(context, false, "*", "javax.validation.constraints.NotNull.message");
+		if (manager == null)
+			super.state(context, false, "manager", "javax.validation.constraints.NotNull.message");
+		else if (manager.getIdentifierNumber() == null)
+			super.state(context, false, "identifierNumber", "javax.validation.constraints.NotNull.message");
 		else {
 			DefaultUserIdentity identity = manager.getIdentity();
 			String identifierNumber = manager.getIdentifierNumber();
