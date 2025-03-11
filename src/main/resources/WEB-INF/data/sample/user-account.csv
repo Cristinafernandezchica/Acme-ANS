@@ -13,3 +13,6 @@ user-account-fight-crew-member-02,true,"UserIdentity{name: 'Luigi', surname: 'Br
 user-account-fight-crew-member-03,true,"UserIdentity{name: 'Peter', surname: 'Parker', email: 'spiderman@acme.com'}",flightCrewMember3,flightCrewMember3
 user-account-fight-crew-member-04,true,"UserIdentity{name: 'Ariana', surname: 'Grande', email: 'sweetener@acme.com'}",flightCrewMember4,flightCrewMember4
 user-account-fight-crew-member-05,true,"UserIdentity{name: 'Mac', surname: 'Miller', email: 'congratulations@acme.com'}",flightCrewMember5,flightCrewMember5
+user-account-customer-01,true,"UserIdentity{name: 'Angel', surname: 'Customer1', email: 'angel@acme.com'}",customer1,customer1
+user-account-customer-02,true,"UserIdentity{name: 'Rafael', surname: 'Customer2', email: 'rafael@acme.com'}",customer2,customer2
+user-account-customer-03,true,"UserIdentity{name: 'Ana', surname: 'Customer3', email: 'ana@acme.com'}",customer3,customer3
