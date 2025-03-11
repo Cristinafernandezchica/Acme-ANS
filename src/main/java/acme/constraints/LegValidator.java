@@ -33,7 +33,7 @@ public class LegValidator extends AbstractValidator<ValidLeg, Leg> {
 		boolean result = false;
 		String flightNumber = leg.getFlightNumber();
 
-		if (flightNumber == null || !flightNumber.matches("^[A-Z]{2}X\\d{4}$"))
+		if (flightNumber == null || !flightNumber.matches("^[A-Z]{2,3}\\d{4}$"))
 			super.state(context, false, "*", "javax.validation.constraints.NotNull.message");
 		else {
 			// flightNumber have the iataCode
@@ -50,8 +50,7 @@ public class LegValidator extends AbstractValidator<ValidLeg, Leg> {
 
 				if (MomentHelper.isInRange(leg.getScheduledDeparture(), l.getScheduledDeparture(), l.getScheduledArrival())) {
 					result = false;
-					context.disableDefaultConstraintViolation();
-					context.buildConstraintViolationWithTemplate("The leg can't be in the middle of another leg of the same flight").addConstraintViolation();
+					super.state(context, false, "scheduledDeparture/scheduledArrival", "Overlap with another leg of the same flight");
 				}
 			}
 
@@ -59,8 +58,7 @@ public class LegValidator extends AbstractValidator<ValidLeg, Leg> {
 			Date departureWithDelta = MomentHelper.deltaFromMoment(leg.getScheduledDeparture(), 1, ChronoUnit.MINUTES);
 			if (MomentHelper.isBefore(leg.getScheduledArrival(), departureWithDelta)) {
 				result = false;
-				context.disableDefaultConstraintViolation();
-				context.buildConstraintViolationWithTemplate("The scheduled arrival can't be before the scheduled departure + 1 minute").addConstraintViolation();
+				super.state(context, false, "scheduledDeparture/scheduledArrival", "Departure = Arrival");
 
 			}
 
