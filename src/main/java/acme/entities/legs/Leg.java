@@ -5,7 +5,8 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -37,7 +38,7 @@ public class Leg extends AbstractEntity {
 
 	@Column(unique = true)
 	@Mandatory
-	@ValidString(pattern = "^[A-Z]{2-3}\\d{6}$")
+	@ValidString(pattern = "^[A-Z]{2,3}\\d{4}$")
 	private String				flightNumber;
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -52,6 +53,7 @@ public class Leg extends AbstractEntity {
 
 	@Mandatory
 	@Automapped
+	@Enumerated(EnumType.STRING)
 	private LegStatus			status;
 
 	// Relationships ----------------------------------------
@@ -67,14 +69,15 @@ public class Leg extends AbstractEntity {
 	private Airport				arrivalAirport;
 
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "flight_id", nullable = false)
+	// @JoinColumn(name = "flight_id", nullable = false)
 	@Valid
+	@Mandatory
 	private Flight				flight;
 
 	@Mandatory
 	@Valid
-	@ManyToOne
-	@JoinColumn(name = "aircraft_id", nullable = false)
+	@ManyToOne(optional = false)
+	// @JoinColumn(name = "aircraft_id", nullable = false)
 	private Aircraft			aircraft;
 
 	// Derived attributes ---------------------------
