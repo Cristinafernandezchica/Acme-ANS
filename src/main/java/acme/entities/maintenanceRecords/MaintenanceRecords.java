@@ -17,6 +17,7 @@ import acme.client.components.validation.Optional;
 import acme.client.components.validation.ValidMoment;
 import acme.client.components.validation.ValidMoney;
 import acme.client.components.validation.ValidString;
+import acme.constraints.ValidMaintenanceRecord;
 import acme.entities.aircrafts.Aircraft;
 import acme.entities.technicians.Technicians;
 import lombok.Getter;
@@ -25,6 +26,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
+@ValidMaintenanceRecord
 public class MaintenanceRecords extends AbstractEntity {
 
 	private static final long	serialVersionUID	= 1L;
@@ -42,7 +44,7 @@ public class MaintenanceRecords extends AbstractEntity {
 	private Aircraft			aircraft;
 
 	@Temporal(TemporalType.DATE)
-	@ValidMoment(past = true)
+	@ValidMoment(past = true, min = "1925/01/01 10:00", max = "2100/01/01 10:00")
 	@Mandatory
 	@Automapped
 	private Date				moment;
@@ -53,13 +55,13 @@ public class MaintenanceRecords extends AbstractEntity {
 	private Status				status;
 
 	@Temporal(TemporalType.DATE)
-	@ValidMoment(past = false)
+	@ValidMoment(min = "1925/01/01 10:00", max = "2100/01/01 10:00")
 	@Mandatory
 	@Automapped
 	private Date				inspectionDueDate;
 
 	@Mandatory
-	@ValidMoney
+	@ValidMoney(min = 0.00, max = 100000000.00)
 	@Automapped
 	private Money				estimatedCost;
 

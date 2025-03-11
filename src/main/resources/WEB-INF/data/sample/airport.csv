@@ -58,3 +58,10 @@ airport-48,"Example Airport","STU",DOMESTIC,"Tenerife","España",https://example
 airport-49,"Example Airport","VWX",DOMESTIC,"Tenerife","España",https://example.acme.com,example49@acme.com,+72926097
 airport-50,"Example Airport","YZA",DOMESTIC,"Tenerife","España",https://example.acme.com,example50@acme.com,+972750999284
 airport-51,"Example Airport","BCD",DOMESTIC,"Tenerife","España",https://example.acme.com,example51@acme.com,6279243516
+# email - variations
+airport-52,"Example Airport","EFG",DOMESTIC,"Tenerife","España",https://example.acme.com,acme@lorem-ipsum.org,+34990000052
+airport-53,"Example Airport","HIJ",DOMESTIC,"Tenerife","España",https://example.acme.com,a@b.e,+34990000053
+airport-54,"Example Airport","KLM",DOMESTIC,"Tenerife","España",https://example.acme.com,lorem-ipsum@dolor.sit.amet.consectetur.adipiscing.elit.sed.do.eiusmod.tempor.incididunt.ut.labore.et.dolore.magna.aliqua.Ut.enim.ad.minim.veniam.quis.nostrud.exercitation.ullamco.laboris.nisi.ut.aliquip.ex.ea.commodo.consequat.duis.aute.irure.dolor.es.org,+34990000054
+airport-55,"Example Airport","NOP",DOMESTIC,"Tenerife","España",https://example.acme.com,invalid-email,+34990000055
+airport-56,"Example Airport","NOO",DOMESTIC,"Tenerife","España",https://example.acme.com,,+34990000055
+
