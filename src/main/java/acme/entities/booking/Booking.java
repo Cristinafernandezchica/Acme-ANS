@@ -36,7 +36,7 @@ public class Booking extends AbstractEntity {
 	private String				locatorCode;
 
 	@Mandatory
-	@ValidMoment(min = "2000/01/01 00:00:00", past = true)
+	@ValidMoment(min = "2000/01/01 00:00", past = true)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date				purchaseMoment;
 
