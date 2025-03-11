@@ -33,9 +33,12 @@ public class ServiceValidator extends AbstractValidator<ValidService, Service> {
 			String ultimosDosDigitosDePromotionCode = service.getPromotionCode().substring(service.getPromotionCode().length() - 2);
 			if (ultimosDosDigitosDePromotionCode.equals(ultimosDosNumerosDelAño))
 				promotionalCodeCorrect = true;
+			super.state(context, promotionalCodeCorrect, "promotionalCode", "acme.validation.service.promotionalCode.message");
+
 			boolean moneyCorrect = false;
 			if (service.getPromotionCode() != null)
 				moneyCorrect = true;
+			super.state(context, promotionalCodeCorrect, "money", "acme.validation.service.money.message");
 			if (promotionalCodeCorrect && moneyCorrect)
 				result = true;
 		}

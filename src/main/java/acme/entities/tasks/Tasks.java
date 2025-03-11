@@ -43,7 +43,7 @@ public class Tasks extends AbstractEntity {
 	private Integer				priority;
 
 	@Mandatory
-	@ValidNumber(min = 0, max = 1000)
+	@ValidNumber(min = 0, max = 5000)
 	@Automapped
 	private Integer				estimatedDuration;
 }

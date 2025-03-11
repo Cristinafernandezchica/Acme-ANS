@@ -9,7 +9,7 @@ import acme.client.components.basis.AbstractEntity;
 import acme.client.components.mappings.Automapped;
 import acme.client.components.validation.Mandatory;
 import acme.entities.maintenanceRecords.MaintenanceRecords;
-import acme.entities.technicians.Technicians;
+import acme.entities.tasks.Tasks;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -24,7 +24,7 @@ public class Involves extends AbstractEntity {
 	@ManyToOne(optional = false)
 	@Valid
 	@Automapped
-	private Technicians			technician;
+	private Tasks				tasks;
 
 	@Mandatory
 	@ManyToOne(optional = false)
