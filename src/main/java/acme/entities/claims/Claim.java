@@ -64,8 +64,8 @@ public class Claim extends AbstractEntity {
 
 
 	@Transient
-	private String getPassengerEmail() {
-		return this.getPassenger().getEmail();
+	public String getPassengerEmail() {
+		return this.getPassenger() != null ? this.getPassenger().getEmail() : null;
 	}
 
 }
