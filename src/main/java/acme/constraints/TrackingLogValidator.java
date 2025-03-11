@@ -3,19 +3,13 @@ package acme.constraints;
 
 import javax.validation.ConstraintValidatorContext;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import acme.client.components.validation.AbstractValidator;
 import acme.client.components.validation.Validator;
 import acme.entities.trackingLogs.TrackingLog;
-import acme.entities.trackingLogs.TrackingLogRepository;
+import acme.entities.trackingLogs.TrackingLogStatus;
 
 @Validator
 public class TrackingLogValidator extends AbstractValidator<ValidTrackingLog, TrackingLog> {
-
-	@Autowired
-	private TrackingLogRepository repository;
-
 
 	@Override
 	protected void initialise(final ValidTrackingLog annotation) {
@@ -24,17 +18,29 @@ public class TrackingLogValidator extends AbstractValidator<ValidTrackingLog, Tr
 
 	@Override
 	public boolean isValid(final TrackingLog trackingLog, final ConstraintValidatorContext context) {
-		assert context != null;
+		if (context == null)
+			throw new IllegalArgumentException("ConstraintValidatorContext must not be null");
+
 		boolean result = true;
+
 		if (trackingLog == null) {
 			result = false;
 			context.disableDefaultConstraintViolation();
-			context.buildConstraintViolationWithTemplate("A Tracking Log can't be a null").addConstraintViolation();
-		} else if (this.repository.findClaimIndicator(trackingLog.getId()) != null && trackingLog.getResolution() == null) {
+			context.buildConstraintViolationWithTemplate("A Tracking Log can't be null").addConstraintViolation();
+		} else if (trackingLog.getStatus().equals(TrackingLogStatus.PENDING) && trackingLog.getResolutionPercentage() == 100.00) {
 			result = false;
 			context.disableDefaultConstraintViolation();
-			context.buildConstraintViolationWithTemplate("If a claim is accepted or rejected, the system must store its resolution").addConstraintViolation();
+			context.buildConstraintViolationWithTemplate("The status can be “PENDING” only when the resolution percentage is not 100%").addConstraintViolation();
+		} else if (!trackingLog.getStatus().equals(TrackingLogStatus.PENDING) && trackingLog.getResolutionPercentage() != 100.00) {
+			result = false;
+			context.disableDefaultConstraintViolation();
+			context.buildConstraintViolationWithTemplate("The status can be “ACCEPTED” or “REJECTED” only when the resolution percentage gets to 100%").addConstraintViolation();
+		} else if (!trackingLog.getStatus().equals(TrackingLogStatus.PENDING) && (trackingLog.getResolution() == null || trackingLog.getResolution().isBlank())) {
+			result = false;
+			context.disableDefaultConstraintViolation();
+			context.buildConstraintViolationWithTemplate("If the status is not “PENDING”, then the resolution is mandatory").addConstraintViolation();
 		}
+
 		return result;
 	}
 
