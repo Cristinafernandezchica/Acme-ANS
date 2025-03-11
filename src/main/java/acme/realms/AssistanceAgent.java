@@ -50,7 +50,7 @@ public class AssistanceAgent extends AbstractRole {
 
 	@Mandatory
 	@Automapped
-	@ValidMoment(past = false)
+	@ValidMoment(past = true)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date				moment;
 
