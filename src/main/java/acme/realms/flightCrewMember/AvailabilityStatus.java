@@ -1,5 +1,5 @@
 
-package acme.entities.flightCrewMember;
+package acme.realms.flightCrewMember;
 
 public enum AvailabilityStatus {
 

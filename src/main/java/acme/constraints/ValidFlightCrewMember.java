@@ -8,21 +8,15 @@ import java.lang.annotation.Target;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
-import javax.validation.ReportAsSingleViolation;
-import javax.validation.constraints.Pattern;
 
-@Target(ElementType.FIELD)
+@Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = {})
-@ReportAsSingleViolation
+@Constraint(validatedBy = FlightCrewMemberValidator.class)
+public @interface ValidFlightCrewMember {
 
-@Pattern(regexp = "^[A-Z]{3}$")
+	// Standard validation properties ------------------------------
 
-public @interface ValidAirportIATACode {
-
-	// Standard validation properties ----------------------------
-
-	String message() default "Invalid IATA Code";
+	String message() default "";
 
 	Class<?>[] groups() default {};
 	Class<? extends Payload>[] payload() default {};

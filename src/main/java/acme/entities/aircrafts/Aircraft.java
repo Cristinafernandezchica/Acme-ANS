@@ -5,6 +5,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 
 import acme.client.components.basis.AbstractEntity;
+import acme.client.components.mappings.Automapped;
 import acme.client.components.validation.Mandatory;
 import acme.client.components.validation.Optional;
 import acme.client.components.validation.ValidNumber;
@@ -17,27 +18,39 @@ import lombok.Setter;
 @Setter
 public class Aircraft extends AbstractEntity {
 
+	// Serialisation version --------------------------------------------------
+
+	private static final long	serialVersionUID	= 1L;
+
+	// Attributes -------------------------------------------------------------
+
 	@Mandatory
-	@ValidString(max = 50)
-	private String	model;
+	@ValidString(min = 1, max = 50)
+	@Automapped
+	private String				model;
 
 	@Mandatory
 	@Column(unique = true)
-	@ValidString(max = 50)
-	private String	registrationNumber;
+	@ValidString(min = 1, max = 50)
+	private String				registrationNumber;
 
 	@Mandatory
-	private Integer	numberPassengers;
+	@Automapped
+	@ValidNumber(min = 1, max = 255)
+	private Integer				numberPassengers;
 
 	@Mandatory
 	@ValidNumber(min = 2000, max = 50000)
-	private Integer	cargoWeight;
+	@Automapped
+	private Integer				cargoWeight;
 
 	@Mandatory
-	private Status	status;
+	@Automapped
+	private Status				status;
 
 	@Optional
 	@ValidString(max = 255)
-	private String	details;
+	@Automapped
+	private String				details;
 
 }

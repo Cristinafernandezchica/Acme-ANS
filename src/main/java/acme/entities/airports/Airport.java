@@ -54,15 +54,10 @@ public class Airport extends AbstractEntity {
 	@Automapped
 	private String					country;
 
-	@ValidUrl()
+	@ValidUrl
 	@Optional
 	@Automapped
 	private String					website;
-
-	@Optional
-	@Automapped
-	@ValidString(min = 0, max = 50)
-	private String					address;
 
 	@ValidEmail
 	@Optional

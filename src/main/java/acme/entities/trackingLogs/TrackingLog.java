@@ -57,8 +57,16 @@ public class TrackingLog extends AbstractEntity {
 
 
 	@Transient
-	private Boolean getClaimAccepted() {
-		return this.claim.getAccepted();
+	public TrackingLogStatus getStatus() {
+		TrackingLogStatus indicator;
+		if (Boolean.TRUE.equals(this.claim.getAccepted()))
+			indicator = TrackingLogStatus.ACCEPTED;
+		else if (Boolean.FALSE.equals(this.claim.getAccepted()))
+			indicator = TrackingLogStatus.REJECTED;
+		else
+			indicator = TrackingLogStatus.PENDING;
+
+		return indicator;
 	}
 
 }
