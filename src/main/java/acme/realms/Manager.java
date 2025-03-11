@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.Valid;
 
 import acme.client.components.basis.AbstractRole;
 import acme.client.components.mappings.Automapped;
@@ -17,6 +18,7 @@ import acme.client.components.validation.ValidMoment;
 import acme.client.components.validation.ValidNumber;
 import acme.client.components.validation.ValidString;
 import acme.client.components.validation.ValidUrl;
+import acme.constraints.ValidManager;
 import acme.entities.airline.Airline;
 import lombok.Getter;
 import lombok.Setter;
@@ -24,6 +26,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
+@ValidManager
 public class Manager extends AbstractRole {
 
 	// Serialisation version --------------------------------------------------
@@ -33,19 +36,18 @@ public class Manager extends AbstractRole {
 	// Attributes -------------------------------------------------------------
 
 	@ValidString(min = 8, max = 9, pattern = "^[A-Z]{2,3}\\d{6}$")
-	@Column(unique = true)
 	@Mandatory
+	@Column(unique = true)
 	private String				identifierNumber;
 
-	@ValidNumber(min = 0)
+	@ValidNumber(min = 0, max = 120)
 	@Mandatory
 	@Automapped
 	private Integer				yearsExperience;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@ValidMoment(past = true)
+	@ValidMoment(min = "2000/01/01 00:00", past = true)
 	@Mandatory
-	@Automapped
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date				dateBirth;
 
 	@ValidUrl
@@ -53,7 +55,8 @@ public class Manager extends AbstractRole {
 	@Automapped
 	private String				picture;
 
-	@ManyToOne(optional = false)
+	@Valid
 	@Mandatory
+	@ManyToOne(optional = false)
 	private Airline				airline;
 }
