@@ -37,7 +37,6 @@ public class Claim extends AbstractEntity {
 	private AssistanceAgent		assistanceAgent;
 
 	@Mandatory
-	@Automapped
 	@ValidMoment(past = true)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date				registrationMoment;

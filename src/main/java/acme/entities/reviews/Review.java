@@ -31,7 +31,6 @@ public class Review extends AbstractEntity {
 	private String				personName;
 
 	@Mandatory
-	@Automapped
 	@ValidMoment(past = true)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date				postedMoment;
@@ -47,7 +46,7 @@ public class Review extends AbstractEntity {
 	private String				text;
 
 	@Optional
-	@ValidNumber(max = 10)
+	@ValidNumber(min = 0, max = 10, integer = 2, fraction = 2)
 	@Automapped
 	private Double				score;
 
