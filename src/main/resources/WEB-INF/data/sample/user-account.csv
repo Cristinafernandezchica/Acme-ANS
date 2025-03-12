@@ -19,3 +19,6 @@ user-account-fight-crew-member-05,true,"UserIdentity{name: 'Mac', surname: 'Mill
 user-account-customer-01,true,"UserIdentity{name: 'Angel', surname: 'Customer1', email: 'angel@acme.com'}",customer1,customer1
 user-account-customer-02,true,"UserIdentity{name: 'Rafael', surname: 'Customer2', email: 'rafael@acme.com'}",customer2,customer2
 user-account-customer-03,true,"UserIdentity{name: 'Ana', surname: 'Customer3', email: 'ana@acme.com'}",customer3,customer3
+user-account-technician-01,true,"UserIdentity{name: 'Mariano', surname: 'technician1', email: 'mariano@acme.com'}",technician1,technician1
+user-account-technician-02,true,"UserIdentity{name: 'Lupe', surname: 'technician2', email: 'lupe@acme.com'}",technician2,technician2
+user-account-technician-03,true,"UserIdentity{name: 'noTengoNombreCaraTriste', surname: 'technician3', email: 'sindatos@acme.com'}",technician3,technician3

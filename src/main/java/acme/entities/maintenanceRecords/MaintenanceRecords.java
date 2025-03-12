@@ -25,6 +25,10 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
+<<<<<<< HEAD
+=======
+// @ValidMaintenanceRecord
+>>>>>>> master
 public class MaintenanceRecords extends AbstractEntity {
 
 	private static final long	serialVersionUID	= 1L;
