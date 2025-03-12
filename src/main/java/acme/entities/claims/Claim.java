@@ -10,16 +10,16 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 import javax.validation.Valid;
 
 import acme.client.components.basis.AbstractEntity;
 import acme.client.components.mappings.Automapped;
 import acme.client.components.validation.Mandatory;
 import acme.client.components.validation.Optional;
+import acme.client.components.validation.ValidEmail;
 import acme.client.components.validation.ValidMoment;
 import acme.client.components.validation.ValidString;
-import acme.entities.passenger.Passenger;
+import acme.entities.legs.Leg;
 import acme.realms.AssistanceAgent;
 import lombok.Getter;
 import lombok.Setter;
@@ -41,10 +41,10 @@ public class Claim extends AbstractEntity {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date				registrationMoment;
 
-	@ManyToOne(optional = false)
-	@JoinColumn(name = "passenger_id", nullable = false)
-	@Valid
-	private Passenger			passenger;
+	@Mandatory
+	@ValidEmail
+	@Automapped
+	private String				passengerEmail;
 
 	@Mandatory
 	@ValidString(max = 255)
@@ -61,10 +61,9 @@ public class Claim extends AbstractEntity {
 	@Automapped
 	private Boolean				accepted;
 
-
-	@Transient
-	public String getPassengerEmail() {
-		return this.getPassenger() != null ? this.getPassenger().getEmail() : null;
-	}
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "leg_id", nullable = false)
+	@Valid
+	private Leg					leg;
 
 }

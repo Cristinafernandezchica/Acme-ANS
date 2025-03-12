@@ -59,7 +59,7 @@ public class AssistanceAgent extends AbstractRole {
 	private String				briefBio;
 
 	@Optional
-	@ValidMoney
+	@ValidMoney(max = 30000)
 	@Automapped
 	private Money				salary;
 
