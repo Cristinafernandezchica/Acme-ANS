@@ -5,10 +5,10 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.Valid;
 
 import acme.client.components.basis.AbstractEntity;
 import acme.client.components.datatypes.Money;
@@ -54,12 +54,14 @@ public class Booking extends AbstractEntity {
 	@Automapped
 	private String				lastCardNibble;
 
-	@ManyToOne
-	@JoinColumn(name = "customer_id")
+	@Mandatory
+	@ManyToOne(optional = false)
+	@Valid
 	private Customer			customer;
 
-	@ManyToOne
-	@JoinColumn(name = "flight_id")
+	@Mandatory
+	@ManyToOne(optional = false)
+	@Valid
 	private Flight				flight;
 
 }

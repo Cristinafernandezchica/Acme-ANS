@@ -2,11 +2,10 @@
 package acme.entities.bookingrecord;
 
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.Valid;
 
 import acme.client.components.basis.AbstractEntity;
-import acme.client.components.mappings.Automapped;
 import acme.client.components.validation.Mandatory;
 import acme.entities.booking.Booking;
 import acme.entities.passenger.Passenger;
@@ -22,13 +21,11 @@ public class BookingRecord extends AbstractEntity {
 
 	@Mandatory
 	@ManyToOne
-	@JoinColumn(name = "booking_id")
-	@Automapped
+	@Valid
 	private Booking				booking;
 
 	@Mandatory
 	@ManyToOne
-	@JoinColumn(name = "passenger_id")
-	@Automapped
+	@Valid
 	private Passenger			passenger;
 }
