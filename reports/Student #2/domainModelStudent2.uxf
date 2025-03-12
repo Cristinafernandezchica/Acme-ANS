@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="15.1">
+  <zoom_level>6</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>12</x>
+      <y>342</y>
+      <w>384</w>
+      <h>84</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;AbstractEntity&gt;&gt;
+booking::Booking
+--
++ locatorCode: String {Mandatory, Column(unique=true), ValidString}
++ purchaseMoment: Date {Mandatory, Temporal(TemporalType.TIMESTAMP), ValidMoment}
++ travelClass: TravelClass {Mandatory, Automapped}
++ price: Money {Mandatory, ValidMoney, Automapped}
+- lastCardNibble: String {Optional, ValidString, Automapped}</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>156</x>
+      <y>210</y>
+      <w>96</w>
+      <h>48</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;AbstractEntity&gt;&gt;
+flights::Flight
+--
+Grupal Entity</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>132</x>
+      <y>510</y>
+      <w>102</w>
+      <h>54</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;AbstractEntity&gt;&gt;
+BookingRecord
+--
++ booking: Booking
++ passenger: Passenger</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>42</x>
+      <y>660</y>
+      <w>336</w>
+      <h>84</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;AbstractEntity&gt;&gt;
+passenger::Passenger
+--
++ fullName: String {Mandatory, Automapped, ValidString}
++ email: String {Mandatory, Automapped, ValidEmail}
++ passportNumber: String {Mandatory, Automapped, ValidString}
++ dateOfBirth: Date {Mandatory, Temporal(TemporalType.TIMESTAMP), ValidMoment}
+- specialNeeds: String {Optional, Automapped, ValidString}</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>330</x>
+      <y>234</y>
+      <w>102</w>
+      <h>48</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Enumeration&gt;&gt;
+booking::TravelClass
+--
+ECONOMY
+BUSINESS</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>168</x>
+      <y>252</y>
+      <w>54</w>
+      <h>102</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=0..1
+m2=0..n
+flying at &gt;</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;150.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>492</x>
+      <y>336</y>
+      <w>336</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;AbstractRole&gt;&gt;
+realms::Customer
+--
++ identifier: String {Mandatory, Column(unique = true), ValidString}
++ phoneNumber: String {Mandatory, Automapped, ValidPhoneNumber}
++ address: String {Mandatory, Automapped, ValidString}
++ city: String {Mandatory, Automapped, ValidString}
++ country: String {Mandatory, Automapped, ValidString}
+- earnedPoints: Integer {Optional, Automapped, ValidNumber}</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>168</x>
+      <y>558</y>
+      <w>66</w>
+      <h>114</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=0..n
+m2=0..1
+booked by &gt;</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;170.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>168</x>
+      <y>420</y>
+      <w>72</w>
+      <h>102</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=0..1
+m2=0..n
+registered to &gt;</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;150.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>390</x>
+      <y>378</y>
+      <w>114</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=0..n
+m2=0..1
+bought by &gt;</panel_attributes>
+    <additional_attributes>10.0;20.0;170.0;20.0</additional_attributes>
+  </element>
+</diagram>
