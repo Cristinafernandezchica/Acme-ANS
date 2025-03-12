@@ -4,11 +4,12 @@ package acme.entities.trackingLogs;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 
 import acme.client.components.basis.AbstractEntity;
 import acme.client.components.mappings.Automapped;
@@ -17,7 +18,6 @@ import acme.client.components.validation.Optional;
 import acme.client.components.validation.ValidMoment;
 import acme.client.components.validation.ValidScore;
 import acme.client.components.validation.ValidString;
-import acme.client.helpers.SpringHelper;
 import acme.constraints.ValidTrackingLog;
 import acme.entities.claims.Claim;
 import lombok.Getter;
@@ -50,43 +50,14 @@ public class TrackingLog extends AbstractEntity {
 	@Automapped
 	private Double				resolutionPercentage;
 
+	@Mandatory
+	@Enumerated(EnumType.STRING)
+	@Automapped
+	private TrackingLogStatus	status;
+
 	@Optional
 	@ValidString(max = 255)
 	@Automapped
 	private String				resolution;
-
-	/*
-	 * @Transient
-	 * public TrackingLogStatus getStatus() {
-	 * TrackingLogStatus indicator;
-	 * if (Boolean.TRUE.equals(this.claim.getAccepted()))
-	 * indicator = TrackingLogStatus.ACCEPTED;
-	 * else if (Boolean.FALSE.equals(this.claim.getAccepted()))
-	 * indicator = TrackingLogStatus.REJECTED;
-	 * else
-	 * indicator = TrackingLogStatus.PENDING;
-	 * 
-	 * return indicator;
-	 * }
-	 */
-
-
-	@Transient
-	public TrackingLogStatus getStatus() {
-		TrackingLogStatus status;
-		TrackingLogRepository repository;
-		Boolean indicator;
-
-		repository = SpringHelper.getBean(TrackingLogRepository.class);
-		indicator = repository.findClaimIndicatorByTrackingLogId(this.getId());
-
-		if (Boolean.TRUE.equals(indicator))
-			status = TrackingLogStatus.ACCEPTED;
-		else if (Boolean.FALSE.equals(indicator))
-			status = TrackingLogStatus.REJECTED;
-		else
-			status = TrackingLogStatus.PENDING;
-		return status;
-	}
 
 }

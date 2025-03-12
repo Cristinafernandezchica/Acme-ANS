@@ -19,11 +19,11 @@ public class AssistanceAgentValidator extends AbstractValidator<ValidAssistanceA
 	@Override
 	public boolean isValid(final AssistanceAgent assistanceAgent, final ConstraintValidatorContext context) {
 
-		boolean result = false;
+		boolean result = true;
 
 		if (assistanceAgent == null || assistanceAgent.getEmployeeCode() == null) {
-			context.disableDefaultConstraintViolation();
-			context.buildConstraintViolationWithTemplate("An assistance agent can't be a null").addConstraintViolation();
+			super.state(context, false, "*", "javax.validation.constraints.NotNull.message");
+			result = !super.hasErrors(context);
 		} else {
 			DefaultUserIdentity identity = assistanceAgent.getIdentity();
 			String employeeCode = assistanceAgent.getEmployeeCode();
@@ -40,20 +40,15 @@ public class AssistanceAgentValidator extends AbstractValidator<ValidAssistanceA
 				char surnameSecondChar = Character.toUpperCase(surnameParts[1].charAt(0));
 				char employeeCodeThirdChar = Character.toUpperCase(employeeCode.charAt(2));
 
-				if (employeeCodeFirstChar == nameFirstChar && employeeCodeSecondChar == surnameFirstChar && employeeCodeThirdChar == surnameSecondChar) {
-					result = true;
-					context.disableDefaultConstraintViolation();
-					context.buildConstraintViolationWithTemplate("The employee code is incorrectly").addConstraintViolation();
-				}
+				if (!(employeeCodeFirstChar == nameFirstChar && employeeCodeSecondChar == surnameFirstChar && employeeCodeThirdChar == surnameSecondChar))
+					super.state(context, false, "EmployeeCode", "The employeeCode is incorrectly");
 			} else {
 				char surnameFirstChar = Character.toUpperCase(surname.charAt(0));
 
-				if (employeeCodeFirstChar == nameFirstChar && employeeCodeSecondChar == surnameFirstChar) {
-					result = true;
-					context.disableDefaultConstraintViolation();
-					context.buildConstraintViolationWithTemplate("The employee code is incorrectly").addConstraintViolation();
-				}
+				if (!(employeeCodeFirstChar == nameFirstChar && employeeCodeSecondChar == surnameFirstChar))
+					super.state(context, false, "EmployeeCode", "The employeeCode is incorrectly");
 			}
+			result = !super.hasErrors(context);
 		}
 		return result;
 	}
