@@ -18,29 +18,22 @@ public class TrackingLogValidator extends AbstractValidator<ValidTrackingLog, Tr
 
 	@Override
 	public boolean isValid(final TrackingLog trackingLog, final ConstraintValidatorContext context) {
-		if (context == null)
-			throw new IllegalArgumentException("ConstraintValidatorContext must not be null");
+		assert context != null;
 
 		boolean result = true;
 
 		if (trackingLog == null) {
-			result = false;
-			context.disableDefaultConstraintViolation();
-			context.buildConstraintViolationWithTemplate("A Tracking Log can't be null").addConstraintViolation();
-		} else if (trackingLog.getStatus().equals(TrackingLogStatus.PENDING) && trackingLog.getResolutionPercentage() == 100.00) {
-			result = false;
-			context.disableDefaultConstraintViolation();
-			context.buildConstraintViolationWithTemplate("The status can be “PENDING” only when the resolution percentage is not 100%").addConstraintViolation();
-		} else if (!trackingLog.getStatus().equals(TrackingLogStatus.PENDING) && trackingLog.getResolutionPercentage() != 100.00) {
-			result = false;
-			context.disableDefaultConstraintViolation();
-			context.buildConstraintViolationWithTemplate("The status can be “ACCEPTED” or “REJECTED” only when the resolution percentage gets to 100%").addConstraintViolation();
-		} else if (!trackingLog.getStatus().equals(TrackingLogStatus.PENDING) && (trackingLog.getResolution() == null || trackingLog.getResolution().isBlank())) {
-			result = false;
-			context.disableDefaultConstraintViolation();
-			context.buildConstraintViolationWithTemplate("If the status is not “PENDING”, then the resolution is mandatory").addConstraintViolation();
+			super.state(context, false, "*", "javax.validation.constraints.NotNull.message");
+			result = !super.hasErrors(context);
+		} else {
+			if (trackingLog.getStatus().equals(TrackingLogStatus.PENDING) && trackingLog.getResolutionPercentage() == 100.00)
+				super.state(context, false, "Status", "The status can be “PENDING” only when the resolution percentage is not 100%");
+			else if (!trackingLog.getStatus().equals(TrackingLogStatus.PENDING) && trackingLog.getResolutionPercentage() != 100.00)
+				super.state(context, false, "Status", "The status can be “ACCEPTED” or “REJECTED” only when the resolution percentage gets to 100%");
+			else if (!trackingLog.getStatus().equals(TrackingLogStatus.PENDING) && (trackingLog.getResolution() == null || trackingLog.getResolution().isBlank()))
+				super.state(context, false, "Status", "If the status is not “PENDING”, then the resolution is mandatory");
+			result = !super.hasErrors(context);
 		}
-
 		return result;
 	}
 
