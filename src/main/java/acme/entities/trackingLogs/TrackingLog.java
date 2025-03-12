@@ -17,6 +17,7 @@ import acme.client.components.validation.Optional;
 import acme.client.components.validation.ValidMoment;
 import acme.client.components.validation.ValidScore;
 import acme.client.components.validation.ValidString;
+import acme.client.helpers.SpringHelper;
 import acme.constraints.ValidTrackingLog;
 import acme.entities.claims.Claim;
 import lombok.Getter;
@@ -54,18 +55,38 @@ public class TrackingLog extends AbstractEntity {
 	@Automapped
 	private String				resolution;
 
+	/*
+	 * @Transient
+	 * public TrackingLogStatus getStatus() {
+	 * TrackingLogStatus indicator;
+	 * if (Boolean.TRUE.equals(this.claim.getAccepted()))
+	 * indicator = TrackingLogStatus.ACCEPTED;
+	 * else if (Boolean.FALSE.equals(this.claim.getAccepted()))
+	 * indicator = TrackingLogStatus.REJECTED;
+	 * else
+	 * indicator = TrackingLogStatus.PENDING;
+	 * 
+	 * return indicator;
+	 * }
+	 */
+
 
 	@Transient
 	public TrackingLogStatus getStatus() {
-		TrackingLogStatus indicator;
-		if (Boolean.TRUE.equals(this.claim.getAccepted()))
-			indicator = TrackingLogStatus.ACCEPTED;
-		else if (Boolean.FALSE.equals(this.claim.getAccepted()))
-			indicator = TrackingLogStatus.REJECTED;
-		else
-			indicator = TrackingLogStatus.PENDING;
+		TrackingLogStatus status;
+		TrackingLogRepository repository;
+		Boolean indicator;
 
-		return indicator;
+		repository = SpringHelper.getBean(TrackingLogRepository.class);
+		indicator = repository.findClaimIndicatorByTrackingLogId(this.getId());
+
+		if (Boolean.TRUE.equals(indicator))
+			status = TrackingLogStatus.ACCEPTED;
+		else if (Boolean.FALSE.equals(indicator))
+			status = TrackingLogStatus.REJECTED;
+		else
+			status = TrackingLogStatus.PENDING;
+		return status;
 	}
 
 }
