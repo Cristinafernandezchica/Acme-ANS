@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="15.1">
+  <zoom_level>8</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>384</x>
+      <y>288</y>
+      <w>168</w>
+      <h>56</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;AbstracEntity&gt;&gt;
+involves::Involves
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>352</x>
+      <y>8</y>
+      <w>168</w>
+      <h>152</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;bstractRole&gt;&gt;
+_class Technicians_
+Package::technicians
+-
+     + licenseNumber: String
+     + phoneNumber: String
+     + specialisation: String 
+     + annualHealthTest: Boolean
+     + yearsOfExperience: int
+     - certifications: String</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>696</x>
+      <y>256</y>
+      <w>240</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;AbstractEntity&gt;&gt;
+maintenanceRecords::MaintenanceRecords
+--
++ moment: date
++ status: Status
++ inspectionDueDate: date
++ estimatedCost</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>112</x>
+      <y>272</y>
+      <w>168</w>
+      <h>112</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;AbstractEntity&gt;&gt;
+tasks::Tasks
+--
++ type: Type
++ description: String
++ priority: Integer
++ estimatedDuration: Integer
+     </panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>184</x>
+      <y>80</y>
+      <w>184</w>
+      <h>208</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=0..n
+m2=1
+&lt; publish</panel_attributes>
+    <additional_attributes>10.0;240.0;10.0;10.0;210.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>272</x>
+      <y>304</y>
+      <w>128</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=1
+m2=0..n
+&lt; involves</panel_attributes>
+    <additional_attributes>10.0;20.0;140.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>544</x>
+      <y>304</y>
+      <w>168</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=0..n
+m2=1
+involves &gt;</panel_attributes>
+    <additional_attributes>10.0;20.0;190.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>512</x>
+      <y>72</y>
+      <w>352</w>
+      <h>200</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=0..n
+m2=1
+is asigned &gt;</panel_attributes>
+    <additional_attributes>400.0;230.0;400.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>736</x>
+      <y>520</y>
+      <w>168</w>
+      <h>56</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;AbstractEntity&gt;&gt;
+aircraft::Aircraft
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>824</x>
+      <y>368</y>
+      <w>96</w>
+      <h>168</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=0..n
+m2=1
+executed on ▼</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;190.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>896</x>
+      <y>168</y>
+      <w>168</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Enum&gt;&gt;
+Status
+--
+PENDING
+INPROGRESS
+COMPLETED</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>56</x>
+      <y>392</y>
+      <w>168</w>
+      <h>96</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Enum&gt;&gt;
+Type
+--
+MAINTENANCE
+INSPECTION
+REPAIR
+SYSTEMCHECK</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>
