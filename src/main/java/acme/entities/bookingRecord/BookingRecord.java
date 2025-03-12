@@ -1,5 +1,5 @@
 
-package acme.entities.bookingrecord;
+package acme.entities.bookingRecord;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
