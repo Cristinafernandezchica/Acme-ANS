@@ -23,7 +23,7 @@ import acme.client.helpers.SpringHelper;
 import acme.entities.legs.Leg;
 import acme.entities.trackingLogs.TrackingLog;
 import acme.entities.trackingLogs.TrackingLogStatus;
-import acme.realms.AssistanceAgent;
+import acme.realms.assistanceAgents.AssistanceAgent;
 import lombok.Getter;
 import lombok.Setter;
 
