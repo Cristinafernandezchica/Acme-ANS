@@ -1,20 +1,19 @@
-key,last_update_moment,step,resolution_percentage,resolution,key:claim
-trackingLog-00,2011/04/16 00:00,Lorem ipsum dolor sit ame,50.00,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",claim-00
-trackingLog-01,2000/01/01 00:00,Lorem ipsum dolor sit ame,50.00,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",claim-00
-trackingLog-02,2000/01/01 00:01,Lorem ipsum dolor sit ame,50.00,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",claim-00
-trackingLog-03,2022/07/29 23:59,Lorem ipsum dolor sit ame,50.00,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",claim-00
-trackingLog-04,2022/07/30 00:00,Lorem ipsum dolor sit ame,50.00,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",claim-00
-trackingLog-05,2011/04/16 00:00,L,50.00,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",claim-00
-trackingLog-06,2011/04/16 00:00,Lo,50.00,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",claim-00
-trackingLog-07,2011/04/16 00:00,"Lorem ipsum dolor sit amet, consectetur adipiscin",50.00,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",claim-00
-trackingLog-08,2011/04/16 00:00,"Lorem ipsum dolor sit amet, consectetur adipiscing",50.00,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",claim-00
-trackingLog-09,2011/04/16 00:00,Lorem ipsum dolor sit ame,00.00,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",claim-00
-trackingLog-10,2011/04/16 00:00,Lorem ipsum dolor sit ame,00.01,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",claim-00
-trackingLog-11,2011/04/16 00:00,Lorem ipsum dolor sit ame,99.99,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",claim-00
-trackingLog-12,2011/04/16 00:00,Lorem ipsum dolor sit ame,100.00,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",claim-00
-trackingLog-13,2011/04/16 00:00,Lorem ipsum dolor sit ame,50.00,null,claim-00
-trackingLog-14,2011/04/16 00:00,Lorem ipsum dolor sit ame,50.00,"",claim-00
-trackingLog-15,2011/04/16 00:00,Lorem ipsum dolor sit ame,50.00,L,claim-00
-trackingLog-16,2011/04/16 00:00,Lorem ipsum dolor sit ame,50.00,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut enim ad minim veniam? Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor",claim-00
-trackingLog-17,2011/04/16 00:00,Lorem ipsum dolor sit ame,50.00,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut enim ad minim veniam? Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor*",claim-00
-trackingLog-18,2011/04/16 00:00,Lorem ipsum dolor sit ame,50.00,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut enim ad minim veniam? Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor*",claim-17
+key,last_update_moment,step,resolution_percentage,resolution,key:claim,status
+trackingLog-00,2011/04/16 00:00,Lorem ipsum dolor sit ame,50.00,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",claim-00,PENDING
+trackingLog-01,2000/01/01 00:00,Lorem ipsum dolor sit ame,50.00,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",claim-00,PENDING
+trackingLog-02,2000/01/01 00:01,Lorem ipsum dolor sit ame,50.00,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",claim-00,PENDING
+trackingLog-03,2022/07/29 23:59,Lorem ipsum dolor sit ame,50.00,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",claim-00,PENDING
+trackingLog-04,2022/07/30 00:00,Lorem ipsum dolor sit ame,50.00,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",claim-00,PENDING
+trackingLog-05,2011/04/16 00:00,L,50.00,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",claim-00,PENDING
+trackingLog-06,2011/04/16 00:00,Lo,50.00,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",claim-00,PENDING
+trackingLog-07,2011/04/16 00:00,"Lorem ipsum dolor sit amet, consectetur adipiscin",50.00,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",claim-00,PENDING
+trackingLog-08,2011/04/16 00:00,"Lorem ipsum dolor sit amet, consectetur adipiscing",50.00,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",claim-00,PENDING
+trackingLog-09,2011/04/16 00:00,Lorem ipsum dolor sit ame,00.00,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",claim-00,PENDING
+trackingLog-10,2011/04/16 00:00,Lorem ipsum dolor sit ame,00.01,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",claim-00,PENDING
+trackingLog-11,2011/04/16 00:00,Lorem ipsum dolor sit ame,99.99,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",claim-00,PENDING
+trackingLog-12,2011/04/16 00:00,Lorem ipsum dolor sit ame,100.00,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",claim-00,ACCEPTED
+trackingLog-13,2011/04/16 00:00,Lorem ipsum dolor sit ame,50.00,null,claim-00,PENDING
+trackingLog-14,2011/04/16 00:00,Lorem ipsum dolor sit ame,50.00,"",claim-00,PENDING
+trackingLog-15,2011/04/16 00:00,Lorem ipsum dolor sit ame,50.00,L,claim-00,PENDING
+trackingLog-16,2011/04/16 00:00,Lorem ipsum dolor sit ame,50.00,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut enim ad minim veniam? Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor",claim-00,PENDING
+trackingLog-17,2011/04/16 00:00,Lorem ipsum dolor sit ame,50.00,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut enim ad minim veniam? Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor*",claim-00,PENDING

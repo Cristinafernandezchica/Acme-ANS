@@ -10,17 +10,20 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.Valid;
 
 import acme.client.components.basis.AbstractEntity;
 import acme.client.components.mappings.Automapped;
 import acme.client.components.validation.Mandatory;
-import acme.client.components.validation.Optional;
 import acme.client.components.validation.ValidEmail;
 import acme.client.components.validation.ValidMoment;
 import acme.client.components.validation.ValidString;
+import acme.client.helpers.SpringHelper;
 import acme.entities.legs.Leg;
-import acme.realms.AssistanceAgent;
+import acme.entities.trackingLogs.TrackingLog;
+import acme.entities.trackingLogs.TrackingLogStatus;
+import acme.realms.assistanceAgents.AssistanceAgent;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -56,14 +59,32 @@ public class Claim extends AbstractEntity {
 	@Automapped
 	private ClaimType			type;
 
-	@Optional
-	@Valid
-	@Automapped
-	private Boolean				accepted;
-
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "leg_id", nullable = false)
 	@Valid
 	private Leg					leg;
+
+
+	@Transient
+	public Boolean getAccepted() {
+		Boolean result;
+		ClaimRepository repository;
+		TrackingLog trackingLog;
+
+		repository = SpringHelper.getBean(ClaimRepository.class);
+		trackingLog = repository.findLastTrackingLogByClaimId(this.getId()).orElse(null);
+		if (trackingLog == null)
+			result = null;
+		else {
+			TrackingLogStatus status = trackingLog.getStatus();
+			if (status.equals(TrackingLogStatus.ACCEPTED))
+				result = true;
+			else if (status.equals(TrackingLogStatus.REJECTED))
+				result = false;
+			else
+				result = null;
+		}
+		return result;
+	}
 
 }

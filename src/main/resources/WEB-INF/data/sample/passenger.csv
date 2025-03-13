@@ -1,3 +1,43 @@
 key,fullName,email,passportNumber,dateOfBirth,specialNeeds
-passenger-01,Angel Customer1,angel@acme.com,ES123456,2004/01/01 0:00,
-passenger-02,Rafael Customer2,rafael@acme.com,ES789012,2005/01/01 0:00,Blind Assistant
+#Base
+passenger-01,Angel Customer1,angel@acme.com,ES123456,2004/01/01 00:00,
+passenger-02,Rafael Customer2,rafael@acme.com,ES789012,2005/01/01 00:00,Blind Assistant
+
+# FullName - Variations
+passenger-03, ,empty@acme.com,ES987654,2006/02/02 00:00,
+passenger-04,A,a@acme.com,ES654321,2007/03/03 00:00,
+passenger-05,An,an@acme.com,ES445566,2008/04/04 00:00,
+passenger-06,Angel Customer With Extra Name,angelc@acme.com,ES432109,2009/05/05 00:00,
+passenger-07,Lorem Ipsum Passenger,lorem@ipsum.com,ES321098,2010/06/06 00:00,
+passenger-08,مُسَافِرُ عَرَبِي,arab@acme.com,AF210987,2011/07/07 00:00,
+passenger-09,乘客,china@acme.com,CH109876,2012/08/08 00:00,
+passenger-10,<marquee>Hacked</marquee>,hacked@acme.com,ES987654,2013/09/09 00:00,
+passenger-11,<script>alert('Hacked!')</script>,script@acme.com,ES876543,2014/10/10 00:00,
+
+# Email - Variations
+passenger-12,Valid Name, ,ES765432,2015/11/11 00:00,
+passenger-13,Valid Name,invalid-email,ES654321,2016/12/12 00:00,
+passenger-14,Valid Name,no-at-domain.com,ES543210,2017/01/13 00:00,
+passenger-15,Valid Name,@missingusername.com,ES432109,2018/02/14 00:00,
+passenger-16,Valid Name,missing@.com,ES321098,2019/03/15 00:00,
+passenger-17,Valid Name,longemailaddresslongemailaddresslongemailaddresslongemailaddresslongemailaddresslongemailaddresslongemailaddress@acme.com,ES210987,2020/04/16 00:00,
+
+# PassportNumber - Variations
+passenger-18,Valid Name,valid@acme.com, ,2001/05/17 00:00,
+passenger-19,Valid Name,valid@acme.com,12345,2002/06/18 00:00,
+passenger-20,Valid Name,valid@acme.com,ES12345,2003/07/19 00:00,
+passenger-21,Valid Name,valid@acme.com,ES123456789,2004/08/20 00:00,
+
+# DateOfBirth - Variations
+passenger-22,Valid Name,valid@acme.com,ES654321,1999/12/31 23:59,
+passenger-23,Valid Name,valid@acme.com,ES765432,2201/01/01 00:00,
+
+# SpecialNeeds - Variations
+passenger-24,Valid Name,valid@acme.com,ES765432,2001/01/01 00:00,Blind Assistant Blind Assistant Blind Assistant Blind Assistant Blind Assistant Blind Assistant
+
+# Random Variations
+passenger-25,Люфтваффе Pilot,luftwaffe@acme.com,DE998877,2000/05/21 00:00,
+passenger-26,สายการบินไทย First Class,thai@acme.com,TH112233,2001/06/22 00:00,
+passenger-27,日本航空 旅客,jal@acme.com,JP445566,2002/07/23 00:00,
+passenger-28,Compagnie Aérienne Française,airfrance@acme.com,FR778899,2003/08/24 00:00,
+passenger-29,شركة الطيران Passenger,airarabia@acme.com,AE223344,2004/09/25 00:00,
