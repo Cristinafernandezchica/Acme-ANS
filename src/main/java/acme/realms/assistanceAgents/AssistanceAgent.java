@@ -1,5 +1,5 @@
 
-package acme.realms;
+package acme.realms.assistanceAgents;
 
 import java.util.Date;
 
