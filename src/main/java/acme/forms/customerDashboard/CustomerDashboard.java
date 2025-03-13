@@ -1,5 +1,5 @@
 
-package acme.forms;
+package acme.forms.customerDashboard;
 
 import java.util.List;
 import java.util.Map;
