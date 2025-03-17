@@ -1,5 +1,5 @@
 
-package acme.forms;
+package acme.forms.customerDashboard;
 
 import java.util.List;
 import java.util.Map;
@@ -17,18 +17,18 @@ public class CustomerDashboard extends AbstractForm {
 	private static final long			serialVersionUID	= 1L;
 
 	private List<String>				lastFiveDestinations;
-	private Double						moneySpentLastYear;
-	private Map<Integer, TravelClass>	bookingCountByTravelClass;
+	private Money						moneySpentLastYear;
+	private Map<TravelClass, Integer>	bookingCountByTravelClass;
 
-	private Money						bookingCountLastFiveYears;
+	private Integer						bookingCountLastFiveYears;
 	private Money						bookingAverageCostLastFiveYears;
 	private Money						bookingMinCostLastFiveYears;
 	private Money						bookingMaxCostLastFiveYears;
 	private Money						bookingStdDevCostLastFiveYears;
 
 	private Integer						passengerCount;
-	private Integer						passengerAverage;	//Cuando haga la media, el double lo tengo que redondear
+	private Double						passengerAverage;	//Cuando haga la media, el double lo tengo que redondear
 	private Integer						passengerMin;
 	private Integer						passengerMax;
-	private Integer						passengerStdDev;	//Cuando haga la cuenta, el double lo tengo que redondear
+	private Double						passengerStdDev;	//Cuando haga la cuenta, el double lo tengo que redondear
 }
