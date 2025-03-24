@@ -60,7 +60,7 @@ public class Flight extends AbstractEntity {
 
 
 	@Transient
-	private Date getScheduledDeparture() {
+	public Date getScheduledDeparture() {
 		Date res;
 		LegRepository repository;
 		List<Leg> wrapper;
@@ -75,7 +75,7 @@ public class Flight extends AbstractEntity {
 	}
 
 	@Transient
-	private Date getScheduledArrival() {
+	public Date getScheduledArrival() {
 		Date res;
 		LegRepository repository;
 		List<Leg> wrapper;
@@ -90,7 +90,7 @@ public class Flight extends AbstractEntity {
 	}
 
 	@Transient
-	private String originCity() {
+	public String originCity() {
 		String res;
 		LegRepository repository;
 		List<Leg> wrapper;
@@ -105,7 +105,7 @@ public class Flight extends AbstractEntity {
 	}
 
 	@Transient
-	private String destinationCity() {
+	public String destinationCity() {
 		String res;
 		LegRepository repository;
 		List<Leg> wrapper;
@@ -120,7 +120,7 @@ public class Flight extends AbstractEntity {
 	}
 
 	@Transient
-	private Integer layovers() {
+	public Integer layovers() {
 		Integer res;
 		LegRepository repository;
 		List<Leg> wrapper;
