@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import acme.client.components.validation.AbstractValidator;
 import acme.client.components.validation.Validator;
 import acme.client.helpers.MomentHelper;
+import acme.entities.aircrafts.Status;
 import acme.entities.legs.Leg;
 import acme.entities.legs.LegRepository;
 
@@ -30,12 +31,13 @@ public class LegValidator extends AbstractValidator<ValidLeg, Leg> {
 	@Override
 	public boolean isValid(final Leg leg, final ConstraintValidatorContext context) {
 
-		boolean result = false;
+		boolean result = true;
 		String flightNumber = leg.getFlightNumber();
 
-		if (flightNumber == null || !flightNumber.matches("^[A-Z]{2,3}\\d{4}$"))
+		if (flightNumber == null || !flightNumber.matches("^[A-Z]{2,3}\\d{4}$")) {
+			result = false;
 			super.state(context, false, "*", "javax.validation.constraints.NotNull.message");
-		else {
+		} else {
 			// flightNumber have the iataCode
 			String iataCodeFlightNumber = flightNumber.substring(0, 3);
 			String airlineIataCode = leg.getFlight().getManager().getAirline().getIataCode();
@@ -50,16 +52,27 @@ public class LegValidator extends AbstractValidator<ValidLeg, Leg> {
 
 				if (MomentHelper.isInRange(leg.getScheduledDeparture(), l.getScheduledDeparture(), l.getScheduledArrival())) {
 					result = false;
-					super.state(context, false, "scheduledDeparture/scheduledArrival", "Overlap with another leg of the same flight");
+					super.state(context, false, "scheduledDeparture/scheduledArrival", "{acme.validation.leg.overlap.message}");
 				}
 			}
 
-			// scheduledArrival >= scheduledDeparture + delta (1 min)
-			Date departureWithDelta = MomentHelper.deltaFromMoment(leg.getScheduledDeparture(), 1, ChronoUnit.MINUTES);
+			// scheduledArrival >= scheduledDeparture + delta (5 min)
+			Date departureWithDelta = MomentHelper.deltaFromMoment(leg.getScheduledDeparture(), 5, ChronoUnit.MINUTES);
 			if (MomentHelper.isBefore(leg.getScheduledArrival(), departureWithDelta)) {
 				result = false;
-				super.state(context, false, "scheduledDeparture/scheduledArrival", "Departure = Arrival");
+				super.state(context, false, "scheduledDeparture/scheduledArrival", "{acme.validation.leg.departure.arrival.difference.message}");
 
+			}
+
+			// scheduledDeparture after scheduledArrival 
+			if (MomentHelper.isBefore(leg.getScheduledArrival(), leg.getScheduledDeparture())) {
+				result = false;
+				super.state(context, false, "scheduledDeparture", "{acme.validation.leg.departure.after.arrival.message}");
+			}
+			// aircraft operative
+			if (leg.getAircraft().getStatus().equals(Status.UNDER_MAINTENANCE)) {
+				result = false;
+				super.state(context, false, "aircraft", "{acme.validation.leg.operative.aircraft.message}");
 			}
 
 		}

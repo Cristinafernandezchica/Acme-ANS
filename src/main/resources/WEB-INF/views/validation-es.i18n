@@ -1,0 +1,7 @@
+acme.validation.flight.layovers.zero.message = El atributo layovers no puede ser menor o igual a 0
+acme.validation.filght.legs.empty.message = Un vuelo debe tener, al menos, un tramo
+
+acme.validation.leg.overlap.message = Solapamiento con otro tramo del mismo vuelo
+acme.validation.leg.departure.arrival.difference.message = Tiene que haber mínimo 5 minutos entre salida y llegada
+acme.validation.leg.departure.after.arrival.message = La salida tiene que ser antes que la llegada
+acme.validation.leg.operative.aircraft.message = El avión está bajo mantenimiento, debe estar operativo
