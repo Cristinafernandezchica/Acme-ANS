@@ -4,10 +4,10 @@ package acme.entities.trackingLogs;
 import java.util.Date;
 
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.Valid;
 
 import acme.client.components.basis.AbstractEntity;
 import acme.client.components.mappings.Automapped;
@@ -29,8 +29,9 @@ public class TrackingLog extends AbstractEntity {
 
 	private static final long	serialVersionUID	= 1L;
 
+	@Mandatory
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "claim_id", nullable = false)
+	@Valid
 	private Claim				claim;
 
 	@Mandatory
@@ -56,5 +57,4 @@ public class TrackingLog extends AbstractEntity {
 	@ValidString(max = 255)
 	@Automapped
 	private String				resolution;
-
 }
