@@ -35,7 +35,7 @@ public class AircraftCreateService extends AbstractGuiService<Administrator, Air
 
 	@Override
 	public void bind(final Aircraft aircraft) {
-		super.bindObject(aircraft, "model", "registrationNumber", "numberPassengers", "cargoWeight", "status", "details");
+		super.bindObject(aircraft, "model", "registrationNumber", "numberPassengers", "status", "details");
 	}
 
 	@Override
@@ -55,7 +55,7 @@ public class AircraftCreateService extends AbstractGuiService<Administrator, Air
 
 		choices = SelectChoices.from(Status.class, aircraft.getStatus());
 
-		dataset = super.unbindObject(aircraft, "model", "registrationNumber", "capacity", "cargoWeight", "status", "details");
+		dataset = super.unbindObject(aircraft, "model", "registrationNumber", "numberPassengers", "cargoWeight", "status", "details");
 		dataset.put("statuses", choices);
 		super.getBuffer().addData(dataset);
 	}

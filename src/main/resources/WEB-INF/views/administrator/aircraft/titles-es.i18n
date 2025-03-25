@@ -1,5 +1,5 @@
 administrator.aircraft.list.label.model = Modelo
 administrator.aircraft.list.label.registrationNumber = Número de registro
-administrator.aircraft.list.label.capacity = Capacidad
+administrator.aircraft.list.label.numberPassengers = Capacidad
 administrator.aircraft.list.label.cargoWeight = Peso 
 administrator.aircraft.list.label.status = Estado
