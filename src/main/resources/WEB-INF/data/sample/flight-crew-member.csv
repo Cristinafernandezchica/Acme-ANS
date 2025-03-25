@@ -1,0 +1,7 @@
+key,employeeCode,phoneNumber,availabilityStatus,salary,yearsOfExperience,languageSkills,key:airline,key:userAccount
+flightCrewMember-01,MB123456,+341234567890,AVAILABLE,EUR 50000.00,5,English,airline-01,user-account-fight-crew-member-01
+flightCrewMember-02,LB654321,+344561237890,ON_LEAVE,EUR 55000.00,7,Spanish,airline-02,user-account-fight-crew-member-02
+flightCrewMember-03,PP112233,+442033344455,ON_LEAVE,EUR 48000.00,3,French,airline-01,user-account-fight-crew-member-03
+flightCrewMember-04,AG789012,+349122233344,AVAILABLE,EUR 60000.00,10,German,airline-02,user-account-fight-crew-member-04
+# Nuevo miembro sin asignación de vuelo
+flightCrewMember-05,MM000000,+345559998888,AVAILABLE,EUR 50000.00,0,None,airline-01,user-account-fight-crew-member-05

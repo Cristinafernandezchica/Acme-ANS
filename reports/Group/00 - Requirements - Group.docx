@@ -1,0 +1,278 @@
+Requirements  -  Group
+Please, fill in the following form, make sure that you have ticked the requirements that you consider fulfilled, save this document, and attach it in its original format (.docx) to every deliverable. Regarding your ID, please keep only four random digits and mask the others using an asterisk. Please, note that this document must be edited with the desktop version of Word since the web version does not properly support forms. Attaching this document entails that you are the authors of the work delivered, you have not cheated in any way, and you have read and understood the information delivered regarding the subject, with a special emphasis on the methodological guidelines and how your work is going to be graded. Make sure that your project works well with the latest version of the development framework.
+
+Group: 		 C1.050 
+Repository: 	 https://github.com/Cristinafernandezchica/Acme-ANS 
+Student #1
+ID:		 ****6002
+UVUS: 		 RFM6490  
+Name:		 Fernández Chica, Cristina  	
+Roles:		 manager, desarrollador, tester  
+Student #2
+ID:		 ****4826
+UVUS: 		 YTR7670  
+Name:		 Amo Sánchez, Ángel  
+Roles:		 analista, desarrollador, tester  
+Student #3
+ID:		 ****9364
+UVUS: 		 DGL2523  
+Name:		 Gutiérrez González, Candela Jazmín
+Roles:		 operador, desarrollador, tester  
+Student #4
+ID:		 ****3895
+UVUS: 		 NMY0786  
+Name:		 Aguilar Morcillo, Marta  
+Roles:		 analista, desarrollador, tester  
+Student #5
+ID:		 ***2811
+UVUS: 		 PXT3852 
+Name:		 Chávez Malavé, Luis Emmanuel 
+Roles:		 analista, desarrollador, tester  
+
+Date: 		 Sevilla febrero 18, 2025 
+
+MANDATORY 
+Deliverable D01: introduction
+Information requirements 
+Intentionally blank.
+Functional requirements
+Intentionally blank.
+Non-functional requirements
+Intentionally blank.
+Testing requirements
+Intentionally blank.
+Managerial requirements
+Instantiate and customise the appropriate starter project so that you can work on this project.  Make sure that the name of your project folder, maven configuration (pom.xml), and database is "Acme-ANS-D〈dd〉", where "〈dd〉" denotes the deliverable number using two digits. Make sure that you have followed the instructions in the "On Your Deliverables" document to package and deliver your work. This requirement must be fulfilled in this and every other group or individual deliverable for it to be considered satisfied.
+  X     
+Produce a chartering report.
+  X    
+Provide a link to your planning dashboard in GitHub to review the tasks, their current status, and your schedule.
+  X     
+MANDATORY 
+Deliverable D02: data models
+Information requirements 
+An airport is a facility that enables airlines to operate by providing flights for passengers travelling between cities or countries.  The system must store the following data about airports: a name (up to 50 characters), an IATA code (a unique three-uppercase-letter identifier), an operational scope ("INTERNATIONAL", "DOMESTIC", "REGIONAL"), a city and a country (up to 50 characters). Additionally, optional fields include a website, email address, and contact phone number (pattern " ^\+?\d{6,15}$").  It is assumed that airports have only two runways, one for landing and one for take-offs; no further information about them is needed in the system.
+ X     
+An airline is a company that provides air transportation services for passengers by operating flights between different airports.  The system must store a name (up to 50 characters), an IATA code (a unique three-uppercase-letter identifier, where the last letter is typically an "X"), a website, a type ("LUXURY", "STANDARD", "LOW-COST"), a foundation moment (in the past), and optional email address and phone number (pattern "^\+?\d{6,15}$").
+  X     
+An aircraft is a vehicle designed for air travel that belongs to an airline and is used to transport passengers between cities or countries. The system must store the following data about them: a model (up to 50 characters), a registration number (unique, up to 50 characters), its capacity as a number of passengers, its cargo weight (between 2K and 50K kgs), a status, which reports on whether the aircraft is in active service or under maintenance, and optional details (up to 255 characters).
+ X         
+A service is an offering provided by airports to enhance a passenger's experience.  The system must store the following data about them: a name (up to 50 characters), a link to a picture that must be stored somewhere else, and its average dwell time (in hours); optionally, it can store a promotion code (unique, "^[A-Z]{4}-[0-9]{2}$", the last two digits correspond to the current year), and the money that should be discounted when the promotion code is applied. 
+ X      
+A review is a short message posted by a user to share his or her experiences.  The reviews may deal with aspects such as airport cleanliness, services (e.g., restaurants, customer service, or assistance), or experiences with airlines or flights.  The system must store the following data: a name or an alias of the person who posts it (up to 50 characters), the moment when the review is posted (in the past), a subject (up to 50 characters), a piece of text (up to 255 characters), and, optionally, a score (a double between 0 and 10), and whether the experience is recommended or not. 
+ X      
+Functional requirements
+Intentionally blank.
+Non-functional requirements
+Intentionally blank.
+Testing requirements
+Produce initial data to cold start your project; it must include an administrator account with credentials "administrator/administrator".  Produce sample data to test your requirements; it must include additional administrator accounts with credentials "administrator1/administrator1" and "administrator2/administrator2".
+  X      
+Managerial requirements
+Provide a link to your planning dashboard in GitHub to review the tasks, their current status, and your schedule.
+ X       
+MANDATORY 
+Deliverable D03: implementing features
+Information requirements 
+Intentionally blank.
+Functional requirements
+Operations by administrators on airports:
+List the airports and show their details.
+Create and update an airport.  Both operations require confirmation.
+    
+Operations by administrators on airlines:
+List the airlines and show their details.
+Create and update an airline. Both operations require confirmation.
+       
+Operations by administrators on aircrafts:
+List the aircrafts and show their details.
+Create, update, or disable an aircraft. These operations require confirmation.
+       
+Operations by any principals on services:
+Display any of them randomly (only its picture); the services must be promoted in every page as little intrusively as possible.
+       
+Non-functional requirements
+Intentionally blank.
+Testing requirements
+Intentionally blank.
+Managerial requirements
+Provide a link to your planning dashboard in GitHub to review the tasks, their current status, and your schedule.
+      
+MANDATORY 
+Deliverable D04: formal testing
+Information requirements 
+Create appropriate indexes for your entities, if required. 
+       
+Functional requirements
+ Intentionally blank.
+Non-functional requirements
+Intentionally blank.
+Testing requirements
+Produce as a complete test suite as possible for Requirement #11.
+      
+Managerial requirements
+Provide a link to your planning dashboard in GitHub to review the tasks, their current status, and your schedule.  
+       
+Produce a testing report. 
+       
+
+SUPPLEMENTARY I 
+Deliverable D01: introduction 
+Information requirements
+Intentionally blank. 
+Functional requirements 
+Intentionally blank. 
+Non-functional requirements 
+The default language must be English, but Spanish must be supported, as well.  Other mainstream languages are welcome but not required.  This requirement must be met in this and every other group or individual deliverable for it to be considered satisfied.
+  X        
+Testing requirements 
+Intentionally blank. 
+Managerial requirements 
+Produce a report on what you knew about the architecture of a WIS before this subject. 
+  X     
+Produce a report on what you knew about testing a WIS before this subject. 
+  X    
+Produce a report on how you have set up your development configuration.  You must not reproduce the guideline to set it up, but to make it clear that you have followed it, and you have your development configuration ready to work.
+  X     
+SUPPLEMENTARY I 
+Deliverable D02: data models 
+Information requirements
+The system configuration must include the following initial data: a system currency, which must be initialised to "EUR" and a list of accepted currencies, which must be initialised to "EUR", "USD", and "GBP". 
+         
+The system must handle administrator dashboards with the following indicators: 
+Total number of airports grouped by their operational scope.
+Number of airlines grouped by their type.
+Ratio of airlines with both an email address and a phone number.
+Ratios of active and non-active aircrafts.
+Ratio of reviews with a score above 5.00.
+Count, average, minimum, maximum, and standard deviation of the number of reviews posted over the last 10 weeks.
+  X     
+Functional requirements 
+Intentionally blank. 
+Non-functional requirements 
+Intentionally blank. 
+Testing requirements 
+Intentionally blank. 
+Managerial requirements 
+Produce a UML domain model regarding the information requirements. 
+  X      
+
+SUPPLEMENTARY I 
+Deliverable D03: implementing features 
+Information requirements
+Intentionally blank. 
+Functional requirements 
+Operations by any principals on services:
+List and show the services.
+       
+Operations by any principals on reviews:
+List the reviews posted in the last year and their details. Note that the number of reviews in a year is expected to be huge.
+Post a review.  This operation requires a confirmation since reviews cannot be updated or deleted.
+       
+Operations by administrators on the system configuration: 
+Show the system configuration. 
+Update the system configuration. 
+       
+Operations by administrators on services: 
+List the services and their details.
+Create, update, or delete a service. 
+       
+Operations by administrators on dashboards: 
+Show their administrator dashboards. 
+         
+Non-functional requirements 
+Money amounts, Booleans, and moments must be internationalised when they are shown. Other kinds of data are not expected to be internationalised.  Internally, all moments must be stored in GMT format.  This requirement must be fulfilled in this and every other group or individual deliverable for it to be considered satisfied. 
+    
+Testing requirements 
+Intentionally blank. 
+Managerial requirements      
+Provide a link to a video in which you informally test Requirement #14.  Videos should not exceed 10 minutes in length and must be stored at the USE's facilities.
+         
+SUPPLEMENTARY I 
+Deliverable D04: formal testing 
+Information requirements  
+Intentionally blank. 
+Functional requirements 
+Intentionally blank. 
+Non-functional requirements 
+Intentionally blank. 
+Testing requirements 
+Perform five mutations in your code and report on the results.
+      
+Managerial requirements 
+Produce a lint report.
+              
+
+SUPPLEMENTARY II 
+Deliverable D01: introduction 
+Information requirements
+Intentionally blank. 
+Functional requirements 
+Intentionally blank. 
+Non-functional requirements 
+Intentionally blank. 
+Testing requirements 
+Intentionally blank. 
+Managerial requirements 
+Produce an analysis report.
+  X     
+Produce a planning and progress report.
+  X      
+SUPPLEMENTARY II 
+Deliverable D02: data models 
+Information requirements
+The system must manage data about banned passengers.  The system must store the following data: a full name (up to 50 characters), date of birth (in the past), a passport number (pattern "^[A-Z0-9]{6,9}$"), nationality (up to 50 characters), the reason for the ban (up to 255 characters), the date the ban was issued (in the past), and an optional lift date (in the past) to indicate whether the passenger is still banned or if the prohibition has been lifted. 
+     
+Functional requirements 
+Intentionally blank. 
+Non-functional requirements 
+The system must show money amounts as they are entered by the users, but also their corresponding money exchanges according to the system currency.  It is the students' responsibility to find the appropriate exchange-rate service; no implicit or explicit liabilities shall be covered by the University of Seville or their individual affiliates if the students contract pay-per-use services!  This requirement must be fulfilled in this and every other group or individual deliverable for it to be considered satisfied. 
+       
+Testing requirements 
+Intentionally blank. 
+Managerial requirements 
+Produce an analysis report.
+       
+Produce a planning and progress report.
+      
+SUPPLEMENTARY II 
+Deliverable D03: implementing features 
+Information requirements
+Intentionally blank. 
+Functional requirements 
+Operations by administrators on banned passengers: 
+Create or update a banned passenger record.  This operation requires confirmation since banned passengers cannot be deleted.  Instead, the prohibition can be lifted by specifying a ban lift date.
+List the passengers who are currently banned and show their details. 
+List the passengers whose bans have been lifted and show their details. 
+List the passengers that have been banned in the last month.
+       
+Operations by any principal on airports:
+List the airports and show their details.
+       
+Non-functional requirements 
+The system must prevent storing data that can be considered spam.  A piece of text is classified as spam if it contains a percentage of spam terms that exceeds a given threshold.  The default list of spam terms includes words such as "sex", "viagra", "cialis", "one million", "you've won", "nigeria", and their corresponding translations in the supported languages.  The default threshold for identifying spam is preset to 10%.  Administrators may modify both the spam terms and the threshold.  The system must preprocess text to account for "emphatic spacing" by removing any punctuation between consecutive letters (e.g., "S.E.X", "H:A:R:D C:O:R:E", or "V*I:AG!$R-A").  A term is considered spam regardless of letter case or the placement of punctuation symbols in between letters. For instance, "one␣million" would match "ONE␣MILLION", "*O*n*E* M:i:L:L:i:O:n", and "One␣⏎␣Million", but would not match "One␣Millionaire", "One␣or␣two␣millions", or "One␣sexy␣million". The spam detection mechanism must be easily reusable across forthcoming projects.  Ensure that the spam detection project is delivered separately for evaluation.  This requirement must be met in this and all other group or individual deliverables for it to be considered valid.
+      
+Testing requirements 
+Intentionally blank. 
+Managerial requirements 
+Produce an analysis report.
+       
+Produce a planning and progress report.
+         
+SUPPLEMENTARY II 
+Deliverable D04: formal testing 
+Information requirements  
+Intentionally blank. 
+Functional requirements 
+Intentionally blank. 
+Non-functional requirements 
+Intentionally blank. 
+Testing requirements 
+Produce as a complete test suite as possible for Requirement #39 ensuring that the web service is properly mocked.
+      
+Managerial requirements 
+Produce an analysis report.
+         
+Produce a planning and progress report.
+          
+

@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="15.1">
+  <zoom_level>4</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>108</x>
+      <y>288</y>
+      <w>104</w>
+      <h>68</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;AbstractRole&gt;&gt;
+flightCrewMember::FlightCrewMember
+--
++ employeeCode: String
++ phoneNumber: String
++ languageSkills: String
++ availabilityStatus: AvailibilityStatus
++ airline: Airline
++ salary: Money
+- yearsOfExperience: Integer</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>120</x>
+      <y>184</y>
+      <w>84</w>
+      <h>64</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;AbstractEntity&gt;&gt;
+airline::Airline
+--
++ name: String
++ iaataCode: String
++ String website
++ type: AirlineType
++ foundationMoment: Date
+- email: String
+- phoneNumber: String
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>152</x>
+      <y>244</y>
+      <w>48</w>
+      <h>52</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=0..n
+m2=1
+composed of &gt;</panel_attributes>
+    <additional_attributes>10.0;110.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>264</x>
+      <y>296</y>
+      <w>128</w>
+      <h>52</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;AbstractEntity&gt;&gt;
+flightAssigment::FlightAssigment
+--
++ flightCrewsDuty: FlightCrewsDuty
++ lastUpdate: Date
++ currentStatus: CurrentStatus
+- remarks: String
++ flightCrewMemberAssigned: FlightCrewMember</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>208</x>
+      <y>316</y>
+      <w>64</w>
+      <h>20</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=1
+m2=0..n
+&lt; is assigned to</panel_attributes>
+    <additional_attributes>10.0;20.0;140.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>264</x>
+      <y>388</y>
+      <w>84</w>
+      <h>56</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;AbstractEntity&gt;&gt;
+activitylog::ActivityLog
+--
++ registrationMoment: Date
++ typeOfIncident: String
++ description: String
++ severityLevel: Integer
++ flightAssignmentRelated: FlightAssignment</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>300</x>
+      <y>344</y>
+      <w>28</w>
+      <h>52</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=1
+m2=0..n
+has &gt;</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;110.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>0</x>
+      <y>308</y>
+      <w>84</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Enum&gt;&gt;
+_AvailibilityStatus_
+--
+AVAILABLE
+ON_VACATION
+ON_LEAVE</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>236</x>
+      <y>244</y>
+      <w>84</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Enum&gt;&gt;
+_CurrentStatus_
+--
+CONFIRMED
+PENDING
+CANCELLED</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>328</x>
+      <y>244</y>
+      <w>84</w>
+      <h>48</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Enum&gt;&gt;
+_FlightCrewsDuty_
+--
+PILOT
+CO_PILOT
+LEAD_ATTENDANT
+CABIN_ATTENDANT</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>124</x>
+      <y>132</y>
+      <w>84</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Enum&gt;&gt;
+_AirlineType_
+--
+LUXURY
+STANDARD 
+LOW_COST</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>456</x>
+      <y>284</y>
+      <w>84</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;AbstractEntity&gt;&gt;
+leg::Leg
+--
++ flightNumber: String
++ scheduledDeparture: Date
++ scheduledArrival: Date
++ status: LegStatus
++ departureAirport: Airport
++ arrivalAirport: Airport
++ flight: Flight
++ aircraft: Aircraft
+--
++ getDuration(): Double
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>388</x>
+      <y>312</y>
+      <w>76</w>
+      <h>20</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=0..n
+m2=1
+assigned to &gt;</panel_attributes>
+    <additional_attributes>10.0;20.0;170.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>552</x>
+      <y>300</y>
+      <w>84</w>
+      <h>48</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Enum&gt;&gt;
+_LegStatus_
+--
+ON_TIME
+DELAYED
+CANCELLED
+LANDED</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>

@@ -1,0 +1,12 @@
+key,flightNumber,scheduledDeparture,scheduledArrival,status,key:departureAirport,key:arrivalAirport,key:flight,key:aircraft
+# base
+leg-00,MAX5450,2020/09/01 10:00,2020/09/01 12:00,ON_TIME,airport-01,airport-15,flight-00,aircraft-01
+# flightNumber and status - variations
+leg-01,MAX1222,2020/09/01 13:00,2020/09/01 14:00,ON_TIME,airport-01,airport-15,flight-00,aircraft-01
+leg-02,MAX1223,2020/09/01 20:00,2020/09/01 21:00,ON_TIME,airport-01,airport-15,flight-00,aircraft-01
+leg-03,MAX1224,2020/09/03 3:00,2020/09/03 4:00,DELAYED,airport-01,airport-15,flight-00,aircraft-01
+# scheduledDeparture,scheduledArrival - variations
+leg-04,MAX1225,2020/09/03 5:00,2020/09/03 5:00,LANDED,airport-01,airport-15,flight-00,aircraft-01
+leg-05,MAX1226,2020/09/03 20:05,2020/09/03 20:30,ON_TIME,airport-01,airport-15,flight-00,aircraft-01
+leg-06,MAX1227,2020/09/01 11:00,2020/09/01 13:30,DELAYED,airport-01,airport-15,flight-00,aircraft-01
+leg-07,MAX1228,2020/09/01 18:00,2020/09/01 18:30,,airport-01,airport-15,flight-00,aircraft-01

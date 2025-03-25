@@ -1,0 +1,29 @@
+key,locatorCode,purchaseMoment,travelClass,price,lastCardNibble,key:customer,key:flight
+booking-01,ID88888,2020/01/28 21:00,ECONOMY,EUR 19.00,2025,customer-01,flight-01
+booking-02,ID12345,2020/11/01 1:00,ECONOMY,USD 500.00,1708,customer-02,flight-02
+
+# LocatorCode - Variations
+booking-03, ,2021/02/02 10:00,ECONOMY,USD 1000.00,5432,customer-01,flight-01
+booking-04,A12345,2020/03/03 12:30,ECONOMY,EUR 199.99,6789,customer-02,flight-02
+booking-05,ЛЮФТ123,2003/04/04 08:15,ECONOMY,USD 50.00,2345,customer-01,flight-01
+booking-06,ABCDEFGH,2004/05/05 19:45,ECONOMY,EUR 25.50,9999,customer-02,flight-02
+booking-07,"<marquee>Hacked</marquee>",2005/06/06 14:20,ECONOMY,USD 50000.00,1234,customer-01,flight-01
+booking-08,"<script>alert('Hacked!')</script>",2020/07/07 09:10,ECONOMY,EUR 0.00,7777,customer-02,flight-02
+
+# PurchaseMoment - Variations
+booking-09,ID67890,1999/12/31 23:59,ECONOMY,USD 9999.99,3456,customer-01,flight-01
+booking-10,ID54321,2201/01/01 00:00,ECONOMY,EUR 4500.00,1111,customer-02,flight-02
+
+# TravelClass - Variations
+booking-11,ID11111,2020/08/08 08:08,BUSINESS,USD 500.00,2222,customer-01,flight-01
+booking-12,ID22222,2021/09/09 09:09,ECONOMY,EUR 750.75,3333,customer-02,flight-02
+
+# Price - Variations
+booking-13,ID33333,2022/10/10 10:10,ECONOMY,GBP 0.00,4444,customer-01,flight-01
+booking-14,ID44444,2020/11/11 11:11,ECONOMY,EUR -50000.00,5555,customer-02,flight-02
+booking-15,ID55555,2004/12/12 12:12,ECONOMY,USD 50000.01,6666,customer-01,flight-01
+
+# LastCardNibble - Variations
+booking-16,ID66666,2005/01/13 13:13,ECONOMY,EUR 100.00, ,customer-02,flight-02
+booking-17,ID77777,2020/02/14 14:14,ECONOMY,USD 75.75,123,customer-01,flight-01
+booking-18,ID88889,2007/03/15 15:15,ECONOMY,EUR 999.99,12345,customer-02,flight-02

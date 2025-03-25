@@ -1,0 +1,59 @@
+key,model,registrationNumber,numberPassengers,cargoWeight,status,details,key:airline
+# Base Entity
+aircraft-01,"Airbus 360","1",250,2400,ACTIVE_SERVICE,"nothing",airline-01
+
+# model - variations
+aircraft-02,"Lorem ipsum dolor sit ame","2",250,2400,ACTIVE_SERVICE,"nothing",airline-01
+aircraft-03,"","3",250,2400,ACTIVE_SERVICE,"nothing",airline-01
+aircraft-04,"Lorem ","4",250,2400,ACTIVE_SERVICE,"nothing",airline-01
+aircraft-05,"L","5",250,2400,ACTIVE_SERVICE,"nothing",airline-01
+aircraft-06,"Lo","6",250,2400,ACTIVE_SERVICE,"nothing",airline-01
+aircraft-07,"Lorem ipsum dolor sit amet, consectetur adipiscin","7",250,2400,ACTIVE_SERVICE,"nothing",airline-01
+aircraft-08,"Lorem ipsum dolor sit amet, consectetur adipiscing","8",250,2400,ACTIVE_SERVICE,"nothing",airline-01
+aircraft-09,"Lorem ipsum dolor sit amet, consectetur adipiscing*","9",250,2400,ACTIVE_SERVICE,"nothing",airline-01
+aircraft-10,"โลเร็ม อิปซัม","10",250,2400,ACTIVE_SERVICE,"nothing",airline-01
+aircraft-11,"لوريم إيبسوم","11",250,2400,ACTIVE_SERVICE,"nothing",airline-01
+aircraft-12,"洛伦·伊普森","12",250,2400,ACTIVE_SERVICE,"nothing",airline-01
+aircraft-13,"<marquee>Hacked</marquee>","13",250,2400,ACTIVE_SERVICE,"nothing",airline-01
+aircraft-14,"<script>alert(‘Hacked!’);</script>","14",250,2400,ACTIVE_SERVICE,"nothing",airline-01
+
+# registration - variations
+aircraft-15,"Airbus 360","Lorem ipsum dolor sit ame",250,2400,ACTIVE_SERVICE,"nothing",airline-01
+aircraft-16,"Airbus 360","",250,2400,ACTIVE_SERVICE,"nothing",airline-01
+aircraft-17,"Airbus 360","Lorem ",250,2400,ACTIVE_SERVICE,"nothing",airline-01
+aircraft-18,"Airbus 360","L",250,2400,ACTIVE_SERVICE,"nothing",airline-01
+aircraft-19,"Airbus 360","Lo",250,2400,ACTIVE_SERVICE,"nothing",airline-01
+aircraft-20,"Airbus 360","Lorem ipsum dolor sit amet, consectetur adipiscin",250,2400,ACTIVE_SERVICE,"nothing",airline-01
+aircraft-21,"Airbus 360","Lorem ipsum dolor sit amet, consectetur adipiscing",250,2400,ACTIVE_SERVICE,"nothing",airline-01
+aircraft-22,"Airbus 360","Lorem ipsum dolor sit amet, consectetur adipiscing*",250,2400,ACTIVE_SERVICE,"nothing",airline-01
+aircraft-23,"Airbus 360","โลเร็ม อิปซัม",250,2400,ACTIVE_SERVICE,"nothing",airline-01
+aircraft-24,"Airbus 360","لوريم إيبسوم",250,2400,ACTIVE_SERVICE,"nothing",airline-01
+aircraft-25,"Airbus 360","洛伦·伊普森",250,2400,ACTIVE_SERVICE,"nothing",airline-01
+aircraft-26,"Airbus 360","<marquee>Hacked</marquee>",250,2400,ACTIVE_SERVICE,"nothing",airline-01
+aircraft-27,"Airbus 360","<script>alert(‘Hacked!’);</script>",250,2400,ACTIVE_SERVICE,"nothing",airline-01
+
+# numberPassengers - variations
+aircraft-28,"Airbus 360","28",127,2400,ACTIVE_SERVICE,"nothing",airline-01
+aircraft-29,"Airbus 360","29",50,2400,ACTIVE_SERVICE,"nothing",airline-01
+aircraft-30,"Airbus 360","30",-0,2400,ACTIVE_SERVICE,"nothing",airline-01
+aircraft-31,"Airbus 360","31",0,2400,ACTIVE_SERVICE,"nothing",airline-01
+aircraft-32,"Airbus 360","32",254,2400,ACTIVE_SERVICE,"nothing",airline-01
+aircraft-33,"Airbus 360","33",255,2400,ACTIVE_SERVICE,"nothing",airline-01
+
+# cargoWeight - variations
+aircraft-34,"Airbus 360","34",250,26000,ACTIVE_SERVICE,"nothing",airline-01
+aircraft-35,"Airbus 360","35",250,,ACTIVE_SERVICE,"nothing",airline-01
+aircraft-36,"Airbus 360","36",250,1999,ACTIVE_SERVICE,"nothing",airline-01
+aircraft-37,"Airbus 360","37",250,2000,ACTIVE_SERVICE,"nothing",airline-01
+aircraft-38,"Airbus 360","38",250,2000,ACTIVE_SERVICE,"nothing",airline-01
+aircraft-39,"Airbus 360","39",250,49999,ACTIVE_SERVICE,"nothing",airline-01
+aircraft-40,"Airbus 360","40",250,50000,ACTIVE_SERVICE,"nothing",airline-01
+
+# status - variations
+aircraft-41,"Airbus 360","41",250,2400,UNDER_MAINTENANCE,"nothing",airline-01
+
+# details - variations
+aircraft-42,"Airbus 360","42",250,2400,ACTIVE_SERVICE,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",airline-01
+aircraft-43,"Airbus 360","43",250,2400,ACTIVE_SERVICE,"L",airline-01
+aircraft-44,"Airbus 360","44",250,2400,ACTIVE_SERVICE,"",airline-01
+aircraft-45,"Airbus 360","45",250,2400,ACTIVE_SERVICE,"",airline-01
