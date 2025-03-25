@@ -19,6 +19,6 @@ public interface AircraftRepository extends AbstractRepository {
 	Aircraft findAircraftById(int id);
 
 	@Query("select a from Aircraft a")
-	Collection<Aircraft> findAllAircraft();
+	Collection<Aircraft> findAllAircrafts();
 
 }
