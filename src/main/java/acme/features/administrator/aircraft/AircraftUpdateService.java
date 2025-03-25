@@ -45,7 +45,7 @@ public class AircraftUpdateService extends AbstractGuiService<Administrator, Air
 
 	@Override
 	public void validate(final Aircraft aircraft) {
-		assert aircraft != null;
+		super.state(aircraft != null, "*", "aircraft.validation.error.null");
 	}
 
 	@Override
