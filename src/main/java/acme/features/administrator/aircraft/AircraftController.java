@@ -24,12 +24,16 @@ public class AircraftController extends AbstractGuiController<Administrator, Air
 	@Autowired
 	private AicraftListService		listService;
 
+	@Autowired
+	private AircraftShowService		showService;
+
 	// Constructors ---------------------------------------------------------------------
 
 
 	@PostConstruct
 	protected void initialise() {
 		super.addBasicCommand("create", this.createService);
+		super.addBasicCommand("show", this.showService);
 		super.addBasicCommand("update", this.updateService);
 		super.addBasicCommand("list", this.listService);
 	}
