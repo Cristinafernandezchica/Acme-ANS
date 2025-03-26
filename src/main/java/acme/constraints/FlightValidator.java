@@ -1,7 +1,7 @@
 
 package acme.constraints;
 
-import java.util.List;
+import java.util.Collection;
 
 import javax.validation.ConstraintValidatorContext;
 
@@ -34,7 +34,7 @@ public class FlightValidator extends AbstractValidator<ValidFlight, Flight> {
 			super.state(context, false, "layovers", "{acme.validation.flight.layovers.zero.message}");
 		}
 
-		List<Leg> legs = this.repository.findAllLegsByFlightId(flight.getId());
+		Collection<Leg> legs = this.repository.findAllLegsByFlightId(flight.getId());
 		if (legs.isEmpty()) {
 			res = false;
 			super.state(context, false, "numberOfLegs", "{acme.validation.filght.legs.empty.message}");

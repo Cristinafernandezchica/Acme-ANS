@@ -1,7 +1,7 @@
 
 package acme.entities.flights;
 
-import java.util.List;
+import java.util.Collection;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -14,5 +14,5 @@ import acme.entities.legs.Leg;
 public interface FlightRepository extends AbstractRepository {
 
 	@Query("SELECT l FROM Leg l WHERE l.flight.id = :flightId")
-	List<Leg> findAllLegsByFlightId(@Param("flightId") int flightId);
+	Collection<Leg> findAllLegsByFlightId(@Param("flightId") int flightId);
 }
