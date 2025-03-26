@@ -1,43 +1,5 @@
 key,key:user_account,annual_health_test,certifications,license_number,phone_number,specialisation,years_of_experience
 # bases
 technician-01,user-account-technician-01,true,"ingles","CD456789",987654321,"ninguna",12
-# variaciones annual_health_test
-technician-02,user-account-technician-01,false,"ingles","CE456789",987654321,"ninguna",12
-technician-03,user-account-technician-01,true,"ingles","CQ456789",987654321,"ninguna",12
-# variaciones certifications 
-technician-04,user-account-technician-01,true,"ingles,mondongo,paella","CR456789",987654321,"ninguna",12
-technician-05,user-account-technician-01,true,"โลเร็ม อิปซัม","CS456789",987654321,"ninguna",12
-technician-06,user-account-technician-01,true,"hola,adios,avion,jamon,vecino,mamaxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", "CT456789",987654321,"ninguna",12
-technician-07,user-account-technician-01,true,"hola,adios,avion,jamon,vecino,mamaxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", "CU456789",987654321,"ninguna",12
-technician-08,user-account-technician-01,true,"لوريم إيبسوم", "CV456789",987654321,"ninguna",12
-technician-09,user-account-technician-01,true,"áéíóú,ñ,ü,ç,ø,å,œ,ß,ð,þ","CW456789",987654321,"ninguna",12
-technician-10,user-account-technician-01,true,"你好,世界,学习,语言","CX456789",987654321,"ninguna",12
-technician-11,user-account-technician-01,true,NULL,"TX456789",987654321,"ninguna",12
-# variaciones License Number
-technician-12,user-account-technician-01,true,"ingles","CCD456789",987654321,"ninguna",12
-technician-13,user-account-technician-01,true,"ingles","DH111111",987654321,"ninguna",12
-technician-14,user-account-technician-01,true,"ingles","DHH111111",987654321,"ninguna",12
-technician-34,user-account-technician-01,true,"ingles","1HH111211",987654321,"ninguna",12
-technician-35,user-account-technician-01,true,"ingles","1HH1112111",987654321,"ninguna",12
-technician-36,user-account-technician-01,true,"ingles","HHHH1112111",987654321,"ninguna",12
-# variaciones Phone Number
-technician-16,user-account-technician-01,true,"ingles","CE123456",+123456,"ninguna",12
-technician-17,user-account-technician-01,true,"ingles","CF654321",987654,"ninguna",12
-technician-18,user-account-technician-01,true,"ingles","CH222222",123456789012345,"ninguna",12
-technician-19,user-account-technician-01,true,"ingles","CI333334",+123456789012345,"ninguna",12
-technician-31,user-account-technician-01,true,"ingles","CI333335",+1234567890123451,"ninguna",12
-technician-32,user-account-technician-01,true,"ingles","CI333336",+1234567890123451A,"ninguna",12
-technician-33,user-account-technician-01,true,"ingles","CI333337",-12345678901234,"ninguna",12
-# variaciones especialisation
-technician-20,user-account-technician-01,true,"ingles","CD456788",987654321,"áéíóú,ñ,ü,ç,ø,å,œ,ß,ð,þ",12
-technician-21,user-account-technician-01,true,"ingles","CD456787",987654321,"你好,世界,学习,语言",12
-technician-22,user-account-technician-01,true,"ingles","CD456786",987654321,"",12
-technician-23,user-account-technician-01,true,"ingles","CD456785",987654321,"Estaesunaespecializacionmuylargaxxxxxxxxxxxxxxxx",12
-technician-30,user-account-technician-01,true,"ingles","CD556785",987654321,"Estaesunaespecializacionmuylargaxxxxxxxxxxxxxxxxx",12
-# variaciones years of experience
-technician-24,user-account-technician-01,true,"ingles","CD456749",987654321,"ninguna",0
-technician-25,user-account-technician-01,true,"ingles","CD486679",987654321,"ninguna",1
-technician-26,user-account-technician-01,true,"ingles","CD456729",987654321,"ninguna",120
-technician-27,user-account-technician-01,true,"ingles","CD456719",987654321,"ninguna",119
-technician-28,user-account-technician-01,true,"ingles","CPP456729",987654321,"ninguna",121
-technician-29,user-account-technician-01,true,"ingles","RP456729",987654321,"ninguna",-1
+technician-02,user-account-technician-02,false,"ingles","CD312789",987654322,"Alguna",15
+technician-03,user-account-technician-03,true,"ingles","CD312719",987654323,"Alguna Mas",1

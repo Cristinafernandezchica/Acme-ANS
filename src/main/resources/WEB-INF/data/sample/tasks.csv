@@ -1,30 +1,28 @@
-key,description,estimated_duration,priority,type,key:technician
+key,description,estimated_duration,priority,type,key:technician,draftMode
 #task base
-task-01,"Revisar el motor",12,8,"INSPECTION",technician-01
+task-01,"Revisar el motor",12,8,"INSPECTION",technician-01,true
 #description variaciones
-task-02,"โลเร็ม อิปซัม",12,8,"INSPECTION",technician-01
-task-03,"洛伦·伊普森",12,8,"INSPECTION",technician-01
-task-04,"<marquee>Hacked</marquee>",12,8,"INSPECTION",technician-01
-task-05,"' or 'A' = 'A",12,8,"INSPECTION",technician-01
-task-06,"",12,8,"INSPECTION",technician-01
+task-02,"โลเร็ม อิปซัม",12,8,"INSPECTION",technician-01,true
+task-03,"洛伦·伊普森",12,8,"INSPECTION",technician-01,true
+task-04,"<marquee>Hacked</marquee>",12,8,"INSPECTION",technician-01,true
+task-05,"' or 'A' = 'A",12,8,"INSPECTION",technician-01,true
 # variaciones estimated_duration
-task-07,"Revisar el motor",,8,"INSPECTION",technician-01
-task-08,"Revisar el motor",-1,8,"INSPECTION",technician-01
-task-09,"Revisar el motor",1000,8,"INSPECTION",technician-01
-task-10,"Revisar el motor",0,8,"INSPECTION",technician-01
-task-11,"Revisar el motor",1,8,"INSPECTION",technician-01
-task-12,"Revisar el motor",1001,8,"INSPECTION",technician-01
-task-13,"Revisar el motor",999,8,"INSPECTION",technician-01
+task-06,"Revisar el motor",1000,8,"INSPECTION",technician-01,true
+task-07,"Revisar el motor",0,8,"INSPECTION",technician-01,true
+task-08,"Revisar el motor",1,8,"INSPECTION",technician-01,true
+task-09,"Revisar el motor",1001,8,"INSPECTION",technician-01,true
+task-10,"Revisar el motor",999,8,"INSPECTION",technician-01,true
 # variaciones priority
-task-14,"Revisar el motor",12,0,"INSPECTION",technician-01
-task-15,"Revisar el motor",12,10,"INSPECTION",technician-01
-task-16,"Revisar el motor",12,1,"INSPECTION",technician-01
-task-17,"Revisar el motor",12,9,"INSPECTION",technician-01
-task-18,"Revisar el motor",12,-1,"INSPECTION",technician-01
-task-19,"Revisar el motor",12,11,"INSPECTION",technician-01
-task-20,"Revisar el motor",12,,"INSPECTION",technician-01
+task-11,"Revisar el motor",12,0,"INSPECTION",technician-01,true
+task-12,"Revisar el motor",12,10,"INSPECTION",technician-01,true
+task-13,"Revisar el motor",12,1,"INSPECTION",technician-01,true
+task-14,"Revisar el motor",12,9,"INSPECTION",technician-01,true
 # variaciones type
-task-21,"Revisar el motor",12,8,"MAINTENANCE",technician-01
-task-22,"Revisar el motor",12,8,"REPAIR",technician-01
-task-23,"Revisar el motor",12,8,"SYSTEMCHECK",technician-01
-task-24,"Revisar el motor",12,8,"",technician-01
+task-15,"Revisar el motor",12,8,"MAINTENANCE",technician-01,true
+task-16,"Revisar el motor",12,8,"REPAIR",technician-01,true
+task-17,"Revisar el motor",12,8,"SYSTEMCHECK",technician-01,true
+# draftMode false
+task-18,"Revisar el motor",12,8,"SYSTEMCHECK",technician-01,false
+# variaciones para popular technician 2
+task-19,"Revisar las luces",12,8,"INSPECTION",technician-02,true
+task-20,"Revisar el avion",12,8,"SYSTEMCHECK",technician-02,false
