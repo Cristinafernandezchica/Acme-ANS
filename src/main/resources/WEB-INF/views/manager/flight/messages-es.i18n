@@ -23,6 +23,7 @@ manager.flight.list.label.scheduledDeparture = Horario Salida
 manager.flight.list.label.scheduledArrival = Horario Llegada
 manager.flight.list.label.layovers = Aterrizajes
 manager.flight.list.label.description = Descripción
+manager.flight.form.label.airline = Aerolínea
 
 manager.flight.list.button.create = Crear
 
