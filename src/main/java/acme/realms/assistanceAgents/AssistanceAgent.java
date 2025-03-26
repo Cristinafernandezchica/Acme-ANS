@@ -5,7 +5,6 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -43,8 +42,8 @@ public class AssistanceAgent extends AbstractRole {
 	@Automapped
 	private String				spokenLanguages;
 
+	@Mandatory
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "airline_id", nullable = false)
 	@Valid
 	private Airline				airline;
 
@@ -59,7 +58,7 @@ public class AssistanceAgent extends AbstractRole {
 	private String				briefBio;
 
 	@Optional
-	@ValidMoney(max = 30000)
+	@ValidMoney(min = 0, max = 30000)
 	@Automapped
 	private Money				salary;
 
@@ -67,5 +66,4 @@ public class AssistanceAgent extends AbstractRole {
 	@ValidUrl
 	@Automapped
 	private String				picture;
-
 }
