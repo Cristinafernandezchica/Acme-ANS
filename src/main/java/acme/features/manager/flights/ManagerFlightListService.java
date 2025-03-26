@@ -2,7 +2,6 @@
 package acme.features.manager.flights;
 
 import java.util.Collection;
-import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -39,14 +38,11 @@ public class ManagerFlightListService extends AbstractGuiService<Manager, Flight
 	@Override
 	public void unbind(final Flight flight) {
 		Dataset dataset;
-		Date scheduledDeparture;
 
-		scheduledDeparture = flight.getScheduledDeparture();
 		dataset = super.unbindObject(flight, "tag", "indication", "cost", "description", "draftMode");
 		dataset.put("originCity", flight.originCity());
 		dataset.put("destinationCity", flight.destinationCity());
-		dataset.put("layovers", flight.layovers());
-		dataset.put("scheduledDeparture", scheduledDeparture);
+		dataset.put("scheduledDeparture", flight.getScheduledDeparture());
 		dataset.put("scheduledArrival", flight.getScheduledArrival());
 
 		super.getResponse().addData(dataset);
