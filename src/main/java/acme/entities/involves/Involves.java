@@ -8,8 +8,8 @@ import javax.validation.Valid;
 import acme.client.components.basis.AbstractEntity;
 import acme.client.components.mappings.Automapped;
 import acme.client.components.validation.Mandatory;
-import acme.entities.maintenanceRecords.MaintenanceRecords;
-import acme.entities.tasks.Tasks;
+import acme.entities.maintenanceRecords.MaintenanceRecord;
+import acme.entities.tasks.Task;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -24,11 +24,11 @@ public class Involves extends AbstractEntity {
 	@ManyToOne(optional = false)
 	@Valid
 	@Automapped
-	private Tasks				tasks;
+	private Task				tasks;
 
 	@Mandatory
 	@ManyToOne(optional = false)
 	@Valid
 	@Automapped
-	private MaintenanceRecords	maintenanceRecords;
+	private MaintenanceRecord	maintenanceRecords;
 }

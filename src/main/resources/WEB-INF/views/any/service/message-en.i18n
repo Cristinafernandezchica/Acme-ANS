@@ -1,0 +1,7 @@
+
+any.service.list.title = Title
+any.service.list.label.name= name
+any.service.list.label.picture = picture
+any.service.list.label.averageDwellTime = averageDwellTime
+any.service.list.label.promotionCode = promotionCode
+any.service.list.label.money = money
