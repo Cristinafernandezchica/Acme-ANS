@@ -1,8 +1,6 @@
 
 package acme.constraints;
 
-import java.util.Collection;
-
 import javax.validation.ConstraintValidatorContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import acme.client.components.validation.AbstractValidator;
 import acme.entities.flights.Flight;
 import acme.entities.flights.FlightRepository;
-import acme.entities.legs.Leg;
 
 public class FlightValidator extends AbstractValidator<ValidFlight, Flight> {
 
@@ -34,11 +31,14 @@ public class FlightValidator extends AbstractValidator<ValidFlight, Flight> {
 			super.state(context, false, "layovers", "{acme.validation.flight.layovers.zero.message}");
 		}
 
-		Collection<Leg> legs = this.repository.findAllLegsByFlightId(flight.getId());
-		if (legs.isEmpty()) {
-			res = false;
-			super.state(context, false, "numberOfLegs", "{acme.validation.filght.legs.empty.message}");
-		}
+		/*
+		 * // Comprobar al PUCLICAR un vuelo, no al crear, ya que siempre se crea en draftmode (borrador)
+		 * Collection<Leg> legs = this.repository.findAllLegsByFlightId(flight.getId());
+		 * if (legs.isEmpty()) {
+		 * res = false;
+		 * super.state(context, false, "numberOfLegs", "{acme.validation.filght.legs.empty.message}");
+		 * }
+		 */
 
 		return res;
 	}

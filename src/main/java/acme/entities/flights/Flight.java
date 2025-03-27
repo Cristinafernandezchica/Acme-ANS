@@ -28,6 +28,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
+// @ValidFlight
 public class Flight extends AbstractEntity {
 
 	// Serialisation version --------------------------------------------------
