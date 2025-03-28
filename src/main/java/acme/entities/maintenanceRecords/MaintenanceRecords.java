@@ -69,4 +69,8 @@ public class MaintenanceRecords extends AbstractEntity {
 	@ValidString(max = 255, min = 1)
 	@Automapped
 	private String				notes;
+
+	@Mandatory
+	@Automapped
+	private boolean				draftMode;
 }

@@ -4,9 +4,6 @@ package acme.entities.claims;
 import java.util.Date;
 
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -34,8 +31,8 @@ public class Claim extends AbstractEntity {
 
 	private static final long	serialVersionUID	= 1L;
 
+	@Mandatory
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "assistanceAgent_id", nullable = false)
 	@Valid
 	private AssistanceAgent		assistanceAgent;
 
@@ -55,14 +52,18 @@ public class Claim extends AbstractEntity {
 	private String				description;
 
 	@Mandatory
-	@Enumerated(EnumType.STRING)
 	@Automapped
 	private ClaimType			type;
 
+	@Mandatory
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "leg_id", nullable = false)
 	@Valid
 	private Leg					leg;
+
+	@Mandatory
+	@Automapped
+	@Valid
+	private Boolean				drafmode;
 
 
 	@Transient
@@ -70,7 +71,6 @@ public class Claim extends AbstractEntity {
 		Boolean result;
 		ClaimRepository repository;
 		TrackingLog trackingLog;
-
 		repository = SpringHelper.getBean(ClaimRepository.class);
 		trackingLog = repository.findLastTrackingLogByClaimId(this.getId()).orElse(null);
 		if (trackingLog == null)
@@ -86,5 +86,4 @@ public class Claim extends AbstractEntity {
 		}
 		return result;
 	}
-
 }

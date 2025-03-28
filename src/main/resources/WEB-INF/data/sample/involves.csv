@@ -1,0 +1,16 @@
+key,key:maintenance-records,key:tasks
+# un maintenance con una task
+involves-01,MR-01,task-01
+# un maintenance con multiples tasks
+involves-02,MR-02,task-01
+involves-03,MR-02,task-02
+involves-04,MR-02,task-05
+# un maintenance con task de diferentes technicians
+involves-05,MR-03,task-05
+involves-06,MR-02,task-20
+# popular un par de maintenance del technician 2
+involves-07,MR-25,task-19
+involves-08,MR-25,task-20
+involves-09,MR-24,task-01
+involves-10,MR-24,task-20
+involves-11,MR-24,task-18
