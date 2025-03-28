@@ -2,7 +2,7 @@ key,name,iataCode,operationalScope,city,country,website,email,phoneNumber
 # base
 airport-01,"Santa Cruz Airport","SCA",DOMESTIC,"Tenerife","España",https://santacruzairport.acme.com,santacruzair@gamil.com,+34999999999
 # name - variations
-airport-02,"","SCB",DOMESTIC,"Tenerife","España",https://santacruzairport.acme.com,santacruzair@gamil.com,+34999999999
+airport-02,"Sevilla","SCB",DOMESTIC,"Tenerife","España",https://santacruzairport.acme.com,santacruzair@gamil.com,+34999999999
 airport-03,"S","SCC",DOMESTIC,"Tenerife","España",https://santacruzairport.acme.com,santacruzair@gamil.com,+34999999999
 airport-04,"Sa","SCD",DOMESTIC,"Tenerife","España",https://santacruzairport.acme.com,santacruzair@gamil.com,+34999999999
 airport-05,"Santa Cruz Airport, Tenerife","SCE",DOMESTIC,"Tenerife","España",https://santacruzairport.acme.com,santacruzair@gamil.com,+34999999999
@@ -13,27 +13,27 @@ airport-09,"<script>alert(‘Hacked!’);</script>","SCI",DOMESTIC,"Tenerife","E
 airport-10,"洛伦·伊普森","SCJ",DOMESTIC,"Tenerife","España",https://santacruzairport.acme.com,santacruzair@gamil.com,+34999999999
 airport-11,"لوريم إيبسوم","SCK",DOMESTIC,"Tenerife","España",https://santacruzairport.acme.com,santacruzair@gamil.com,+34999999999
 airport-12,"โลเร็ม อิปซัม","SCL",DOMESTIC,"Tenerife","España",https://santacruzairport.acme.com,santacruzair@gamil.com,+34999999999
-airport-13,"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor","SCM",DOMESTIC,"Tenerife","España",https://santacruzairport.acme.com,santacruzair@gamil.com,+34999999999
+
 # iataCode - variations
-airport-14,"Santa Cruz Airport","SC",DOMESTIC,"Tenerife","España",https://santacruzairport.acme.com,santacruzair@gamil.com,+34999999999
+
 # operationalScope - variations
 airport-15,"San Cristóbal Domestic","SFF",DOMESTIC,"San Cristóbal","España",https://sancristobaldomestic.acme.com,sancristobaldomestic@acme.com,+34987777777
 airport-16,"Gran Canaria Regional","GCR",REGIONAL,"Gran Canaria","España",https://grancanariaregional.acme.com,grancanariaregional@acme.com,+34986666666
 airport-17,"La Laguna International","LAX",INTERNATIONAL,"La Laguna","España",https://lagunainternational.acme.com,lagunainternational@acme.com,+34988888888
 # city - variations
-airport-18,"Example Airport","EXA",DOMESTIC,"","España",https://example.acme.com,example@acme.com,+34993333333
+airport-18,"Example Airport","EXA",DOMESTIC,"Málaga","España",https://example.acme.com,example@acme.com,+34993333333
 airport-19,"Example Airport","EXB",DOMESTIC,"L","España",https://example.acme.com,example@acme.com,+34994444444
 airport-20,"Example Airport","EXC",DOMESTIC,"Lo","España",https://example.acme.com,example@acme.com,+34995555555
 airport-21,"Example Airport","EXD",DOMESTIC,"Lorem ipsum dolor sit amet, consectetur adipiscin","España",https://example.acme.com,example@acme.com,+34996666666
 airport-22,"Example Airport","EXE",DOMESTIC,"Lorem ipsum dolor sit amet, consectetur","España",https://example.acme.com,example@acme.com,+34997777777
-airport-23,"Example Airport","EXF",DOMESTIC,"Lorem ipsum dolor sit amet, consectetur adipiscing elit","España",https://example.acme.com,example@acme.com,+34998888888
+
 airport-24,"Example Airport","EXG",DOMESTIC,"โLorem อิปซัม","España",https://example.acme.com,example@acme.com,+34999999999
 airport-25,"Example Airport","EXH",DOMESTIC,"洛伦·伊普森","España",https://example.acme.com,example@acme.com,+34888888888
 airport-26,"Example Airport","EXI",DOMESTIC,"لوريم إيبسوم","España",https://example.acme.com,example@acme.com,+34887777777
 airport-27,"Example Airport","EXJ",DOMESTIC,"<marquee>Hacked</marquee>","España",https://example.acme.com,example@acme.com,+34886666666
 airport-28,"Example Airport","EXK",DOMESTIC,"<script>alert('Hacked!')</script>","España",https://example.acme.com,example@acme.com,+34885555555
 # country - variations
-airport-29,"Example Airport","EXN",DOMESTIC,"Tenerife","",https://example.acme.com,example29@acme.com,+34990000029
+airport-29,"Example Airport","EXN",DOMESTIC,"Tenerife","Prueba",https://example.acme.com,example29@acme.com,+34990000029
 airport-30,"Example Airport","EXO",DOMESTIC,"Tenerife","E",https://example.acme.com,example30@acme.com,+34990000030
 airport-31,"Example Airport","EXP",DOMESTIC,"Tenerife","Es",https://example.acme.com,example31@acme.com,+34990000031
 airport-32,"Example Airport","EXQ",DOMESTIC,"Tenerife","España",https://example.acme.com,example32@acme.com,+34990000032
@@ -43,12 +43,12 @@ airport-35,"Example Airport","EXT",DOMESTIC,"Tenerife","Alemania",https://exampl
 airport-36,"Example Airport","EXU",DOMESTIC,"Tenerife","Suiza",https://example.acme.com,example36@acme.com,+34990000036
 airport-37,"Example Airport","EXV",DOMESTIC,"Tenerife","Francia",https://example.acme.com,example37@acme.com,+34990000037
 airport-38,"Example Airport","EXW",DOMESTIC,"Tenerife","Canadá",https://example.acme.com,example38@acme.com,+34990000038
-airport-39,"Example Airport","EXX",DOMESTIC,"Tenerife","Estados Unidos Mexicanos y Territorios Adyacentes al Océano Pacífico",https://example.acme.com,example39@acme.com,+34990000039
+
 # website - variations
 airport-40,"Example Airport","EXY",DOMESTIC,"Tenerife","España",ftp://,example40@acme.com,+34990000040
 airport-41,"Example Airport","EXZ",DOMESTIC,"Tenerife","España",http://www.lorem-ipsum.org/dolor/sit/amet/consectetur/adipiscing/elit/sed/do/eiusmod/tempor/incididunt/ut/labore/et/dolore/magna/aliqua/Ut/enim/ad/minim/veniam/quis/nostrud/exercitation/ullamco/laboris/nisi/ut/aliquip/ex/ea/commodo/consequat/duis/aute/XYZ,example41@acme.com,+34990000041
 # phoneNumber - variations
-airport-42,"Example Airport","OOO",DOMESTIC,"Tenerife","España",https://example.acme.com,example42@acme.com,+40845276941964945646
+
 airport-43,"Example Airport","DEF",DOMESTIC,"Tenerife","España",https://example.acme.com,example43@acme.com,634428478836
 airport-44,"Example Airport","GHI",DOMESTIC,"Tenerife","España",https://example.acme.com,example44@acme.com,+349448114
 airport-45,"Example Airport","JKL",DOMESTIC,"Tenerife","España",https://example.acme.com,example45@acme.com,692555867
@@ -62,6 +62,6 @@ airport-51,"Example Airport","BCD",DOMESTIC,"Tenerife","España",https://example
 airport-52,"Example Airport","EFG",DOMESTIC,"Tenerife","España",https://example.acme.com,acme@lorem-ipsum.org,+34990000052
 airport-53,"Example Airport","HIJ",DOMESTIC,"Tenerife","España",https://example.acme.com,a@b.e,+34990000053
 airport-54,"Example Airport","KLM",DOMESTIC,"Tenerife","España",https://example.acme.com,lorem-ipsum@dolor.sit.amet.consectetur.adipiscing.elit.sed.do.eiusmod.tempor.incididunt.ut.labore.et.dolore.magna.aliqua.Ut.enim.ad.minim.veniam.quis.nostrud.exercitation.ullamco.laboris.nisi.ut.aliquip.ex.ea.commodo.consequat.duis.aute.irure.dolor.es.org,+34990000054
-airport-55,"Example Airport","NOP",DOMESTIC,"Tenerife","España",https://example.acme.com,invalid-email,+34990000055
+
 airport-56,"Example Airport","NOO",DOMESTIC,"Tenerife","España",https://example.acme.com,,+34990000055
 

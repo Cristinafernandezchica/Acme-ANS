@@ -28,6 +28,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
+// @ValidFlight
 public class Flight extends AbstractEntity {
 
 	// Serialisation version --------------------------------------------------
@@ -55,6 +56,10 @@ public class Flight extends AbstractEntity {
 	@Optional
 	@Automapped
 	private String				description;
+
+	@Mandatory
+	@Automapped
+	private boolean				draftMode;
 
 	// Atributos derivados ---------------------------------
 

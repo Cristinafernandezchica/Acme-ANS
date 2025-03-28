@@ -1,0 +1,37 @@
+manager.flight.form.title = Flight form 
+manager.flight.list.title = Listing of flights
+
+manager.flight.form.label.tag = Tag:
+manager.flight.form.label.airline = Airline: 
+manager.flight.form.label.indication = Self transfer:
+manager.flight.form.label.cost = Cost:
+manager.flight.form.label.description = Description (Optional):
+
+		
+manager.flight.form.button.legs = Legs
+manager.flight.form.button.update = Update
+manager.flight.form.button.delete = Delete
+manager.flight.form.button.publish = Publish
+manager.flight.form.button.create = Create
+
+manager.flight.list.label.tag = Tag
+manager.flight.list.label.indication = Self Transfer
+manager.flight.list.label.cost = Cost
+manager.flight.list.label.originCity = Origin City
+manager.flight.list.label.destinationCity = Destination City
+manager.flight.list.label.scheduledDeparture = Scheduled Departure
+manager.flight.list.label.scheduledArrival = Scheduled Arrival
+manager.flight.list.label.layovers = Layovers
+manager.flight.list.label.description = Description
+
+manager.flight.list.button.create = Create
+
+manager.flight.form.label.draftMode = Draft Mode
+manager.flight.form.label.scheduledDeparture = Scheduled Departure
+manager.flight.form.label.scheduledArrival = Scheduled Arrival
+manager.flight.form.label.originCity = Origin City
+manager.flight.form.label.destinationCity = Destination City
+manager.flight.form.label.layovers = Layovers
+manager.flight.form.label.airline = Airline
+
+manager.flights.without.legs = You can't publish a flight without legs
