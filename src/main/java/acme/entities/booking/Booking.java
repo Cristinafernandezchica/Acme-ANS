@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.Valid;
 
 import acme.client.components.basis.AbstractEntity;
@@ -18,6 +19,7 @@ import acme.client.components.validation.Optional;
 import acme.client.components.validation.ValidMoment;
 import acme.client.components.validation.ValidMoney;
 import acme.client.components.validation.ValidString;
+import acme.client.helpers.SpringHelper;
 import acme.entities.flights.Flight;
 import acme.realms.Customer;
 import lombok.Getter;
@@ -55,6 +57,10 @@ public class Booking extends AbstractEntity {
 	private String				lastCardNibble;
 
 	@Mandatory
+	@Automapped
+	private boolean				draftMode;
+
+	@Mandatory
 	@ManyToOne(optional = false)
 	@Valid
 	private Customer			customer;
@@ -64,8 +70,20 @@ public class Booking extends AbstractEntity {
 	@Valid
 	private Flight				flight;
 
-	@Mandatory
-	@Automapped
-	private boolean				draftMode;
+
+	@Transient
+	public Money getTotalCost() {
+		BookingRepository repository;
+		Double totalAmount;
+		Money total = new Money();
+
+		repository = SpringHelper.getBean(BookingRepository.class);
+		totalAmount = this.flight.getCost().getAmount() * repository.findPassengersByBookingId(this.getId()).size();
+
+		total.setAmount(totalAmount);
+		total.setCurrency(this.flight.getCost().getCurrency());
+
+		return total;
+	}
 
 }
