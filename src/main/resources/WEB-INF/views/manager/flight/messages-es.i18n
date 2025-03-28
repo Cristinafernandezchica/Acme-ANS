@@ -23,7 +23,6 @@ manager.flight.list.label.scheduledDeparture = Horario Salida
 manager.flight.list.label.scheduledArrival = Horario Llegada
 manager.flight.list.label.layovers = Aterrizajes
 manager.flight.list.label.description = Descripción
-manager.flight.form.label.airline = Aerolínea
 
 manager.flight.list.button.create = Crear
 
@@ -33,3 +32,6 @@ manager.flight.form.label.scheduledArrival = Horario de Llegada
 manager.flight.form.label.originCity = Ciudad Origen
 manager.flight.form.label.destinationCity = Ciudad Destino
 manager.flight.form.label.layovers = Aterrizajes
+manager.flight.form.label.airline = Aerolínea
+
+manager.flights.without.legs = No puedes publicar un vuelo sin tramos
