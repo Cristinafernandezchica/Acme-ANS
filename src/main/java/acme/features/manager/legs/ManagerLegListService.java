@@ -34,6 +34,7 @@ public class ManagerLegListService extends AbstractGuiService<Manager, Leg> {
 
 		orderedByMomentLegs = legs.stream().sorted(Comparator.comparing(Leg::getScheduledDeparture)).toList();
 
+		super.getResponse().addGlobal("flightId", flightId);
 		super.getBuffer().addData(orderedByMomentLegs);
 
 	}
@@ -46,7 +47,6 @@ public class ManagerLegListService extends AbstractGuiService<Manager, Leg> {
 		dataset.put("departureAirport", leg.getDepartureAirport().getIataCode());
 		dataset.put("arrivalAirport", leg.getArrivalAirport().getIataCode());
 
-		super.getResponse().addGlobal("flightId", leg.getFlight().getId());
 		super.getResponse().addData(dataset);
 
 	}
