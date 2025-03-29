@@ -17,10 +17,10 @@
 
 	<jstl:choose>	 
 		<jstl:when test="${_command == 'show' && draftMode == false}">
-			<acme:button code="manager.leg.form.button.legs" action="/manager/leg/list?masterId=${id}"/>			
+			<acme:button code="manager.leg.form.button.legs" action="/manager/leg/list?flightId=${id}"/>			
 		</jstl:when>
 		<jstl:when test="${acme:anyOf(_command, 'show|update|delete|publish') && draftMode == true}">
-			<acme:button code="manager.leg.form.button.legs" action="/manager/leg/list?masterId=${id}"/>
+			<acme:button code="manager.leg.form.button.legs" action="/manager/leg/list?flightId=${id}"/>
 			<acme:submit code="manager.leg.form.button.update" action="/manager/leg/update"/>
 			<acme:submit code="manager.leg.form.button.delete" action="/manager/leg/delete"/>
 			<acme:submit code="manager.leg.form.button.publish" action="/manager/leg/publish"/>

@@ -49,4 +49,3 @@ master.menu.user-account.consumer-profile = Perfil de consumidor
 # master.menu.manager ##########################################################
 master.menu.manager = Manager
 master.menu.manager.list-flights = Listar vuelos
-master.menu.manager.list-legs = Listar tramos

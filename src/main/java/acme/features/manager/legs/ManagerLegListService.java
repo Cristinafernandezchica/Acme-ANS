@@ -26,12 +26,11 @@ public class ManagerLegListService extends AbstractGuiService<Manager, Leg> {
 
 	@Override
 	public void load() {
-		int managerId;
+		int flightId = super.getRequest().getData("flightId", int.class);
 		Collection<Leg> legs;
 		Collection<Leg> orderedByMomentLegs;
 
-		managerId = super.getRequest().getPrincipal().getActiveRealm().getId();
-		legs = this.repository.findAllLegsByManagerId(managerId);
+		legs = this.repository.findAllLegsByFlightId(flightId);
 
 		orderedByMomentLegs = legs.stream().sorted(Comparator.comparing(Leg::getScheduledDeparture)).toList();
 
@@ -44,7 +43,6 @@ public class ManagerLegListService extends AbstractGuiService<Manager, Leg> {
 		Dataset dataset;
 
 		dataset = super.unbindObject(leg, "flightNumber", "scheduledDeparture", "scheduledArrival");
-
 		dataset.put("departureAirport", leg.getDepartureAirport().getIataCode());
 		dataset.put("arrivalAirport", leg.getArrivalAirport().getIataCode());
 
