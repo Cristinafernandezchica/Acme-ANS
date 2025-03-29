@@ -46,6 +46,7 @@ public class ManagerLegListService extends AbstractGuiService<Manager, Leg> {
 		dataset.put("departureAirport", leg.getDepartureAirport().getIataCode());
 		dataset.put("arrivalAirport", leg.getArrivalAirport().getIataCode());
 
+		super.getResponse().addGlobal("flightId", leg.getFlight().getId());
 		super.getResponse().addData(dataset);
 
 	}

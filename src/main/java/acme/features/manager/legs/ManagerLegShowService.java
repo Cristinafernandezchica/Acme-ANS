@@ -12,7 +12,6 @@ import acme.client.services.GuiService;
 import acme.entities.aircrafts.Aircraft;
 import acme.entities.aircrafts.Status;
 import acme.entities.airports.Airport;
-import acme.entities.flights.Flight;
 import acme.entities.legs.Leg;
 import acme.entities.legs.LegStatus;
 import acme.realms.Manager;
@@ -54,24 +53,19 @@ public class ManagerLegShowService extends AbstractGuiService<Manager, Leg> {
 	public void unbind(final Leg leg) {
 		SelectChoices statuses;
 		Dataset dataset;
-		Collection<Flight> flights;
 		Collection<Aircraft> aircrafts;
-		SelectChoices selectedFlights;
 		SelectChoices selectedAircrafts;
 		Collection<Aircraft> activeAircrafts;
-		Collection<Flight> unpublishedFlights;
 		Collection<Airport> airports;
 		Collection<Airport> departureAirports;
 		Collection<Airport> arrivalAirports;
 		SelectChoices selectedDepartureAirport;
 		SelectChoices selectedArrivalAirport;
+		int airlineId = leg.getFlight().getAirline().getId();
 
 		statuses = SelectChoices.from(LegStatus.class, leg.getStatus());
-		flights = this.repository.findAllFlights();
-		unpublishedFlights = flights.stream().filter(Flight::isDraftMode).toList();
-		aircrafts = this.repository.findAllAircrafts();
+		aircrafts = this.repository.findAllAircraftsByAirlineId(airlineId);
 		activeAircrafts = aircrafts.stream().filter(a -> a.getStatus().equals(Status.ACTIVE_SERVICE)).toList();
-		selectedFlights = SelectChoices.from(unpublishedFlights, "tag", leg.getFlight());
 		selectedAircrafts = SelectChoices.from(activeAircrafts, "model", leg.getAircraft());
 
 		airports = this.repository.findAllAirports();
@@ -84,8 +78,9 @@ public class ManagerLegShowService extends AbstractGuiService<Manager, Leg> {
 		dataset.put("statuses", statuses);
 		dataset.put("departureAirports", selectedDepartureAirport);
 		dataset.put("arrivalAirports", selectedArrivalAirport);
-		dataset.put("flights", selectedFlights);
+		dataset.put("flight", leg.getFlight().getTag());
 		dataset.put("aircrafts", selectedAircrafts);
+		dataset.put("duration", leg.getDuration());
 
 		super.getResponse().addData(dataset);
 	}
