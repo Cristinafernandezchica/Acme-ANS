@@ -49,3 +49,4 @@ master.menu.user-account.consumer-profile = Consumer profile
 # master.menu.manager ##########################################################
 master.menu.manager = Manager
 master.menu.manager.list-flights = List flights
+master.menu.manager.list-legs = List legs
