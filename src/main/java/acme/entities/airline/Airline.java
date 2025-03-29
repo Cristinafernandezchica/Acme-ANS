@@ -3,6 +3,7 @@ package acme.entities.airline;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -34,7 +35,7 @@ public class Airline extends AbstractEntity {
 
 	@Mandatory
 	@ValidAirportIATACode
-	@Automapped
+	@Column(unique = true)
 	private String				iataCode;
 
 	@Mandatory
