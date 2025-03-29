@@ -11,6 +11,7 @@ import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.aircrafts.Aircraft;
 import acme.entities.aircrafts.Status;
+import acme.entities.airports.Airport;
 import acme.entities.flights.Flight;
 import acme.entities.legs.Leg;
 import acme.entities.legs.LegStatus;
@@ -59,6 +60,11 @@ public class ManagerLegShowService extends AbstractGuiService<Manager, Leg> {
 		SelectChoices selectedAircrafts;
 		Collection<Aircraft> activeAircrafts;
 		Collection<Flight> unpublishedFlights;
+		Collection<Airport> airports;
+		Collection<Airport> departureAirports;
+		Collection<Airport> arrivalAirports;
+		SelectChoices selectedDepartureAirport;
+		SelectChoices selectedArrivalAirport;
 
 		statuses = SelectChoices.from(LegStatus.class, leg.getStatus());
 		flights = this.repository.findAllFlights();
@@ -68,10 +74,16 @@ public class ManagerLegShowService extends AbstractGuiService<Manager, Leg> {
 		selectedFlights = SelectChoices.from(unpublishedFlights, "tag", leg.getFlight());
 		selectedAircrafts = SelectChoices.from(activeAircrafts, "model", leg.getAircraft());
 
+		airports = this.repository.findAllAirports();
+		departureAirports = airports.stream().filter(a -> !a.getIataCode().equals(leg.getArrivalAirport().getIataCode())).toList();
+		arrivalAirports = airports.stream().filter(a -> !a.getIataCode().equals(leg.getDepartureAirport().getIataCode())).toList();
+		selectedDepartureAirport = SelectChoices.from(departureAirports, "iataCode", leg.getDepartureAirport());
+		selectedArrivalAirport = SelectChoices.from(arrivalAirports, "iataCode", leg.getArrivalAirport());
+
 		dataset = super.unbindObject(leg, "flightNumber", "scheduledDeparture", "scheduledArrival", "draftMode");
 		dataset.put("statuses", statuses);
-		dataset.put("departureAirport", leg.getDepartureAirport().getName());
-		dataset.put("arrivalAirport", leg.getArrivalAirport().getName());
+		dataset.put("departureAirports", selectedDepartureAirport);
+		dataset.put("arrivalAirports", selectedArrivalAirport);
 		dataset.put("flights", selectedFlights);
 		dataset.put("aircrafts", selectedAircrafts);
 

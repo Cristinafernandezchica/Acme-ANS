@@ -9,8 +9,8 @@
 	<acme:input-textbox code="manager.leg.form.label.scheduledArrival" path="scheduledArrival"/>
 	<acme:input-select code="manager.leg.form.label.status" path="status" choices="${statuses}"/>
 	<acme:input-checkbox code="manager.leg.form.label.draftMode" path="draftMode" readonly="true"/>
-	<acme:input-textbox code="manager.leg.form.label.departureAirport" path="departureAirport" readonly="true"/>
-	<acme:input-textbox code="manager.leg.form.label.arrivalAirport" path="arrivalAirport" readonly="true"/>
+	<acme:input-select code="manager.leg.form.label.departureAirport" path="departureAirport" choices="${departureAirports}"/>
+	<acme:input-select code="manager.leg.form.label.arrivalAirport" path="arrivalAirport" choices="${arrivalAirports}"/>
 	<acme:input-select code="manager.leg.form.label.flight" path="flight" choices="${flights}"/>
 	<acme:input-select code="manager.leg.form.label.aircraft" path="aircraft" choices="${aircrafts}"/>
 	
