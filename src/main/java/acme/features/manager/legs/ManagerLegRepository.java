@@ -24,8 +24,8 @@ public interface ManagerLegRepository extends AbstractRepository {
 	@Query("select f from Flight f")
 	Collection<Flight> findAllFlights();
 
-	@Query("select a from Aircraft a")
-	Collection<Aircraft> findAllAircrafts();
+	@Query("select a from Aircraft a where a.airline.id = :airlineId")
+	Collection<Aircraft> findAllAircraftsByAirlineId(int airlineId);
 
 	@Query("select a from Airport a")
 	Collection<Airport> findAllAirports();
@@ -35,5 +35,8 @@ public interface ManagerLegRepository extends AbstractRepository {
 
 	@Query("select f from Flight f where f.id = :id")
 	Flight findFlightById(int id);
+
+	@Query("select l.flightNumber from Leg l where l.flight.manager.airline.id = :airlineId")
+	Collection<String> findAllLegsFlightNumberByAirlineId(int airlineId);
 
 }
