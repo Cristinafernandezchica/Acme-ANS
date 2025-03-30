@@ -1,5 +1,7 @@
 acme.validation.flight.layovers.zero.message = The attribute layovers can't be 0 or less
 acme.validation.filght.legs.empty.message = A flight must have one leg at least
+acme.validation.lastCardNibble.message = The last card nibble can't be empty 
+acme.validation.booking.flight.message = No flight assigned
 
 acme.validation.leg.overlap.message = Overlap with another leg of the same flight
 acme.validation.leg.departure.arrival.difference.message = Arrival has to be at least 5 minutes later than the departure

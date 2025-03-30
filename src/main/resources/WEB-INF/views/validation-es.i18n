@@ -1,5 +1,7 @@
 acme.validation.flight.layovers.zero.message = El atributo layovers no puede ser menor o igual a 0
 acme.validation.filght.legs.empty.message = Un vuelo debe tener, al menos, un tramo
+acme.validation.lastCardNibble.message = Los últimos dígitos de la tarjeta no pueden estar vacios
+acme.validation.booking.flight.message = Sin vuelo asignado
 
 acme.validation.leg.overlap.message = Solapamiento con otro tramo del mismo vuelo
 acme.validation.leg.departure.arrival.difference.message = Tiene que haber mínimo 5 minutos entre salida y llegada

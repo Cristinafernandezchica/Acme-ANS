@@ -1,0 +1,20 @@
+customer.booking.list.title = My bookings
+customer.booking.list.locatorCode = Locator Code
+customer.booking.list.purchaseMoment = Purchase Moment
+customer.booking.list.travelClass = Travel Class
+customer.booking.list.price = Price
+customer.booking.list.flight = Flight Identifier
+customer.booking.list.button.create = Create new booking
+
+
+customer.booking.form.title = Booking information
+customer.booking.form.locatorCode = Locator Code
+customer.booking.form.purchaseMoment = Purchase Moment
+customer.booking.form.travelClass = Travel Class
+customer.booking.form.price = Price
+customer.booking.form.lastNibble = Last Nibble 
+customer.booking.form.flight = Flight Tag 
+customer.booking.form.show.passengers = View passengers
+customer.booking.form.confirmation = Confirmation
+customer.booking.form.button.create = Create
+customer.booking.form.button.update = Update

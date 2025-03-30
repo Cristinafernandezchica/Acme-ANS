@@ -1,0 +1,20 @@
+customer.booking.list.title = Mis reservas
+customer.booking.list.locatorCode = Código localizador
+customer.booking.list.purchaseMoment = Fecha de compra
+customer.booking.list.travelClass = Clase
+customer.booking.list.price = Precio
+customer.booking.list.flight = Identificador de Vuelo
+customer.booking.list.button.create = Crear nueva reserva
+
+
+customer.booking.form.title = Información de mi reserva
+customer.booking.form.locatorCode = Código localizador
+customer.booking.form.purchaseMoment = Fecha de compra
+customer.booking.form.travelClass = Clase
+customer.booking.form.price = Precio
+customer.booking.form.lastNibble = Últimos dígitos tarjeta de crédito
+customer.booking.form.flight = Etiqueta de vuelo
+customer.booking.form.show.passengers = Ver pasajeros
+customer.booking.form.confirmation = Confirmación
+customer.booking.form.button.create = Crear
+customer.booking.form.button.update = Actualizar
