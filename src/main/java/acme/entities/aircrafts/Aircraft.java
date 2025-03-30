@@ -3,7 +3,6 @@ package acme.entities.aircrafts;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.Valid;
 
@@ -53,13 +52,12 @@ public class Aircraft extends AbstractEntity {
 	private Status				status;
 
 	@Optional
-	@ValidString(min = 0,max = 255)
+	@ValidString(min = 0, max = 255)
 	@Automapped
 	private String				details;
 
 	@Mandatory
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "airline_id", nullable = false)
 	@Valid
 	private Airline				airline;
 

@@ -1,28 +1,28 @@
 key,average_dwell_time,money,name,picture,promotion_code,key:airport
 # base
-service-01,10.00,100,"servicio de wi-fi","ruta inventada",EFGH-25,airport-01
-# variacion average dwell time
-service-02,0,100,"servicio de wi-fi","ruta inventada",EFGH-26,airport-01
-service-03,100,100,"servicio de wi-fi","ruta inventada",EFGH-27,airport-01
-service-04,-0.1,100,"servicio de wi-fi","ruta inventada",EFGH-28,airport-01
-service-05,100.1,100,"servicio de wi-fi","ruta inventada",EFGH-29,airport-01
-service-06,,100,"servicio de wi-fi","ruta inventada",EFGH-30,airport-01
-# variacion money
-service-07,10.0,100,"servicio de wi-fi","ruta inventada",EFGH-25,airport-01
-service-08,10.0,0,"servicio de wi-fi","ruta inventada",EFGH-26,airport-01
-service-09,10.0,100,"servicio de wi-fi","ruta inventada",EFGH-27,airport-01
-service-10,10.0,-0.1,"servicio de wi-fi","ruta inventada",EFGH-28,airport-01
-service-11,10.0,100.1,"servicio de wi-fi","ruta inventada",EFGH-29,airport-01
-service-12,10.0,,"servicio de wi-fi","ruta inventada",EFGH-30,airport-01
-#variacion name
-service-13,10.00,100,"服务的Wi-Fi","ruta inventada",EFGH-26,airport-01
-service-14,10.00,100,"A","ruta inventada",EFGH-27,airport-01
-service-15,10.00,100,"servicio de wi-fi con un nombre largo que tiene hasta 50 caracteres","ruta inventada",EFGH-28,airport-01
-#variaciones picture
-service-16,10.00,100,"服务的Wi-Fi","A",EFGH-26,airport-01
-service-17,10.00,100,"A","xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",EFGH-27,airport-01
-service-18,10.00,100,"","服务的路径",EFGH-28,airport-01
-#variaciones de promotioncode
-service-19,10.00,100,"servicio de wi-fi","ruta inventada",EFGH-24,airport-01
-service-20,10.00,100,"servicio de wi-fi","ruta inventada",XYZ-99,airport-01
-service-21,10.00,100,"servicio de wi-fi","ruta inventada",1234-AB,airport-01
+service-01,10.00,100.0,"servicio de wi-fi","ruta inventada",EFGH-25,airport-01
+# variación average dwell time
+service-02,1.0,100.0,"servicio de wi-fi","ruta inventada",EFGH-25,airport-01
+service-03,1.1,100.0,"servicio de wi-fi","ruta inventada",EFGH-25,airport-01
+service-04,100.0,100.0,"servicio de wi-fi","ruta inventada",EFGH-25,airport-01
+service-05,99.0,100.0,"servicio de wi-fi","ruta inventada",EFGH-25,airport-01
+# variación money
+service-06,10.0,100.0,"servicio de wi-fi","ruta inventada",EFGH-25,airport-01
+service-07,10.0,99.0,"servicio de wi-fi","ruta inventada",EFGH-25,airport-01
+service-08,10.0,0.1,"servicio de wi-fi","ruta inventada",EFGH-25,airport-01
+service-09,10.0,55.0,"servicio de wi-fi","ruta inventada",EFGH-25,airport-01
+service-10,10.0,,"servicio de wi-fi","ruta inventada",EFGH-25,airport-01
+# variación name
+service-11,10.00,100.0,"服务的Wi-Fi","ruta inventada",EFGH-25,airport-01
+service-12,10.00,100.0,"A","ruta inventada",EFGH-25,airport-01
+service-13,10.00,100.0,"Esta es una frase con exactamente 49 caracteres..","ruta inventada",EFGH-25,airport-01
+# variaciones picture
+service-14,10.00,100,"servicio de wi-fi","A",EFGH-25,airport-01
+service-15,10.00,100,"servicio de wi-fi","xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",EFGH-25,airport-01
+service-16,10.00,100,"servicio de wi-fi","服务的路径",EFGH-25,airport-01
+# variaciones de promotioncode
+service-17,10.00,100,"servicio de wi-fi","ruta inventada",EFGH-25,airport-01
+service-18,10.00,100,"servicio de wi-fi","ruta inventada",XYZW-25,airport-01
+# alguna asociación distinta 
+service-19,10.00,100.0,"servicio de wi-fi","ruta inventada",EFGH-25,airport-05
+service-20,10.00,100.0,"servicio de wi-fi","ruta inventada",EFGH-25,airport-06
