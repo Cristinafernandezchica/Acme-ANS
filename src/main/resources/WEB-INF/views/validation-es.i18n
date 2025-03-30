@@ -5,3 +5,5 @@ acme.validation.leg.overlap.message = Solapamiento con otro tramo del mismo vuel
 acme.validation.leg.departure.arrival.difference.message = Tiene que haber mínimo 5 minutos entre salida y llegada
 acme.validation.leg.departure.after.arrival.message = La salida tiene que ser antes que la llegada
 acme.validation.leg.operative.aircraft.message = El avión está bajo mantenimiento, debe estar operativo
+
+acme.validation.airport.iataCode.message = No puede usar un Iata Code que ya esté en uso

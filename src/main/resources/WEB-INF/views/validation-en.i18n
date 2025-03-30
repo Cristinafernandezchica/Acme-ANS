@@ -5,3 +5,5 @@ acme.validation.leg.overlap.message = Overlap with another leg of the same fligh
 acme.validation.leg.departure.arrival.difference.message = Arrival has to be at least 5 minutes later than the departure
 acme.validation.leg.departure.after.arrival.message = The departure must be after the arrival
 acme.validation.leg.operative.aircraft.message = The aircraft is under maintenance, it must be operative
+
+acme.validation.airport.iataCode.message = You can not use a Iata Code that is already in use
