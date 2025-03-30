@@ -8,13 +8,13 @@ airline-07,Lorem Ipsum Airways,MAQ,http://loremipsum.com,LOW_COST,2000/07/30 14:
 airline-08,航空会社,MAC,http://japanair.com,STANDARD,2000/08/05 09:10,contact@japanair.com,666666666
 airline-09,<marquee>Hacked</marquee>,MAD,http://hacked.com,LUXURY,2000/09/09 16:55,hacked@hacked.com,777777777
 airline-10,"Lorem ipsum dolor sit amet, consectetur adipiscing",MAE,http://malicious.com,LOW_COST,2000/10/10 22:05,hacker@malware.com,888888888
-airline-13,Pegasus,MAZ,http://pegasus.com,STANDARD,2000/12/12 12:12,pegasus@acme.com,101010101
-airline-15,Ryanair,RAY,http://ryanair.com,LUXURY,2001/02/02 02:02,contact@ryanair.com,303030303
-airline-16,Ryanair,RAZ,http://ryanair.com,STANDARD,2001/03/03 03:03,contact@ryanair.com,404040404
-airline-17,Ryanair,RAX,http://ryanair.com,LOW_COST,2001/04/04 04:04,contact@ryanair.com,505050505
-airline-22,Ryanair,RAX,http://www.super-long-url-example.com/path/to/resource,LOW_COST,2003/06/06 06:06,ryanair@acme.com,909090909
-airline-27,Pegasus,RAY,http://pegasus.com,STANDARD,2008/11/11 11:11,pegasus@acme.com,692555867
-airline-28,Ryanair,RAY,http://ryanair.com,LOW_COST,2009/12/12 12:12,ryanair@acme.com,+806493
+airline-13,Pangea,MAZ,http://pegasus.com,STANDARD,2000/12/12 12:12,pegasus@acme.com,101010101
+airline-15,EasyJet,RAY,http://ryanair.com,LUXURY,2001/02/02 02:02,contact@ryanair.com,303030303
+airline-16,Condor,RAZ,http://ryanair.com,STANDARD,2001/03/03 03:03,contact@ryanair.com,404040404
+airline-17,Lipassam,RAP,http://ryanair.com,LOW_COST,2001/04/04 04:04,contact@ryanair.com,505050505
+airline-22,CanaryLines,RAR,http://www.super-long-url-example.com/path/to/resource,LOW_COST,2003/06/06 06:06,ryanair@acme.com,909090909
+airline-27,Salmorejo,YAY,http://pegasus.com,STANDARD,2008/11/11 11:11,pegasus@acme.com,692555867
+airline-28,Tussam,PAY,http://ryanair.com,LOW_COST,2009/12/12 12:12,ryanair@acme.com,+806493
 airline-29,Люфтваффе,RBA,http://luftwaffe.com,LUXURY,2010/01/01 13:13,contact@luftwaffe.com,+498877665544
 airline-30,สายการบินไทย,RBB,http://thaiairways.com,STANDARD,2011/02/02 14:14,contact@thaiairways.com,+669988776655
 airline-31,日本航空,RBC,http://jal.co.jp,LOW_COST,2012/03/03 15:15,contact@jal.co.jp,+818877665544
