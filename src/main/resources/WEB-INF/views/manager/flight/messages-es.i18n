@@ -1,0 +1,37 @@
+manager.flight.form.title = Formulario vuelo
+manager.flight.list.title = Lista de vuelos
+
+manager.flight.form.label.tag = Etiqueta:
+manager.flight.form.label.airline = Aerolínea: 
+manager.flight.form.label.indication = Transporte:
+manager.flight.form.label.cost = Coste:
+manager.flight.form.label.description = Descrición (Opcional):
+
+		
+manager.flight.form.button.legs = Tramos
+manager.flight.form.button.update = Actualizar
+manager.flight.form.button.delete = Borrar
+manager.flight.form.button.publish = Publicar
+manager.flight.form.button.create = Crear
+
+manager.flight.list.label.tag = Etiqueta
+manager.flight.list.label.indication = Transporte
+manager.flight.list.label.cost = Coste
+manager.flight.list.label.originCity = Ciudad Origen
+manager.flight.list.label.destinationCity = Ciudad Destino
+manager.flight.list.label.scheduledDeparture = Horario Salida
+manager.flight.list.label.scheduledArrival = Horario Llegada
+manager.flight.list.label.layovers = Aterrizajes
+manager.flight.list.label.description = Descripción
+
+manager.flight.list.button.create = Crear
+
+manager.flight.form.label.draftMode = Borrador
+manager.flight.form.label.scheduledDeparture = Horario de Salida
+manager.flight.form.label.scheduledArrival = Horario de Llegada
+manager.flight.form.label.originCity = Ciudad Origen
+manager.flight.form.label.destinationCity = Ciudad Destino
+manager.flight.form.label.layovers = Aterrizajes
+manager.flight.form.label.airline = Aerolínea
+
+manager.flights.without.legs = No puedes publicar un vuelo sin tramos
