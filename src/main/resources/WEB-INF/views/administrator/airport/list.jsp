@@ -21,13 +21,8 @@
 	<acme:list-column code="administrator.airport.list.label.operationalScope" path="operationalScope" width="25%"/>
 	<acme:list-column code="administrator.airport.list.label.city" path="city" width="25%"/>
 	<acme:list-payload path="payload"/>	
-	
-	<jstl:when test="${_command == 'show'}">
-		<acme:button code="administrator.airport.list.label.name" action="/administrator/airport/list?masterId=${id}"/>			
-		<acme:button code="administrator.airport.list.label.iataCode" action="/administrator/airport/list?masterId=${id}"/>
-		<acme:button code="administrator.airport.list.label.operationalScope" action="/administrator/airport/list?masterId=${id}"/>
-		<acme:button code="administrator.airport.list.label.city" action="/administrator/airport/list?masterId=${id}"/>			
-	</jstl:when>
 </acme:list>
 
-<acme:button code="administrator.airport.list.button.create" action="/administrator/airport/create"/>
+<jstl:if test="${_command == 'list'}">
+	<acme:button code="administrator.airport.list.button.create" action="/administrator/airport/create"/>
+</jstl:if>

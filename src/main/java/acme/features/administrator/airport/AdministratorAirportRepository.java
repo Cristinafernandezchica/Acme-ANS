@@ -18,7 +18,7 @@ public interface AdministratorAirportRepository extends AbstractRepository {
 	@Query("select a from Airport a")
 	Collection<Airport> findAllAirports();
 
-	@Query("SELECT (COUNT(a) + COUNT(al)) FROM Airport a, Airline al WHERE a.iataCode = :iataCode OR al.iataCode = :iataCode")
-	long countByIataCode(String iataCode);
+	@Query("SELECT (COUNT(a) + COUNT(al)) FROM Airport a, Airline al WHERE (a.iataCode = :iataCode OR al.iataCode = :iataCode) AND (a.id <> :airportId OR al.iataCode = :iataCode)")
+	long countByIataCodeExcludingAirport(String iataCode, int airportId);
 
 }

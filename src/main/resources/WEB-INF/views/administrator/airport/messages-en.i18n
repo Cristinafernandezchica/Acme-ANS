@@ -22,6 +22,7 @@ administrator.airport.form.label.phoneNumber = Phone Number: (Optional)
 administrator.airport.form.label.confirmation = Confirm that the airport is correct.
 
 administrator.airport.form.button.create = Create
+administrator.airport.form.button.update = Update
 
 administrator.airport.list.label.name = Name
 administrator.airport.list.label.iataCode = Iata Code
