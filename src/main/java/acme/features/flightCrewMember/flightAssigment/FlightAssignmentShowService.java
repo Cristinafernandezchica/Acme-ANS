@@ -60,7 +60,7 @@ public class FlightAssignmentShowService extends AbstractGuiService<FlightCrewMe
 		statuses = SelectChoices.from(CurrentStatus.class, flightAssignment.getCurrentStatus());
 
 		legs = this.repository.findNotPastLegsById(MomentHelper.getCurrentMoment());
-		selectedLeg = SelectChoices.from(legs, "flightNumber", null);
+		selectedLeg = SelectChoices.from(legs, "flightNumber", flightAssignment.getLegRelated());
 
 		dataset = super.unbindObject(flightAssignment, "flightCrewsDuty", "lastUpdate", "currentStatus", "remarks", "legRelated", "flightCrewMemberAssigned", "draftMode");
 		dataset.put("availableFlightCrewMembers", selectedFCrewMember);
