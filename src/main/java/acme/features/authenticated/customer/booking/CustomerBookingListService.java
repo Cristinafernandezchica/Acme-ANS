@@ -46,7 +46,7 @@ public class CustomerBookingListService extends AbstractGuiService<Customer, Boo
 		if (booking.getFlight() != null)
 			dataset.put("flight", booking.getFlight().getTag());
 		else
-			dataset.put("flight", "Sin vuelo asociado");
+			dataset.put("flight", "");
 
 		super.getResponse().addData(dataset);
 	}
