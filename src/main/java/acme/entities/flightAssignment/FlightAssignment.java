@@ -4,7 +4,6 @@ package acme.entities.flightAssignment;
 import java.util.Date;
 
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -54,13 +53,11 @@ public class FlightAssignment extends AbstractEntity {
 
 	@Mandatory
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "flight_crew_member_id", nullable = false)
 	@Valid
 	private FlightCrewMember	flightCrewMemberAssigned;
 
 	@Mandatory
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "leg_id", nullable = false)
 	@Valid
 	private Leg					legRelated;
 
