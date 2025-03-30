@@ -1,35 +1,34 @@
-key,estimated_cost,inspection_due_date,moment,notes,status,key:aircraft,key:technician
+key,estimated_cost,inspection_due_date,moment,notes,status,key:aircraft,key:technician,draftMode
 #base MR
-MR-01,EUR 500000.00,2025/09/01 10:00,2010/09/01 10:00,"mantenimiento hecho al aircraft-01","PENDING",aircraft-01,technician-01
+MR-01,EUR 500000.00,2025/09/01 10:00,2010/09/01 10:00,"mantenimiento hecho al aircraft-01","PENDING",aircraft-01,technician-01,true
 # variaciones estimated_cost
-MR-02,EUR 0.00,2025/09/01 10:00,2010/09/01 10:00,"mantenimiento hecho al aircraft-01","PENDING",aircraft-01,technician-01
-MR-03,EUR 0.01,2025/09/01 10:00,2010/09/01 10:00,"mantenimiento hecho al aircraft-01","PENDING",aircraft-01,technician-01
-MR-04,EUR 1000000.00,2025/09/01 10:00,2010/09/01 10:00,"mantenimiento hecho al aircraft-01","PENDING",aircraft-01,technician-01
-MR-05,EUR 1000000.01,2025/09/01 10:00,2010/09/01 10:00,"mantenimiento hecho al aircraft-01","PENDING",aircraft-01,technician-01
-MR-06,EUR 999999.99,2025/09/01 10:00,2010/09/01 10:00,"mantenimiento hecho al aircraft-01","PENDING",aircraft-01,technician-01
+MR-02,EUR 0.00,2025/09/01 10:00,2010/09/01 10:00,"mantenimiento hecho al aircraft-01","PENDING",aircraft-01,technician-01,true
+MR-03,EUR 0.01,2025/09/01 10:00,2010/09/01 10:00,"mantenimiento hecho al aircraft-01","PENDING",aircraft-01,technician-01,true
+MR-04,EUR 1000000.00,2025/09/01 10:00,2010/09/01 10:00,"mantenimiento hecho al aircraft-01","PENDING",aircraft-01,technician-01,true
+MR-05,EUR 1000000.01,2025/09/01 10:00,2010/09/01 10:00,"mantenimiento hecho al aircraft-01","PENDING",aircraft-01,technician-01,true
+MR-06,EUR 999999.99,2025/09/01 10:00,2010/09/01 10:00,"mantenimiento hecho al aircraft-01","PENDING",aircraft-01,technician-01,true
 #variaciones inspection_due_date
-MR-07,EUR 500000.00,2010/08/30 10:00,2010/09/01 10:00,"mantenimiento hecho al aircraft-01","PENDING",aircraft-01,technician-01
-MR-08,EUR 500000.00,1924/12/31 10:00,2010/09/01 10:00,"mantenimiento hecho al aircraft-01","PENDING",aircraft-01,technician-01
-MR-09,EUR 500000.00,2010/09/01 10:00,2010/09/01 10:00,"mantenimiento hecho al aircraft-01","PENDING",aircraft-01,technician-01
-MR-10,EUR 500000.00,2010/09/01 10:05,2010/09/01 10:00,"mantenimiento hecho al aircraft-01","PENDING",aircraft-01,technician-01
-MR-11,EUR 500000.00,2100/01/01 09:55,2010/09/01 10:00,"mantenimiento hecho al aircraft-01","PENDING",aircraft-01,technician-01
-MR-12,EUR 500000.00,2100/01/01 10:00,2010/09/01 10:00,"mantenimiento hecho al aircraft-01","PENDING",aircraft-01,technician-01
-MR-13,EUR 500000.00,2100/01/01 10:05,2010/09/01 10:00,"mantenimiento hecho al aircraft-01","PENDING",aircraft-01,technician-01
+MR-07,EUR 500000.00,2000/09/01 10:05,2000/09/01 00:00,"mantenimiento hecho al aircraft-01","PENDING",aircraft-01,technician-01,true
+MR-08,EUR 500000.00,2010/09/01 10:05,2010/09/01 10:00,"mantenimiento hecho al aircraft-01","PENDING",aircraft-01,technician-01,true
+MR-09,EUR 500000.00,2100/01/01 09:55,2010/09/01 10:00,"mantenimiento hecho al aircraft-01","PENDING",aircraft-01,technician-01,true
+MR-10,EUR 500000.00,2100/01/01 10:00,2010/09/01 10:00,"mantenimiento hecho al aircraft-01","PENDING",aircraft-01,technician-01,true
 #variaciones moment
-MR-14,EUR 500000.00,2025/09/01 10:00,2025/01/01 00:00,"mantenimiento hecho al aircraft-01","PENDING",aircraft-01,technician-01
-MR-15,EUR 500000.00,2025/09/01 10:00,2024/12/31 23:00,"mantenimiento hecho al aircraft-01","PENDING",aircraft-01,technician-01
-MR-16,EUR 500000.00,2025/09/01 10:00,2100/01/01 11:00,"mantenimiento hecho al aircraft-01","PENDING",aircraft-01,technician-01
-MR-17,EUR 500000.00,2025/09/01 10:00,1924/12/31 09:00,"mantenimiento hecho al aircraft-01","PENDING",aircraft-01,technician-01
-MR-18,EUR 500000.00,2025/09/01 10:00,1925/01/01 10:00,"mantenimiento hecho al aircraft-01","PENDING",aircraft-01,technician-01
-MR-19,EUR 500000.00,2025/09/01 10:00,1925/01/01 11:00,"mantenimiento hecho al aircraft-01","PENDING",aircraft-01,technician-01
-MR-20,EUR 500000.00,2025/09/01 10:00,2025/01/01 11:00,"mantenimiento hecho al aircraft-01","PENDING",aircraft-01,technician-01
+MR-11,EUR 500000.00,2025/09/01 10:00,2025/01/01 00:00,"mantenimiento hecho al aircraft-01","PENDING",aircraft-01,technician-01,true
+MR-12,EUR 500000.00,2025/09/01 10:00,2024/12/31 23:00,"mantenimiento hecho al aircraft-01","PENDING",aircraft-01,technician-01,true
+MR-13,EUR 500000.00,2025/09/01 10:00,1925/01/01 10:00,"mantenimiento hecho al aircraft-01","PENDING",aircraft-01,technician-01,true
+MR-14,EUR 500000.00,2025/09/01 10:00,1925/01/01 11:00,"mantenimiento hecho al aircraft-01","PENDING",aircraft-01,technician-01,true
 #variaciones notes
-MR-21,EUR 500000.00,2025/09/01 10:00,2025/01/01 11:00,"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",PENDING,aircraft-01,technician-02
-MR-22,EUR 500000.00,2025/09/01 10:00,2025/01/01 11:00,"A",PENDING,aircraft-01,technician-03
-MR-23,EUR 500000.00,2025/09/01 10:00,2025/01/01 11:00,"维修完成",PENDING,aircraft-01,technician-04
-MR-24,EUR 500000.00,2025/09/01 10:00,2010/09/01 10:00,"",PENDING,aircraft-01,technician-01
+MR-15,EUR 500000.00,2025/09/01 10:00,2010/09/01 10:00,"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX","PENDING",aircraft-01,technician-01,true
+MR-16,EUR 500000.00,2025/09/01 10:00,2010/09/01 10:00,"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX","PENDING",aircraft-01,technician-01,true
+MR-17,EUR 500000.00,2025/09/01 10:00,2010/09/01 10:00,"x","PENDING",aircraft-01,technician-01,true
+MR-18,EUR 500000.00,2025/09/01 10:00,2010/09/01 10:00,"","PENDING",aircraft-01,technician-01,true
 #variaciones status
-MR-25,EUR 500000.00,2025/09/01 10:00,2010/09/01 10:00,"mantenimiento hecho al aircraft-01","PENDING",aircraft-01,technician-01
-MR-26,EUR 500000.00,2025/09/01 10:00,2010/09/01 10:00,"mantenimiento hecho al aircraft-01","INPROGRESS",aircraft-01,technician-01
-MR-27,EUR 500000.00,2025/09/01 10:00,2010/09/01 10:00,"mantenimiento hecho al aircraft-01","COMPLETED",aircraft-01,technician-01
-MR-28,EUR 500000.00,2025/09/01 10:00,2010/09/01 10:00,"mantenimiento hecho al aircraft-01","",aircraft-01,technician-08
+MR-19,EUR 500000.00,2025/09/01 10:00,2010/09/01 10:00,"mantenimiento hecho al aircraft-01","PENDING",aircraft-01,technician-01,true
+MR-20,EUR 500000.00,2025/09/01 10:00,2010/09/01 10:00,"mantenimiento hecho al aircraft-01","INPROGRESS",aircraft-01,technician-01,true
+MR-21,EUR 500000.00,2025/09/01 10:00,2010/09/01 10:00,"mantenimiento hecho al aircraft-01","COMPLETED",aircraft-01,technician-01,true
+# draftmode a false
+MR-22,EUR 500000.00,2025/09/01 10:00,2010/09/01 10:00,"mantenimiento hecho al aircraft-01","PENDING",aircraft-01,technician-01,false
+# popular a technician 2 y añadir un aircraft distinto
+MR-23,EUR 500000.00,2025/09/01 10:00,2010/09/01 10:00,"mantenimiento hecho al aircraft-01","PENDING",aircraft-01,technician-02,true
+MR-24,EUR 500000.00,2025/09/01 10:00,2010/09/01 10:00,"mantenimiento hecho al aircraft-02","INPROGRESS",aircraft-02,technician-02,true
+MR-25,EUR 500000.00,2025/09/01 10:00,2010/09/01 10:00,"mantenimiento pendiente al aircraft-01","PENDING",aircraft-01,technician-02,false
