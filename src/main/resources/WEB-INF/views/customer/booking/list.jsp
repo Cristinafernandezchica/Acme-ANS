@@ -13,8 +13,9 @@
 	<acme:list-payload path="payload"/>
 </acme:list>
 
-<acme:button code="customer.booking.list.button.create" action="/customer/booking/create"/>
-
+<jstl:if test="${_command == 'list'}">
+	<acme:button code="customer.booking.list.button.create" action="/customer/booking/create"/>
+</jstl:if>
 
 
 <%--

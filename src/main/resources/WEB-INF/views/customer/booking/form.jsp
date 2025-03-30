@@ -4,9 +4,10 @@
 <%@taglib prefix="acme" uri="http://acme-framework.org/"%>
 
 <acme:form> 
-	<acme:input-textbox code="customer.booking.form.locatorCode" path="locatorCode"/>
+	<acme:input-textbox code="customer.booking.form.locatorCode" path="locatorCode" readonly="true"/>
+	<acme:input-moment code="customer.booking.form.purchaseMoment" path="purchaseMoment" readonly="true"/>
 	<acme:input-select code="customer.booking.form.travelClass" path="travelClass" choices="${classes}"/>	 <%-- multiple ="true" /> --%>
-	<acme:input-money code="customer.booking.form.price" path="price"/>
+	<acme:input-money code="customer.booking.form.price" path="price" readonly="true"/>
 	<acme:input-textbox code="customer.booking.form.lastCardNibble" path="lastCardNibble"/>
 	<acme:input-select code="customer.booking.form.flight" path="flight" choices="${flights}"/>	
 
@@ -14,13 +15,16 @@
 
 
 <jstl:choose>
- 	<jstl:when test="${_command == 'create'}">
- 		<acme:input-checkbox code="customer.booking.form.confirmation" path="confirmation" />
- 		<acme:submit code="customer.booking.form.button.create"	action="/customer/booking/create" />
- 	</jstl:when>
- 	<jstl:when test="${acme:anyOf(_command, 'show|update')}">
- 		<acme:submit code="customer.booking.form.button.update"	action="/customer/booking/update" />
- 	</jstl:when>
- </jstl:choose>
-
+		<jstl:when test="${_command == 'create'}">
+			<acme:submit code="customer.booking.form.button.create" action="/customer/booking/create"/>
+		</jstl:when>	
+		<jstl:when test="${acme:anyOf(_command, 'show|update|delete|publish') && !draftMode}"  >		
+			<acme:button code="customer.booking.form.show.passengers" action="/customer/passenger/list?bookingId=${bookingId}"/>
+		</jstl:when> 
+		<jstl:when test="${acme:anyOf(_command, 'show|update|delete|publish') && draftMode}"  >		
+			<acme:button code="customer.booking.form.show.passengers" action="/customer/passenger/list?bookingId=${bookingId}"/>
+			<acme:submit code="customer.booking.form.button.publish" action="/customer/booking/publish"/>
+			<acme:submit code="customer.booking.form.button.update" action="/customer/booking/update"/>
+		</jstl:when>		
+	</jstl:choose>
 </acme:form>
