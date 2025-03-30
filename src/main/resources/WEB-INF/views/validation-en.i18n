@@ -1,5 +1,10 @@
 acme.validation.flight.layovers.zero.message = The attribute layovers can't be 0 or less
 acme.validation.filght.legs.empty.message = A flight must have one leg at least
+acme.validation.flight.needSelftTransfer.messagen = Don't need self transfer, it only have 1 leg
+
+acme.validation.manager.flights.without.legs = The flight has no leg assigned
+acme.validation.manager.flights.no.published.leg = The flight has some unpublished leg(s)
+acme.validation.manager.flights.currency.not.valid = The currency is not valid (only EUR is valid)
 
 acme.validation.leg.overlap.message = Overlap with another leg of the same flight
 acme.validation.leg.departure.arrival.difference.message = Arrival has to be at least 5 minutes later than the departure
