@@ -47,7 +47,7 @@ public class Booking extends AbstractEntity {
 	private TravelClass			travelClass;
 
 	@Mandatory
-	@ValidMoney(min = 0, max = 50000.00)
+	@ValidMoney(min = 0, max = 10000000.00)
 	@Automapped
 	private Money				price;
 
@@ -65,17 +65,23 @@ public class Booking extends AbstractEntity {
 	@Valid
 	private Customer			customer;
 
-	@Mandatory
-	@ManyToOne(optional = false)
+	@Optional
+	@ManyToOne
 	@Valid
 	private Flight				flight;
 
 
 	@Transient
-	public Money getTotalCost() {
+	public Money getPrice() {
 		BookingRepository repository;
 		Double totalAmount;
 		Money total = new Money();
+
+		if (this.flight == null || this.flight.getCost() == null) {
+			total.setAmount(0.0);
+			total.setCurrency("EUR");
+			return total;
+		}
 
 		repository = SpringHelper.getBean(BookingRepository.class);
 		totalAmount = this.flight.getCost().getAmount() * repository.findPassengersByBookingId(this.getId()).size();
