@@ -3,3 +3,5 @@ flight-crew-member.flight-assignment.list.label.flightCrewsDuty = Puesto del asi
 flight-crew-member.flight-assignment.list.label.lastUpdate = Última actualización
 flight-crew-member.flight-assignment.list.label.currentStatus = Estado actual
 flight-crew-member.flight-assignment.list.label.remarks = Indicaciones
+flight-crew-member.flight-assignment.list.label.legs = Vuelo
+flight-crew-member.flight-assignment.list.label.availableFlightCrewMembers = Asistente de vuelo

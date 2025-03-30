@@ -19,6 +19,8 @@
 	<acme:input-moment code="flight-crew-member.flight-assignment.list.label.lastUpdate" path="lastUpdate" placeholder="2025/01/01 00:00"/>
 	<acme:input-select code="flight-crew-member.flight-assignment.list.label.currentStatus" path="currentStatus" choices="${statuses}"/>
 	<acme:input-textbox code="flight-crew-member.flight-assignment.list.label.remarks" path="remarks"/>
+	<acme:input-select code="flight-crew-member.flight-assignment.list.label.legs" path="legs" choices="${legs}"/>
+	<acme:input-select code="flight-crew-member.flight-assignment.list.label.availableFlightCrewMembers" path="availableFlightCrewMembers" choices="${availableFlightCrewMembers}"/>
 	
 	
 	<jstl:choose>

@@ -28,8 +28,6 @@ public class FlightAssignmentCreateService extends AbstractGuiService<FlightCrew
 
 	@Override
 	public void authorise() {
-
-		// Solo pueden hacerlo los lead attendant
 		super.getResponse().setAuthorised(true);
 	}
 

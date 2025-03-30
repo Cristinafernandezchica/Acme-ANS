@@ -3,3 +3,5 @@ flight-crew-member.flight-assignment.list.label.flightCrewsDuty = Flight crew's 
 flight-crew-member.flight-assignment.list.label.lastUpdate = Last update
 flight-crew-member.flight-assignment.list.label.currentStatus = Current status
 flight-crew-member.flight-assignment.list.label.remarks = Remarks
+flight-crew-member.flight-assignment.list.label.legs = Leg
+flight-crew-member.flight-assignment.list.label.availableFlightCrewMembers = Flight crew member

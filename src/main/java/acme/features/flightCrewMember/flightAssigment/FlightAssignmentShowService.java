@@ -7,11 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import acme.client.components.models.Dataset;
 import acme.client.components.views.SelectChoices;
+import acme.client.helpers.MomentHelper;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.flightAssignment.CurrentStatus;
 import acme.entities.flightAssignment.FlightAssignment;
 import acme.entities.flightAssignment.FlightCrewsDuty;
+import acme.entities.legs.Leg;
 import acme.realms.flightCrewMember.FlightCrewMember;
 
 @GuiService
@@ -46,6 +48,8 @@ public class FlightAssignmentShowService extends AbstractGuiService<FlightCrewMe
 		SelectChoices flightcrewsDuties;
 		SelectChoices selectedFCrewMember;
 		SelectChoices statuses;
+		SelectChoices selectedLeg;
+		Collection<Leg> legs;
 		Collection<FlightCrewMember> availableFlightCrewMembers;
 
 		availableFlightCrewMembers = this.repository.findAvailableFlightCrewMembers();
@@ -55,10 +59,14 @@ public class FlightAssignmentShowService extends AbstractGuiService<FlightCrewMe
 
 		statuses = SelectChoices.from(CurrentStatus.class, flightAssignment.getCurrentStatus());
 
-		dataset = super.unbindObject(flightAssignment, "flightCrewsDuty", "lastUpdate", "currentStatus", "remarks");
+		legs = this.repository.findNotPastLegsById(MomentHelper.getCurrentMoment());
+		selectedLeg = SelectChoices.from(legs, "flightNumber", null);
+
+		dataset = super.unbindObject(flightAssignment, "flightCrewsDuty", "lastUpdate", "currentStatus", "remarks", "legRelated", "flightCrewMemberAssigned", "draftMode");
 		dataset.put("availableFlightCrewMembers", selectedFCrewMember);
 		dataset.put("statuses", statuses);
 		dataset.put("flightcrewsDuties", flightcrewsDuties);
+		dataset.put("legs", selectedLeg);
 
 		super.getResponse().addData(dataset);
 	}
