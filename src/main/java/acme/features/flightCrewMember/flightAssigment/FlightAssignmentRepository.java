@@ -18,11 +18,13 @@ public interface FlightAssignmentRepository extends AbstractRepository {
 	@Query("select fa from FlightAssignment fa where fa.flightCrewMemberAssigned.id = :id ")
 	Collection<FlightAssignment> findFlightAssignmentsByFlightCrewMemberId(int id);
 
-	@Query("select fa from FlightAssignment fa where fa.flightCrewMemberAssigned.id = :id and fa.legRelated.status = 'LANDED'")
-	Collection<FlightAssignment> findCompletedFlightAssignmentsByFlightCrewMemberId(int id);
+	//@Query("select fa from FlightAssignment fa where fa.legRelated.status = 'LANDED' or fa.legRelated.status = 'CANCELLED'")
+	@Query("select fa from FlightAssignment fa where fa.legRelated.scheduledArrival<:currentDate")
+	Collection<FlightAssignment> findCompletedFlightAssignmentsByFlightCrewMemberId(Date currentDate);
 
-	@Query("select fa from FlightAssignment fa where fa.flightCrewMemberAssigned.id = :id and fa.legRelated.scheduledDeparture >= :currentDate and fa.legRelated.status != 'LANDED'")
-	Collection<FlightAssignment> findPlannedFlightAssignmentsByFlightCrewMemberId(Date currentDate, int id);
+	//@Query("select fa from FlightAssignment fa where fa.legRelated.scheduledDeparture >= :currentDate and fa.legRelated.status != 'LANDED' and fa.legRelated.status != 'CANCELLED'")
+	@Query("select fa from FlightAssignment fa where fa.legRelated.scheduledDeparture>:currentDate")
+	Collection<FlightAssignment> findPlannedFlightAssignmentsByFlightCrewMemberId(Date currentDate);
 
 	@Query("select fa from FlightAssignment fa where fa.id = :id")
 	FlightAssignment findFlightAssignmentById(int id);

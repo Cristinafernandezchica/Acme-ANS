@@ -49,6 +49,10 @@ public class FlightAssignment extends AbstractEntity {
 	@Automapped
 	private String				remarks;
 
+	@Mandatory
+	@Automapped
+	private boolean				draftMode;
+
 	// Relations -------------------------------------------------------------
 
 	@Mandatory
