@@ -9,4 +9,7 @@ acme.validation.leg.departure.arrival.difference.message = Tiene que haber míni
 acme.validation.leg.departure.after.arrival.message = La salida tiene que ser antes que la llegada
 acme.validation.leg.operative.aircraft.message = El avión está bajo mantenimiento, debe estar operativo
 
+
+acme.validation.service.inspectionDueDate.message = la fecha límite de revision no puede ser anterior al momento de inspección
 acme.validation.airport.iataCode.message = No puede usar un Iata Code que ya esté en uso
+
