@@ -42,7 +42,7 @@
 </acme:footer-panel>
 
 <jstl:if test="${service != null}">
-	<div class="panel-body" style="margin: 1em 0em 1em 0em; text-align: center;">	
-		<img src="${service.picture}" alt="${advertisement.name}" class="img-fluid rounded" style="border-style: solid;"/>
+	<div class="rounded" style="text-align: center;">	
+		<img src="${service.picture}"/>
 	</div>
 </jstl:if>

@@ -15,8 +15,6 @@
 
 <jstl:choose>
 
-
-
 	<jstl:when test ="${_command == 'create'}">
 		<acme:submit code="technician.maintenance-record.form.button.create" action="/technician/maintenance-record/create"/>
 </jstl:when>

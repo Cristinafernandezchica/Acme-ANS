@@ -21,7 +21,7 @@
 	<acme:list-column code="technician.maintenance-record.list.label.moment" path="moment" width="20%"/>
 	<acme:list-column code="technician.maintenance-record.list.label.status" path="status" width="20%"/>
 	<acme:list-column code="technician.maintenance-record.list.label.inspectionDueDate" path="inspectionDueDate" width="20%"/>
-	<acme:list-column code="technician.maintenance-record.list.label.estimatedCost" path="estimatedCost" width="20%"/>
+	<acme:list-column code="technician.maintenance-record.list.label.draftMode" path="draftMode" width="20%"/>
 </acme:list>
 
 <acme:button code="technician.maintenance-record.list.button.create" action ="/technician/maintenance-record/create"/>

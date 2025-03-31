@@ -9,6 +9,9 @@ acme.validation.leg.departure.arrival.difference.message = Arrival has to be at 
 acme.validation.leg.departure.after.arrival.message = The departure must be after the arrival
 acme.validation.leg.operative.aircraft.message = The aircraft is under maintenance, it must be operative
 
+
+acme.validation.length = Is too long
+
 acme.validation.service.inspectionDueDate.message = The inspection due date can't be before that the moment
 acme.validation.airport.iataCode.message = You can not use a IATA Code that is already in use
 acme.validation.airline.iataCode.message = IATA code already in use
