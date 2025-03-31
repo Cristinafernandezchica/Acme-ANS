@@ -1,15 +1,18 @@
 
 package acme.features.manager.legs;
 
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import acme.client.components.models.Dataset;
 import acme.client.components.views.SelectChoices;
+import acme.client.helpers.MomentHelper;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.aircrafts.Aircraft;
@@ -83,10 +86,16 @@ public class ManagerLegCreateService extends AbstractGuiService<Manager, Leg> {
 
 	@Override
 	public void validate(final Leg leg) {
-		// validar que el aeropuerto de salida y el de llegada no sea el mismo
-		// validar que no se ponga un aircraft que esté operando a la misma hora
-		// validar que se salga desde el mismo aeropuerto que llegó la última leg
-		;
+		if (MomentHelper.isBefore(leg.getScheduledArrival(), leg.getScheduledDeparture()))
+			super.state(false, "scheduledDeparture", "acme.validation.leg.departure.after.arrival.message");
+
+		Date departureWithDelta = MomentHelper.deltaFromMoment(leg.getScheduledDeparture(), 5, ChronoUnit.MINUTES);
+		if (MomentHelper.isBefore(leg.getScheduledArrival(), departureWithDelta))
+			super.state(false, "scheduledArrival", "acme.validation.leg.departure.arrival.difference.message");
+
+		if (leg.getDepartureAirport().equals(leg.getArrivalAirport()))
+			super.state(false, "arrivalAirport", "acme.validation.leg.same.departure.arrival.airport");
+
 	}
 
 	@Override
@@ -122,6 +131,8 @@ public class ManagerLegCreateService extends AbstractGuiService<Manager, Leg> {
 		dataset.put("arrivalAirports", selectedArrivalAirport);
 		dataset.put("flight", leg.getFlight().getTag());
 		dataset.put("aircrafts", selectedAircrafts);
+		if(leg.getScheduledDeparture() != null)
+			dataset.put("duration", leg.getDuration());
 
 		super.getResponse().addData(dataset);
 	}
