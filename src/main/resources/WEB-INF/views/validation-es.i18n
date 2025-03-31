@@ -10,7 +10,11 @@ acme.validation.leg.departure.after.arrival.message = La salida tiene que ser an
 acme.validation.leg.operative.aircraft.message = El avión está bajo mantenimiento, debe estar operativo
 
 
-acme.validation.service.inspectionDueDate.message = la fecha límite de revision no puede ser anterior al momento de inspección
-acme.validation.airport.iataCode.message = No puede usar un Iata Code que ya esté en uso
 
-acme.validation.length = es muy largo
+acme.validation.length = Es muy largo
+
+acme.validation.service.inspectionDueDate.message = La fecha límite de revision no puede ser anterior al momento de inspección
+acme.validation.airport.iataCode.message = No puede usar un código IATA que ya esté en uso
+acme.validation.airline.iataCode.message = Código IATA ya en uso
+acme.validation.airline.foundationMoment.message = La fecha tiene que ser pasada
+
