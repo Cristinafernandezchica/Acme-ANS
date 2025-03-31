@@ -58,6 +58,10 @@
 		<acme:menu-option code="master.menu.technician" access="hasRealm('Technician')">
 			<acme:menu-suboption code="master.menu.technician.listMR" action="/technician/maintenance-record/list"/>
 		</acme:menu-option>
+		
+		<acme:menu-option code="master.menu.assistance-agent" access="hasRealm('AssistanceAgent')">
+ 			<acme:menu-suboption code="master.menu.assistance-agent.listCompleted" action="/assistance-agent/claim/listCompleted"/>
+ 		</acme:menu-option>
 
 	</acme:menu-left>
 

@@ -23,10 +23,10 @@ master.menu.anonymous.favourite-link-Angel = 24484826S: Amo Sánchez, Ángel
 master.menu.administrator = Administrator
 master.menu.administrator.list-user-accounts = List user accounts
 master.menu.administrator.aircraft = List aircrafts
+master.menu.administrator.list-airports = List of airports
 master.menu.administrator.populate-db-initial = Populate DB (initial)
 master.menu.administrator.populate-db-sample = Populate DB (samples)
 master.menu.administrator.shut-system-down = Shut system down
-master.menu.administrator.list-airports = List of airports
 
 # master.menu.provider ########################################################
 
@@ -60,3 +60,7 @@ master.menu.technician.listMR = list Maintenance Record
 # master.menu.manager ##########################################################
 master.menu.manager = Manager
 master.menu.manager.list-flights = List flights
+
+# master.menu.assistanceAgent ##########################################################
+master.menu.assistance-agent = Assistance Agent
+master.menu.assistance-agent.listCompleted = List Completed Claims
