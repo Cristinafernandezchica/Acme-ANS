@@ -57,6 +57,7 @@ master.menu.user-account.consumer-profile = Perfil de consumidor
 
 master.menu.technician = Tecnico
 master.menu.technician.listMR = lista de registro de manteminiento
+master.menu.technician.listTask= lista de tareas
 
 # master.menu.manager ##########################################################
 master.menu.manager = Manager

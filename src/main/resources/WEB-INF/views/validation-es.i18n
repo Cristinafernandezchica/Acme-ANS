@@ -13,3 +13,4 @@ acme.validation.leg.operative.aircraft.message = El avión está bajo mantenimie
 acme.validation.service.inspectionDueDate.message = la fecha límite de revision no puede ser anterior al momento de inspección
 acme.validation.airport.iataCode.message = No puede usar un Iata Code que ya esté en uso
 
+acme.validation.length = es muy largo

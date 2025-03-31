@@ -12,3 +12,4 @@ acme.validation.leg.operative.aircraft.message = The aircraft is under maintenan
 acme.validation.service.inspectionDueDate.message = the inspection due date cant be before that the moment
 acme.validation.airport.iataCode.message = You can not use a Iata Code that is already in use
 
+acme.validation.length = is too long
