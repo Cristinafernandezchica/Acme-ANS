@@ -42,7 +42,7 @@ public class AircraftUpdateService extends AbstractGuiService<Administrator, Air
 
 	@Override
 	public void bind(final Aircraft aircraft) {
-		super.bindObject(aircraft, "model", "registrationNumber", "numberPassengers", "cargoWeight", "status", "details");
+		super.bindObject(aircraft, "model", "registrationNumber", "numberPassengers", "cargoWeight", "status", "details", "airline");
 
 	}
 
