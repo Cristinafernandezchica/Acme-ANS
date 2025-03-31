@@ -1,6 +1,7 @@
 acme.validation.flight.layovers.zero.message = El atributo layovers no puede ser menor o igual a 0
 acme.validation.filght.legs.empty.message = Un vuelo debe tener, al menos, un tramo
 acme.validation.flight.needSelftTransfer.message = No necesita transporte propio entre tramos, tiene un solo tramo
+acme.validation.flight.legs.order = Los tramos no están en el orden correcto
 
 acme.validation.manager.flights.without.legs = EL vuelo no tiene ningún tramos asignado
 acme.validation.manager.flights.no.published.leg = El vuelo tiene alguno/s tramo/s sin publicar
