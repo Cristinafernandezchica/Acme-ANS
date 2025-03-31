@@ -17,40 +17,49 @@ import acme.entities.maintenanceRecords.Status;
 import acme.realms.Technician;
 
 @GuiService
-public class MaintenanceRecordCreateService extends AbstractGuiService<Technician, MaintenanceRecord> {
-
-	// Internal state ---------------------------------------------------------
+public class MaintenanceRecordUpdateService extends AbstractGuiService<Technician, MaintenanceRecord> {
 
 	@Autowired
 	private MaintenanceRecordRepository repository;
 
 
-	// AbstractGuiService interface -------------------------------------------
 	@Override
 	public void authorise() {
-		super.getResponse().setAuthorised(true);
+		MaintenanceRecord mr;
+		Technician technician;
+		int mrId;
+
+		mrId = super.getRequest().getData("id", int.class);
+		mr = this.repository.findMRById(mrId);
+
+		technician = (Technician) super.getRequest().getPrincipal().getActiveRealm();
+		if (technician.equals(mr.getTechnician()) && mr.isDraftMode())
+			super.getResponse().setAuthorised(true);
 	}
 
 	@Override
 	public void load() {
-		MaintenanceRecord maintenanceRecord;
-		Date moment;
-		boolean draftMode;
+		MaintenanceRecord mr;
+		int mrId;
+		Status newStatus;
+		mrId = super.getRequest().getData("id", int.class);
+		mr = this.repository.findMRById(mrId);
+		mr.setDraftMode(true);
 
-		moment = MomentHelper.getCurrentMoment();
-		Technician technician = (Technician) super.getRequest().getPrincipal().getActiveRealm();
+		newStatus = super.getRequest().getData("status", Status.class);
 
-		draftMode = true;
-
-		maintenanceRecord = new MaintenanceRecord();
-		maintenanceRecord.setTechnician(technician);
-		maintenanceRecord.setMoment(moment);
-		maintenanceRecord.setDraftMode(draftMode);
-		super.getBuffer().addData(maintenanceRecord);
+		//como moment representa el momento en que una tarea cambia de status
+		//pues si cambia el status cambia el moment
+		if (!mr.getStatus().equals(newStatus)) {
+			Date newMoment = MomentHelper.getCurrentMoment();
+			mr.setMoment(newMoment);
+		}
+		super.getBuffer().addData(mr);
 	}
 
 	@Override
 	public void bind(final MaintenanceRecord mr) {
+
 		super.bindObject(mr, "status", "inspectionDueDate", "estimatedCost", "notes", "aircraft");
 	}
 
@@ -77,7 +86,7 @@ public class MaintenanceRecordCreateService extends AbstractGuiService<Technicia
 		aircrafts = this.repository.findAllAircraft();
 		choiceAircraft = SelectChoices.from(aircrafts, "id", mr.getAircraft());
 
-		dataset = super.unbindObject(mr, "status", "inspectionDueDate", "estimatedCost", "notes", "aircraft", "moment", "draftMode");
+		dataset = super.unbindObject(mr, "status", "inspectionDueDate", "estimatedCost", "notes", "aircraft", "draftMode");
 
 		dataset.put("statuses", statuses);
 		dataset.put("aircrafts", choiceAircraft);
@@ -86,6 +95,6 @@ public class MaintenanceRecordCreateService extends AbstractGuiService<Technicia
 		dataset.put("status", statuses.getSelected().getKey());
 
 		super.getResponse().addData(dataset);
-	}
 
+	}
 }

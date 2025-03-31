@@ -5,7 +5,13 @@ technician.maintenance-record.list.label.moment= Momento
 technician.maintenance-record.list.label.status= Estado
 technician.maintenance-record.list.label.inspectionDueDate = Fecha límite de inspección
 technician.maintenance-record.list.label.estimatedCost = Precio estimado
+technician.maintenance-record.form.label.draftmode = Borrador
 technician.maintenance-record.list.button.create = Crear
+
+
+technician.maintenance-record.form.title = Formulario de registro de matenimiento
+technician.maintenance-record.form.button.update = Actualizar
+technician.maintenance-record.form.button.publish = publicar
 
 technician.maintenance-record.form.label.aircraft = Numero de registro de la aeronave
 technician.maintenance-record.form.label.moment = Momento

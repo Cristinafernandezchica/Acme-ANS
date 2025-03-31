@@ -44,7 +44,7 @@ public class MaintenanceRecord extends AbstractEntity {
 	private Aircraft			aircraft;
 
 	@Temporal(TemporalType.DATE)
-	@ValidMoment(min = "1925/01/01 10:00", max = "2100/01/01 10:00")
+	@ValidMoment(past = true, min = "1925/01/01 10:00", max = "2100/01/01 10:00")
 	@Mandatory
 	@Automapped
 	private Date				moment;

@@ -21,13 +21,12 @@ public class MaintenanceRecordValidator extends AbstractValidator<ValidMaintenan
 		if (mr == null)
 			super.state(context, false, "*", "javax.validation.constraints.NotNull.message");
 
-		else {
-			boolean nextInpectionIsAfterMoment = mr.getInspectionDueDate().before(mr.getMoment());
-			if (nextInpectionIsAfterMoment) {
-				result = false;
-				super.state(context, nextInpectionIsAfterMoment, "inspectionDueDate", "acme.validation.service.inspectionDueDate.message");
-			}
-		}
+		//		else {
+		//			boolean nextInpectionIsAfterMoment = mr.getInspectionDueDate().before(mr.getMoment());
+		//			if (nextInpectionIsAfterMoment) {
+		//				result = false;
+		//				super.state(context, nextInpectionIsAfterMoment, "inspectionDueDate", "acme.validation.service.inspectionDueDate.message");
+		//			}
 		return result;
 	}
 

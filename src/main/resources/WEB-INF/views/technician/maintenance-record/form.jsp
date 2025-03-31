@@ -12,15 +12,22 @@
 <acme:input-money code="technician.maintenance-record.form.label.estimatedCost" path= "estimatedCost"/>
 <acme:input-textbox code="technician.maintenance-record.form.label.notes" path= "notes"/>
 
+
 <jstl:choose>
+
+		<jstl:when test ="${acme:anyOf(_command, 'show|update|publish')}">
+		<acme:input-moment code="technician.maintenance-record.form.label.moment" path= "moment" readonly= "true"/>
+		</jstl:when>
+
 	<jstl:when test ="${_command == 'create'}">
 		<acme:submit code="technician.maintenance-record.form.button.create" action="/technician/maintenance-record/create"/>
 </jstl:when>
 
-	<jstl:when test ="${acme:anyOf(_command, 'show|update')}">
-		<acme:input-checkbox code = "technician.maintenance-record.form.label.confirmation" path = "confirmation"/>
+	<jstl:when test ="${acme:anyOf(_command, 'show|update|publish') && draftMode == true}">
+		<acme:input-moment code="technician.maintenance-record.form.label.moment" path= "moment" readonly= "true"/>
 		<acme:submit code="technician.maintenance-record.form.button.update" action="/technician/maintenance-record/update"/>
-		
+		<acme:submit code="technician.maintenance-record.form.button.publish" action="/technician/maintenance-record/publish"/>
+
 </jstl:when>
 
 </jstl:choose>
