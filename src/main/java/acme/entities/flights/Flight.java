@@ -4,6 +4,7 @@ package acme.entities.flights;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
@@ -74,7 +75,7 @@ public class Flight extends AbstractEntity {
 
 		repository = SpringHelper.getBean(LegRepository.class);
 		wrapper = repository.findLegsByFlightId(this.getId());
-		orderedWrapper = wrapper.stream().sorted(Comparator.comparing(Leg::getScheduledDeparture)).toList();
+		orderedWrapper = wrapper.stream().sorted(Comparator.comparing(Leg::getScheduledDeparture)).collect(Collectors.toList());
 		res = orderedWrapper.getFirst().getScheduledDeparture();
 
 		return res;
@@ -89,7 +90,7 @@ public class Flight extends AbstractEntity {
 
 		repository = SpringHelper.getBean(LegRepository.class);
 		wrapper = repository.findLegsByFlightId(this.getId());
-		orderedWrapper = wrapper.stream().sorted(Comparator.comparing(Leg::getScheduledArrival)).toList();
+		orderedWrapper = wrapper.stream().sorted(Comparator.comparing(Leg::getScheduledArrival)).collect(Collectors.toList());
 		res = orderedWrapper.getLast().getScheduledArrival();
 
 		return res;
@@ -104,7 +105,7 @@ public class Flight extends AbstractEntity {
 
 		repository = SpringHelper.getBean(LegRepository.class);
 		wrapper = repository.findLegsByFlightId(this.getId());
-		orderedWrapper = wrapper.stream().sorted(Comparator.comparing(Leg::getScheduledDeparture)).toList();
+		orderedWrapper = wrapper.stream().sorted(Comparator.comparing(Leg::getScheduledDeparture)).collect(Collectors.toList());
 		res = orderedWrapper.getFirst().getDepartureAirport().getCity();
 
 		return res;
@@ -119,7 +120,7 @@ public class Flight extends AbstractEntity {
 
 		repository = SpringHelper.getBean(LegRepository.class);
 		wrapper = repository.findLegsByFlightId(this.getId());
-		orderedWrapper = wrapper.stream().sorted(Comparator.comparing(Leg::getScheduledArrival)).toList();
+		orderedWrapper = wrapper.stream().sorted(Comparator.comparing(Leg::getScheduledArrival)).collect(Collectors.toList());
 		res = orderedWrapper.getLast().getArrivalAirport().getCity();
 
 		return res;
