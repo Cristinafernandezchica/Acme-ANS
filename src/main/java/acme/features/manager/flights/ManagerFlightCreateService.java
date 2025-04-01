@@ -43,7 +43,9 @@ public class ManagerFlightCreateService extends AbstractGuiService<Manager, Flig
 
 	@Override
 	public void validate(final Flight flight) {
-		;
+		boolean notAcceptedCurrency = flight.getCost().getCurrency().equals("EUR");
+		super.state(notAcceptedCurrency, "cost", "acme.validation.manager.flights.currency.not.valid");
+
 	}
 
 	@Override
@@ -56,11 +58,6 @@ public class ManagerFlightCreateService extends AbstractGuiService<Manager, Flig
 		Dataset dataset;
 
 		dataset = super.unbindObject(flight, "tag", "indication", "cost", "description", "draftMode");
-		// dataset.put("scheduledDeparture", flight.getScheduledDeparture());
-		// dataset.put("scheduledArrival", flight.getScheduledArrival());
-		// dataset.put("originCity", flight.originCity());
-		// dataset.put("destinationCity", flight.destinationCity());
-		// dataset.put("layovers", flight.layovers());
 
 		super.getResponse().addData(dataset);
 	}

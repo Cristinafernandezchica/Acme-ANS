@@ -55,10 +55,11 @@ public class ManagerFlightPublishService extends AbstractGuiService<Manager, Fli
 		Collection<Leg> legs = this.repository.findLegsByFlightId(flight.getId());
 
 		boolean hasLegs = !legs.isEmpty();
-		// Añadir como validación que todas las legs estén publicadas
-		// cuando tenga la parte de legs
+		boolean anyDraftMode = !legs.stream().anyMatch(Leg::isDraftMode);
 
-		super.state(hasLegs, "draftMode", "manager.flights.without.legs");
+		super.state(hasLegs, "draftMode", "acme.validation.manager.flights.without.legs");
+		super.state(anyDraftMode, "draftMode", "acme.validation.manager.flights.no.published.leg");
+
 	}
 
 	@Override
@@ -70,24 +71,8 @@ public class ManagerFlightPublishService extends AbstractGuiService<Manager, Fli
 	@Override
 	public void unbind(final Flight flight) {
 		Dataset dataset;
-		// Collection<Leg> legs;
-		// legs = this.repository.findLegsByFlightId(flight.getId());
+
 		dataset = super.unbindObject(flight, "tag", "indication", "cost", "description", "draftMode");
-		/*
-		 * if (!legs.isEmpty()) {
-		 * dataset.put("originCity", flight.originCity());
-		 * dataset.put("destinationCity", flight.destinationCity());
-		 * dataset.put("scheduledDeparture", flight.getScheduledDeparture());
-		 * dataset.put("scheduledArrival", flight.getScheduledArrival());
-		 * dataset.put("layovers", flight.layovers());
-		 * } else {
-		 * dataset.put("originCity", null);
-		 * dataset.put("destinationCity", null);
-		 * dataset.put("scheduledDeparture", null);
-		 * dataset.put("scheduledArrival", null);
-		 * dataset.put("layovers", null);
-		 * }
-		 */
 
 		super.getResponse().addData(dataset);
 	}

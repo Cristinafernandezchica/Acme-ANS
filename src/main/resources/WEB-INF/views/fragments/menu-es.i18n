@@ -30,6 +30,12 @@ master.menu.administrator.list-airports = Lista de aeropuertos
 master.menu.administrator.list-airlines = Lista de aerolíneas
 
 
+# master.menu.flightCrewMember #################################################
+
+master.menu.flight-crew-member = Asistente de vuelo
+master.menu.flight-crew-member.flight-assignment.plannedList = Lista de asignaciones de vuelo planeadas
+master.menu.flight-crew-member.flight-assignment.completedList = Lista de asignaciones de vuelo completadas
+
 # master.menu.provider ########################################################
 
 master.menu.provider = Proveedor

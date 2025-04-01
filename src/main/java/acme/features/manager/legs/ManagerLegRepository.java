@@ -15,6 +15,9 @@ import acme.entities.legs.Leg;
 @Repository
 public interface ManagerLegRepository extends AbstractRepository {
 
+	@Query("select l from Leg l where l.draftMode = false")
+	Collection<Leg> findAllPublishedLegs();
+
 	@Query("select l from Leg l where l.flight.manager.id = :managerId")
 	Collection<Leg> findAllLegsByManagerId(int managerId);
 
@@ -38,5 +41,8 @@ public interface ManagerLegRepository extends AbstractRepository {
 
 	@Query("select l.flightNumber from Leg l where l.flight.manager.airline.id = :airlineId")
 	Collection<String> findAllLegsFlightNumberByAirlineId(int airlineId);
+
+	@Query("select l from Leg l where l.flight.id = :flightId and l.draftMode = false")
+	Collection<Leg> findAllPublishedLegsByFlightId(int flightId);
 
 }

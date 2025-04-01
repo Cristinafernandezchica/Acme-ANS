@@ -55,8 +55,8 @@ public class ManagerFlightDeleteService extends AbstractGuiService<Manager, Flig
 
 	@Override
 	public void validate(final Flight flight) {
-		// validar que si están publicados no se puedan borrar
-		;
+		boolean notPublished = flight.isDraftMode();
+		super.state(notPublished, "draftMode", "acme.validation.flight.published.delete");
 	}
 
 	@Override

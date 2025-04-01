@@ -1,12 +1,16 @@
 
 package acme.features.manager.legs;
 
+import java.time.temporal.ChronoUnit;
 import java.util.Collection;
+import java.util.Date;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import acme.client.components.models.Dataset;
 import acme.client.components.views.SelectChoices;
+import acme.client.helpers.MomentHelper;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.aircrafts.Aircraft;
@@ -56,7 +60,18 @@ public class ManagerLegUpdateService extends AbstractGuiService<Manager, Leg> {
 
 	@Override
 	public void validate(final Leg leg) {
-		;
+		if (MomentHelper.isBefore(leg.getScheduledArrival(), leg.getScheduledDeparture()))
+			super.state(false, "scheduledDeparture", "acme.validation.leg.departure.after.arrival.message");
+
+		Date departureWithDelta = MomentHelper.deltaFromMoment(leg.getScheduledDeparture(), 5, ChronoUnit.MINUTES);
+		if (MomentHelper.isBefore(leg.getScheduledArrival(), departureWithDelta))
+			super.state(false, "scheduledArrival", "acme.validation.leg.departure.arrival.difference.message");
+
+		if (leg.getDepartureAirport().equals(leg.getArrivalAirport()))
+			super.state(false, "arrivalAirport", "acme.validation.leg.same.departure.arrival.airport");
+
+		boolean notPublished = leg.isDraftMode();
+		super.state(notPublished, "draftMode", "acme.validation.leg.published.update");
 	}
 
 	@Override
@@ -77,7 +92,7 @@ public class ManagerLegUpdateService extends AbstractGuiService<Manager, Leg> {
 
 		statuses = SelectChoices.from(LegStatus.class, leg.getStatus());
 		aircrafts = this.repository.findAllAircraftsByAirlineId(leg.getFlight().getAirline().getId());
-		activeAircrafts = aircrafts.stream().filter(a -> a.getStatus().equals(Status.ACTIVE_SERVICE)).toList();
+		activeAircrafts = aircrafts.stream().filter(a -> a.getStatus().equals(Status.ACTIVE_SERVICE)).collect(Collectors.toList());
 		selectedAircrafts = SelectChoices.from(activeAircrafts, "model", leg.getAircraft());
 
 		airports = this.repository.findAllAirports();
@@ -92,6 +107,7 @@ public class ManagerLegUpdateService extends AbstractGuiService<Manager, Leg> {
 		dataset.put("arrivalAirports", selectedArrivalAirport);
 		dataset.put("flight", leg.getFlight().getTag());
 		dataset.put("aircrafts", selectedAircrafts);
+		dataset.put("duration", leg.getDuration());
 
 		super.getResponse().addData(dataset);
 	}

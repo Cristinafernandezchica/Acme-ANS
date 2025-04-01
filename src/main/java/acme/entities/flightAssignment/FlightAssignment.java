@@ -4,7 +4,6 @@ package acme.entities.flightAssignment;
 import java.util.Date;
 
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -37,7 +36,7 @@ public class FlightAssignment extends AbstractEntity {
 	private FlightCrewsDuty		flightCrewsDuty;
 
 	@Mandatory
-	@ValidMoment(past = true, min = "1970/01/01 00:00", max = "2100/01/01 00:00")
+	@ValidMoment(past = true, min = "2000/01/01 00:00", max = "2100/01/01 00:00")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date				lastUpdate;
 
@@ -50,17 +49,19 @@ public class FlightAssignment extends AbstractEntity {
 	@Automapped
 	private String				remarks;
 
+	@Mandatory
+	@Automapped
+	private boolean				draftMode;
+
 	// Relations -------------------------------------------------------------
 
 	@Mandatory
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "flight_crew_member_id", nullable = false)
 	@Valid
 	private FlightCrewMember	flightCrewMemberAssigned;
 
 	@Mandatory
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "leg_id", nullable = false)
 	@Valid
 	private Leg					legRelated;
 

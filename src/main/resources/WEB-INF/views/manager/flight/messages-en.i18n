@@ -33,5 +33,3 @@ manager.flight.form.label.originCity = Origin City
 manager.flight.form.label.destinationCity = Destination City
 manager.flight.form.label.layovers = Layovers
 manager.flight.form.label.airline = Airline
-
-manager.flights.without.legs = You can't publish a flight without legs

@@ -5,7 +5,7 @@
 
 <acme:form> 
 	<acme:input-textbox code="manager.flight.form.label.tag" path="tag"/>
-	<acme:input-textbox code="manager.flight.form.label.indication" path="indication"/>
+	<acme:input-checkbox code="manager.flight.form.label.indication" path="indication"/>
 	<acme:input-money code="manager.flight.form.label.cost" path="cost"/>
 	<acme:input-textarea code="manager.flight.form.label.description" path="description"/>
 	<acme:input-checkbox code="manager.flight.form.label.draftMode" path="draftMode" readonly="true"/>

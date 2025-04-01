@@ -2,6 +2,7 @@
 package acme.features.manager.legs;
 
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -66,12 +67,12 @@ public class ManagerLegShowService extends AbstractGuiService<Manager, Leg> {
 
 		statuses = SelectChoices.from(LegStatus.class, leg.getStatus());
 		aircrafts = this.repository.findAllAircraftsByAirlineId(airlineId);
-		activeAircrafts = aircrafts.stream().filter(a -> a.getStatus().equals(Status.ACTIVE_SERVICE)).toList();
+		activeAircrafts = aircrafts.stream().filter(a -> a.getStatus().equals(Status.ACTIVE_SERVICE)).collect(Collectors.toList());
 		selectedAircrafts = SelectChoices.from(activeAircrafts, "model", leg.getAircraft());
 
 		airports = this.repository.findAllAirports();
-		departureAirports = airports.stream().filter(a -> !a.getIataCode().equals(leg.getArrivalAirport().getIataCode())).toList();
-		arrivalAirports = airports.stream().filter(a -> !a.getIataCode().equals(leg.getDepartureAirport().getIataCode())).toList();
+		departureAirports = airports.stream().filter(a -> !a.getIataCode().equals(leg.getArrivalAirport().getIataCode())).collect(Collectors.toList());
+		arrivalAirports = airports.stream().filter(a -> !a.getIataCode().equals(leg.getDepartureAirport().getIataCode())).collect(Collectors.toList());
 		selectedDepartureAirport = SelectChoices.from(departureAirports, "iataCode", leg.getDepartureAirport());
 		selectedArrivalAirport = SelectChoices.from(arrivalAirports, "iataCode", leg.getArrivalAirport());
 
