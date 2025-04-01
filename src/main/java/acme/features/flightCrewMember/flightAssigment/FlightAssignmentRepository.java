@@ -3,6 +3,7 @@ package acme.features.flightCrewMember.flightAssigment;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -38,7 +39,19 @@ public interface FlightAssignmentRepository extends AbstractRepository {
 	@Query("select l from Leg l where l.id = :id")
 	Leg findLegById(int id);
 
-	@Query("select l from Leg l where l.scheduledDeparture >= :currentDate")
-	Collection<Leg> findNotPastLegsById(Date currentDate);
+	@Query("select l from Leg l")
+	List<Leg> findAllLegs();
+
+	@Query("SELECT DISTINCT fa.legRelated FROM FlightAssignment fa WHERE fa.flightCrewMemberAssigned.id = :memberId")
+	List<Leg> findLegsByFlightCrewMemberId(int memberId);
+
+	@Query("select fa from FlightAssignment fa WHERE fa.legRelated.id = :legId")
+	List<FlightAssignment> findFlightAssignmentByLegId(int legId);
+
+	@Query("select count(fa) > 0 from FlightAssignment fa where fa.flightCrewsDuty = 'PILOT' and fa.legRelated.id = :idLeg")
+	boolean findPilotInLeg(int idLeg);
+
+	@Query("select count(fa) > 0 from FlightAssignment fa where fa.flightCrewsDuty = 'CO_PILOT' and fa.legRelated.id = :idLeg")
+	boolean findCoPilotInLeg(int idLeg);
 
 }

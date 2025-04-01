@@ -5,3 +5,5 @@ flight-crew-member.flight-assignment.list.label.currentStatus = Estado actual
 flight-crew-member.flight-assignment.list.label.remarks = Indicaciones
 flight-crew-member.flight-assignment.list.label.legs = Vuelo
 flight-crew-member.flight-assignment.list.label.availableFlightCrewMembers = Asistente de vuelo
+
+flightCrewMember.flightAssignment.list.button.create = Crear una asignación de vuelo

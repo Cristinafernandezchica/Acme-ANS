@@ -19,18 +19,18 @@
 	<acme:input-moment code="flight-crew-member.flight-assignment.list.label.lastUpdate" path="lastUpdate" placeholder="2025/01/01 00:00"/>
 	<acme:input-select code="flight-crew-member.flight-assignment.list.label.currentStatus" path="currentStatus" choices="${statuses}"/>
 	<acme:input-textbox code="flight-crew-member.flight-assignment.list.label.remarks" path="remarks"/>
-	<acme:input-select code="flight-crew-member.flight-assignment.list.label.legs" path="legs" choices="${legs}"/>
-	<acme:input-select code="flight-crew-member.flight-assignment.list.label.availableFlightCrewMembers" path="availableFlightCrewMembers" choices="${availableFlightCrewMembers}"/>
+	<acme:input-select code="flight-crew-member.flight-assignment.list.label.legs" path="legRelated" choices="${legs}"/>
+	<acme:input-select code="flight-crew-member.flight-assignment.list.label.availableFlightCrewMembers" path="flightCrewMemberAssigned" choices="${availableFlightCrewMembers}"/>
 	
 	
 	<jstl:choose>
 		<jstl:when test="${acme:anyOf(_command, 'show|update')}">
 			<acme:input-checkbox code="administrator.aircraft.form.label.confirmation" path="confirmation"/>
-			<acme:submit code="administrator.aircraft.form.button.update" action="/administrator/aircraft/update"/>
+			<acme:submit code="administrator.aircraft.form.button.update" action="/flight-crew-member/flight-assignment/update"/>
 		</jstl:when>
 		<jstl:when test="${_command == 'create'}">
 			<acme:input-checkbox code="administrator.aircraft.form.label.confirmation" path="confirmation"/>
-			<acme:submit code="administrator.aircraft.form.button.create" action="/administrator/aircraft/create"/>
+			<acme:submit code="administrator.aircraft.form.button.create" action="/flight-crew-member/flight-assignment/create"/>
 		</jstl:when>		
 	</jstl:choose>
 

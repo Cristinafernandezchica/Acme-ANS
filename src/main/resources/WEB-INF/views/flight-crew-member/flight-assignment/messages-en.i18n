@@ -5,3 +5,5 @@ flight-crew-member.flight-assignment.list.label.currentStatus = Current status
 flight-crew-member.flight-assignment.list.label.remarks = Remarks
 flight-crew-member.flight-assignment.list.label.legs = Leg
 flight-crew-member.flight-assignment.list.label.availableFlightCrewMembers = Flight crew member
+
+flightCrewMember.flightAssignment.list.button.create = Create a Flight assignment
