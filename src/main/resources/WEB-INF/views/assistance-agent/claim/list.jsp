@@ -25,6 +25,6 @@
 	<acme:list-payload path="payload"/>	
 </acme:list>
 
-<jstl:if test="${_command == 'list'}">
+<jstl:if test="${_command == 'listCompleted' || _command == 'listUndergoing'}">
 	<acme:button code="assistance-agent.claim.list.button.create" action="/assistance-agent/claim/create"/>
 </jstl:if>
