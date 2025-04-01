@@ -1,12 +1,15 @@
 
 package acme.features.manager.flights;
 
+import java.util.Collection;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import acme.client.components.models.Dataset;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.flights.Flight;
+import acme.entities.legs.Leg;
 import acme.realms.Manager;
 
 @GuiService
@@ -49,7 +52,10 @@ public class ManagerFlightUpdateService extends AbstractGuiService<Manager, Flig
 
 	@Override
 	public void validate(final Flight flight) {
-		;
+		boolean notAcceptedCurrency = flight.getCost().getCurrency().equals("EUR");
+		super.state(notAcceptedCurrency, "cost", "acme.validation.manager.flights.currency.not.valid");
+		boolean notPublished = flight.isDraftMode();
+		super.state(notPublished, "draftMode", "acme.validation.flight.published.update");
 	}
 
 	@Override
@@ -60,13 +66,23 @@ public class ManagerFlightUpdateService extends AbstractGuiService<Manager, Flig
 	@Override
 	public void unbind(final Flight flight) {
 		Dataset dataset;
-
+		Collection<Leg> legs;
+		legs = this.repository.findLegsByFlightId(flight.getId());
 		dataset = super.unbindObject(flight, "tag", "indication", "cost", "description", "draftMode");
-		dataset.put("scheduledDeparture", flight.getScheduledDeparture());
-		dataset.put("scheduledArrival", flight.getScheduledArrival());
-		dataset.put("originCity", flight.originCity());
-		dataset.put("destinationCity", flight.destinationCity());
-		dataset.put("layovers", flight.layovers());
+		if (!legs.isEmpty()) {
+			dataset.put("originCity", flight.originCity());
+			dataset.put("destinationCity", flight.destinationCity());
+			dataset.put("scheduledDeparture", flight.getScheduledDeparture());
+			dataset.put("scheduledArrival", flight.getScheduledArrival());
+			dataset.put("layovers", flight.layovers());
+			dataset.put("flightId", flight.getId());
+		} else {
+			dataset.put("originCity", null);
+			dataset.put("destinationCity", null);
+			dataset.put("scheduledDeparture", null);
+			dataset.put("scheduledArrival", null);
+			dataset.put("layovers", null);
+		}
 
 		super.getResponse().addData(dataset);
 
