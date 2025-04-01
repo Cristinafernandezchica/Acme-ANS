@@ -5,5 +5,10 @@ flight-crew-member.flight-assignment.list.label.currentStatus = Current status
 flight-crew-member.flight-assignment.list.label.remarks = Remarks
 flight-crew-member.flight-assignment.list.label.legs = Leg
 flight-crew-member.flight-assignment.list.label.availableFlightCrewMembers = Flight crew member
+flight-crew-member.flight-assignment.list.button.create = Create a Flight assignment
 
-flightCrewMember.flightAssignment.list.button.create = Create a Flight assignment
+flight-crew-member.flight-assignment.form.title = Flight Assignments
+flight-crew-member.flight-assignment.form.button.create = Create a Flight assignment
+flight-crew-member.flight-assignment.form.label.confirmation = Confirm
+flight-crew-member.flight-assignment.form.button.update = Update
+flight-crew-member.flight-assignment.form.button.publish = Publish
