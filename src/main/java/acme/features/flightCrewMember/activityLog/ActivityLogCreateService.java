@@ -6,6 +6,7 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import acme.client.components.models.Dataset;
+import acme.client.helpers.MomentHelper;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.activitylog.ActivityLog;
@@ -13,14 +14,15 @@ import acme.entities.flightAssignment.FlightAssignment;
 import acme.realms.flightCrewMember.FlightCrewMember;
 
 @GuiService
-public class ActivityLogListService extends AbstractGuiService<FlightCrewMember, ActivityLog> {
+public class ActivityLogCreateService extends AbstractGuiService<FlightCrewMember, ActivityLog> {
 
 	// Internal state -------------------------------------------------------------------
 	@Autowired
 	private ActivityLogRepository repository;
 
-
 	// AbstractGuiService interface -----------------------------------------------------
+
+
 	@Override
 	public void authorise() {
 		boolean authorization = true;
@@ -43,27 +45,41 @@ public class ActivityLogListService extends AbstractGuiService<FlightCrewMember,
 
 	@Override
 	public void load() {
-		Collection<ActivityLog> activityLogs;
 		int faId = super.getRequest().getData("faId", int.class);
-		int fcmIdLogged = super.getRequest().getPrincipal().getActiveRealm().getId();
-		activityLogs = this.repository.findOwnedActivityLogsByFAId(faId, fcmIdLogged);
+		FlightAssignment flightAssignmentRelated = this.repository.findFlightAssignmentById(faId);
 
-		super.getResponse().addGlobal("faId", faId); // para el create
+		ActivityLog activityLog = new ActivityLog();
+		activityLog.setDraftMode(true);
+		activityLog.setRegistrationMoment(MomentHelper.getCurrentMoment());
+		activityLog.setFlightAssignmentRelated(flightAssignmentRelated);
 
-		super.getBuffer().addData(activityLogs);
+		super.getBuffer().addData(activityLog);
 	}
 
 	@Override
 	public void bind(final ActivityLog activityLog) {
-		super.bindObject(activityLog, "typeOfIncident", "description", "severityLevel");
+		super.bindObject(activityLog, "registrationMoment", "typeOfIncident", "description", "severityLevel", "flightAssignmentRelated");
 
 	}
+
+	@Override
+	public void validate(final ActivityLog activityLog) {
+		boolean confirmation;
+
+		confirmation = super.getRequest().getData("confirmation", boolean.class);
+		super.state(confirmation, "confirmation", "acme.validation.confirmation.message");
+	}
+
+	@Override
+	public void perform(final ActivityLog activityLog) {
+		this.repository.save(activityLog);
+	}
+
 	@Override
 	public void unbind(final ActivityLog activityLog) {
-		Dataset dataset;
+		Dataset dataset = null;
 
-		dataset = super.unbindObject(activityLog, "typeOfIncident", "description", "severityLevel");
-		dataset.put("faId", activityLog.getFlightAssignmentRelated().getId());
+		dataset = super.unbindObject(activityLog, "registrationMoment", "typeOfIncident", "description", "severityLevel", "draftMode", "flightAssignmentRelated");
 
 		super.getResponse().addData(dataset);
 	}
