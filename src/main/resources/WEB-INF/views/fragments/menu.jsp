@@ -40,6 +40,11 @@
 			<acme:menu-suboption code="master.menu.administrator.list-airlines" action="/administrator/airline/list"/>
 			
 		</acme:menu-option>
+		
+		<acme:menu-option code="master.menu.flight-crew-member" access="hasRealm('FlightCrewMember')">
+			<acme:menu-suboption code="master.menu.flight-crew-member.flight-assignment.plannedList" action="/flight-crew-member/flight-assignment/planned-list"/>
+			<acme:menu-suboption code="master.menu.flight-crew-member.flight-assignment.completedList" action="/flight-crew-member/flight-assignment/completed-list"/>
+		</acme:menu-option>
 
 		<acme:menu-option code="master.menu.provider" access="hasRealm('Provider')">
 			<acme:menu-suboption code="master.menu.provider.favourite-link" action="http://www.example.com/"/>

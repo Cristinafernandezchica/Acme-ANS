@@ -17,6 +17,12 @@ acme.validation.leg.overlap.message = Overlap with another leg of the same fligh
 acme.validation.leg.departure.arrival.difference.message = Arrival has to be at least 5 minutes later than the departure
 acme.validation.leg.departure.after.arrival.message = The departure must be after the arrival
 acme.validation.leg.operative.aircraft.message = The aircraft is under maintenance, it must be operative
+
+# Flight crew member - flight assignments messages
+acme.validation.confirmation.message = This action must be confirm
+acme.validation.pilotExceptionPassed.message = That leg already has a pilot
+acme.validation.coPilotExceptionPassed.message = That leg already has a co-pilot
+
 acme.validation.leg.same.aircraft.message = The aircraft is used in the by other leg in the same schedule
 acme.validation.leg.flight.draftMode = The flight is published, you can't publish a leg of a flight that is published
 acme.validation.leg.iataCode.flightNumber = The flight number must contains the airline's IATA code

@@ -17,6 +17,12 @@ acme.validation.leg.overlap.message = Solapamiento con otro tramo del mismo vuel
 acme.validation.leg.departure.arrival.difference.message = Tiene que haber mínimo 5 minutos entre salida y llegada
 acme.validation.leg.departure.after.arrival.message = La salida tiene que ser antes que la llegada
 acme.validation.leg.operative.aircraft.message = El avión está bajo mantenimiento, debe estar operativo
+
+# Flight crew member - flight assignments messages
+acme.validation.confirmation.message = Esta acción debe ser confirmada
+acme.validation.pilotExceptionPassed.message = Este vuelo ya tiene un piloto
+acme.validation.coPilotExceptionPassed.message = Este vuelo ya tiene un copiloto
+
 acme.validation.leg.same.aircraft.message = El avión es usado por otro tramo en el mismo horario
 acme.validation.leg.flight.draftMode = El vuelo está publicado, no puedes publicar un tramo de un vuelo que ya está publicado
 acme.validation.leg.iataCode.flightNumber = El número de vuelo debe contener el código IATA de la aerolínea
