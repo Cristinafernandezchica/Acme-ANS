@@ -1,0 +1,8 @@
+
+technician.maintenance-record.list.title = Lista de las tareas del registro de mantenimiento
+
+technician.involves.list.label.taskId =Id
+technician.involves.list.label.taskPriority = Prioridad
+technician.involves.list.label.taskType = Tipo
+
+technician.involves.list.button.create = Añadir nueva tarea
