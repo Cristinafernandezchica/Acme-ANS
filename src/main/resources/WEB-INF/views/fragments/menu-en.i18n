@@ -49,7 +49,8 @@ master.menu.consumer.favourite-link = Favourite link
 # master.menu.customer ##########################################################
  
  master.menu.customer = Customer
- master.menu.customer.booking = My Bookings
+ master.menu.customer.booking = My bookings
+ master.menu.customer.passenger = My passengers
 
 # master.menu.user-account ####################################################
 
@@ -63,8 +64,8 @@ master.menu.user-account.consumer-profile = Consumer profile
 # master.menu.technician ##########################################################
 
 master.menu.technician = Technician
-master.menu.technician.listMR = list Maintenance Record
-master.menu.technician.listTask = list Task
+master.menu.technician.listMR = List Maintenance Record
+master.menu.technician.listTask = List Task
 
 # master.menu.manager ##########################################################
 master.menu.manager = Manager
