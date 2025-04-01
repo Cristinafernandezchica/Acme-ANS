@@ -64,3 +64,4 @@ master.menu.manager.list-flights = List flights
 # master.menu.assistanceAgent ##########################################################
 master.menu.assistance-agent = Assistance Agent
 master.menu.assistance-agent.listCompleted = List Completed Claims
+master.menu.assistance-agent.listUndergoing = List Undergoing Claims
