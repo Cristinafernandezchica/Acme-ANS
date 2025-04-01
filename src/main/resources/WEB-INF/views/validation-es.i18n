@@ -15,6 +15,11 @@ acme.validation.booking.passengers.message = Alguno de los pasajeros seleccionad
 acme.validation.passenger.duplicate-passport = Ya has creado un pasajero con este número de pasaporte
 acme.validation.airline.dateOfBirth.message = La fecha de nacimiento tiene que ser pasada
 
+acme.validation.bookingRecord.invalid-booking-null.message = Sin reservas asociadas
+acme.validation.bookingRecord.invalid-passenger-null.message = Sin pasajeros asociados
+
+
+
 acme.validation.leg.overlap.message = Solapamiento con otro tramo del mismo vuelo
 acme.validation.leg.departure.arrival.difference.message = Tiene que haber mínimo 5 minutos entre salida y llegada
 acme.validation.leg.departure.after.arrival.message = La salida tiene que ser antes que la llegada
