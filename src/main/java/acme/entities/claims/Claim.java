@@ -62,8 +62,7 @@ public class Claim extends AbstractEntity {
 
 	@Mandatory
 	@Automapped
-	@Valid
-	private Boolean				drafmode;
+	private boolean				drafMode;
 
 
 	@Transient

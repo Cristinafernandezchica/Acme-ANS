@@ -9,6 +9,10 @@ acme.validation.manager.flights.without.legs = The flight has no leg assigned
 acme.validation.manager.flights.no.published.leg = The flight has some unpublished leg(s)
 acme.validation.manager.flights.currency.not.valid = The currency is not valid (only EUR is valid)
 
+acme.validation.lastCardNibble.message = The last card nibble can't be empty 
+acme.validation.booking.flight.message = No flight assigned
+acme.validation.booking.passengers.message = Some passengers selected are in draft mode.
+
 acme.validation.leg.overlap.message = Overlap with another leg of the same flight
 acme.validation.leg.departure.arrival.difference.message = Arrival has to be at least 5 minutes later than the departure
 acme.validation.leg.departure.after.arrival.message = The departure must be after the arrival
@@ -19,3 +23,11 @@ acme.validation.leg.iataCode.flightNumber = The flight number must contains the 
 acme.validation.leg.same.departure.arrival.airport = The departure and arrival airports must be diferents
 acme.validation.leg.published.update = You can't update a published leg
 acme.validation.leg.published.delete = You can't delete a published leg
+
+
+acme.validation.length = Is too long
+
+acme.validation.service.inspectionDueDate.message = The inspection due date can't be before that the moment
+acme.validation.airport.iataCode.message = You can not use a IATA Code that is already in use
+acme.validation.airline.iataCode.message = IATA code already in use
+acme.validation.airline.foundationMoment.message = Foundation moment must be past
