@@ -2,6 +2,8 @@ acme.validation.flight.layovers.zero.message = The attribute layovers can't be 0
 acme.validation.filght.legs.empty.message = A flight must have one leg at least
 acme.validation.flight.needSelftTransfer.messagen = Don't need self transfer, it only have 1 leg
 acme.validation.flight.legs.order = The legs are not in the right order
+acme.validation.flight.published.update = You can't update a published flight
+acme.validation.flight.published.delete = You can't delete a published flight
 
 acme.validation.manager.flights.without.legs = The flight has no leg assigned
 acme.validation.manager.flights.no.published.leg = The flight has some unpublished leg(s)

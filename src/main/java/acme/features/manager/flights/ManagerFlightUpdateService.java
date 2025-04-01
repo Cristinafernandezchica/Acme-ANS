@@ -54,6 +54,8 @@ public class ManagerFlightUpdateService extends AbstractGuiService<Manager, Flig
 	public void validate(final Flight flight) {
 		boolean notAcceptedCurrency = flight.getCost().getCurrency().equals("EUR");
 		super.state(notAcceptedCurrency, "cost", "acme.validation.manager.flights.currency.not.valid");
+		boolean notPublished = flight.isDraftMode();
+		super.state(notPublished, "draftMode", "acme.validation.flight.published.update");
 	}
 
 	@Override

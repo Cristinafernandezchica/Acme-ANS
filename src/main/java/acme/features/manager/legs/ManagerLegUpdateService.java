@@ -71,7 +71,7 @@ public class ManagerLegUpdateService extends AbstractGuiService<Manager, Leg> {
 			super.state(false, "arrivalAirport", "acme.validation.leg.same.departure.arrival.airport");
 
 		boolean notPublished = leg.isDraftMode();
-		super.state(!notPublished, "draftMode", "acme.validation.leg.published.update");
+		super.state(notPublished, "draftMode", "acme.validation.leg.published.update");
 	}
 
 	@Override
