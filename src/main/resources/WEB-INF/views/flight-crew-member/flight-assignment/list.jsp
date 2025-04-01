@@ -30,3 +30,7 @@
 <jstl:if test="${_command == 'completed-list'}">
 	<acme:button code="flight-crew-member.flight-assignment.list.button.create" action="/flight-crew-member/flight-assignment/create"/>
 </jstl:if>
+
+<jstl:if test="${_command == 'completed-list'}">
+	<acme:button code="flight-crew-member.flight-assignment.list.button.create" action="/flight-crew-member/flight-assignment/create"/>
+</jstl:if>
