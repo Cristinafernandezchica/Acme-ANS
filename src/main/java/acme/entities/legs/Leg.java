@@ -35,24 +35,28 @@ public class Leg extends AbstractEntity {
 
 	// Attributes -------------------------------------------------------------
 
-	@ValidString(pattern = "^[A-Z]{3}\\d{4}$")
 	@Mandatory
+	@ValidString(pattern = "^[A-Z]{3}\\d{4}$")
 	@Column(unique = true)
 	private String				flightNumber;
 
+	@Mandatory
 	@ValidMoment
 	@Temporal(TemporalType.TIMESTAMP)
-	@Mandatory
 	private Date				scheduledDeparture;
 
+	@Mandatory
 	@ValidMoment
 	@Temporal(TemporalType.TIMESTAMP)
-	@Mandatory
 	private Date				scheduledArrival;
 
 	@Mandatory
 	@Automapped
 	private LegStatus			status;
+
+	@Mandatory
+	@Automapped
+	private boolean				draftMode;
 
 	// Relationships ----------------------------------------
 
@@ -80,8 +84,9 @@ public class Leg extends AbstractEntity {
 
 
 	@Transient
-	private double getDuration() {
-		return (double) (this.getScheduledArrival().getTime() - this.getScheduledDeparture().getTime()) * (1000 * 60 * 60);
+	public double getDuration() {
+		long durationInMillis = this.getScheduledArrival().getTime() - this.getScheduledDeparture().getTime();
+		return (double) durationInMillis / (1000 * 60 * 60);
 	}
 
 }

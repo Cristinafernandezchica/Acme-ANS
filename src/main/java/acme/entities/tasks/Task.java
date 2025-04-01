@@ -10,14 +10,14 @@ import acme.client.components.mappings.Automapped;
 import acme.client.components.validation.Mandatory;
 import acme.client.components.validation.ValidNumber;
 import acme.client.components.validation.ValidString;
-import acme.entities.technicians.Technicians;
+import acme.realms.Technician;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
 @Entity
-public class Tasks extends AbstractEntity {
+public class Task extends AbstractEntity {
 
 	private static final long	serialVersionUID	= 1L;
 
@@ -25,7 +25,7 @@ public class Tasks extends AbstractEntity {
 	@ManyToOne(optional = false)
 	@Valid
 	@Automapped
-	private Technicians			technician;
+	private Technician			technician;
 
 	@Mandatory
 	@Valid

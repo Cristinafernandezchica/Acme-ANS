@@ -1,5 +1,5 @@
 
-package acme.entities.technicians;
+package acme.realms;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,7 +17,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-public class Technicians extends AbstractRole {
+public class Technician extends AbstractRole {
 
 	private static final long	serialVersionUID	= 1L;
 
