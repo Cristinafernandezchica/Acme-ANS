@@ -1,8 +1,16 @@
 
-technician.maintenance-record.list.title = Lista de las tareas del registro de mantenimiento
+technician.involves.list.title = Lista de las tareas del registro de mantenimiento
 
 technician.involves.list.label.taskId =Id
 technician.involves.list.label.taskPriority = Prioridad
 technician.involves.list.label.taskType = Tipo
 
 technician.involves.list.button.create = Añadir nueva tarea
+technician.involves.form.button.delete = Borrar
+
+technician.involves.form.label.task = Tarea id
+technician.involves.form.button.create = Crear
+
+technician.involves.form.button.delete = Borrar
+
+technician.involves.form.title = Formulario de las tareas del registro de mantenimiento
