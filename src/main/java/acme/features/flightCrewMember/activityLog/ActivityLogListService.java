@@ -23,7 +23,7 @@ public class ActivityLogListService extends AbstractGuiService<FlightCrewMember,
 	// AbstractGuiService interface -----------------------------------------------------
 	@Override
 	public void authorise() {
-		boolean isFlightAssignmentOwner = true;
+		boolean isFlightAssignmentOwner;
 
 		FlightCrewMember fcmLogged;
 		FlightAssignment faSelected;
@@ -59,7 +59,7 @@ public class ActivityLogListService extends AbstractGuiService<FlightCrewMember,
 
 	@Override
 	public void validate(final ActivityLog activityLog) {
-		;
+
 	}
 
 	@Override

@@ -2,7 +2,6 @@
 package acme.features.flightCrewMember.flightAssigment;
 
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.Query;
@@ -19,18 +18,19 @@ public interface FlightAssignmentRepository extends AbstractRepository {
 	@Query("select fa from FlightAssignment fa where fa.flightCrewMemberAssigned.id = :id ")
 	Collection<FlightAssignment> findFlightAssignmentsByFlightCrewMemberId(int id);
 
-	//@Query("select fa from FlightAssignment fa where fa.legRelated.status = 'LANDED' or fa.legRelated.status = 'CANCELLED'")
-	@Query("select fa from FlightAssignment fa where fa.legRelated.scheduledArrival<:currentDate")
-	Collection<FlightAssignment> findCompletedFlightAssignmentsByFlightCrewMemberId(Date currentDate);
+	@Query("select fa from FlightAssignment fa")
+	List<FlightAssignment> findAllFlightAssignments();
 
-	//@Query("select fa from FlightAssignment fa where fa.legRelated.scheduledDeparture >= :currentDate and fa.legRelated.status != 'LANDED' and fa.legRelated.status != 'CANCELLED'")
-	@Query("select fa from FlightAssignment fa where fa.legRelated.scheduledDeparture>:currentDate")
-	Collection<FlightAssignment> findPlannedFlightAssignmentsByFlightCrewMemberId(Date currentDate);
+	@Query("select fa from FlightAssignment fa where fa.legRelated.status = acme.entities.legs.LegStatus.LANDED or fa.legRelated.status = acme.entities.legs.LegStatus.CANCELLED ")
+	Collection<FlightAssignment> findCompletedFlightAssignmentByFlightCrewMemberId();
+
+	@Query("select fa from FlightAssignment fa where fa.legRelated.status = acme.entities.legs.LegStatus.DELAYED or fa.legRelated.status = acme.entities.legs.LegStatus.ON_TIME ")
+	Collection<FlightAssignment> findPlannedFlightAssignmentByFlightCrewMemberId();
 
 	@Query("select fa from FlightAssignment fa where fa.id = :id")
 	FlightAssignment findFlightAssignmentById(int id);
 
-	@Query("select fcm from FlightCrewMember fcm where fcm.availabilityStatus = 'AVAILABLE'")
+	@Query("select fcm from FlightCrewMember fcm where fcm.availabilityStatus = acme.realms.flightCrewMember.AvailabilityStatus.AVAILABLE")
 	Collection<FlightCrewMember> findAvailableFlightCrewMembers();
 
 	@Query("select fcm from FlightCrewMember fcm where fcm.id = :id")
