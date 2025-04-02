@@ -16,3 +16,9 @@ acme.validation.service.inspectionDueDate.message = The inspection due date can'
 acme.validation.airport.iataCode.message = You can not use a IATA Code that is already in use
 acme.validation.airline.iataCode.message = IATA code already in use
 acme.validation.airline.foundationMoment.message = Foundation moment must be past
+
+acme.validation.technician.involves.message = The task can't be in draft mode
+acme.validation.technician.invalidTask.message = This is an invalid task
+acme.validation.technician.maintenance-record.unpublished-tasks.message = Can't publish a Maintenance record with unpublish tasks
+acme.validation.technician.maintenance-record.published-tasks.message = Need at least 1 publish task
+acme.validation.maintenanceRecords.costs.message = Need to be an acepted currency

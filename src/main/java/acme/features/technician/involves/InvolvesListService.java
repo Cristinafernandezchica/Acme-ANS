@@ -9,6 +9,7 @@ import acme.client.components.models.Dataset;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.involves.Involves;
+import acme.entities.maintenanceRecords.MaintenanceRecord;
 import acme.realms.Technician;
 
 @GuiService
@@ -20,7 +21,18 @@ public class InvolvesListService extends AbstractGuiService<Technician, Involves
 
 	@Override
 	public void authorise() {
-		super.getResponse().setAuthorised(true);
+		boolean authored = false;
+		MaintenanceRecord mr;
+		int maintenanceRecordId;
+		maintenanceRecordId = super.getRequest().getData("id", int.class);
+		Technician technician = (Technician) super.getRequest().getPrincipal().getActiveRealm();
+
+		mr = this.repository.findMRById(maintenanceRecordId);
+
+		if (mr.getTechnician().equals(technician))
+			authored = true;
+
+		super.getResponse().setAuthorised(authored);
 	}
 
 	@Override
@@ -40,7 +52,7 @@ public class InvolvesListService extends AbstractGuiService<Technician, Involves
 
 		Dataset dataset;
 
-		dataset = super.unbindObject(involves, "tasks.id", "tasks.type", "tasks.priority");
+		dataset = super.unbindObject(involves, "task.id", "task.type", "task.priority");
 
 		super.getResponse().addData(dataset);
 	}

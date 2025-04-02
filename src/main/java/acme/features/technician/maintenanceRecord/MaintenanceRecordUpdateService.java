@@ -33,7 +33,7 @@ public class MaintenanceRecordUpdateService extends AbstractGuiService<Technicia
 		mr = this.repository.findMRById(mrId);
 
 		technician = (Technician) super.getRequest().getPrincipal().getActiveRealm();
-		if (technician.equals(mr.getTechnician()) && mr.isDraftMode())
+		if (technician.equals(mr.getTechnician()))
 			super.getResponse().setAuthorised(true);
 	}
 
@@ -44,7 +44,6 @@ public class MaintenanceRecordUpdateService extends AbstractGuiService<Technicia
 		Status newStatus;
 		mrId = super.getRequest().getData("id", int.class);
 		mr = this.repository.findMRById(mrId);
-		mr.setDraftMode(true);
 
 		newStatus = super.getRequest().getData("status", Status.class);
 
@@ -86,7 +85,7 @@ public class MaintenanceRecordUpdateService extends AbstractGuiService<Technicia
 		aircrafts = this.repository.findAllAircraft();
 		choiceAircraft = SelectChoices.from(aircrafts, "id", mr.getAircraft());
 
-		dataset = super.unbindObject(mr, "status", "inspectionDueDate", "estimatedCost", "notes", "aircraft", "draftMode");
+		dataset = super.unbindObject(mr, "status", "inspectionDueDate", "estimatedCost", "notes", "aircraft", "moment", "draftMode");
 
 		dataset.put("statuses", statuses);
 		dataset.put("aircrafts", choiceAircraft);

@@ -14,12 +14,10 @@ import acme.entities.tasks.Task;
 import acme.realms.Technician;
 
 @GuiService
-public class InvolvesShowService extends AbstractGuiService<Technician, Involves> {
+public class InvolvesDeleteService extends AbstractGuiService<Technician, Involves> {
 
 	@Autowired
 	private InvolvesRepository repository;
-
-	//AbstractGuiService state ----------------------------------------------------------
 
 
 	@Override
@@ -36,7 +34,6 @@ public class InvolvesShowService extends AbstractGuiService<Technician, Involves
 			authored = true;
 
 		super.getResponse().setAuthorised(authored);
-
 	}
 
 	@Override
@@ -51,8 +48,22 @@ public class InvolvesShowService extends AbstractGuiService<Technician, Involves
 	}
 
 	@Override
-	public void unbind(final Involves involves) {
+	public void bind(final Involves involves) {
+		super.bindObject(involves, "task");
+	}
 
+	@Override
+	public void validate(final Involves involves) {
+		;
+	}
+
+	@Override
+	public void perform(final Involves involves) {
+		this.repository.delete(involves);
+	}
+
+	@Override
+	public void unbind(final Involves involves) {
 		SelectChoices selectTask;
 
 		Collection<Task> tasks;
