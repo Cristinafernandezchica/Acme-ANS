@@ -1,8 +1,6 @@
 
 package acme.features.flightCrewMember.activityLog;
 
-import java.util.Collection;
-
 import org.springframework.beans.factory.annotation.Autowired;
 
 import acme.client.components.models.Dataset;
@@ -25,22 +23,19 @@ public class ActivityLogCreateService extends AbstractGuiService<FlightCrewMembe
 
 	@Override
 	public void authorise() {
-		boolean authorization = true;
-		int fcmIdLogged;
+		boolean isFlightAssignmentOwner = true;
+
 		FlightCrewMember fcmLogged;
-		Collection<FlightAssignment> flightAssignments;
+		ActivityLog alSelected;
+		int alId = super.getRequest().getData("id", int.class);
 
-		fcmIdLogged = super.getRequest().getPrincipal().getActiveRealm().getId();
-		flightAssignments = this.repository.findFlightAssignmentsByFCMId(fcmIdLogged);
+		// Comprobación de que la activityLog sea del FCM logeado
+		int fcmIdLogged = super.getRequest().getPrincipal().getActiveRealm().getId();
 		fcmLogged = this.repository.findFlighCrewMemberById(fcmIdLogged);
+		alSelected = this.repository.findActivityLogById(alId);
+		isFlightAssignmentOwner = alSelected.getFlightAssignmentRelated().getFlightCrewMemberAssigned() == fcmLogged;
 
-		for (FlightAssignment fa : flightAssignments) {
-			authorization = fa.getFlightCrewMemberAssigned().equals(fcmLogged);
-			if (!authorization)
-				break;
-		}
-
-		super.getResponse().setAuthorised(authorization);
+		super.getResponse().setAuthorised(isFlightAssignmentOwner);
 	}
 
 	@Override

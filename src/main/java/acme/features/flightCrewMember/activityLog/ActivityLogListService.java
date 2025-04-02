@@ -23,22 +23,20 @@ public class ActivityLogListService extends AbstractGuiService<FlightCrewMember,
 	// AbstractGuiService interface -----------------------------------------------------
 	@Override
 	public void authorise() {
-		boolean authorization = true;
-		int fcmIdLogged;
+		boolean isFlightAssignmentOwner = true;
+
 		FlightCrewMember fcmLogged;
-		Collection<FlightAssignment> flightAssignments;
+		FlightAssignment faSelected;
+		int faId = super.getRequest().getData("faId", int.class);
 
-		fcmIdLogged = super.getRequest().getPrincipal().getActiveRealm().getId();
-		flightAssignments = this.repository.findFlightAssignmentsByFCMId(fcmIdLogged);
+		// Comprobación de que la flight assignments relacionadas al activityLog sean asiganadas al fcm
+		int fcmIdLogged = super.getRequest().getPrincipal().getActiveRealm().getId();
 		fcmLogged = this.repository.findFlighCrewMemberById(fcmIdLogged);
+		faSelected = this.repository.findFlightAssignmentById(faId);
+		isFlightAssignmentOwner = faSelected.getFlightCrewMemberAssigned() == fcmLogged;
 
-		for (FlightAssignment fa : flightAssignments) {
-			authorization = fa.getFlightCrewMemberAssigned().equals(fcmLogged);
-			if (!authorization)
-				break;
-		}
+		super.getResponse().setAuthorised(isFlightAssignmentOwner);
 
-		super.getResponse().setAuthorised(authorization);
 	}
 
 	@Override
@@ -58,6 +56,12 @@ public class ActivityLogListService extends AbstractGuiService<FlightCrewMember,
 		super.bindObject(activityLog, "typeOfIncident", "description", "severityLevel");
 
 	}
+
+	@Override
+	public void validate(final ActivityLog activityLog) {
+		;
+	}
+
 	@Override
 	public void unbind(final ActivityLog activityLog) {
 		Dataset dataset;

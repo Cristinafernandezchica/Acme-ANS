@@ -22,7 +22,19 @@ public class ActivityLogDeleteService extends AbstractGuiService<FlightCrewMembe
 
 	@Override
 	public void authorise() {
-		super.getResponse().setAuthorised(true);
+		boolean isFlightAssignmentOwner = true;
+
+		FlightCrewMember fcmLogged;
+		ActivityLog alSelected;
+		int alId = super.getRequest().getData("id", int.class);
+
+		// Comprobación de que la activityLog sea del FCM logeado
+		int fcmIdLogged = super.getRequest().getPrincipal().getActiveRealm().getId();
+		fcmLogged = this.repository.findFlighCrewMemberById(fcmIdLogged);
+		alSelected = this.repository.findActivityLogById(alId);
+		isFlightAssignmentOwner = alSelected.getFlightAssignmentRelated().getFlightCrewMemberAssigned() == fcmLogged;
+
+		super.getResponse().setAuthorised(isFlightAssignmentOwner);
 	}
 
 	@Override
