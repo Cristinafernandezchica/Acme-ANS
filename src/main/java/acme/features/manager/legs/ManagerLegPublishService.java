@@ -32,10 +32,11 @@ public class ManagerLegPublishService extends AbstractGuiService<Manager, Leg> {
 		Leg leg;
 		Manager manager;
 
+		int managerId = super.getRequest().getPrincipal().getActiveRealm().getId();
 		masterId = super.getRequest().getData("id", int.class);
 		leg = this.repository.findLegById(masterId);
 		manager = leg == null ? null : leg.getFlight().getManager();
-		status = leg != null && leg.isDraftMode() && super.getRequest().getPrincipal().hasRealm(manager);
+		status = leg != null && leg.isDraftMode() && super.getRequest().getPrincipal().hasRealm(manager) && managerId == manager.getId();
 
 		super.getResponse().setAuthorised(status);
 	}
