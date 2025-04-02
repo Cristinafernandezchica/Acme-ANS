@@ -47,3 +47,7 @@ leg-39,MAX0038,2025/02/08 15:00,2025/02/08 17:00,ON_TIME,airport-08,airport-17,f
 leg-40,MAX0039,2024/12/25 10:00,2024/12/25 12:00,ON_TIME,airport-04,airport-01,flight-38,aircraft-02,false
 leg-41,MAX0040,2024/12/26 14:30,2024/12/26 16:30,ON_TIME,airport-01,airport-11,flight-40,aircraft-10,false
 
+#Examples for flight assignments
+leg-42,MAX0042,2020/07/03 05:00,2020/07/03 05:45,LANDED,airport-01,airport-15,flight-42,aircraft-01,false
+
+
