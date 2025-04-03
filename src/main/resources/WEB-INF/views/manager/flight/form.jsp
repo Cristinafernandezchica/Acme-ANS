@@ -9,7 +9,7 @@
 	<acme:input-money code="manager.flight.form.label.cost" path="cost"/>
 	<acme:input-textarea code="manager.flight.form.label.description" path="description"/>
 	
-	<jstl:if test="${_command == 'show'}">
+	<jstl:if test="${acme:anyOf(_command, 'show|publish')}">
         <acme:input-moment code="manager.flight.form.label.scheduledDeparture" path="scheduledDeparture" readonly="true"/>
         <acme:input-moment code="manager.flight.form.label.scheduledArrival" path="scheduledArrival" readonly="true"/>
         <acme:input-textbox code="manager.flight.form.label.originCity" path="originCity" readonly="true"/>
