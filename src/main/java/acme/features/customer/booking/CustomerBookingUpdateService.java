@@ -66,6 +66,13 @@ public class CustomerBookingUpdateService extends AbstractGuiService<Customer, B
 
 		super.bindObject(booking, "locatorCode", "travelClass", "lastCardNibble");
 		booking.setPurchaseMoment(moment);
+
+		// Si el vuelo no es válido, asignar null en lugar de provocar una excepción
+		Collection<Flight> validFlights = this.repository.findAllFlights().stream().filter(f -> f.getScheduledDeparture() != null && !f.isDraftMode() && f.getScheduledDeparture().after(MomentHelper.getCurrentMoment())
+			&& this.repository.findLegsByFlightId(f.getId()).stream().allMatch(leg -> leg.getScheduledDeparture().after(MomentHelper.getCurrentMoment()))).collect(Collectors.toList());
+		if (!validFlights.contains(flight))
+			flight = null;
+
 		booking.setFlight(flight);
 		booking.setPrice(booking.getPrice());
 		booking.setDraftMode(true);
@@ -76,7 +83,7 @@ public class CustomerBookingUpdateService extends AbstractGuiService<Customer, B
 		Collection<Flight> validFlights = this.repository.findAllFlights().stream().filter(flight -> flight.getScheduledDeparture() != null && !flight.isDraftMode() && flight.getScheduledDeparture().after(MomentHelper.getCurrentMoment())
 			&& this.repository.findLegsByFlightId(flight.getId()).stream().allMatch(leg -> leg.getScheduledDeparture().after(MomentHelper.getCurrentMoment()))).collect(Collectors.toList());
 
-		boolean isFlightValid = validFlights.contains(booking.getFlight()) || booking.getFlight() == null;
+		boolean isFlightValid = booking.getFlight() == null || validFlights.contains(booking.getFlight());
 		super.state(isFlightValid, "flight", "acme.validation.booking.flight.message");
 	}
 
@@ -104,7 +111,7 @@ public class CustomerBookingUpdateService extends AbstractGuiService<Customer, B
 		flights = this.repository.findAllFlights().stream().filter(flight -> flight.getScheduledDeparture() != null && !flight.isDraftMode() && flight.getScheduledDeparture().after(MomentHelper.getCurrentMoment())
 			&& this.repository.findLegsByFlightId(flight.getId()).stream().allMatch(leg -> leg.getScheduledDeparture().after(MomentHelper.getCurrentMoment()))).collect(Collectors.toList());
 
-		choices = SelectChoices.from(flights, "tag", booking.getFlight());
+		choices = SelectChoices.from(flights, "flightLabel", booking.getFlight());
 		classes = SelectChoices.from(TravelClass.class, booking.getTravelClass());
 
 		dataset = super.unbindObject(booking, "locatorCode", "purchaseMoment", "travelClass", "price", "lastCardNibble", "draftMode");
@@ -115,6 +122,7 @@ public class CustomerBookingUpdateService extends AbstractGuiService<Customer, B
 			dataset.put("flight", booking.getFlight() != null ? choices.getSelected().getKey() : "0");
 		dataset.put("classes", classes);
 		dataset.put("travelClass", classes.getSelected().getKey());
+		dataset.put("bookingId", booking.getId());
 
 		super.getResponse().addData(dataset);
 	}

@@ -70,8 +70,8 @@ public class CustomerPassengerPublishService extends AbstractGuiService<Customer
 		super.state(!existsDuplicate, "passportNumber", "acme.validation.passenger.duplicate-passport");
 
 		dateOfBirthValue = super.getRequest().getData("dateOfBirth", Date.class);
-		isDateOfBirthPast = dateOfBirthValue.before(MomentHelper.getCurrentMoment());
-		super.state(isDateOfBirthPast, "dateOfBirth", "acme.validation.airline.dateOfBirth.message");
+		isDateOfBirthPast = dateOfBirthValue != null && dateOfBirthValue.before(MomentHelper.getCurrentMoment());
+		super.state(isDateOfBirthPast, "dateOfBirth", "acme.validation.passenger.dateOfBirth.message");
 	}
 
 	@Override
