@@ -29,29 +29,18 @@ public class FlightAssignmentPublishService extends AbstractGuiService<FlightCre
 
 	@Override
 	public void authorise() {
+		boolean isFlightAssignmentOwner;
 
-		boolean authorization;
-		boolean status;
-		boolean isFCMAssignedToTheFA;
-		int fcmIdLogged;
 		FlightCrewMember fcmLogged;
-		FlightAssignment flightAssignment;
-		int faIdSolicitud;
+		FlightAssignment faSelected;
+		int faId = super.getRequest().getData("id", int.class);
 
-		fcmIdLogged = super.getRequest().getPrincipal().getActiveRealm().getId();
+		int fcmIdLogged = super.getRequest().getPrincipal().getActiveRealm().getId();
 		fcmLogged = this.repository.findFlighCrewMemberById(fcmIdLogged);
+		faSelected = this.repository.findFlightAssignmentById(faId);
+		isFlightAssignmentOwner = faSelected.getFlightCrewMemberAssigned() == fcmLogged;
 
-		faIdSolicitud = super.getRequest().getData("id", int.class);
-		flightAssignment = this.repository.findFlightAssignmentById(faIdSolicitud);
-
-		status = flightAssignment.isDraftMode();
-
-		isFCMAssignedToTheFA = flightAssignment.getFlightCrewMemberAssigned().equals(fcmLogged);
-
-		authorization = status && isFCMAssignedToTheFA;
-
-		super.getResponse().setAuthorised(authorization);
-
+		super.getResponse().setAuthorised(isFlightAssignmentOwner);
 	}
 
 	@Override

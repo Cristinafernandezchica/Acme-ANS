@@ -49,5 +49,6 @@ leg-41,MAX0040,2024/12/26 14:30,2024/12/26 16:30,ON_TIME,airport-01,airport-11,f
 
 #Examples for flight assignments
 leg-42,MAX0042,2020/07/03 05:00,2020/07/03 05:45,LANDED,airport-01,airport-15,flight-42,aircraft-01,false
+leg-43,MAX0043,2020/08/03 05:00,2020/07/03 05:45,ON_TIME,airport-15,airport-01,flight-43,aircraft-01,false
 
 
