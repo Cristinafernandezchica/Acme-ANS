@@ -11,14 +11,13 @@ acme.validation.manager.flights.currency.not.valid = La unidad monetaria no es v
 
 acme.validation.lastCardNibble.message = Los últimos dígitos de la tarjeta no pueden estar vacios
 acme.validation.booking.flight.message = Sin vuelo asignado
-acme.validation.booking.passengers.message = Alguno de los pasajeros seleccionados está en borrador
+acme.validation.booking.passengers.message = Alguno de los pasajeros seleccionados está en borrador o no ha seleccionado a ningún pasajero
 acme.validation.passenger.duplicate-passport = Ya has creado un pasajero con este número de pasaporte
-acme.validation.airline.dateOfBirth.message = La fecha de nacimiento tiene que ser pasada
+acme.validation.passenger.dateOfBirth.message = La fecha de nacimiento tiene que ser pasada
 
 acme.validation.bookingRecord.invalid-booking-null.message = Sin reservas asociadas
 acme.validation.bookingRecord.invalid-passenger-null.message = Sin pasajeros asociados
-
-
+acme.validation.bookingRecord.invalid-passenger.message = Pasajero inválido o ya asociado
 
 acme.validation.leg.overlap.message = Solapamiento con otro tramo del mismo vuelo
 acme.validation.leg.departure.arrival.difference.message = Tiene que haber mínimo 5 minutos entre salida y llegada

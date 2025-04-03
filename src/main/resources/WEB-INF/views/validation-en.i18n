@@ -11,12 +11,13 @@ acme.validation.manager.flights.currency.not.valid = The currency is not valid (
 
 acme.validation.lastCardNibble.message = The last card nibble can't be empty 
 acme.validation.booking.flight.message = No flight assigned
-acme.validation.booking.passengers.message = Some passengers selected are in draft mode
+acme.validation.booking.passengers.message = Some passengers selected are in draft mode or selection is empty
 acme.validation.passenger.duplicate-passport = You have already created a passenger with this passport number
-acme.validation.airline.dateOfBirth.message = Date of birth must be past
+acme.validation.passenger.dateOfBirth.message = Date of birth must be past
 
 acme.validation.bookingRecord.invalid-booking-null.message = No booking associated
 acme.validation.bookingRecord.invalid-passenger-null.message = No passenger associated
+acme.validation.bookingRecord.invalid-passenger.message = Invalid passenger or already associated
 
 acme.validation.leg.overlap.message = Overlap with another leg of the same flight
 acme.validation.leg.departure.arrival.difference.message = Arrival has to be at least 5 minutes later than the departure

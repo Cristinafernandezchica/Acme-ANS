@@ -10,10 +10,6 @@
 	<acme:input-moment code="customer.passenger.form.dateOfBirth" path="dateOfBirth"/>
 	<acme:input-textbox code="customer.passenger.form.specialNeeds" path="specialNeeds"/>
 		
-
-<%-- Hay que añadir el selector multiopción de los passengers y el botón para añadir los passengers --%>
-<%-- <acme:input-select code="customer.booking.form.passengers" path="passengers" choices="${flights}" multiple ="true" /> --%>
-
 <jstl:choose>
 		<jstl:when test="${_command == 'create'}">
 			<acme:submit code="customer.passenger.form.button.create" action="/customer/passenger/create"/>
