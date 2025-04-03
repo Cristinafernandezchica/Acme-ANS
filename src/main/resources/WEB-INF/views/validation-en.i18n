@@ -4,6 +4,7 @@ acme.validation.flight.needSelftTransfer.messagen = Don't need self transfer, it
 acme.validation.flight.legs.order = The legs are not in the right order
 acme.validation.flight.published.update = You can't update a published flight
 acme.validation.flight.published.delete = You can't delete a published flight
+acme.validation.flight.create.no.draftmode = You can't crate a flight with no draftmode
 
 acme.validation.manager.flights.without.legs = The flight has no leg assigned
 acme.validation.manager.flights.no.published.leg = The flight has some unpublished leg(s)
@@ -29,6 +30,15 @@ acme.validation.leg.iataCode.flightNumber = The flight number must contains the 
 acme.validation.leg.same.departure.arrival.airport = The departure and arrival airports must be diferents
 acme.validation.leg.published.update = You can't update a published leg
 acme.validation.leg.published.delete = You can't delete a published leg
+acme.validation.leg.invalid.number.flightNumber = Invalid number on flight number
+acme.validation.leg.invalid.iata.flightNumber = Letters do not match the airline's IATA Code
+acme.validation.leg.create.no.draftmode = You can't crate a leg with no draftmode
+acme.validation.leg.scheduledDeparture.past = Invalid scheduled departure, it can't be in the past
+acme.validation.leg.scheduledArrival.past = Invalid scheduled arrival, it can't be in the past
+acme.validation.leg.status.always.ontime = When create a leg, the status must be ON_TIME
+acme.validation.leg.status.draftmode.ontime = When a leg is on draft mode, the status must be ON_TIME
+acme.validation.leg.update.other.fields = You can only update the state of the leg
+acme.validation.leg.flightNumber.not.unique = The flight number already exists
 
 
 acme.validation.length = Is too long

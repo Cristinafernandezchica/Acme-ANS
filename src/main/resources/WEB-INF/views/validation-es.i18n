@@ -4,6 +4,7 @@ acme.validation.flight.needSelftTransfer.message = No necesita transporte propio
 acme.validation.flight.legs.order = Los tramos no están en el orden correcto
 acme.validation.flight.published.update = No se puede actualizar un vuelo publicado
 acme.validation.flight.published.delete = No se puede borrar un vuelo publicado
+acme.validation.flight.create.no.draftmode = No se puede crear un vuelo en modo no borrador
 
 acme.validation.manager.flights.without.legs = El vuelo no tiene ningún tramos asignado
 acme.validation.manager.flights.no.published.leg = El vuelo tiene alguno/s tramo/s sin publicar
@@ -29,6 +30,15 @@ acme.validation.leg.iataCode.flightNumber = El número de vuelo debe contener el
 acme.validation.leg.same.departure.arrival.airport = El aeropuerto de salida y de llegada deben ser diferentes
 acme.validation.leg.published.update = No puedes actualizar un tramo publicado
 acme.validation.leg.published.delete = No puedes borrar un tramo publcado
+acme.validation.leg.invalid.number.flightNumber = El número del número de vuelo es inválido, ya existe el número de vuelo
+acme.validation.leg.invalid.iata.flightNumber = Las letras no coinciden con el IATA code de la aerolínea
+acme.validation.leg.create.no.draftmode = No se puede crear un tramo en modo no borrador
+acme.validation.leg.scheduledDeparture.past = Horario de salida inválido, no puede ser en el pasado
+acme.validation.leg.scheduledArrival.past = Horario de llegada inválido, no puede ser en el pasado
+acme.validation.leg.status.always.ontime = Al crear un tramo, su estado tiene que ser ON_TIME
+acme.validation.leg.status.draftmode.ontime = Cuando un tramo está en modo borrador, su estado debe ser ON_TIME
+acme.validation.leg.update.other.fields = Solo se puede actualizar el estado del tramo
+acme.validation.leg.flightNumber.not.unique = El número de vuelo ya existe
 
 
 acme.validation.length = Es muy largo
