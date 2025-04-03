@@ -30,23 +30,23 @@ public class ActivityLog extends AbstractEntity {
 
 	// Attributes -------------------------------------------------------------
 
-	@Mandatory
-	@ValidMoment(past = true, min = "2000/01/01 00:00", max = "2100/01/01 00:00")
+	@Mandatory(message = "Must not be null")
+	@ValidMoment(past = true, min = "2000/01/01 00:00", max = "2100/01/01 00:00", message = "Must be past")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date				registrationMoment;
 
-	@Mandatory
-	@ValidString(min = 1, max = 50)
+	@Mandatory(message = "May not be null")
+	@ValidString(min = 1, max = 50, message = "Must not be too long")
 	@Automapped
 	private String				typeOfIncident;
 
-	@Mandatory
-	@ValidString(min = 1, max = 255)
+	@Mandatory(message = "May not be null")
+	@ValidString(min = 1, max = 255, message = "Must not be too long")
 	@Automapped
 	private String				description;
 
-	@Mandatory
-	@ValidNumber(min = 0, max = 10)
+	@Mandatory(message = "May not be null")
+	@ValidNumber(min = 0, max = 10, message = "Must be beetween 0 and 10")
 	@Automapped
 	private Integer				severityLevel;
 
@@ -56,7 +56,7 @@ public class ActivityLog extends AbstractEntity {
 
 	// Relations -------------------------------------------------------------
 
-	@Mandatory
+	@Mandatory(message = "May not be null")
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "flight_assignment_id", nullable = false)
 	private FlightAssignment	flightAssignmentRelated;
