@@ -44,7 +44,7 @@ public class CustomerBookingListService extends AbstractGuiService<Customer, Boo
 
 		dataset = super.unbindObject(booking, "locatorCode", "purchaseMoment", "travelClass", "price");
 		if (booking.getFlight() != null)
-			dataset.put("flight", booking.getFlight().getTag());
+			dataset.put("flight", booking.getFlight().getFlightLabel());
 		else
 			dataset.put("flight", "");
 

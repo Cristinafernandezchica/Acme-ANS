@@ -14,6 +14,7 @@ import acme.client.services.GuiService;
 import acme.entities.booking.Booking;
 import acme.entities.booking.TravelClass;
 import acme.entities.flights.Flight;
+import acme.entities.passenger.Passenger;
 import acme.realms.Customer;
 
 @GuiService
@@ -72,15 +73,12 @@ public class CustomerBookingPublishService extends AbstractGuiService<Customer, 
 		Collection<Flight> validFlights = this.repository.findAllFlights().stream().filter(flight -> flight.getScheduledDeparture() != null && !flight.isDraftMode() && flight.getScheduledDeparture().after(MomentHelper.getCurrentMoment())
 			&& this.repository.findLegsByFlightId(flight.getId()).stream().allMatch(leg -> leg.getScheduledDeparture().after(MomentHelper.getCurrentMoment()))).collect(Collectors.toList());
 
-		boolean isFlightValid = validFlights.contains(booking.getFlight()) || booking.getFlight() == null;
+		boolean isFlightValid = booking.getFlight() != null && validFlights.contains(booking.getFlight());
 		super.state(isFlightValid, "flight", "acme.validation.booking.flight.message");
 
-		//Collection<Passenger> passengers = this.repository.findPassengersByBookingId(booking.getId());
-		// boolean hasPassengersInDraftMode = !passengers.isEmpty() && passengers.stream().anyMatch(p -> p.isDraftMode()))
-		//super.state(hasPassengersInDraftMode, "draftMode", "acme.validation.booking.passengers.message");
-
-		boolean hasFlight = booking.getFlight() != null;
-		super.state(hasFlight, "flight", "acme.validation.booking.flight.message");
+		Collection<Passenger> passengers = this.repository.findPassengersByBookingId(booking.getId());
+		boolean hasPassengersInDraftModeOrEmpty = passengers.isEmpty() || passengers.stream().anyMatch(Passenger::isDraftMode);
+		super.state(!hasPassengersInDraftModeOrEmpty, "flight", "acme.validation.booking.passengers.message");
 
 		boolean hasCardNibble = booking.getLastCardNibble() != null && !booking.getLastCardNibble().trim().isEmpty();
 		super.state(hasCardNibble, "lastCardNibble", "acme.validation.lastCardNibble.message");
@@ -106,7 +104,7 @@ public class CustomerBookingPublishService extends AbstractGuiService<Customer, 
 		if (!flightStillValid)
 			booking.setFlight(null);
 
-		choices = SelectChoices.from(flights, "tag", booking.getFlight());
+		choices = SelectChoices.from(flights, "flightLabel", booking.getFlight());
 		classChoices = SelectChoices.from(TravelClass.class, booking.getTravelClass());
 
 		dataset = super.unbindObject(booking, "locatorCode", "purchaseMoment", "travelClass", "price", "lastCardNibble", "draftMode");
