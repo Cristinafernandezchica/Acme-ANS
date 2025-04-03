@@ -22,6 +22,7 @@ acme.validation.leg.operative.aircraft.message = El avión está bajo mantenimie
 acme.validation.confirmation.message = Esta acción debe ser confirmada
 acme.validation.pilotExceptionPassed.message = Este vuelo ya tiene un piloto
 acme.validation.coPilotExceptionPassed.message = Este vuelo ya tiene un copiloto
+acme.validation.legNotPublished.message = Este vuelo no está publicado
 acme.validation.legNotPast.message = Este vuelo no es pasada
 acme.validation.legNotCompleted.message = Este vuelo no está completada
 acme.validation.legFromRightAirline.message = Este vuelo no opera con la aerolínea del asistente de vuelo
@@ -36,6 +37,9 @@ acme.validation.isOriginalCurrentStatus.message = No es el estado actual origina
 acme.validation.isOriginalRemarks.message = No son las indicaciones originales
 acme.validation.isOriginalLeg.message = No es el vuelo original
 acme.validation.isOriginalFCM.message = No es el asistente de vuelo original
+
+# Activity log - activity log's messages (antiHacking)
+acme.validation.isOriginalRegistrationMoment.message = No es la fecha de registro original
 
 # Leg - leg's messages
 acme.validation.leg.same.aircraft.message = El avión es usado por otro tramo en el mismo horario

@@ -71,6 +71,7 @@ public class FlightAssignmentPublishService extends AbstractGuiService<FlightCre
 		leg = this.repository.findLegById(legId);
 
 		super.bindObject(flightAssignment, "flightCrewsDuty", "lastUpdate", "currentStatus", "remarks");
+		flightAssignment.setLastUpdate(MomentHelper.getCurrentMoment());
 		flightAssignment.setFlightCrewMemberAssigned(flightCrewMember);
 		flightAssignment.setLegRelated(leg);
 	}
@@ -78,37 +79,9 @@ public class FlightAssignmentPublishService extends AbstractGuiService<FlightCre
 	@Override
 	public void validate(final FlightAssignment flightAssignment) {
 
-		int faId = super.getRequest().getData("id", int.class);
-		FlightAssignment faBaseData = this.repository.findFlightAssignmentById(faId);
-
 		FlightCrewMember fcmLogged;
 		int fcmIdLogged = super.getRequest().getPrincipal().getActiveRealm().getId();
 		fcmLogged = this.repository.findFlighCrewMemberById(fcmIdLogged);
-
-		// Comprobación de flightCrewsDuty no modificado
-		boolean isOriginalFlightCrewsDuty;
-		isOriginalFlightCrewsDuty = flightAssignment.getFlightCrewsDuty() == faBaseData.getFlightCrewsDuty();
-		super.state(isOriginalFlightCrewsDuty, "flightCrewsDuty", "acme.validation.isOriginalFlightCrewsDuty.message");
-
-		// Comprobación de lastUpdate no modificado
-		boolean isOriginalLastUpdate;
-		isOriginalLastUpdate = flightAssignment.getLastUpdate() == faBaseData.getLastUpdate();
-		super.state(isOriginalLastUpdate, "lastUpdate", "acme.validation.isOriginalLastUpdate.message");
-
-		// Comprobación de currentStatus no modificado
-		boolean isOriginalCurrentStatus;
-		isOriginalCurrentStatus = flightAssignment.getCurrentStatus() == faBaseData.getCurrentStatus();
-		super.state(isOriginalCurrentStatus, "currentStatus", "acme.validation.isOriginalCurrentStatus.message");
-
-		// Comprobación de remarks no modificado
-		boolean isOriginalRemarks;
-		isOriginalRemarks = flightAssignment.getRemarks().equals(faBaseData.getRemarks());
-		super.state(isOriginalRemarks, "remarks", "acme.validation.isOriginalRemarks.message");
-
-		// Comprobacion de leg no modificado
-		boolean isOriginalLeg;
-		isOriginalLeg = flightAssignment.getLegRelated() == faBaseData.getLegRelated();
-		super.state(isOriginalLeg, "legRelated", "acme.validation.isOriginalLeg.message");
 
 		// Comprobación de FCM no modificado
 		boolean isOriginalFCM;
@@ -157,8 +130,8 @@ public class FlightAssignmentPublishService extends AbstractGuiService<FlightCre
 		if (flightCrewsDuty.equals(FlightCrewsDuty.CO_PILOT) && fAHasCoPilot)
 			coPilotExceptionPassed = false;
 
-		super.state(pilotExceptionPassed, "pilotExceptionPassed", "acme.validation.pilotExceptionPassed.message");
-		super.state(coPilotExceptionPassed, "coPilotExceptionPassed", "acme.validation.coPilotExceptionPassed.message");
+		super.state(pilotExceptionPassed, "legRelated", "acme.validation.pilotExceptionPassed.message");
+		super.state(coPilotExceptionPassed, "legRelated", "acme.validation.coPilotExceptionPassed.message");
 
 		// Comprobación de leg asignadas simultáneamente
 		boolean legCompatible = true;
@@ -167,7 +140,7 @@ public class FlightAssignmentPublishService extends AbstractGuiService<FlightCre
 		for (Leg l : legByFCM)
 			if (this.legIsCompatible(flightAssignment.getLegRelated(), l)) {
 				legCompatible = false;
-				super.state(legCompatible, "legCompatible", "acme.validation.legCompatible.message");
+				super.state(legCompatible, "legRelated", "acme.validation.legCompatible.message");
 				break;
 			}
 

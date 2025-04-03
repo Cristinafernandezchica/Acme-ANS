@@ -54,7 +54,17 @@ public class ActivityLogUpdateService extends AbstractGuiService<FlightCrewMembe
 
 	@Override
 	public void validate(final ActivityLog activityLog) {
-		;
+
+		int id = super.getRequest().getData("id", int.class);
+		ActivityLog activityLogBaseData = this.repository.findActivityLogById(id);
+
+		boolean isOriginalRegistrationMoment;
+		isOriginalRegistrationMoment = activityLog.getRegistrationMoment() == activityLogBaseData.getRegistrationMoment();
+		super.state(isOriginalRegistrationMoment, "registrationMoment", "acme.validation.isOriginalRegistrationMoment.message");
+
+		boolean confirmation;
+		confirmation = super.getRequest().getData("confirmation", boolean.class);
+		super.state(confirmation, "confirmation", "acme.validation.confirmation.message");
 	}
 
 	@Override
