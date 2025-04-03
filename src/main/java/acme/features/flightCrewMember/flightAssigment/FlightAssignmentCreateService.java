@@ -15,6 +15,8 @@ import acme.entities.flightAssignment.CurrentStatus;
 import acme.entities.flightAssignment.FlightAssignment;
 import acme.entities.flightAssignment.FlightCrewsDuty;
 import acme.entities.legs.Leg;
+import acme.entities.legs.LegStatus;
+import acme.realms.flightCrewMember.AvailabilityStatus;
 import acme.realms.flightCrewMember.FlightCrewMember;
 
 @GuiService
@@ -75,42 +77,47 @@ public class FlightAssignmentCreateService extends AbstractGuiService<FlightCrew
 	@Override
 	public void validate(final FlightAssignment flightAssignment) {
 
-		boolean confirmation;
-		boolean pilotExceptionPassed = true;
-		boolean coPilotExceptionPassed = true;
+		FlightCrewMember fcmLogged;
+		int fcmIdLogged = super.getRequest().getPrincipal().getActiveRealm().getId();
+		fcmLogged = this.repository.findFlighCrewMemberById(fcmIdLogged);
 
-		// Comprobación de 1 piloto y un copiloto
-		boolean fAHasPilot = this.repository.findPilotInLeg(flightAssignment.getId());
-		boolean fAHasCoPilot = this.repository.findCoPilotInLeg(flightAssignment.getId());
+		// Comprobación de leg no pasada
+		boolean legNotPast;
+		legNotPast = flightAssignment.getLegRelated().getScheduledArrival().before(MomentHelper.getCurrentMoment());
+		super.state(legNotPast, "legRelated", "acme.validation.legNotPast.message");
 
-		FlightCrewsDuty flightCrewsDuty = flightAssignment.getFlightCrewsDuty();
-		if (flightCrewsDuty.equals(FlightCrewsDuty.PILOT) && fAHasPilot)
-			pilotExceptionPassed = false;
-		if (flightCrewsDuty.equals(FlightCrewsDuty.CO_PILOT) && fAHasCoPilot)
-			coPilotExceptionPassed = false;
+		// Comprobación de leg no completada
+		boolean legNotCompleted;
+		legNotCompleted = flightAssignment.getLegRelated().getStatus().equals(LegStatus.ON_TIME) || flightAssignment.getLegRelated().getStatus().equals(LegStatus.DELAYED);
+		super.state(legNotCompleted, "legRelated", "acme.validation.legNotCompleted.message");
 
-		super.state(pilotExceptionPassed, "pilotExceptionPassed", "acme.validation.pilotExceptionPassed.message");
-		super.state(coPilotExceptionPassed, "coPilotExceptionPassed", "acme.validation.coPilotExceptionPassed.message");
+		// Comprobación de leg no completada
+		boolean legNotPublished;
+		legNotPublished = !flightAssignment.getLegRelated().isDraftMode();
+		super.state(legNotPublished, "legRelated", "acme.validation.legNotPublished.message");
 
-		// Comprobación de leg asignadas simultáneamente
+		// Comprobación de leg operada con la aerolínea del FCM
+		boolean legFromRightAirline;
+		legFromRightAirline = flightAssignment.getLegRelated().getAircraft().getAirline().equals(fcmLogged.getAirline());
+		super.state(legFromRightAirline, "legRelated", "acme.validation.legFromRightAirline.message");
+
+		// Comprobación de que el FCM esté AVAILABLE
+		boolean fcmAvailable;
+		fcmAvailable = flightAssignment.getFlightCrewMemberAssigned().getAvailabilityStatus().equals(AvailabilityStatus.AVAILABLE);
+		super.state(fcmAvailable, "legRelated", "acme.validation.fcmAvailable.message");
+
+		// Comprobación de leg asignadas al fcm no sea a la vez que otra
 		boolean legCompatible = true;
 
 		List<Leg> legByFCM = this.repository.findLegsByFlightCrewMemberId(flightAssignment.getFlightCrewMemberAssigned().getId());
 		for (Leg l : legByFCM)
 			if (this.legIsCompatible(flightAssignment.getLegRelated(), l)) {
 				legCompatible = false;
-				super.state(legCompatible, "legCompatible", "acme.validation.legCompatible.message");
+				super.state(legCompatible, "legRelated", "acme.validation.legCompatible.message");
 				break;
 			}
 
-		/*
-		 * Falta:
-		 * - Comprobacion de la leg no pasada
-		 * - Comprobacion de la FCM esta available
-		 * - Comprobacion de los otros atributos
-		 * - Comprobar que no se ponga el draftMode a false
-		 */
-
+		boolean confirmation;
 		confirmation = super.getRequest().getData("confirmation", boolean.class);
 		super.state(confirmation, "confirmation", "acme.validation.confirmation.message");
 

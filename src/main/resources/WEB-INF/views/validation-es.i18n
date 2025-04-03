@@ -18,11 +18,17 @@ acme.validation.leg.departure.arrival.difference.message = Tiene que haber míni
 acme.validation.leg.departure.after.arrival.message = La salida tiene que ser antes que la llegada
 acme.validation.leg.operative.aircraft.message = El avión está bajo mantenimiento, debe estar operativo
 
-# Flight crew member - flight assignments messages
+# Flight crew member - flight assignment's messages
 acme.validation.confirmation.message = Esta acción debe ser confirmada
 acme.validation.pilotExceptionPassed.message = Este vuelo ya tiene un piloto
 acme.validation.coPilotExceptionPassed.message = Este vuelo ya tiene un copiloto
+acme.validation.legNotPast.message = Este vuelo no es pasada
+acme.validation.legNotCompleted.message = Este vuelo no está completada
+acme.validation.legFromRightAirline.message = Este vuelo no opera con la aerolínea del asistente de vuelo
+acme.validation.fcmAvailable.message = El asistente de vuelo no está disponible
+acme.validation.legCompatible.message = Este asistente de vuelo ya tiene un vuelo en esa fecha
 
+# Leg - leg's messages
 acme.validation.leg.same.aircraft.message = El avión es usado por otro tramo en el mismo horario
 acme.validation.leg.flight.draftMode = El vuelo está publicado, no puedes publicar un tramo de un vuelo que ya está publicado
 acme.validation.leg.iataCode.flightNumber = El número de vuelo debe contener el código IATA de la aerolínea
