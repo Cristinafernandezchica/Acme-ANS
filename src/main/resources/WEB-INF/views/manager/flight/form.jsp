@@ -8,12 +8,15 @@
 	<acme:input-checkbox code="manager.flight.form.label.indication" path="indication"/>
 	<acme:input-money code="manager.flight.form.label.cost" path="cost"/>
 	<acme:input-textarea code="manager.flight.form.label.description" path="description"/>
-	<acme:input-checkbox code="manager.flight.form.label.draftMode" path="draftMode" readonly="true"/>
-	<acme:input-moment code="manager.flight.form.label.scheduledDeparture" path="scheduledDeparture" readonly="true"/>
-	<acme:input-moment code="manager.flight.form.label.scheduledArrival" path="scheduledArrival" readonly="true"/>
-	<acme:input-textbox code="manager.flight.form.label.originCity" path="originCity" readonly="true"/>
-	<acme:input-textbox code="manager.flight.form.label.destinationCity" path="destinationCity" readonly="true"/>
-	<acme:input-textbox code="manager.flight.form.label.layovers" path="layovers" readonly="true"/>
+	
+	<jstl:if test="${_command == 'show'}">
+        <acme:input-moment code="manager.flight.form.label.scheduledDeparture" path="scheduledDeparture" readonly="true"/>
+        <acme:input-moment code="manager.flight.form.label.scheduledArrival" path="scheduledArrival" readonly="true"/>
+        <acme:input-textbox code="manager.flight.form.label.originCity" path="originCity" readonly="true"/>
+        <acme:input-textbox code="manager.flight.form.label.destinationCity" path="destinationCity" readonly="true"/>
+        <acme:input-textbox code="manager.flight.form.label.layovers" path="layovers" readonly="true"/>
+    </jstl:if>
+    
 	
 
 	<jstl:choose>	 
