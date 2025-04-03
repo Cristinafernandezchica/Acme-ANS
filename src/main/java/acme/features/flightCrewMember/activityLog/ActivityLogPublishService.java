@@ -60,7 +60,9 @@ public class ActivityLogPublishService extends AbstractGuiService<FlightCrewMemb
 		ActivityLog activityLogBaseData = this.repository.findActivityLogById(id);
 
 		boolean isOriginalRegistrationMoment;
-		isOriginalRegistrationMoment = activityLog.getRegistrationMoment() == activityLogBaseData.getRegistrationMoment();
+		isOriginalRegistrationMoment = activityLog.getRegistrationMoment().getDate() == activityLogBaseData.getRegistrationMoment().getDate() && activityLog.getRegistrationMoment().getMonth() == activityLogBaseData.getRegistrationMoment().getMonth()
+			&& activityLog.getRegistrationMoment().getYear() == activityLogBaseData.getRegistrationMoment().getYear() && activityLog.getRegistrationMoment().getMinutes() == activityLogBaseData.getRegistrationMoment().getMinutes()
+			&& activityLog.getRegistrationMoment().getSeconds() == activityLogBaseData.getRegistrationMoment().getSeconds();
 		super.state(isOriginalRegistrationMoment, "registrationMoment", "acme.validation.isOriginalRegistrationMoment.message");
 
 		boolean confirmation;
