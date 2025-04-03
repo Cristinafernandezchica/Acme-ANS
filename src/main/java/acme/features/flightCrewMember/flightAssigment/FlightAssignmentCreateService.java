@@ -31,18 +31,7 @@ public class FlightAssignmentCreateService extends AbstractGuiService<FlightCrew
 
 	@Override
 	public void authorise() {
-		boolean isFlightAssignmentOwner;
-
-		FlightCrewMember fcmLogged;
-		FlightAssignment faSelected;
-		int faId = super.getRequest().getData("id", int.class);
-
-		int fcmIdLogged = super.getRequest().getPrincipal().getActiveRealm().getId();
-		fcmLogged = this.repository.findFlighCrewMemberById(fcmIdLogged);
-		faSelected = this.repository.findFlightAssignmentById(faId);
-		isFlightAssignmentOwner = faSelected.getFlightCrewMemberAssigned() == fcmLogged;
-
-		super.getResponse().setAuthorised(isFlightAssignmentOwner);
+		super.getResponse().setAuthorised(true);
 	}
 
 	@Override
@@ -50,7 +39,11 @@ public class FlightAssignmentCreateService extends AbstractGuiService<FlightCrew
 		FlightAssignment flightAssignment;
 		flightAssignment = new FlightAssignment();
 
+		int fcmIdLogged = super.getRequest().getPrincipal().getActiveRealm().getId();
+		FlightCrewMember flightCrewMember = this.repository.findFlighCrewMemberById(fcmIdLogged);
+
 		flightAssignment.setDraftMode(true);
+		flightAssignment.setFlightCrewMemberAssigned(flightCrewMember);
 
 		super.getBuffer().addData(flightAssignment);
 	}

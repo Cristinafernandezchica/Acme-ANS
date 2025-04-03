@@ -53,44 +53,47 @@ public class FlightAssignmentShowService extends AbstractGuiService<FlightCrewMe
 		super.getBuffer().addData(flightAssignment);
 	}
 
-	@Override
-	public void validate(final FlightAssignment flightAssignment) {
-
-		FlightAssignment faBaseData;
-		int id = super.getRequest().getData("id", int.class);
-		faBaseData = this.repository.findFlightAssignmentById(id);
-
-		// Comprobación de flightCrewsDuty no modificado
-		boolean isOriginalFlightCrewsDuty;
-		isOriginalFlightCrewsDuty = flightAssignment.getFlightCrewsDuty() == faBaseData.getFlightCrewsDuty();
-		super.state(isOriginalFlightCrewsDuty, "flightCrewsDuty", "acme.validation.isOriginalFlightCrewsDuty.message");
-
-		// Comprobación de lastUpdate no modificado
-		boolean isOriginalLastUpdate;
-		isOriginalLastUpdate = flightAssignment.getLastUpdate() == faBaseData.getLastUpdate();
-		super.state(isOriginalLastUpdate, "lastUpdate", "acme.validation.isOriginalLastUpdate.message");
-
-		// Comprobación de currentStatus no modificado
-		boolean isOriginalCurrentStatus;
-		isOriginalCurrentStatus = flightAssignment.getCurrentStatus() == faBaseData.getCurrentStatus();
-		super.state(isOriginalCurrentStatus, "currentStatus", "acme.validation.isOriginalCurrentStatus.message");
-
-		// Comprobación de remarks no modificado
-		boolean isOriginalRemarks;
-		isOriginalRemarks = flightAssignment.getRemarks().equals(faBaseData.getRemarks());
-		super.state(isOriginalRemarks, "remarks", "acme.validation.isOriginalRemarks.message");
-
-		// Comprobacion de leg no modificado
-		boolean isOriginalLeg;
-		isOriginalLeg = flightAssignment.getLegRelated() == faBaseData.getLegRelated();
-		super.state(isOriginalLeg, "legRelated", "acme.validation.isOriginalLeg.message");
-
-		// Comprobación de FCM no modificado
-		boolean isOriginalFCM;
-		isOriginalFCM = flightAssignment.getFlightCrewMemberAssigned() == faBaseData.getFlightCrewMemberAssigned();
-		super.state(isOriginalFCM, "flightCrewMemberAssigned", "acme.validation.isOriginalFCM.message");
-
-	}
+	/*
+	 * 
+	 * @Override
+	 * public void validate(final FlightAssignment flightAssignment) {
+	 * 
+	 * FlightAssignment faBaseData;
+	 * int id = super.getRequest().getData("id", int.class);
+	 * faBaseData = this.repository.findFlightAssignmentById(id);
+	 * 
+	 * // Comprobación de flightCrewsDuty no modificado
+	 * boolean isOriginalFlightCrewsDuty;
+	 * isOriginalFlightCrewsDuty = flightAssignment.getFlightCrewsDuty() == faBaseData.getFlightCrewsDuty();
+	 * super.state(isOriginalFlightCrewsDuty, "flightCrewsDuty", "acme.validation.isOriginalFlightCrewsDuty.message");
+	 * 
+	 * // Comprobación de lastUpdate no modificado
+	 * boolean isOriginalLastUpdate;
+	 * isOriginalLastUpdate = flightAssignment.getLastUpdate() == faBaseData.getLastUpdate();
+	 * super.state(isOriginalLastUpdate, "lastUpdate", "acme.validation.isOriginalLastUpdate.message");
+	 * 
+	 * // Comprobación de currentStatus no modificado
+	 * boolean isOriginalCurrentStatus;
+	 * isOriginalCurrentStatus = flightAssignment.getCurrentStatus() == faBaseData.getCurrentStatus();
+	 * super.state(isOriginalCurrentStatus, "currentStatus", "acme.validation.isOriginalCurrentStatus.message");
+	 * 
+	 * // Comprobación de remarks no modificado
+	 * boolean isOriginalRemarks;
+	 * isOriginalRemarks = flightAssignment.getRemarks().equals(faBaseData.getRemarks());
+	 * super.state(isOriginalRemarks, "remarks", "acme.validation.isOriginalRemarks.message");
+	 * 
+	 * // Comprobacion de leg no modificado
+	 * boolean isOriginalLeg;
+	 * isOriginalLeg = flightAssignment.getLegRelated() == faBaseData.getLegRelated();
+	 * super.state(isOriginalLeg, "legRelated", "acme.validation.isOriginalLeg.message");
+	 * 
+	 * // Comprobación de FCM no modificado
+	 * boolean isOriginalFCM;
+	 * isOriginalFCM = flightAssignment.getFlightCrewMemberAssigned() == faBaseData.getFlightCrewMemberAssigned();
+	 * super.state(isOriginalFCM, "flightCrewMemberAssigned", "acme.validation.isOriginalFCM.message");
+	 * 
+	 * }
+	 */
 
 	@Override
 	public void unbind(final FlightAssignment flightAssignment) {
