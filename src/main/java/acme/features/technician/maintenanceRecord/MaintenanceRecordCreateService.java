@@ -75,9 +75,9 @@ public class MaintenanceRecordCreateService extends AbstractGuiService<Technicia
 
 		statuses = SelectChoices.from(Status.class, mr.getStatus());
 		aircrafts = this.repository.findAllAircraft();
-		choiceAircraft = SelectChoices.from(aircrafts, "id", mr.getAircraft());
+		choiceAircraft = SelectChoices.from(aircrafts, "registrationNumber", mr.getAircraft());
 
-		dataset = super.unbindObject(mr, "status", "inspectionDueDate", "estimatedCost", "notes", "aircraft", "moment", "draftMode");
+		dataset = super.unbindObject(mr, "status", "inspectionDueDate", "estimatedCost", "notes", "aircraft", "moment");
 
 		dataset.put("statuses", statuses);
 		dataset.put("aircrafts", choiceAircraft);

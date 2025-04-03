@@ -1,6 +1,8 @@
 
 package acme.constraints;
 
+import java.util.List;
+
 import javax.validation.ConstraintValidatorContext;
 import javax.validation.Valid;
 
@@ -20,14 +22,15 @@ public class MaintenanceRecordValidator extends AbstractValidator<ValidMaintenan
 		boolean result = true;
 		if (mr == null)
 			super.state(context, false, "*", "javax.validation.constraints.NotNull.message");
+		else {
+			List<String> aceptedCurrencys = List.of("USD", "EUR", "GBP");
+			boolean haveAnAceptedCurrency = aceptedCurrencys.contains(mr.getEstimatedCost().getCurrency());
+			if (!haveAnAceptedCurrency) {
+				result = false;
+				super.state(context, haveAnAceptedCurrency, "estimatedCost", "acme.validation.maintenanceRecords.costs.message");
+			}
 
-		//		else {
-		//			boolean nextInpectionIsAfterMoment = mr.getInspectionDueDate().before(mr.getMoment());
-		//			if (nextInpectionIsAfterMoment) {
-		//				result = false;
-		//				super.state(context, nextInpectionIsAfterMoment, "inspectionDueDate", "acme.validation.service.inspectionDueDate.message");
-		//			}
+		}
 		return result;
 	}
-
 }

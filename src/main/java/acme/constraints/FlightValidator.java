@@ -1,13 +1,17 @@
 
 package acme.constraints;
 
+import java.util.List;
+
 import javax.validation.ConstraintValidatorContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import acme.client.components.validation.AbstractValidator;
+import acme.client.helpers.MomentHelper;
 import acme.entities.flights.Flight;
 import acme.entities.flights.FlightRepository;
+import acme.entities.legs.Leg;
 
 public class FlightValidator extends AbstractValidator<ValidFlight, Flight> {
 
@@ -22,23 +26,22 @@ public class FlightValidator extends AbstractValidator<ValidFlight, Flight> {
 
 	@Override
 	public boolean isValid(final Flight flight, final ConstraintValidatorContext context) {
+		boolean res;
 
-		Integer layovers = flight.layovers();
-		boolean res = true;
+		if (flight == null)
+			super.state(context, false, "*", "javax.validation.constraints.NotNull.message");
+		else {
 
-		if (layovers < 0 || layovers == 0) {
-			res = false;
-			super.state(context, false, "layovers", "{acme.validation.flight.layovers.zero.message}");
+			List<Leg> orderedLegs = this.repository.findLegsByFlightIdOrdered(flight.getId());
+			if (orderedLegs != null)
+				for (int i = 0; i < orderedLegs.size() - 1; ++i) {
+					Leg currentLeg = orderedLegs.get(i);
+					Leg nextLeg = orderedLegs.get(i + 1);
+					if (MomentHelper.isAfter(currentLeg.getScheduledArrival(), nextLeg.getScheduledDeparture()))
+						super.state(context, false, "*", "acme.validation.flight.legs.order");
+				}
 		}
-
-		/*
-		 * // Comprobar al PUCLICAR un vuelo, no al crear, ya que siempre se crea en draftmode (borrador)
-		 * Collection<Leg> legs = this.repository.findAllLegsByFlightId(flight.getId());
-		 * if (legs.isEmpty()) {
-		 * res = false;
-		 * super.state(context, false, "numberOfLegs", "{acme.validation.filght.legs.empty.message}");
-		 * }
-		 */
+		res = !super.hasErrors(context);
 
 		return res;
 	}

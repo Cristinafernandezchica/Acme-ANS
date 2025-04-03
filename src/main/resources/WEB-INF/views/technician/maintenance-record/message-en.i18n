@@ -5,7 +5,7 @@ technician.maintenance-record.list.label.moment= Moment
 technician.maintenance-record.list.label.status= Status
 technician.maintenance-record.list.label.inspectionDueDate = Inspection Due Date
 technician.maintenance-record.list.label.estimatedCost = EstimatedCost
-technician.maintenance-record.form.label.draftmode = draftmode
+technician.maintenance-record.list.label.draftMode = draftmode
 technician.maintenance-record.list.button.create = Create
 
 technician.maintenance-record.form.title = Maintenance record form
@@ -19,5 +19,7 @@ technician.maintenance-record.form.label.status = Status
 technician.maintenance-record.form.label.inspectionDueDate = Inspection Due Date
 technician.maintenance-record.form.label.estimatedCost = Estimated Cost
 technician.maintenance-record.form.label.notes = Notes
+
+technician.maintenance-record.form.button.tasks = tasks list
 
 

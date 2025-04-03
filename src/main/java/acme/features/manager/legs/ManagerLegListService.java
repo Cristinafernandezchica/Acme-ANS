@@ -3,6 +3,7 @@ package acme.features.manager.legs;
 
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -32,7 +33,7 @@ public class ManagerLegListService extends AbstractGuiService<Manager, Leg> {
 
 		legs = this.repository.findAllLegsByFlightId(flightId);
 
-		orderedByMomentLegs = legs.stream().sorted(Comparator.comparing(Leg::getScheduledDeparture)).toList();
+		orderedByMomentLegs = legs.stream().sorted(Comparator.comparing(Leg::getScheduledDeparture)).collect(Collectors.toList());
 
 		super.getResponse().addGlobal("flightId", flightId);
 		super.getBuffer().addData(orderedByMomentLegs);

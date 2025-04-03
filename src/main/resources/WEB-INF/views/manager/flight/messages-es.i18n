@@ -33,5 +33,3 @@ manager.flight.form.label.originCity = Ciudad Origen
 manager.flight.form.label.destinationCity = Ciudad Destino
 manager.flight.form.label.layovers = Aterrizajes
 manager.flight.form.label.airline = Aerolínea
-
-manager.flights.without.legs = No puedes publicar un vuelo sin tramos

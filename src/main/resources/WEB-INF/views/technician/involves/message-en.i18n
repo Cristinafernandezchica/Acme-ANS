@@ -1,0 +1,14 @@
+
+technician.involves.list.title = List maintenance record's tasks
+
+technician.involves.list.label.taskId =Id
+technician.involves.list.label.taskPriority = Priority
+technician.involves.list.label.taskType = Type
+
+technician.involves.list.button.create = Add new task
+technician.involves.form.button.delete =Delete
+technician.involves.form.label.task = Task id
+technician.involves.form.button.create = Create
+technician.involves.form.button.delete = Delete
+
+technician.involves.form.title = Form maintenance record's tasks

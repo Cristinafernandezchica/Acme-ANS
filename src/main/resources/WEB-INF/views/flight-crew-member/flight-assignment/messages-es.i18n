@@ -1,0 +1,16 @@
+flight-crew-member.flight-assignment.list.title = Asignación de vuelo
+flight-crew-member.flight-assignment.list.label.flightCrewsDuty = Puesto del asistente de vuelo
+flight-crew-member.flight-assignment.list.label.lastUpdate = Última actualización
+flight-crew-member.flight-assignment.list.label.currentStatus = Estado actual
+flight-crew-member.flight-assignment.list.label.remarks = Indicaciones
+flight-crew-member.flight-assignment.list.label.legs = Vuelo
+flight-crew-member.flight-assignment.list.label.availableFlightCrewMembers = Asistente de vuelo
+flight-crew-member.flight-assignment.list.button.create = Crear una asignación de vuelo
+
+flight-crew-member.flight-assignment.form.title = Asignación de vuelo
+flight-crew-member.flight-assignment.form.button.create = Crear una asignación de vuelo
+flight-crew-member.flight-assignment.form.label.confirmation = Confirmar
+flight-crew-member.flight-assignment.form.button.update = Actualizar
+flight-crew-member.flight-assignment.form.button.publish = Publicar
+flight-crew-member.flight-assignment.form.button.delete = Eliminar
+flight-crew-member.flight-assignment.form.button.activityLogs = Registro de incidentes
