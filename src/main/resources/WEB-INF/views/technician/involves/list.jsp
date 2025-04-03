@@ -5,9 +5,8 @@
 
 
 <acme:list>
-	<acme:list-column code="technician.involves.list.label.taskId" path="tasks.id" width="33%"/>
-	<acme:list-column code="technician.involves.list.label.taskPriority" path="tasks.priority" width="33%"/>
-	<acme:list-column code="technician.involves.list.label.taskType" path="tasks.type" width="33%"/>
+	<acme:list-column code="technician.involves.list.label.taskId" path="task.id" width="33%"/>
+	<acme:list-column code="technician.involves.list.label.taskPriority" path="task.priority" width="33%"/>
+	<acme:list-column code="technician.involves.list.label.taskType" path="task.type" width="33%"/>
 </acme:list>
-
-
+<acme:button code="technician.involves.list.button.create" action ="/technician/involves/create?id=${$request.data.id}"/>

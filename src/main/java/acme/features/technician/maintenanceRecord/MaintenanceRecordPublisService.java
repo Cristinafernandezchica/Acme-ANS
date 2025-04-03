@@ -1,12 +1,17 @@
 
 package acme.features.technician.maintenanceRecord;
 
+import java.util.Collection;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import acme.client.components.models.Dataset;
+import acme.client.components.views.SelectChoices;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
+import acme.entities.aircrafts.Aircraft;
 import acme.entities.maintenanceRecords.MaintenanceRecord;
+import acme.entities.maintenanceRecords.Status;
 import acme.realms.Technician;
 
 @GuiService
@@ -44,12 +49,22 @@ public class MaintenanceRecordPublisService extends AbstractGuiService<Technicia
 	@Override
 	public void bind(final MaintenanceRecord mr) {
 
-		super.bindObject(mr, "status", "inspectionDueDate", "estimatedCost", "notes", "aircraft");
+		super.bindObject(mr);
 	}
 
 	@Override
 	public void validate(final MaintenanceRecord mr) {
-		;
+		int id;
+		id = super.getRequest().getData("id", int.class);
+		int unpublishedNumberTasks = this.repository.findAllInvolvesByMRId(id).stream().filter(x -> x.getTask().isDraftMode()).toList().size();
+
+		int publishedNumberTasks = this.repository.findAllInvolvesByMRId(id).stream().filter(x -> x.getTask().isDraftMode() == false).toList().size();
+
+		if (!this.getBuffer().getErrors().hasErrors("notes") && mr.isDraftMode() == true)
+			super.state(unpublishedNumberTasks == 0, "notes", "acme.validation.technician.maintenance-record.unpublished-tasks.message", mr);
+		if (!this.getBuffer().getErrors().hasErrors("notes") && mr.isDraftMode() == true)
+			super.state(publishedNumberTasks > 0, "notes", "acme.validation.technician.maintenance-record.published-tasks.message", mr);
+
 	}
 
 	@Override
@@ -62,9 +77,22 @@ public class MaintenanceRecordPublisService extends AbstractGuiService<Technicia
 	@Override
 	public void unbind(final MaintenanceRecord mr) {
 
+		SelectChoices choiceAircraft;
+		SelectChoices statuses;
 		Dataset dataset;
+		Collection<Aircraft> aircrafts;
 
-		dataset = super.unbindObject(mr, "draftMode");
+		statuses = SelectChoices.from(Status.class, mr.getStatus());
+		aircrafts = this.repository.findAllAircraft();
+		choiceAircraft = SelectChoices.from(aircrafts, "id", mr.getAircraft());
+
+		dataset = super.unbindObject(mr, "status", "inspectionDueDate", "estimatedCost", "notes", "aircraft", "draftMode");
+
+		dataset.put("statuses", statuses);
+		dataset.put("aircrafts", choiceAircraft);
+
+		dataset.put("aircraft", choiceAircraft.getSelected().getKey());
+		dataset.put("status", statuses.getSelected().getKey());
 
 		super.getResponse().addData(dataset);
 

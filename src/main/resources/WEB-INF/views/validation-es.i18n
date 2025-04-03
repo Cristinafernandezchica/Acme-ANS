@@ -49,3 +49,8 @@ acme.validation.airport.iataCode.message = No puede usar un código IATA que ya 
 acme.validation.airline.iataCode.message = Código IATA ya en uso
 acme.validation.airline.foundationMoment.message = La fecha tiene que ser pasada
 
+acme.validation.technician.involves.message = La tarea no puede estar en modo borrador
+acme.validation.technician.invalidTask.message = Esta es una task no valida
+acme.validation.technician.maintenance-record.unpublished-tasks.message = No puedes publicar un registro de mantenimiento con tareas sin publicar
+acme.validation.technician.maintenance-record.published-tasks.message = Necesitas al menos 1 tarea publicada
+acme.validation.maintenanceRecords.costs.message = Necesita ser una moneda aceptada
