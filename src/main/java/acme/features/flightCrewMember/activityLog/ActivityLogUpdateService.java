@@ -21,7 +21,7 @@ public class ActivityLogUpdateService extends AbstractGuiService<FlightCrewMembe
 
 	@Override
 	public void authorise() {
-		boolean isFlightAssignmentOwner = true;
+		boolean isFlightAssignmentOwner;
 
 		FlightCrewMember fcmLogged;
 		ActivityLog alSelected;
@@ -59,7 +59,9 @@ public class ActivityLogUpdateService extends AbstractGuiService<FlightCrewMembe
 		ActivityLog activityLogBaseData = this.repository.findActivityLogById(id);
 
 		boolean isOriginalRegistrationMoment;
-		isOriginalRegistrationMoment = activityLog.getRegistrationMoment() == activityLogBaseData.getRegistrationMoment();
+		isOriginalRegistrationMoment = activityLog.getRegistrationMoment().getDate() == activityLogBaseData.getRegistrationMoment().getDate() && activityLog.getRegistrationMoment().getMonth() == activityLogBaseData.getRegistrationMoment().getMonth()
+			&& activityLog.getRegistrationMoment().getYear() == activityLogBaseData.getRegistrationMoment().getYear() && activityLog.getRegistrationMoment().getMinutes() == activityLogBaseData.getRegistrationMoment().getMinutes()
+			&& activityLog.getRegistrationMoment().getSeconds() == activityLogBaseData.getRegistrationMoment().getSeconds();
 		super.state(isOriginalRegistrationMoment, "registrationMoment", "acme.validation.isOriginalRegistrationMoment.message");
 
 		boolean confirmation;
