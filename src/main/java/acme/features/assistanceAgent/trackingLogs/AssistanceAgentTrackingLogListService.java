@@ -18,7 +18,7 @@ public class AssistanceAgentTrackingLogListService extends AbstractGuiService<As
 	// Internal state ---------------------------------------------------------
 
 	@Autowired
-	private AssistanceAgentTrackingRepository repository;
+	private AssistanceAgentTrackingLogRepository repository;
 
 	// AbstractGuiService interface -------------------------------------------
 
@@ -31,7 +31,7 @@ public class AssistanceAgentTrackingLogListService extends AbstractGuiService<As
 
 		claimId = super.getRequest().getData("claimId", int.class);
 		claim = this.repository.findClaimById(claimId);
-		status = claim != null && (!claim.isDraftMode() || super.getRequest().getPrincipal().hasRealm(claim.getAssistanceAgent()));
+		status = claim != null && !claim.isDraftMode() && super.getRequest().getPrincipal().hasRealm(claim.getAssistanceAgent());
 
 		super.getResponse().setAuthorised(status);
 	}
@@ -65,7 +65,13 @@ public class AssistanceAgentTrackingLogListService extends AbstractGuiService<As
 
 		claimId = super.getRequest().getData("claimId", int.class);
 		claim = this.repository.findClaimById(claimId);
-		showCreate = !claim.isDraftMode() && super.getRequest().getPrincipal().hasRealm(claim.getAssistanceAgent());
+
+		if (trackingLogs.isEmpty())
+			showCreate = !claim.isDraftMode() && super.getRequest().getPrincipal().hasRealm(claim.getAssistanceAgent());
+		else {
+			Long maximumTrackingLogs = trackingLogs.stream().filter(t -> t.getResolutionPercentage().equals(100.00)).count();
+			showCreate = !claim.isDraftMode() && super.getRequest().getPrincipal().hasRealm(claim.getAssistanceAgent()) && maximumTrackingLogs < 2;
+		}
 
 		super.getResponse().addGlobal("claimId", claimId);
 		super.getResponse().addGlobal("showCreate", showCreate);

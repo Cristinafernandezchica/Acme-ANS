@@ -55,7 +55,13 @@ acme.validation.technician.invalidTask.message = This is an invalid task
 acme.validation.technician.maintenance-record.unpublished-tasks.message = Can't publish a Maintenance record with unpublish tasks
 acme.validation.technician.maintenance-record.published-tasks.message = Need at least 1 publish task
 acme.validation.maintenanceRecords.costs.message = Need to be an acepted currencyacme.validation.claim.leg.message = You can just choose one of the legs from the selection
+
+acme.validation.claim.leg.message =  You can just choose one of the legs from the selection
 acme.validation.claim.type.message = You can just choose one of the types from the selection
 acme.validation.claim.draftMode.message = You can not update o delete a claim if it is not in draft mode
 acme.validation.claim.accepted.message = The accepted claim value is not the same as the status of your last Tracking Record
 acme.validation.claim.legNull.message = You can not publish a claim without a leg
+
+acme.validation.trackingLog.resolutionPercentage.message = The resolution percentage is not correct
+acme.validation.trackingLog.status.message = That status is not possible
+acme.validation.trackingLog.resolutionPercentageStatus.message = You can only set the resolution percentage to 100.00 and the status cannot be pending

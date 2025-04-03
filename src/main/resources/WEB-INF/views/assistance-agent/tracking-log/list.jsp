@@ -24,5 +24,5 @@
 </acme:list>
 
 <jstl:if test="${showCreate}">
-	<acme:button code="assistance-agent.tracking-log.list.button.create" action="/assistance-agent/tracking-log/create?claimId=${id}"/>				
+	<acme:button code="assistance-agent.tracking-log.list.button.create" action="/assistance-agent/tracking-log/create?claimId=${claimId}"/>				
 </jstl:if>
