@@ -108,6 +108,7 @@ public class FlightAssignmentCreateService extends AbstractGuiService<FlightCrew
 		 * - Comprobacion de la leg no pasada
 		 * - Comprobacion de la FCM esta available
 		 * - Comprobacion de los otros atributos
+		 * - Comprobar que no se ponga el draftMode a false
 		 */
 
 		confirmation = super.getRequest().getData("confirmation", boolean.class);

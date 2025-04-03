@@ -62,6 +62,13 @@ public class FlightAssignmentUpdateService extends AbstractGuiService<FlightCrew
 		faIdSolicitud = super.getRequest().getData("id", int.class);
 		flightAssignment = this.repository.findFlightAssignmentById(faIdSolicitud);
 
+		int fcmIdLogged = super.getRequest().getPrincipal().getActiveRealm().getId();
+		FlightCrewMember fcmLogged = this.repository.findFlighCrewMemberById(fcmIdLogged);
+
+		flightAssignment.setDraftMode(true);
+		flightAssignment.setLastUpdate(MomentHelper.getCurrentMoment());
+		flightAssignment.setFlightCrewMemberAssigned(fcmLogged);
+
 		super.getBuffer().addData(flightAssignment);
 	}
 
@@ -109,7 +116,7 @@ public class FlightAssignmentUpdateService extends AbstractGuiService<FlightCrew
 
 		List<Leg> legByFCM = this.repository.findLegsByFlightCrewMemberId(flightAssignment.getFlightCrewMemberAssigned().getId());
 		for (Leg l : legByFCM)
-			if (!this.legIsCompatible(flightAssignment.getLegRelated(), l)) {
+			if (this.legIsCompatible(flightAssignment.getLegRelated(), l)) {
 				legCompatible = false;
 				super.state(legCompatible, "legCompatible", "acme.validation.legCompatible.message");
 				break;

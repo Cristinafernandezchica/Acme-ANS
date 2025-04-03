@@ -98,7 +98,7 @@ public class FlightAssignmentPublishService extends AbstractGuiService<FlightCre
 
 		List<Leg> legByFCM = this.repository.findLegsByFlightCrewMemberId(flightAssignment.getFlightCrewMemberAssigned().getId());
 		for (Leg l : legByFCM)
-			if (!this.legIsCompatible(flightAssignment.getLegRelated(), l)) {
+			if (this.legIsCompatible(flightAssignment.getLegRelated(), l)) {
 				legCompatible = false;
 				super.state(legCompatible, "legCompatible", "acme.validation.legCompatible.message");
 				break;
