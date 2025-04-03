@@ -25,11 +25,8 @@ public interface AssistanceAgentClaimRepository extends AbstractRepository {
 	@Query("select a from AssistanceAgent a where a.id = :id")
 	AssistanceAgent findAssistanceAgentById(int id);
 
-	@Query("SELECT c FROM Claim c WHERE c.assistanceAgent.id = :assistanceAgentId AND c.accepted != null AND c.draftMode = false")
-	Collection<Claim> findAllCompletedClaimsByAssistanceAgentId(int assistanceAgentId);
-
-	@Query("SELECT c FROM Claim c WHERE c.assistanceAgent.id = :assistanceAgentId AND c.accepted = null")
-	Collection<Claim> findAllUndergoingClaimsByAssistanceAgentId(int assistanceAgentId);
+	@Query("SELECT c FROM Claim c WHERE c.assistanceAgent.id = :assistanceAgentId")
+	Collection<Claim> findAllClaimsByAssistanceAgentId(int assistanceAgentId);
 
 	@Query("SELECT l FROM Leg l WHERE l.draftMode = false AND l.scheduledArrival <= :now AND l.flight.airline.id = :agentAirlineId")
 	Collection<Leg> findAllPublishedLegs(Date now, int agentAirlineId);

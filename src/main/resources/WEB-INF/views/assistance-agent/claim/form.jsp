@@ -22,7 +22,7 @@
 			<acme:input-select code="assistance-agent.claim.form.label.type" path="type" choices="${types}" readonly="true"/>	
 			<acme:input-textarea code="assistance-agent.claim.form.label.description" path="description" readonly="true"/>
 			<acme:input-select code="assistance-agent.claim.form.label.leg" path="leg" choices="${legs}" readonly="true"/>
-			<acme:input-checkbox code="assistance-agent.claim.form.label.accepted" path="accepted" readonly="true"/>
+			<acme:input-textbox code="assistance-agent.claim.form.label.accepted" path="accepted" readonly="true"/>
 			
 			<acme:button code="assistance-agent.claim.form.button.trackingLogs" action="/assistance-agent/claim/listCompleted?claimId=${id}"/>	
 		</jstl:when>

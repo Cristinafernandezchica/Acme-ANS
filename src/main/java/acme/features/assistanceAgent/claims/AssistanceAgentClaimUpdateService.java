@@ -112,7 +112,8 @@ public class AssistanceAgentClaimUpdateService extends AbstractGuiService<Assist
 		agentId = super.getRequest().getPrincipal().getActiveRealm().getId();
 		assistanceAgent = this.repository.findAssistanceAgentById(agentId);
 		legs = this.repository.findAllPublishedLegs(MomentHelper.getCurrentMoment(), assistanceAgent.getAirline().getId());
-		dataset = super.unbindObject(claim, "registrationMoment", "passengerEmail", "description", "accepted", "draftMode");
+		dataset = super.unbindObject(claim, "registrationMoment", "passengerEmail", "description", "draftMode");
+		dataset.put("accepted", claim.getAccepted());
 
 		if (legs.isEmpty()) {
 			choices = new SelectChoices();
