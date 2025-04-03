@@ -65,8 +65,6 @@ public class FlightAssignmentUpdateService extends AbstractGuiService<FlightCrew
 		int fcmIdLogged = super.getRequest().getPrincipal().getActiveRealm().getId();
 		FlightCrewMember fcmLogged = this.repository.findFlighCrewMemberById(fcmIdLogged);
 
-		flightAssignment.setDraftMode(true);
-		flightAssignment.setLastUpdate(MomentHelper.getCurrentMoment());
 		flightAssignment.setFlightCrewMemberAssigned(fcmLogged);
 
 		super.getBuffer().addData(flightAssignment);
@@ -142,6 +140,7 @@ public class FlightAssignmentUpdateService extends AbstractGuiService<FlightCrew
 
 	@Override
 	public void perform(final FlightAssignment flightAssignment) {
+		flightAssignment.setLastUpdate(MomentHelper.getCurrentMoment());
 		this.repository.save(flightAssignment);
 	}
 
