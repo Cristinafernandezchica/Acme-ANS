@@ -24,7 +24,7 @@
 			<acme:input-select code="assistance-agent.claim.form.label.leg" path="leg" choices="${legs}" readonly="true"/>
 			<acme:input-textbox code="assistance-agent.claim.form.label.accepted" path="accepted" readonly="true"/>
 			
-			<acme:button code="assistance-agent.claim.form.button.trackingLogs" action="/assistance-agent/claim/listCompleted?claimId=${id}"/>	
+			<acme:button code="assistance-agent.claim.form.button.trackingLogs" action="/assistance-agent/tracking-log/list?claimId=${id}"/>				
 		</jstl:when>
 		<jstl:when test="${_command == 'create'}">
 			<acme:input-email code="assistance-agent.claim.form.label.passengerEmail" path="passengerEmail"/>

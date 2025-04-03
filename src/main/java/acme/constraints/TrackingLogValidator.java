@@ -32,6 +32,8 @@ public class TrackingLogValidator extends AbstractValidator<ValidTrackingLog, Tr
 				super.state(context, false, "Status", "The status can be “ACCEPTED” or “REJECTED” only when the resolution percentage gets to 100%");
 			else if (!trackingLog.getStatus().equals(TrackingLogStatus.PENDING) && (trackingLog.getResolution() == null || trackingLog.getResolution().isBlank()))
 				super.state(context, false, "Status", "If the status is not “PENDING”, then the resolution is mandatory");
+			else if (trackingLog.getClaim().isDraftMode())
+				super.state(context, false, "Claim", "We cannot associate a tracking log with a claim in draft mode.");
 			result = !super.hasErrors(context);
 		}
 		return result;
