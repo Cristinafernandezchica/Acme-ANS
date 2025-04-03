@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import acme.client.repositories.AbstractRepository;
+import acme.entities.involves.Involves;
 import acme.entities.tasks.Task;
 
 @Repository
@@ -17,5 +18,8 @@ public interface TaskRepository extends AbstractRepository {
 
 	@Query("select t from Task t where t.id = :taskId")
 	Task findByTaskId(int taskId);
+
+	@Query("select i from Involves i where i.task.id = :taskId")
+	Collection<Involves> findAllInvolvesByTaskId(int taskId);
 
 }

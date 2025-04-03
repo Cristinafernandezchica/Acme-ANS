@@ -41,7 +41,7 @@ public class Flight extends AbstractEntity {
 	// Attributes -------------------------------------------------------------
 
 	@ValidString(min = 1, max = 50)
-	@Mandatory
+	@Mandatory(message = "May not be null")
 	@Automapped
 	private String				tag;
 
@@ -51,7 +51,7 @@ public class Flight extends AbstractEntity {
 	private Boolean				indication;
 
 	@ValidMoney(min = 0.00, max = 1000000.00)
-	@Mandatory
+	@Mandatory(message = "May not be null")
 	@Automapped
 	private Money				cost;
 

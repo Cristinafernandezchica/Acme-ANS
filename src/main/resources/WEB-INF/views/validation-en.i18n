@@ -4,10 +4,11 @@ acme.validation.flight.needSelftTransfer.messagen = Don't need self transfer, it
 acme.validation.flight.legs.order = The legs are not in the right order
 acme.validation.flight.published.update = You can't update a published flight
 acme.validation.flight.published.delete = You can't delete a published flight
+acme.validation.flight.create.no.draftmode = You can't crate a flight with no draftmode
 
 acme.validation.manager.flights.without.legs = The flight has no leg assigned
 acme.validation.manager.flights.no.published.leg = The flight has some unpublished leg(s)
-acme.validation.manager.flights.currency.not.valid = The currency is not valid (only EUR is valid)
+acme.validation.manager.flights.currency.not.valid = The currency is not valid
 
 acme.validation.lastCardNibble.message = The last card nibble can't be empty 
 acme.validation.booking.flight.message = No flight assigned
@@ -35,6 +36,17 @@ acme.validation.leg.iataCode.flightNumber = The flight number must contains the 
 acme.validation.leg.same.departure.arrival.airport = The departure and arrival airports must be diferents
 acme.validation.leg.published.update = You can't update a published leg
 acme.validation.leg.published.delete = You can't delete a published leg
+acme.validation.leg.invalid.number.flightNumber = Invalid number on flight number
+acme.validation.leg.invalid.iata.flightNumber = Letters do not match the airline's IATA Code
+acme.validation.leg.create.no.draftmode = You can't crate a leg with no draftmode
+acme.validation.leg.scheduledDeparture.past = Invalid scheduled departure, it can't be in the past
+acme.validation.leg.scheduledArrival.past = Invalid scheduled arrival, it can't be in the past
+acme.validation.leg.status.always.ontime = When create a leg, the status must be ON_TIME
+acme.validation.leg.status.draftmode.ontime = When a leg is on draft mode, the status must be ON_TIME
+acme.validation.leg.update.other.fields = You can only update the state of the leg
+acme.validation.leg.flightNumber.not.unique = The flight number already exists
+acme.validation.leg.published.flight.delete = You can't delete a leg of a published flight
+acme.validation.leg.create.no.flight.draftmode = Can't create a leg, the flight is published
 
 
 acme.validation.length = Is too long
@@ -43,3 +55,13 @@ acme.validation.service.inspectionDueDate.message = The inspection due date can'
 acme.validation.airport.iataCode.message = You can not use a IATA Code that is already in use
 acme.validation.airline.iataCode.message = IATA code already in use
 acme.validation.airline.foundationMoment.message = Foundation moment must be past
+
+acme.validation.technician.involves.message = The task can't be in draft mode
+acme.validation.technician.invalidTask.message = This is an invalid task
+acme.validation.technician.maintenance-record.unpublished-tasks.message = Can't publish a Maintenance record with unpublish tasks
+acme.validation.technician.maintenance-record.published-tasks.message = Need at least 1 publish task
+acme.validation.maintenanceRecords.costs.message = Need to be an acepted currencyacme.validation.claim.leg.message = You can just choose one of the legs from the selection
+acme.validation.claim.type.message = You can just choose one of the types from the selection
+acme.validation.claim.draftMode.message = You can not update o delete a claim if it is not in draft mode
+acme.validation.claim.accepted.message = The accepted claim value is not the same as the status of your last Tracking Record
+acme.validation.claim.legNull.message = You can not publish a claim without a leg
