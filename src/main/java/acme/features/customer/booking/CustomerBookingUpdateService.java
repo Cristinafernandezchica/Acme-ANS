@@ -1,7 +1,8 @@
 
-package acme.features.authenticated.customer.booking;
+package acme.features.customer.booking;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ import acme.entities.flights.Flight;
 import acme.realms.Customer;
 
 @GuiService
-public class CustomerBookingPublishService extends AbstractGuiService<Customer, Booking> {
+public class CustomerBookingUpdateService extends AbstractGuiService<Customer, Booking> {
 
 	// Internal state ---------------------------------------------------------
 
@@ -29,18 +30,17 @@ public class CustomerBookingPublishService extends AbstractGuiService<Customer, 
 
 	@Override
 	public void authorise() {
-		int bookingId;
-		Booking booking;
-		Customer customer;
 		boolean status;
+		int bookingId;
+		Customer customer;
+		Booking booking;
 
 		bookingId = super.getRequest().getData("id", int.class);
 		booking = this.repository.findBookingById(bookingId);
 		customer = booking == null ? null : booking.getCustomer();
-		status = booking != null && super.getRequest().getPrincipal().hasRealm(customer) && booking.isDraftMode();
+		status = super.getRequest().getPrincipal().hasRealm(customer) && booking != null && booking.isDraftMode();
 
 		super.getResponse().setAuthorised(status);
-
 	}
 
 	@Override
@@ -58,13 +58,24 @@ public class CustomerBookingPublishService extends AbstractGuiService<Customer, 
 	public void bind(final Booking booking) {
 		int flightId;
 		Flight flight;
+		Date moment;
 
+		moment = MomentHelper.getCurrentMoment();
 		flightId = super.getRequest().getData("flight", int.class);
 		flight = this.repository.findFlightById(flightId);
 
-		super.bindObject(booking, "travelClass", "lastCardNibble");
-		booking.setFlight(flight);
+		super.bindObject(booking, "locatorCode", "travelClass", "lastCardNibble");
+		booking.setPurchaseMoment(moment);
 
+		// Si el vuelo no es válido, asignar null en lugar de provocar una excepción
+		Collection<Flight> validFlights = this.repository.findAllFlights().stream().filter(f -> f.getScheduledDeparture() != null && !f.isDraftMode() && f.getScheduledDeparture().after(MomentHelper.getCurrentMoment())
+			&& this.repository.findLegsByFlightId(f.getId()).stream().allMatch(leg -> leg.getScheduledDeparture().after(MomentHelper.getCurrentMoment()))).collect(Collectors.toList());
+		if (!validFlights.contains(flight))
+			flight = null;
+
+		booking.setFlight(flight);
+		booking.setPrice(booking.getPrice());
+		booking.setDraftMode(true);
 	}
 
 	@Override
@@ -72,52 +83,47 @@ public class CustomerBookingPublishService extends AbstractGuiService<Customer, 
 		Collection<Flight> validFlights = this.repository.findAllFlights().stream().filter(flight -> flight.getScheduledDeparture() != null && !flight.isDraftMode() && flight.getScheduledDeparture().after(MomentHelper.getCurrentMoment())
 			&& this.repository.findLegsByFlightId(flight.getId()).stream().allMatch(leg -> leg.getScheduledDeparture().after(MomentHelper.getCurrentMoment()))).collect(Collectors.toList());
 
-		boolean isFlightValid = validFlights.contains(booking.getFlight()) || booking.getFlight() == null;
+		boolean isFlightValid = booking.getFlight() == null || validFlights.contains(booking.getFlight());
 		super.state(isFlightValid, "flight", "acme.validation.booking.flight.message");
-
-		//Collection<Passenger> passengers = this.repository.findPassengersByBookingId(booking.getId());
-		// boolean hasPassengersInDraftMode = !passengers.isEmpty() && passengers.stream().anyMatch(p -> p.isDraftMode()))
-		//super.state(hasPassengersInDraftMode, "draftMode", "acme.validation.booking.passengers.message");
-
-		boolean hasFlight = booking.getFlight() != null;
-		super.state(hasFlight, "flight", "acme.validation.booking.flight.message");
-
-		boolean hasCardNibble = booking.getLastCardNibble() != null && !booking.getLastCardNibble().trim().isEmpty();
-		super.state(hasCardNibble, "lastCardNibble", "acme.validation.lastCardNibble.message");
 	}
 
 	@Override
 	public void perform(final Booking booking) {
-		booking.setDraftMode(false);
-		this.repository.save(booking);
+		Booking persistentBooking = this.repository.findBookingById(booking.getId());
+		if (persistentBooking != null) {
+			persistentBooking.setFlight(booking.getFlight());
+			persistentBooking.setTravelClass(booking.getTravelClass());
+			persistentBooking.setLastCardNibble(booking.getLastCardNibble());
+			persistentBooking.setPurchaseMoment(MomentHelper.getCurrentMoment());
+			persistentBooking.setDraftMode(true);
+
+			this.repository.save(persistentBooking);
+		}
 	}
 
 	@Override
 	public void unbind(final Booking booking) {
 		Collection<Flight> flights;
 		SelectChoices choices;
-		SelectChoices classChoices;
+		SelectChoices classes;
 		Dataset dataset;
 
 		flights = this.repository.findAllFlights().stream().filter(flight -> flight.getScheduledDeparture() != null && !flight.isDraftMode() && flight.getScheduledDeparture().after(MomentHelper.getCurrentMoment())
 			&& this.repository.findLegsByFlightId(flight.getId()).stream().allMatch(leg -> leg.getScheduledDeparture().after(MomentHelper.getCurrentMoment()))).collect(Collectors.toList());
 
-		boolean flightStillValid = flights.contains(booking.getFlight());
-		if (!flightStillValid)
-			booking.setFlight(null);
-
-		choices = SelectChoices.from(flights, "tag", booking.getFlight());
-		classChoices = SelectChoices.from(TravelClass.class, booking.getTravelClass());
+		choices = SelectChoices.from(flights, "flightLabel", booking.getFlight());
+		classes = SelectChoices.from(TravelClass.class, booking.getTravelClass());
 
 		dataset = super.unbindObject(booking, "locatorCode", "purchaseMoment", "travelClass", "price", "lastCardNibble", "draftMode");
-
-		dataset.put("flight", booking.getFlight() != null && choices.getSelected() != null ? choices.getSelected().getKey() : "0");
 		dataset.put("flights", choices);
-		dataset.put("classes", classChoices);
+		if (booking.isDraftMode() && (choices.getSelected() == null || choices.getSelected().getKey() == null))
+			dataset.put("flight", "0");
+		else
+			dataset.put("flight", booking.getFlight() != null ? choices.getSelected().getKey() : "0");
+		dataset.put("classes", classes);
+		dataset.put("travelClass", classes.getSelected().getKey());
 		dataset.put("bookingId", booking.getId());
 
 		super.getResponse().addData(dataset);
-
 	}
-
 }

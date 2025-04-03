@@ -13,6 +13,7 @@ technician.maintenance-record.form.title = Formulario de registro de matenimient
 technician.maintenance-record.form.button.update = Actualizar
 technician.maintenance-record.form.button.publish = publicar
 
+technician.maintenance-record.form.button.create = Crear
 technician.maintenance-record.form.label.aircraft = Numero de registro de la aeronave
 technician.maintenance-record.form.label.moment = Momento
 technician.maintenance-record.form.label.status = Estado

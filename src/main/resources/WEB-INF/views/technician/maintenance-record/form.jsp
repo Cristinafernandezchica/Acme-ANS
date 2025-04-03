@@ -20,13 +20,15 @@
 </jstl:when>
 
 	<jstl:when test ="${acme:anyOf(_command, 'show|update|publish') && draftMode == true}">
-		<acme:submit code="technician.maintenance-record.form.button.update" action="/technician/maintenance-record/update"/>
-		<acme:button code="technician.maintenance-record.form.button.tasks" action="/technician/involves/list?id=${id}"/>
+			<acme:submit code="technician.maintenance-record.form.button.update" action="/technician/maintenance-record/update"/>
 		<acme:submit code="technician.maintenance-record.form.button.publish" action="/technician/maintenance-record/publish"/>
+		<acme:button code="technician.maintenance-record.form.button.tasks" action="/technician/involves/list?id=${id}"/>
 </jstl:when>
 
 		<jstl:when test ="${acme:anyOf(_command, 'show|update|publish')}">
 		<acme:input-moment code="technician.maintenance-record.form.label.moment" path= "moment" readonly= "true"/>
+				<acme:submit code="technician.maintenance-record.form.button.update" action="/technician/maintenance-record/update"/>
+		<acme:button code="technician.maintenance-record.form.button.tasks" action="/technician/involves/list?id=${id}"/>
 		</jstl:when>
 
 </jstl:choose>

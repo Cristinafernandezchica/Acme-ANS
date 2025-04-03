@@ -24,7 +24,18 @@ public class InvolvesShowService extends AbstractGuiService<Technician, Involves
 
 	@Override
 	public void authorise() {
-		super.getResponse().setAuthorised(true);
+		boolean authored = false;
+		Involves involves;
+		int involvesId;
+		involvesId = super.getRequest().getData("id", int.class);
+		Technician technician = (Technician) super.getRequest().getPrincipal().getActiveRealm();
+
+		involves = this.repository.findInvolvesById(involvesId);
+
+		if (involves.getMaintenanceRecord().getTechnician().equals(technician))
+			authored = true;
+
+		super.getResponse().setAuthorised(authored);
 
 	}
 
@@ -47,11 +58,11 @@ public class InvolvesShowService extends AbstractGuiService<Technician, Involves
 		Collection<Task> tasks;
 		Dataset dataset;
 
-		tasks = this.repository.findAllPublishTasks();
+		tasks = this.repository.findAllTasks();
 
-		selectTask = SelectChoices.from(tasks, "description", involves.getTasks());
+		selectTask = SelectChoices.from(tasks, "id", involves.getTask());
 
-		dataset = super.unbindObject(involves);
+		dataset = super.unbindObject(involves, "task");
 		dataset.put("tasks", selectTask);
 		dataset.put("task", selectTask.getSelected().getKey());
 

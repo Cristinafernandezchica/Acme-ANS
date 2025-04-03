@@ -62,7 +62,7 @@ public class AdministratorAirlineCreateService extends AbstractGuiService<Admini
 		super.state(isIataCodeUnique, "iataCode", "acme.validation.airport.iataCode.message");
 
 		foundationMomentValue = super.getRequest().getData("foundationMoment", Date.class);
-		isfoundationMomentPast = foundationMomentValue.before(MomentHelper.getCurrentMoment());
+		isfoundationMomentPast = foundationMomentValue != null && foundationMomentValue.before(MomentHelper.getCurrentMoment());
 		super.state(isfoundationMomentPast, "foundationMoment", "acme.validation.airline.foundationMoment.message");
 
 		confirmation = super.getRequest().getData("confirmation", boolean.class);

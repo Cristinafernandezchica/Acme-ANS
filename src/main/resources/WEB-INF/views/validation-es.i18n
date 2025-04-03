@@ -4,14 +4,21 @@ acme.validation.flight.needSelftTransfer.message = No necesita transporte propio
 acme.validation.flight.legs.order = Los tramos no están en el orden correcto
 acme.validation.flight.published.update = No se puede actualizar un vuelo publicado
 acme.validation.flight.published.delete = No se puede borrar un vuelo publicado
+acme.validation.flight.create.no.draftmode = No se puede crear un vuelo en modo no borrador
 
 acme.validation.manager.flights.without.legs = El vuelo no tiene ningún tramos asignado
 acme.validation.manager.flights.no.published.leg = El vuelo tiene alguno/s tramo/s sin publicar
-acme.validation.manager.flights.currency.not.valid = La unidad monetaria no es válida (solo es válida EUR)
+acme.validation.manager.flights.currency.not.valid = La unidad monetaria no es válida
 
 acme.validation.lastCardNibble.message = Los últimos dígitos de la tarjeta no pueden estar vacios
 acme.validation.booking.flight.message = Sin vuelo asignado
-acme.validation.booking.passengers.message = Alguno de los pasajeros seleccionados está en borrador
+acme.validation.booking.passengers.message = Alguno de los pasajeros seleccionados está en borrador o no ha seleccionado a ningún pasajero
+acme.validation.passenger.duplicate-passport = Ya has creado un pasajero con este número de pasaporte
+acme.validation.passenger.dateOfBirth.message = La fecha de nacimiento tiene que ser pasada
+
+acme.validation.bookingRecord.invalid-booking-null.message = Sin reservas asociadas
+acme.validation.bookingRecord.invalid-passenger-null.message = Sin pasajeros asociados
+acme.validation.bookingRecord.invalid-passenger.message = Pasajero inválido o ya asociado
 
 acme.validation.leg.overlap.message = Solapamiento con otro tramo del mismo vuelo
 acme.validation.leg.departure.arrival.difference.message = Tiene que haber mínimo 5 minutos entre salida y llegada
@@ -48,6 +55,16 @@ acme.validation.leg.iataCode.flightNumber = El número de vuelo debe contener el
 acme.validation.leg.same.departure.arrival.airport = El aeropuerto de salida y de llegada deben ser diferentes
 acme.validation.leg.published.update = No puedes actualizar un tramo publicado
 acme.validation.leg.published.delete = No puedes borrar un tramo publcado
+acme.validation.leg.invalid.number.flightNumber = El número del número de vuelo es inválido, ya existe el número de vuelo
+acme.validation.leg.invalid.iata.flightNumber = Las letras no coinciden con el IATA code de la aerolínea
+acme.validation.leg.create.no.draftmode = No se puede crear un tramo en modo no borrador
+acme.validation.leg.scheduledDeparture.past = Horario de salida inválido, no puede ser en el pasado
+acme.validation.leg.scheduledArrival.past = Horario de llegada inválido, no puede ser en el pasado
+acme.validation.leg.status.always.ontime = Al crear un tramo, su estado tiene que ser ON_TIME
+acme.validation.leg.status.draftmode.ontime = Cuando un tramo está en modo borrador, su estado debe ser ON_TIME
+acme.validation.leg.update.other.fields = Solo se puede actualizar el estado del tramo
+acme.validation.leg.flightNumber.not.unique = El número de vuelo ya existe
+acme.validation.leg.create.no.flight.draftmode = No se puede crear un tramo, el vuelo está publicado
 
 
 acme.validation.length = Es muy largo
@@ -55,5 +72,14 @@ acme.validation.length = Es muy largo
 acme.validation.service.inspectionDueDate.message = La fecha límite de revision no puede ser anterior al momento de inspección
 acme.validation.airport.iataCode.message = No puede usar un código IATA que ya esté en uso
 acme.validation.airline.iataCode.message = Código IATA ya en uso
-acme.validation.airline.foundationMoment.message = La fecha tiene que ser pasada
+acme.validation.airline.foundationMoment.message = La fecha de fundación tiene que ser pasada
 
+acme.validation.technician.involves.message = La tarea no puede estar en modo borrador
+acme.validation.technician.invalidTask.message = Esta es una task no valida
+acme.validation.technician.maintenance-record.unpublished-tasks.message = No puedes publicar un registro de mantenimiento con tareas sin publicar
+acme.validation.technician.maintenance-record.published-tasks.message = Necesitas al menos 1 tarea publicada
+acme.validation.maintenanceRecords.costs.message = Necesita ser una moneda aceptadaacme.validation.claim.leg.message = Solo puede elegir una de las patas de la selección
+acme.validation.claim.type.message = Solo puede elegir uno de los tipos de la selección
+acme.validation.claim.draftMode.message = No se puede actualizar o borrar un reclamo si no está en modo borrador
+acme.validation.claim.accepted.message = El valor aceptado del Reclamo no es el mismo que el estado de su último Registro de Seguimiento
+acme.validation.claim.legNull.message = No puedes publicar un reclamo sin pata
