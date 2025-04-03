@@ -53,12 +53,18 @@ public class ActivityLogCreateService extends AbstractGuiService<FlightCrewMembe
 
 	@Override
 	public void bind(final ActivityLog activityLog) {
-		super.bindObject(activityLog, "registrationMoment", "typeOfIncident", "description", "severityLevel");
 
+		super.bindObject(activityLog, "registrationMoment", "typeOfIncident", "description", "severityLevel");
+		activityLog.setRegistrationMoment(MomentHelper.getCurrentMoment());
 	}
 
 	@Override
 	public void validate(final ActivityLog activityLog) {
+
+		FlightCrewMember fcmLogged;
+		int fcmIdLogged = super.getRequest().getPrincipal().getActiveRealm().getId();
+		fcmLogged = this.repository.findFlighCrewMemberById(fcmIdLogged);
+
 		boolean confirmation;
 
 		confirmation = super.getRequest().getData("confirmation", boolean.class);

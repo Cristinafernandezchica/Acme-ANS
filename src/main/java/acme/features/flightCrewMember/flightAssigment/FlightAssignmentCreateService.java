@@ -63,6 +63,7 @@ public class FlightAssignmentCreateService extends AbstractGuiService<FlightCrew
 		leg = this.repository.findLegById(legId);
 
 		super.bindObject(flightAssignment, "flightCrewsDuty", "lastUpdate", "currentStatus", "remarks");
+		flightAssignment.setLastUpdate(MomentHelper.getCurrentMoment());
 		flightAssignment.setFlightCrewMemberAssigned(flightCrewMember);
 		flightAssignment.setLegRelated(leg);
 	}
