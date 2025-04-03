@@ -60,7 +60,7 @@ public class FlightAssignment extends AbstractEntity {
 	@Valid
 	private FlightCrewMember	flightCrewMemberAssigned;
 
-	@Mandatory(message = "Must not be null")
+	@Mandatory
 	@ManyToOne(optional = false)
 	@Valid
 	private Leg					legRelated;

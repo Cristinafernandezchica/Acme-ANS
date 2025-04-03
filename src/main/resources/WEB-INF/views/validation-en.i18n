@@ -27,7 +27,9 @@ acme.validation.legNotCompleted.message = That leg is completed
 acme.validation.legFromRightAirline.message = That leg doesn't operate with your airline
 acme.validation.fcmAvailable.message = The flight crew member is not available
 acme.validation.legCompatible.message = The flight crew member already has a leg at that date
+acme.validation.isConfirmedOrCancelled.message = The flight assignment must be confirmed or cancelled
 # Flight crew member - flight assignment's messages (antiHacking)
+acme.validation.isLegNull.message = Must not be null
 acme.validation.isOriginalFlightCrewsDuty.message = That's not the original duty
 acme.validation.isOriginalLastUpdate.message = That's not the original last update
 acme.validation.isOriginalCurrentStatus.message = That's not the original current status
