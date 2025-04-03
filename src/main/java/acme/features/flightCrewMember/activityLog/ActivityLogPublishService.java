@@ -22,7 +22,19 @@ public class ActivityLogPublishService extends AbstractGuiService<FlightCrewMemb
 
 	@Override
 	public void authorise() {
-		super.getResponse().setAuthorised(true);
+		boolean isFlightAssignmentOwner = true;
+
+		FlightCrewMember fcmLogged;
+		ActivityLog alSelected;
+		int alId = super.getRequest().getData("id", int.class);
+
+		// Comprobación de que la activityLog sea del FCM logeado
+		int fcmIdLogged = super.getRequest().getPrincipal().getActiveRealm().getId();
+		fcmLogged = this.repository.findFlighCrewMemberById(fcmIdLogged);
+		alSelected = this.repository.findActivityLogById(alId);
+		isFlightAssignmentOwner = alSelected.getFlightAssignmentRelated().getFlightCrewMemberAssigned() == fcmLogged;
+
+		super.getResponse().setAuthorised(isFlightAssignmentOwner);
 	}
 
 	@Override
@@ -43,7 +55,17 @@ public class ActivityLogPublishService extends AbstractGuiService<FlightCrewMemb
 
 	@Override
 	public void validate(final ActivityLog activityLog) {
-		;
+
+		int id = super.getRequest().getData("id", int.class);
+		ActivityLog activityLogBaseData = this.repository.findActivityLogById(id);
+
+		boolean isOriginalRegistrationMoment;
+		isOriginalRegistrationMoment = activityLog.getRegistrationMoment() == activityLogBaseData.getRegistrationMoment();
+		super.state(isOriginalRegistrationMoment, "registrationMoment", "acme.validation.isOriginalRegistrationMoment.message");
+
+		boolean confirmation;
+		confirmation = super.getRequest().getData("confirmation", boolean.class);
+		super.state(confirmation, "confirmation", "acme.validation.confirmation.message");
 	}
 
 	@Override
