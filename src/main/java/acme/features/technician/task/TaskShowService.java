@@ -22,7 +22,16 @@ public class TaskShowService extends AbstractGuiService<Technician, Task> {
 
 	@Override
 	public void authorise() {
-		super.getResponse().setAuthorised(true);
+		Task task;
+		Technician technician;
+		int taskId;
+
+		taskId = super.getRequest().getData("id", int.class);
+		task = this.repository.findByTaskId(taskId);
+
+		technician = (Technician) super.getRequest().getPrincipal().getActiveRealm();
+		if (technician.equals(task.getTechnician()))
+			super.getResponse().setAuthorised(true);
 
 	}
 

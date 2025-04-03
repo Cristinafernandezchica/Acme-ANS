@@ -1,8 +1,10 @@
 
-package acme.features.authenticated.customer.booking;
+package acme.features.customer.booking;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +20,7 @@ import acme.entities.flights.Flight;
 import acme.realms.Customer;
 
 @GuiService
-public class CustomerBookingUpdateService extends AbstractGuiService<Customer, Booking> {
+public class CustomerBookingCreateService extends AbstractGuiService<Customer, Booking> {
 
 	// Internal state ---------------------------------------------------------
 
@@ -30,26 +32,18 @@ public class CustomerBookingUpdateService extends AbstractGuiService<Customer, B
 
 	@Override
 	public void authorise() {
-		boolean status;
-		int bookingId;
-		Customer customer;
-		Booking booking;
-
-		bookingId = super.getRequest().getData("id", int.class);
-		booking = this.repository.findBookingById(bookingId);
-		customer = booking == null ? null : booking.getCustomer();
-		status = super.getRequest().getPrincipal().hasRealm(customer) && booking != null && booking.isDraftMode();
-
-		super.getResponse().setAuthorised(status);
+		super.getResponse().setAuthorised(true);
 	}
 
 	@Override
 	public void load() {
-		int bookingId;
 		Booking booking;
+		Customer customer;
 
-		bookingId = super.getRequest().getData("id", int.class);
-		booking = this.repository.findBookingById(bookingId);
+		customer = (Customer) super.getRequest().getPrincipal().getActiveRealm();
+
+		booking = new Booking();
+		booking.setCustomer(customer);
 
 		super.getBuffer().addData(booking);
 	}
@@ -64,11 +58,20 @@ public class CustomerBookingUpdateService extends AbstractGuiService<Customer, B
 		flightId = super.getRequest().getData("flight", int.class);
 		flight = this.repository.findFlightById(flightId);
 
-		super.bindObject(booking, "locatorCode", "travelClass", "lastCardNibble");
+		super.bindObject(booking, "travelClass", "lastCardNibble");
+		booking.setLocatorCode(this.generateLocatorCode());
 		booking.setPurchaseMoment(moment);
+
+		// Si el vuelo seleccionado no es válido, asignar null
+		Collection<Flight> validFlights = this.repository.findAllFlights().stream().filter(f -> f.getScheduledDeparture() != null && !f.isDraftMode() && f.getScheduledDeparture().after(MomentHelper.getCurrentMoment())
+			&& this.repository.findLegsByFlightId(f.getId()).stream().allMatch(leg -> leg.getScheduledDeparture().after(MomentHelper.getCurrentMoment()))).collect(Collectors.toList());
+
+		if (!validFlights.contains(flight))
+			flight = null;
 		booking.setFlight(flight);
 		booking.setPrice(booking.getPrice());
 		booking.setDraftMode(true);
+
 	}
 
 	@Override
@@ -76,22 +79,14 @@ public class CustomerBookingUpdateService extends AbstractGuiService<Customer, B
 		Collection<Flight> validFlights = this.repository.findAllFlights().stream().filter(flight -> flight.getScheduledDeparture() != null && !flight.isDraftMode() && flight.getScheduledDeparture().after(MomentHelper.getCurrentMoment())
 			&& this.repository.findLegsByFlightId(flight.getId()).stream().allMatch(leg -> leg.getScheduledDeparture().after(MomentHelper.getCurrentMoment()))).collect(Collectors.toList());
 
-		boolean isFlightValid = validFlights.contains(booking.getFlight()) || booking.getFlight() == null;
+		boolean isFlightValid = booking.getFlight() == null || validFlights.contains(booking.getFlight());
 		super.state(isFlightValid, "flight", "acme.validation.booking.flight.message");
+
 	}
 
 	@Override
 	public void perform(final Booking booking) {
-		Booking persistentBooking = this.repository.findBookingById(booking.getId());
-		if (persistentBooking != null) {
-			persistentBooking.setFlight(booking.getFlight());
-			persistentBooking.setTravelClass(booking.getTravelClass());
-			persistentBooking.setLastCardNibble(booking.getLastCardNibble());
-			persistentBooking.setPurchaseMoment(MomentHelper.getCurrentMoment());
-			persistentBooking.setDraftMode(true);
-
-			this.repository.save(persistentBooking);
-		}
+		this.repository.save(booking);
 	}
 
 	@Override
@@ -103,19 +98,53 @@ public class CustomerBookingUpdateService extends AbstractGuiService<Customer, B
 
 		flights = this.repository.findAllFlights().stream().filter(flight -> flight.getScheduledDeparture() != null && !flight.isDraftMode() && flight.getScheduledDeparture().after(MomentHelper.getCurrentMoment())
 			&& this.repository.findLegsByFlightId(flight.getId()).stream().allMatch(leg -> leg.getScheduledDeparture().after(MomentHelper.getCurrentMoment()))).collect(Collectors.toList());
-
-		choices = SelectChoices.from(flights, "tag", booking.getFlight());
+		choices = SelectChoices.from(flights, "flightLabel", booking.getFlight());
 		classes = SelectChoices.from(TravelClass.class, booking.getTravelClass());
 
 		dataset = super.unbindObject(booking, "locatorCode", "purchaseMoment", "travelClass", "price", "lastCardNibble", "draftMode");
 		dataset.put("flights", choices);
-		if (booking.isDraftMode() && (choices.getSelected() == null || choices.getSelected().getKey() == null))
-			dataset.put("flight", "0");
-		else
-			dataset.put("flight", booking.getFlight() != null ? choices.getSelected().getKey() : "0");
+
+		dataset.put("flight", choices.getSelected() != null && choices.getSelected().getKey() != null ? choices.getSelected().getKey() : "0");
 		dataset.put("classes", classes);
 		dataset.put("travelClass", classes.getSelected().getKey());
 
 		super.getResponse().addData(dataset);
+
 	}
+
+	private String generateLocatorCode() {
+		String letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+		Set<String> existingCodes = new HashSet<>(this.repository.findAllLocatorCodes());
+
+		while (true) { // Si todos los códigos están ocupados, vuelve a iterar
+			for (int letterCount = 1; letterCount <= 8; letterCount++) { // Usa de 1 a 8 letras
+				int maxNumbers = (int) Math.pow(10, 8 - letterCount) - 1; // Ajusta los números
+
+				for (int letterIndex = 0; letterIndex < Math.pow(letters.length(), letterCount); letterIndex++) {
+					StringBuilder letterPart = new StringBuilder();
+					int tempIndex = letterIndex;
+
+					for (int i = 0; i < letterCount; i++) {
+						letterPart.insert(0, letters.charAt(tempIndex % letters.length()));
+						tempIndex /= letters.length();
+					}
+
+					for (int num = 0; num <= maxNumbers; num++) {
+						String numberPart = String.format("%0" + (8 - letterCount) + "d", num);
+						String locator = letterPart.toString() + numberPart;
+
+						if (!existingCodes.contains(locator))
+							return locator; // Devuelve el primer código disponible
+					}
+				}
+			}
+
+			// Si ha recorrido todo y no encontró un código libre, revisa si hay códigos eliminados
+			if (existingCodes.size() >= Math.pow(26, 8))
+				throw new IllegalStateException("No available locator codes.");
+
+			existingCodes = new HashSet<>(this.repository.findAllLocatorCodes()); // Refrescar códigos eliminados
+		}
+	}
+
 }

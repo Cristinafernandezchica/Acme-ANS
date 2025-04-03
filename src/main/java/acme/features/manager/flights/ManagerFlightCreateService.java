@@ -43,8 +43,13 @@ public class ManagerFlightCreateService extends AbstractGuiService<Manager, Flig
 
 	@Override
 	public void validate(final Flight flight) {
-		boolean notAcceptedCurrency = flight.getCost().getCurrency().equals("EUR");
-		super.state(notAcceptedCurrency, "cost", "acme.validation.manager.flights.currency.not.valid");
+
+		if (flight.getCost() != null) {
+			boolean notAcceptedCurrency = flight.getCost().getCurrency().equals("EUR") || flight.getCost().getCurrency().equals("USD") || flight.getCost().getCurrency().equals("GBP");
+			super.state(notAcceptedCurrency, "cost", "acme.validation.manager.flights.currency.not.valid");
+		}
+		if (!flight.isDraftMode())
+			super.state(false, "*", "acme.validation.flight.create.no.draftmode");
 
 	}
 

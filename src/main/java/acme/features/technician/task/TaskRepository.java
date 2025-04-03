@@ -19,7 +19,7 @@ public interface TaskRepository extends AbstractRepository {
 	@Query("select t from Task t where t.id = :taskId")
 	Task findByTaskId(int taskId);
 
-	@Query("select i from Involves i where i.tasks.id = :taskId")
+	@Query("select i from Involves i where i.task.id = :taskId")
 	Collection<Involves> findAllInvolvesByTaskId(int taskId);
 
 }

@@ -24,11 +24,11 @@ public class Involves extends AbstractEntity {
 	@ManyToOne(optional = false)
 	@Valid
 	@Automapped
-	private Task				tasks;
+	private Task				task;
 
 	@Mandatory
 	@ManyToOne(optional = false)
 	@Valid
 	@Automapped
-	private MaintenanceRecord	maintenanceRecords;
+	private MaintenanceRecord	maintenanceRecord;
 }

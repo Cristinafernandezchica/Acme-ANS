@@ -19,11 +19,11 @@ public class ManagerLegDeleteService extends AbstractGuiService<Manager, Leg> {
 	@Override
 	public void authorise() {
 		boolean status;
-		int masterId = super.getRequest().getData("id", int.class);
 		int managerId = super.getRequest().getPrincipal().getActiveRealm().getId();
+		int masterId = super.getRequest().getData("id", int.class);
 		Leg leg = this.repository.findLegById(masterId);
 		Manager manager = leg == null ? null : leg.getFlight().getManager();
-		status = leg != null && leg.isDraftMode() && super.getRequest().getPrincipal().hasRealm(manager) && manager.getId() == managerId;
+		status = leg != null && leg.isDraftMode() && super.getRequest().getPrincipal().hasRealm(manager) && managerId == manager.getId();
 
 		super.getResponse().setAuthorised(status);
 	}
@@ -47,7 +47,9 @@ public class ManagerLegDeleteService extends AbstractGuiService<Manager, Leg> {
 	@Override
 	public void validate(final Leg leg) {
 		boolean notPublished = leg.isDraftMode();
-		super.state(notPublished, "draftMode", "acme.validation.leg.published.delete");
+		super.state(notPublished, "*", "acme.validation.leg.published.delete");
+		boolean flightNotPublished = leg.getFlight().isDraftMode();
+		super.state(flightNotPublished, "*", "acme.validation.leg.published.flight.delete");
 	}
 
 	@Override

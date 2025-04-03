@@ -12,10 +12,11 @@ customer.booking.form.purchaseMoment = Purchase Moment
 customer.booking.form.travelClass = Travel Class
 customer.booking.form.price = Price
 customer.booking.form.lastCardNibble = Last Nibble of the credit card
-customer.booking.form.flight = Flight Tag 
+customer.booking.form.flight = Flight Label 
 
 customer.booking.form.show.passengers = View passengers
 
 customer.booking.form.button.create = Create
 customer.booking.form.button.update = Update
 customer.booking.form.button.publish = Publish
+customer.booking.form.button.delete = Delete

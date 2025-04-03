@@ -23,16 +23,16 @@ master.menu.anonymous.favourite-link-Angel = 24484826S: Amo Sánchez, Ángel
 master.menu.administrator = Administrator
 master.menu.administrator.list-user-accounts = List user accounts
 master.menu.administrator.aircraft = List aircrafts
+master.menu.administrator.list-airports = List of airports
 master.menu.administrator.populate-db-initial = Populate DB (initial)
 master.menu.administrator.populate-db-sample = Populate DB (samples)
 master.menu.administrator.shut-system-down = Shut system down
-master.menu.administrator.list-airports = List of airports
 master.menu.administrator.list-airlines = List of airlines
 
 
 # master.menu.flightCrewMember #################################################
 
-master.menu.flightCrewMember = Flight crew member
+master.menu.flight-crew-member = Flight crew member
 master.menu.flight-crew-member.flight-assignment.plannedList = List planned flight assignments
 master.menu.flight-crew-member.flight-assignment.completedList = List completed flight assignments
 
@@ -49,7 +49,8 @@ master.menu.consumer.favourite-link = Favourite link
 # master.menu.customer ##########################################################
  
  master.menu.customer = Customer
- master.menu.customer.booking = My Bookings
+ master.menu.customer.booking = My bookings
+ master.menu.customer.passenger = My passengers
 
 # master.menu.user-account ####################################################
 
@@ -63,9 +64,14 @@ master.menu.user-account.consumer-profile = Consumer profile
 # master.menu.technician ##########################################################
 
 master.menu.technician = Technician
-master.menu.technician.listMR = list Maintenance Record
-master.menu.technician.listTask = list Task
+master.menu.technician.listMR = List Maintenance Record
+master.menu.technician.listTask = List Task
 
 # master.menu.manager ##########################################################
 master.menu.manager = Manager
 master.menu.manager.list-flights = List flights
+
+# master.menu.assistanceAgent ##########################################################
+master.menu.assistance-agent = Assistance Agent
+master.menu.assistance-agent.listCompleted = List Completed Claims
+master.menu.assistance-agent.listUndergoing = List Undergoing Claims
