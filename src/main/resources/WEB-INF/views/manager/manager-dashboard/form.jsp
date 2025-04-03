@@ -6,13 +6,16 @@
 <acme:form> 
 	<acme:input-textbox code="manager.dashboard.form.label.rankingManager" path="rankingManager"/>
 	<acme:input-textbox code="manager.dashboard.form.label.yearsToRetire" path="yearsToRetire"/>
-	<acme:input-money code="manager.flight.form.label.cost" path="cost"/>
-	<acme:input-textarea code="manager.flight.form.label.description" path="description"/>
-	<acme:input-checkbox code="manager.flight.form.label.draftMode" path="draftMode" readonly="true"/>
-	<acme:input-moment code="manager.flight.form.label.scheduledDeparture" path="scheduledDeparture" readonly="true"/>
-	<acme:input-moment code="manager.flight.form.label.scheduledArrival" path="scheduledArrival" readonly="true"/>
-	<acme:input-textbox code="manager.flight.form.label.originCity" path="originCity" readonly="true"/>
-	<acme:input-textbox code="manager.flight.form.label.destinationCity" path="destinationCity" readonly="true"/>
-	<acme:input-textbox code="manager.flight.form.label.layovers" path="layovers" readonly="true"/>
+	<acme:input-textbox code="manager.flight.form.label.ratioOnTimeDelayedLegs" path="ratioOnTimeDelayedLegs"/>
+	<acme:input-textbox code="manager.flight.form.label.mostPopularAirport" path="mostPopularAirport"/>
+	<acme:input-textbox code="manager.flight.form.label.lessPopularAirport" path="lessPopularAirport" readonly="true"/>
+	<acme:input-textbox code="manager.flight.form.label.legOnTime" path="legOnTime" readonly="true"/>
+	<acme:input-textbox code="manager.flight.form.label.legDelayed" path="legDelayed" readonly="true"/>
+	<acme:input-textbox code="manager.flight.form.label.legCancelled" path="legCancelled" readonly="true"/>
+	<acme:input-textbox code="manager.flight.form.label.legLanded" path="legLanded" readonly="true"/>
+	<acme:input-textbox code="manager.flight.form.label.averageFlightCost" path="averageFlightCost" readonly="true"/>
+	<acme:input-textbox code="manager.flight.form.label.minFlightCost" path="minFlightCost" readonly="true"/>
+	<acme:input-textbox code="manager.flight.form.label.maxFlightCost" path="maxFlightCost" readonly="true"/>
+	<acme:input-textbox code="manager.flight.form.label.standarDerivationFlightCost" path="standarDerivationFlightCost" readonly="true"/>
 	
 </acme:form>

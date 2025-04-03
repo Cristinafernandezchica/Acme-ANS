@@ -1,8 +1,6 @@
 
 package acme.forms.managerDashboard;
 
-import java.util.Map;
-
 import acme.client.components.basis.AbstractForm;
 import acme.client.components.datatypes.Money;
 import lombok.Getter;
@@ -23,8 +21,10 @@ public class ManagerDashboard extends AbstractForm {
 	private double				ratioOnTimeDelayedLegs;
 	private String				mostPopularAirport;
 	private String				lessPopularAirport;
-	private Map<String, Long>	legsByStatus;
-	// en vez de un map, un long para cada estado existente
+	private Long				legOnTime;
+	private Long				legDelayed;
+	private Long				legCancelled;
+	private Long				legLanded;
 	private Long				legsOnTime;
 	private Long				legsDelayed;
 	private Long				legs;

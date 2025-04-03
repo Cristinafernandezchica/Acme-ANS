@@ -1,0 +1,14 @@
+manager.manager-dashboard.form.title = Dashboard
+manager.dashboard.form.label.rankingManager = Clasificación
+manager.dashboard.form.label.yearsToRetire = Años para retirarse
+manager.flight.form.label.ratioOnTimeDelayedLegs = Ratio vuelos A Tiempo-Retrasados
+manager.flight.form.label.mostPopularAirport = Aeropuerto más popular
+manager.flight.form.label.lessPopularAirport = Aeropuerto menos popular
+manager.flight.form.label.legOnTime = Tramos A Tiempo
+manager.flight.form.label.legDelayed = Tramos Retrasados
+manager.flight.form.label.legCancelled = Tramos Cancelados
+manager.flight.form.label.legLanded = Tramos Aterrizados
+manager.flight.form.label.averageFlightCost = Media de coste de los vuelos
+manager.flight.form.label.minFlightCost = Coste mínimo de los vuelos
+manager.flight.form.label.maxFlightCost = Coste máximo de los vuelos
+manager.flight.form.label.standarDerivationFlightCost = Derivación estándar de los costes de los vuelos

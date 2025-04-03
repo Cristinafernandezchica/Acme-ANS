@@ -3,6 +3,7 @@ package acme.features.manager.dashboard;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +17,7 @@ import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.airports.Airport;
 import acme.entities.legs.Leg;
+import acme.entities.legs.LegStatus;
 import acme.forms.managerDashboard.ManagerDashboard;
 import acme.realms.Manager;
 
@@ -42,13 +44,14 @@ public class ManagerDashboardShowService extends AbstractGuiService<Manager, Man
 		double ratioOnTimeDelayedLegs;
 		String mostPopularAirport;
 		String lessPopularAirport;
-		Map<String, Long> legsByStatus;
-		Money averageFlightCost = null;
-		Money minFlightCost = null;
-		Money maxFlightCost = null;
-		Money standarDerivationFlightCost = null;
+		Map<LegStatus, Long> legsByStatus;
+		Money averageFlightCost = new Money();
+		Money minFlightCost = new Money();
+		Money maxFlightCost = new Money();
+		Money standarDerivationFlightCost = new Money();
 
-		Map<Airport, Integer> popularAirports = null;
+		Map<Airport, Integer> popularAirports = new HashMap<>();
+		;
 		Collection<Leg> managerLegs = this.repository.findLegsByManagerId(managerId);
 
 		Integer onTimeLegs = this.repository.findOnTimeLegs(managerId).orElse(0);
@@ -87,12 +90,20 @@ public class ManagerDashboardShowService extends AbstractGuiService<Manager, Man
 		standarDerivationFlightCost.setAmount(this.repository.findStandardDeviationOfFlightCost(managerId).orElse(0.));
 		standarDerivationFlightCost.setCurrency("EUR");
 
+		System.out.println(legsByStatus.get(LegStatus.ON_TIME));
+		System.out.println(legsByStatus.get(LegStatus.DELAYED));
+		System.out.println(legsByStatus.get(LegStatus.CANCELLED));
+		System.out.println(legsByStatus.get(LegStatus.LANDED));
+
 		managerDashboard.setRankingManager(rankingManager);
 		managerDashboard.setYearsToRetire(yearsToRetire);
 		managerDashboard.setRatioOnTimeDelayedLegs(ratioOnTimeDelayedLegs);
 		managerDashboard.setMostPopularAirport(mostPopularAirport);
 		managerDashboard.setLessPopularAirport(lessPopularAirport);
-		managerDashboard.setLegsByStatus(legsByStatus);
+		managerDashboard.setLegOnTime(legsByStatus.get(LegStatus.ON_TIME));
+		managerDashboard.setLegDelayed(legsByStatus.get(LegStatus.DELAYED));
+		managerDashboard.setLegCancelled(legsByStatus.get(LegStatus.CANCELLED));
+		managerDashboard.setLegLanded(legsByStatus.get(LegStatus.LANDED));
 		managerDashboard.setAverageFlightCost(averageFlightCost);
 		managerDashboard.setMinFlightCost(minFlightCost);
 		managerDashboard.setMaxFlightCost(maxFlightCost);
@@ -102,10 +113,10 @@ public class ManagerDashboardShowService extends AbstractGuiService<Manager, Man
 
 	}
 
-	public Map<String, Long> getLegsGroupedByStatus(final int managerId) {
+	public Map<LegStatus, Long> getLegsGroupedByStatus(final int managerId) {
 		List<Object[]> results = this.repository.findLegsGroupedByStatus(managerId).orElse(List.of());
 
-		Map<String, Long> statusMap = results.stream().collect(Collectors.toMap(result -> (String) result[0], result -> (Long) result[1]));
+		Map<LegStatus, Long> statusMap = results.stream().collect(Collectors.toMap(result -> (LegStatus) result[0], result -> (Long) result[1]));
 
 		return statusMap;
 	}
@@ -115,8 +126,8 @@ public class ManagerDashboardShowService extends AbstractGuiService<Manager, Man
 
 		Dataset dataset;
 
-		dataset = super.unbindObject(managerDashboard, "rankingManager", "yearsToRetire", "ratioOnTimeDelayedLegs", "mostPopularAirport", "lessPopularAirport", "legsByStatus", "averageFlightCost", "minFlightCost", "maxFlightCost",
-			"standarDerivationFlightCost");
+		dataset = super.unbindObject(managerDashboard, "rankingManager", "yearsToRetire", "ratioOnTimeDelayedLegs", "mostPopularAirport", "lessPopularAirport", "legOnTime", "legDelayed", "legCancelled", "legLanded", "averageFlightCost", "minFlightCost",
+			"maxFlightCost", "standarDerivationFlightCost");
 
 		super.getResponse().addData(dataset);
 	}
