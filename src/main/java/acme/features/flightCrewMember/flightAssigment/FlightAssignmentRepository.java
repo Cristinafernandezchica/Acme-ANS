@@ -21,11 +21,11 @@ public interface FlightAssignmentRepository extends AbstractRepository {
 	@Query("select fa from FlightAssignment fa")
 	List<FlightAssignment> findAllFlightAssignments();
 
-	@Query("select fa from FlightAssignment fa where fa.legRelated.status = acme.entities.legs.LegStatus.LANDED or fa.legRelated.status = acme.entities.legs.LegStatus.CANCELLED ")
-	Collection<FlightAssignment> findCompletedFlightAssignmentByFlightCrewMemberId();
+	@Query("select fa from FlightAssignment fa where fa.flightCrewMemberAssigned.id = :id and fa.legRelated.status = acme.entities.legs.LegStatus.LANDED or fa.legRelated.status = acme.entities.legs.LegStatus.CANCELLED ")
+	Collection<FlightAssignment> findCompletedFlightAssignmentByFlightCrewMemberId(int id);
 
-	@Query("select fa from FlightAssignment fa where fa.legRelated.status = acme.entities.legs.LegStatus.DELAYED or fa.legRelated.status = acme.entities.legs.LegStatus.ON_TIME ")
-	Collection<FlightAssignment> findPlannedFlightAssignmentByFlightCrewMemberId();
+	@Query("select fa from FlightAssignment fa where fa.flightCrewMemberAssigned.id = :id and fa.legRelated.status = acme.entities.legs.LegStatus.DELAYED or fa.legRelated.status = acme.entities.legs.LegStatus.ON_TIME ")
+	Collection<FlightAssignment> findPlannedFlightAssignmentByFlightCrewMemberId(int id);
 
 	@Query("select fa from FlightAssignment fa where fa.id = :id")
 	FlightAssignment findFlightAssignmentById(int id);

@@ -29,8 +29,9 @@ public class FlightAssignmentCompletedListService extends AbstractGuiService<Fli
 	@Override
 	public void load() {
 		Collection<FlightAssignment> completedFlightAssignments;
+		int fcmIdLogged = super.getRequest().getPrincipal().getActiveRealm().getId();
 
-		completedFlightAssignments = this.repository.findCompletedFlightAssignmentByFlightCrewMemberId();
+		completedFlightAssignments = this.repository.findCompletedFlightAssignmentByFlightCrewMemberId(fcmIdLogged);
 
 		super.getBuffer().addData(completedFlightAssignments);
 	}

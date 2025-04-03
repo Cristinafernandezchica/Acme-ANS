@@ -29,8 +29,9 @@ public class FlightAssignmentPlannedListService extends AbstractGuiService<Fligh
 	@Override
 	public void load() {
 		Collection<FlightAssignment> plannedFlightAssignments;
+		int fcmIdLogged = super.getRequest().getPrincipal().getActiveRealm().getId();
 
-		plannedFlightAssignments = this.repository.findPlannedFlightAssignmentByFlightCrewMemberId();
+		plannedFlightAssignments = this.repository.findPlannedFlightAssignmentByFlightCrewMemberId(fcmIdLogged);
 
 		super.getBuffer().addData(plannedFlightAssignments);
 	}
