@@ -47,7 +47,9 @@ public class ManagerLegDeleteService extends AbstractGuiService<Manager, Leg> {
 	@Override
 	public void validate(final Leg leg) {
 		boolean notPublished = leg.isDraftMode();
-		super.state(notPublished, "draftMode", "acme.validation.leg.published.delete");
+		super.state(notPublished, "*", "acme.validation.leg.published.delete");
+		boolean flightNotPublished = leg.getFlight().isDraftMode();
+		super.state(flightNotPublished, "*", "acme.validation.leg.published.flight.delete");
 	}
 
 	@Override

@@ -77,7 +77,10 @@ public class ManagerLegShowService extends AbstractGuiService<Manager, Leg> {
 		selectedArrivalAirport = SelectChoices.from(arrivalAirports, "iataCode", leg.getArrivalAirport());
 
 		dataset = super.unbindObject(leg, "flightNumber", "scheduledDeparture", "scheduledArrival", "draftMode");
-		dataset.put("statuses", statuses);
+		if (leg.isDraftMode())
+			dataset.put("status", leg.getStatus());
+		else
+			dataset.put("statuses", statuses);
 		dataset.put("departureAirports", selectedDepartureAirport);
 		dataset.put("arrivalAirports", selectedArrivalAirport);
 		dataset.put("flight", leg.getFlight().getTag());

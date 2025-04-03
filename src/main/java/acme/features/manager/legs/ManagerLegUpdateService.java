@@ -88,11 +88,7 @@ public class ManagerLegUpdateService extends AbstractGuiService<Manager, Leg> {
 		if (leg.isDraftMode()) {
 			if (leg.getFlightNumber().length() != 0 && !leg.getFlightNumber().substring(0, 3).equals(airline.getIataCode()))
 				super.state(false, "flightNumber", "acme.validation.leg.invalid.iata.flightNumber");
-			/*
-			 * // Ya se está validando en el validador personalizado, que sea único
-			 * if (numbers.contains(leg.getFlightNumber().substring(3)) && legByFlightNumber.getId() != leg.getId())
-			 * super.state(false, "flightNumber", "acme.validation.leg.invalid.number.flightNumber");
-			 */
+
 			if (leg.getStatus() != LegStatus.ON_TIME)
 				super.state(false, "status", "acme.validation.leg.status.draftmode.ontime");
 		} else {

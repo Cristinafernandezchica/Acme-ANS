@@ -39,6 +39,7 @@ acme.validation.leg.status.always.ontime = When create a leg, the status must be
 acme.validation.leg.status.draftmode.ontime = When a leg is on draft mode, the status must be ON_TIME
 acme.validation.leg.update.other.fields = You can only update the state of the leg
 acme.validation.leg.flightNumber.not.unique = The flight number already exists
+acme.validation.leg.published.flight.delete = You can't delete a leg of a published flight
 
 
 acme.validation.length = Is too long
