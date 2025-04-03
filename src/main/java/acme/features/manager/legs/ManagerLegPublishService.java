@@ -61,14 +61,6 @@ public class ManagerLegPublishService extends AbstractGuiService<Manager, Leg> {
 
 	@Override
 	public void validate(final Leg leg) {
-		/*
-		 * if (MomentHelper.isBefore(leg.getScheduledDeparture(), MomentHelper.getCurrentMoment()))
-		 * super.state(false, "scheduledDeparture", "acme.validation.leg.scheduledDeparture.past");
-		 * if (MomentHelper.isBefore(leg.getScheduledArrival(), MomentHelper.getCurrentMoment()))
-		 * super.state(false, "scheduledArrival", "acme.validation.leg.scheduledArrival.past");
-		 * if (MomentHelper.isBefore(leg.getScheduledArrival(), leg.getScheduledDeparture()))
-		 * super.state(false, "scheduledDeparture", "acme.validation.leg.departure.after.arrival.message");
-		 */
 
 		if (leg.getScheduledDeparture() != null && MomentHelper.isBefore(leg.getScheduledDeparture(), MomentHelper.getCurrentMoment()))
 			super.state(false, "scheduledDeparture", "acme.validation.leg.scheduledDeparture.past");

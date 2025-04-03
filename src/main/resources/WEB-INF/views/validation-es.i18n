@@ -39,6 +39,7 @@ acme.validation.leg.status.always.ontime = Al crear un tramo, su estado tiene qu
 acme.validation.leg.status.draftmode.ontime = Cuando un tramo está en modo borrador, su estado debe ser ON_TIME
 acme.validation.leg.update.other.fields = Solo se puede actualizar el estado del tramo
 acme.validation.leg.flightNumber.not.unique = El número de vuelo ya existe
+acme.validation.leg.create.no.flight.draftmode = No se puede crear un tramo, el vuelo está publicado
 
 
 acme.validation.length = Es muy largo

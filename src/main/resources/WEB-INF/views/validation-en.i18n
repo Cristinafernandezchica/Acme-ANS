@@ -40,6 +40,7 @@ acme.validation.leg.status.draftmode.ontime = When a leg is on draft mode, the s
 acme.validation.leg.update.other.fields = You can only update the state of the leg
 acme.validation.leg.flightNumber.not.unique = The flight number already exists
 acme.validation.leg.published.flight.delete = You can't delete a leg of a published flight
+acme.validation.leg.create.no.flight.draftmode = Can't create a leg, the flight is published
 
 
 acme.validation.length = Is too long
