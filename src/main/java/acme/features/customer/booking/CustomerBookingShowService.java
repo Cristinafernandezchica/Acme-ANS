@@ -1,5 +1,5 @@
 
-package acme.features.authenticated.customer.booking;
+package acme.features.customer.booking;
 
 import java.util.Collection;
 import java.util.stream.Collectors;
@@ -77,7 +77,7 @@ public class CustomerBookingShowService extends AbstractGuiService<Customer, Boo
 		dataset = super.unbindObject(booking, "locatorCode", "purchaseMoment", "travelClass", "price", "lastCardNibble", "draftMode");
 
 		if (!booking.isDraftMode()) {
-			generalChoices = SelectChoices.from(generalFlights, "tag", booking.getFlight());
+			generalChoices = SelectChoices.from(generalFlights, "flightLabel", booking.getFlight());
 			dataset.put("flight", generalChoices.getSelected() != null ? generalChoices.getSelected().getKey() : "0");
 			dataset.put("flights", generalChoices);
 
@@ -88,7 +88,7 @@ public class CustomerBookingShowService extends AbstractGuiService<Customer, Boo
 			if (!flightStillValid)
 				booking.setFlight(null); // Desasignar el vuelo si ya no es válido
 
-			choices = SelectChoices.from(flights, "tag", booking.getFlight());
+			choices = SelectChoices.from(flights, "flightLabel", booking.getFlight());
 
 			dataset.put("flight", booking.getFlight() != null && choices.getSelected() != null ? choices.getSelected().getKey() : "0");
 			dataset.put("flights", choices);

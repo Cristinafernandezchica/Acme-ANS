@@ -13,7 +13,7 @@ import acme.entities.passenger.Passenger;
 @Repository
 public interface BookingRepository extends AbstractRepository {
 
-	@Query("SELECT br.passenger FROM BookingRecord br WHERE br.booking.id = :bookingId")
+	@Query("SELECT DISTINCT br.passenger FROM BookingRecord br WHERE br.booking.id = :bookingId")
 	public List<Passenger> findPassengersByBookingId(@Param("bookingId") int bookingId);
 
 }
