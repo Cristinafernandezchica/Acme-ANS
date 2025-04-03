@@ -17,7 +17,6 @@ assistance-agent.claim.form.label.type = Type
 assistance-agent.claim.form.label.description = Description
 assistance-agent.claim.form.label.leg = Leg
 assistance-agent.claim.form.label.accepted = Accepted
-assistance-agent.claim.form.label.draftMode = Draft Mode
 
 assistance-agent.claim.form.button.trackingLogs = Tracking Logs
 assistance-agent.claim.form.button.update = Update
@@ -28,7 +27,6 @@ assistance-agent.claim.form.button.create = Create
 assistance-agent.claim.list.label.registrationMoment = Registration Moment
 assistance-agent.claim.list.label.passengerEmail = Passenger Email
 assistance-agent.claim.list.label.type = Type
-assistance-agent.claim.list.label.draftMode = Draft Mode
 assistance-agent.claim.list.label.leg = Leg
 assistance-agent.claim.list.label.accepted = Accepted
 

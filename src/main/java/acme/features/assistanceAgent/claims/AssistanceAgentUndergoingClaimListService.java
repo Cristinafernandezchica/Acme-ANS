@@ -39,7 +39,7 @@ public class AssistanceAgentUndergoingClaimListService extends AbstractGuiServic
 	public void unbind(final Claim claim) {
 		Dataset dataset;
 
-		dataset = super.unbindObject(claim, "registrationMoment", "passengerEmail", "type", "accepted", "draftMode");
+		dataset = super.unbindObject(claim, "registrationMoment", "passengerEmail", "type", "accepted");
 		dataset.put("leg", claim.getLeg().getFlightNumber());
 		super.addPayload(dataset, claim, "description");
 

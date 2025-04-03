@@ -1,6 +1,7 @@
 
 package acme.features.assistanceAgent.claims;
 
+import java.util.Arrays;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ import acme.entities.legs.Leg;
 import acme.realms.assistanceAgents.AssistanceAgent;
 
 @GuiService
-public class AssistanceAgentClaimShowService extends AbstractGuiService<AssistanceAgent, Claim> {
+public class AssistanceAgentClaimUpdateService extends AbstractGuiService<AssistanceAgent, Claim> {
 
 	@Autowired
 	private AssistanceAgentClaimRepository repository;
@@ -32,7 +33,7 @@ public class AssistanceAgentClaimShowService extends AbstractGuiService<Assistan
 		id = super.getRequest().getData("id", int.class);
 		claim = this.repository.findClaimById(id);
 		assistanceAgent = claim == null ? null : claim.getAssistanceAgent();
-		status = claim != null && super.getRequest().getPrincipal().hasRealm(assistanceAgent);
+		status = super.getRequest().getPrincipal().hasRealm(assistanceAgent) && claim != null && claim.isDraftMode();
 
 		super.getResponse().setAuthorised(status);
 	}
@@ -46,6 +47,57 @@ public class AssistanceAgentClaimShowService extends AbstractGuiService<Assistan
 		claim = this.repository.findClaimById(id);
 
 		super.getBuffer().addData(claim);
+	}
+
+	@Override
+	public void bind(final Claim claim) {
+		int legId;
+		Leg leg;
+
+		super.bindObject(claim, "passengerEmail", "description", "type");
+		legId = super.getRequest().getData("leg", int.class);
+		leg = this.repository.findLegById(legId);
+		claim.setLeg(leg);
+	}
+
+	@Override
+	public void validate(final Claim claim) {
+		Collection<Leg> legs;
+		Collection<ClaimType> types;
+		ClaimType type;
+		int legId;
+		Leg leg;
+		int agentId;
+		AssistanceAgent assistanceAgent;
+		boolean isCorrectLeg = true;
+		boolean isNullLeg = true;
+		boolean isCorrectType;
+
+		types = Arrays.asList(ClaimType.values());
+		type = super.getRequest().getData("type", ClaimType.class);
+		isCorrectType = types.contains(type);
+
+		agentId = super.getRequest().getPrincipal().getActiveRealm().getId();
+		assistanceAgent = this.repository.findAssistanceAgentById(agentId);
+		legs = this.repository.findAllPublishedLegs(MomentHelper.getCurrentMoment(), assistanceAgent.getAirline().getId());
+
+		if (legs.isEmpty())
+			isNullLeg = false;
+		else {
+			legId = super.getRequest().getData("leg", int.class);
+			leg = this.repository.findLegById(legId);
+			isCorrectLeg = legs.contains(leg);
+		}
+
+		super.state(isCorrectType, "type", "acme.validation.claim.type.message");
+		super.state(isCorrectLeg, "leg", "acme.validation.claim.leg.message");
+		super.state(isNullLeg, "leg", "acme.validation.claim.legNull.message");
+		super.state(claim.isDraftMode(), "draftMode", "acme.validation.claim.draftMode.message");
+	}
+
+	@Override
+	public void perform(final Claim claim) {
+		this.repository.save(claim);
 	}
 
 	@Override

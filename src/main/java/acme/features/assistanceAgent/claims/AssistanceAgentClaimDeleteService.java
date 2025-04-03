@@ -16,10 +16,12 @@ import acme.entities.legs.Leg;
 import acme.realms.assistanceAgents.AssistanceAgent;
 
 @GuiService
-public class AssistanceAgentClaimShowService extends AbstractGuiService<AssistanceAgent, Claim> {
+public class AssistanceAgentClaimDeleteService extends AbstractGuiService<AssistanceAgent, Claim> {
 
 	@Autowired
 	private AssistanceAgentClaimRepository repository;
+
+	// AbstractGuiService interface -------------------------------------------
 
 
 	@Override
@@ -32,7 +34,7 @@ public class AssistanceAgentClaimShowService extends AbstractGuiService<Assistan
 		id = super.getRequest().getData("id", int.class);
 		claim = this.repository.findClaimById(id);
 		assistanceAgent = claim == null ? null : claim.getAssistanceAgent();
-		status = claim != null && super.getRequest().getPrincipal().hasRealm(assistanceAgent);
+		status = super.getRequest().getPrincipal().hasRealm(assistanceAgent) && claim != null && claim.isDraftMode();
 
 		super.getResponse().setAuthorised(status);
 	}
@@ -46,6 +48,27 @@ public class AssistanceAgentClaimShowService extends AbstractGuiService<Assistan
 		claim = this.repository.findClaimById(id);
 
 		super.getBuffer().addData(claim);
+	}
+
+	@Override
+	public void bind(final Claim claim) {
+		int legId;
+		Leg leg;
+
+		super.bindObject(claim, "passengerEmail", "description", "type");
+		legId = super.getRequest().getData("leg", int.class);
+		leg = this.repository.findLegById(legId);
+		claim.setLeg(leg);
+	}
+
+	@Override
+	public void validate(final Claim claim) {
+		super.state(claim.isDraftMode(), "draftMode", "acme.validation.claim.draftMode.message");
+	}
+
+	@Override
+	public void perform(final Claim claim) {
+		this.repository.delete(claim);
 	}
 
 	@Override

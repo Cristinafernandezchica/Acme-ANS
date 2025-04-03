@@ -11,4 +11,8 @@ acme.validation.leg.operative.aircraft.message = The aircraft is under maintenan
 
 acme.validation.service.inspectionDueDate.message = the inspection due date cant be before that the moment
 acme.validation.airport.iataCode.message = You can not use a Iata Code that is already in use
-
+acme.validation.claim.leg.message = You can just choose one of the legs from the selection
+acme.validation.claim.type.message = You can just choose one of the types from the selection
+acme.validation.claim.draftMode.message = You can not update o delete a claim if it is not in draft mode
+acme.validation.claim.accepted.message = The accepted claim value is not the same as the status of your last Tracking Record
+acme.validation.claim.legNull.message = You can not publish a claim without a leg
