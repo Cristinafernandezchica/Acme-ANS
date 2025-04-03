@@ -13,5 +13,6 @@ customer.passenger.form.dateOfBirth = Date of birth
 customer.passenger.form.specialNeeds = Special needs
 
 customer.passenger.form.button.create = Create
+customer.passenger.form.button.create.bookingId = Create and assign
 customer.passenger.form.button.update = Update
 customer.passenger.form.button.publish = Publish

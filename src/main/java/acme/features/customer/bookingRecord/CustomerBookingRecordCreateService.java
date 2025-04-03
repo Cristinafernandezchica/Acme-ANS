@@ -109,9 +109,6 @@ public class CustomerBookingRecordCreateService extends AbstractGuiService<Custo
 		dataset.put("passengers", choises);
 		dataset.put("passenger", choises.getSelected() != null && choises.getSelected().getKey() != null ? choises.getSelected().getKey() : "0");
 
-		if (availablePassengers.isEmpty())
-			dataset.put("noPassengersMessage", "No hay más pasajeros disponibles");
-
 		super.getResponse().addData(dataset);
 
 	}
