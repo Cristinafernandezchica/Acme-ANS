@@ -1,7 +1,9 @@
 
 package acme.features.manager.legs;
 
+import java.time.temporal.ChronoUnit;
 import java.util.Collection;
+import java.util.Date;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,10 +34,11 @@ public class ManagerLegPublishService extends AbstractGuiService<Manager, Leg> {
 		Leg leg;
 		Manager manager;
 
+		int managerId = super.getRequest().getPrincipal().getActiveRealm().getId();
 		masterId = super.getRequest().getData("id", int.class);
 		leg = this.repository.findLegById(masterId);
 		manager = leg == null ? null : leg.getFlight().getManager();
-		status = leg != null && leg.isDraftMode() && super.getRequest().getPrincipal().hasRealm(manager);
+		status = leg != null && leg.isDraftMode() && super.getRequest().getPrincipal().hasRealm(manager) && managerId == manager.getId();
 
 		super.getResponse().setAuthorised(status);
 	}
@@ -53,44 +56,62 @@ public class ManagerLegPublishService extends AbstractGuiService<Manager, Leg> {
 
 	@Override
 	public void bind(final Leg leg) {
-		super.bindObject(leg, "scheduledDeparture", "scheduledArrival", "status", "departureAirport", "arrivalAirport", "aircraft", "draftMode");
+		super.bindObject(leg, "flightNumber", "scheduledDeparture", "scheduledArrival", "status", "departureAirport", "arrivalAirport", "aircraft");
 	}
 
 	@Override
 	public void validate(final Leg leg) {
-		if (MomentHelper.isBefore(leg.getScheduledArrival(), leg.getScheduledDeparture()))
+
+		if (leg.getScheduledDeparture() != null && MomentHelper.isBefore(leg.getScheduledDeparture(), MomentHelper.getCurrentMoment()))
+			super.state(false, "scheduledDeparture", "acme.validation.leg.scheduledDeparture.past");
+
+		if (leg.getScheduledArrival() != null && leg.getScheduledDeparture() != null && MomentHelper.isBefore(leg.getScheduledArrival(), leg.getScheduledDeparture()))
 			super.state(false, "scheduledDeparture", "acme.validation.leg.departure.after.arrival.message");
 
-		Collection<Leg> allPublishedLegs = this.repository.findAllPublishedLegs();
-		for (Leg publishedLeg : allPublishedLegs)
-			if (publishedLeg.getAircraft().equals(leg.getAircraft())) {
+		if (leg.getScheduledArrival() != null && leg.getScheduledDeparture() != null) {
+			Date departureWithDelta = MomentHelper.deltaFromMoment(leg.getScheduledDeparture(), 5, ChronoUnit.MINUTES);
+			if (MomentHelper.isBefore(leg.getScheduledArrival(), MomentHelper.getCurrentMoment()))
+				super.state(false, "scheduledArrival", "acme.validation.leg.scheduledArrival.past");
+
+			if (MomentHelper.isBefore(leg.getScheduledArrival(), departureWithDelta))
+				super.state(false, "scheduledArrival", "acme.validation.leg.departure.arrival.difference.message");
+		}
+
+		if (leg.getDepartureAirport() != null && leg.getDepartureAirport().equals(leg.getArrivalAirport())) {
+			super.state(false, "arrivalAirport", "acme.validation.leg.same.departure.arrival.airport");
+			super.state(false, "departureAirport", "acme.validation.leg.same.departure.arrival.airport");
+		}
+
+		if (leg.getScheduledArrival() != null && leg.getScheduledDeparture() != null) {
+			Collection<Leg> allPublishedLegs = this.repository.findAllPublishedLegs();
+			for (Leg publishedLeg : allPublishedLegs)
+				if (publishedLeg.getAircraft().equals(leg.getAircraft())) {
+					boolean overlap = MomentHelper.isBefore(publishedLeg.getScheduledDeparture(), leg.getScheduledArrival()) && MomentHelper.isAfter(publishedLeg.getScheduledArrival(), leg.getScheduledDeparture());
+					if (overlap) {
+						super.state(false, "aircraft", "acme.validation.leg.same.aircraft.message");
+						break;
+					}
+				}
+
+			Collection<Leg> flightPublishedLegs = this.repository.findAllPublishedLegsByFlightId(leg.getFlight().getId());
+			for (Leg publishedLeg : flightPublishedLegs) {
 				boolean overlap = MomentHelper.isBefore(publishedLeg.getScheduledDeparture(), leg.getScheduledArrival()) && MomentHelper.isAfter(publishedLeg.getScheduledArrival(), leg.getScheduledDeparture());
 				if (overlap) {
-					super.state(false, "aircraft", "acme.validation.leg.same.aircraft.message");
+					super.state(false, "scheduledDeparture", "acme.validation.leg.overlap.message");
+					super.state(false, "scheduledArrival", "acme.validation.leg.overlap.message");
 					break;
 				}
 			}
 
-		Collection<Leg> flightPublishedLegs = this.repository.findAllPublishedLegsByFlightId(leg.getFlight().getId());
-		for (Leg publishedLeg : flightPublishedLegs) {
-
-			boolean overlap = MomentHelper.isBefore(publishedLeg.getScheduledDeparture(), leg.getScheduledArrival()) && MomentHelper.isAfter(publishedLeg.getScheduledArrival(), leg.getScheduledDeparture());
-			// publishedLeg.getScheduledDeparture().before(leg.getScheduledArrival()) && publishedLeg.getScheduledArrival().after(leg.getScheduledDeparture());
-			if (overlap) {
-				super.state(false, "scheduledDeparture", "acme.validation.leg.overlap.message");
-				super.state(false, "scheduledArrival", "acme.validation.leg.overlap.message");
-				break;
-			}
-
 		}
 
-		Collection<Leg> flightLegs = this.repository.findAllLegsByFlightId(leg.getFlight().getId());
-
+		if (leg.getAircraft() != null) {
+			boolean operativeAircraft = leg.getAircraft().getStatus().equals(Status.ACTIVE_SERVICE);
+			super.state(operativeAircraft, "aircraft", "acme.validation.leg.operative.aircraft.message");
+		}
 		boolean publishedFlight = leg.getFlight().isDraftMode();
-		boolean operativeAircraft = leg.getAircraft().getStatus().equals(Status.ACTIVE_SERVICE);
+		super.state(publishedFlight, "*", "acme.validation.leg.flight.draftMode");
 
-		super.state(operativeAircraft, "status", "acme.validation.leg.operative.aircraft.message");
-		super.state(publishedFlight, "draftMode", "acme.validation.leg.flight.draftMode");
 	}
 
 	@Override
@@ -121,7 +142,10 @@ public class ManagerLegPublishService extends AbstractGuiService<Manager, Leg> {
 
 		dataset = super.unbindObject(leg, "scheduledDeparture", "scheduledArrival", "status", "departureAirport", "arrivalAirport", "aircraft", "draftMode");
 		dataset.put("flightNumber", leg.getFlightNumber());
-		dataset.put("statuses", statuses);
+		if (leg.isDraftMode())
+			dataset.put("status", leg.getStatus());
+		else
+			dataset.put("statuses", statuses);
 		dataset.put("flightId", leg.getFlight().getId());
 		dataset.put("departureAirports", selectedDepartureAirport);
 		dataset.put("arrivalAirports", selectedArrivalAirport);

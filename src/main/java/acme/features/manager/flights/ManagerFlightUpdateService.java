@@ -26,10 +26,11 @@ public class ManagerFlightUpdateService extends AbstractGuiService<Manager, Flig
 		Flight flight;
 		Manager manager;
 
+		int managerId = super.getRequest().getPrincipal().getActiveRealm().getId();
 		masterId = super.getRequest().getData("id", int.class);
 		flight = this.repository.findFlightById(masterId);
 		manager = flight == null ? null : flight.getManager();
-		status = flight != null && flight.isDraftMode() && super.getRequest().getPrincipal().hasRealm(manager);
+		status = flight != null && flight.isDraftMode() && super.getRequest().getPrincipal().hasRealm(manager) && managerId == manager.getId();
 
 		super.getResponse().setAuthorised(status);
 	}
@@ -52,8 +53,10 @@ public class ManagerFlightUpdateService extends AbstractGuiService<Manager, Flig
 
 	@Override
 	public void validate(final Flight flight) {
-		boolean notAcceptedCurrency = flight.getCost().getCurrency().equals("EUR");
-		super.state(notAcceptedCurrency, "cost", "acme.validation.manager.flights.currency.not.valid");
+		if (flight.getCost() != null) {
+			boolean notAcceptedCurrency = flight.getCost().getCurrency().equals("EUR") || flight.getCost().getCurrency().equals("USD") || flight.getCost().getCurrency().equals("GBP");
+			super.state(notAcceptedCurrency, "cost", "acme.validation.manager.flights.currency.not.valid");
+		}
 		boolean notPublished = flight.isDraftMode();
 		super.state(notPublished, "draftMode", "acme.validation.flight.published.update");
 	}
