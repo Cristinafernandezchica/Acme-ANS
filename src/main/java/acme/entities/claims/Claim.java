@@ -1,6 +1,7 @@
 
 package acme.entities.claims;
 
+import java.util.Collection;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -62,27 +63,23 @@ public class Claim extends AbstractEntity {
 
 	@Mandatory
 	@Automapped
-	private boolean				drafMode;
+	private boolean				draftMode;
 
 
 	@Transient
-	public Boolean getAccepted() {
-		Boolean result;
+	public TrackingLogStatus getAccepted() {
+		TrackingLogStatus result;
 		ClaimRepository repository;
-		TrackingLog trackingLog;
+		Collection<TrackingLog> trackingLogs;
+
 		repository = SpringHelper.getBean(ClaimRepository.class);
-		trackingLog = repository.findLastTrackingLogByClaimId(this.getId()).orElse(null);
-		if (trackingLog == null)
-			result = null;
-		else {
-			TrackingLogStatus status = trackingLog.getStatus();
-			if (status.equals(TrackingLogStatus.ACCEPTED))
-				result = true;
-			else if (status.equals(TrackingLogStatus.REJECTED))
-				result = false;
-			else
-				result = null;
-		}
+		trackingLogs = repository.findTrackingLogsByClaimId(this.getId());
+
+		if (trackingLogs.isEmpty())
+			result = TrackingLogStatus.PENDING;
+		else
+			result = trackingLogs.stream().findFirst().map(t -> t.getStatus()).orElse(TrackingLogStatus.PENDING);
 		return result;
 	}
+
 }
