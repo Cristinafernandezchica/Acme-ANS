@@ -21,7 +21,7 @@ public class ActivityLogUpdateService extends AbstractGuiService<FlightCrewMembe
 
 	@Override
 	public void authorise() {
-		boolean isFlightAssignmentOwner = true;
+		boolean isFlightAssignmentOwner;
 
 		FlightCrewMember fcmLogged;
 		ActivityLog alSelected;

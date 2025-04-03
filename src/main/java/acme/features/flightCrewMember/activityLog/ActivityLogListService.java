@@ -46,7 +46,7 @@ public class ActivityLogListService extends AbstractGuiService<FlightCrewMember,
 		int fcmIdLogged = super.getRequest().getPrincipal().getActiveRealm().getId();
 		activityLogs = this.repository.findOwnedActivityLogsByFAId(faId, fcmIdLogged);
 
-		super.getResponse().addGlobal("faId", faId); // para el create
+		super.getResponse().addGlobal("faId", faId);
 
 		super.getBuffer().addData(activityLogs);
 	}
