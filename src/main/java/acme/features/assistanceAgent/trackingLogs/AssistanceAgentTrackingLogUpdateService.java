@@ -99,7 +99,7 @@ public class AssistanceAgentTrackingLogUpdateService extends AbstractGuiService<
 		super.state(isCorrectPercentage, "resolutionPercentage", "acme.validation.trackingLog.resolutionPercentage.message");
 		super.state(isCorrectPercentageStatus, "status", "acme.validation.trackingLog.resolutionPercentageStatus.message");
 		super.state(isCorrectStatus, "status", "acme.validation.trackingLog.status.message");
-		super.state(!trackingLog.getClaim().isDraftMode(), "draftMode", "acme.validation.claim.draftMode.message");
+		super.state(!trackingLog.getClaim().isDraftMode(), "draftMode", "acme.validation.claim.NoDraftMode.message");
 	}
 
 	@Override
