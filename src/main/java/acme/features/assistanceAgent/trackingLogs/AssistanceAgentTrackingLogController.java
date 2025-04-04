@@ -22,10 +22,10 @@ public class AssistanceAgentTrackingLogController extends AbstractGuiController<
 	@Autowired
 	private AssistanceAgentTrackingLogCreateService	createService;
 
+	@Autowired
+	private AssistanceAgentTrackingLogUpdateService	updateService;
+
 	/*
-	 * @Autowired
-	 * private AssistanceAgentTrackingLogUpdateService updateService;
-	 * 
 	 * @Autowired
 	 * private AssistanceAgentTrackingLogDeleteService deleteService;
 	 * 
@@ -39,9 +39,8 @@ public class AssistanceAgentTrackingLogController extends AbstractGuiController<
 		super.addBasicCommand("list", this.listService);
 		super.addBasicCommand("show", this.showService);
 		super.addBasicCommand("create", this.createService);
-
+		super.addBasicCommand("update", this.updateService);
 		/*
-		 * super.addBasicCommand("update", this.updateService);
 		 * super.addBasicCommand("delete", this.deleteService);
 		 * 
 		 * super.addCustomCommand("publish", "update", this.publishService);
