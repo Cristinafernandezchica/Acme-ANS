@@ -1,8 +1,6 @@
 
 package acme.features.flightCrewMember.activityLog;
 
-import java.util.Collection;
-
 import org.springframework.beans.factory.annotation.Autowired;
 
 import acme.client.components.models.Dataset;
@@ -25,22 +23,8 @@ public class ActivityLogCreateService extends AbstractGuiService<FlightCrewMembe
 
 	@Override
 	public void authorise() {
-		boolean authorization = true;
-		int fcmIdLogged;
-		FlightCrewMember fcmLogged;
-		Collection<FlightAssignment> flightAssignments;
 
-		fcmIdLogged = super.getRequest().getPrincipal().getActiveRealm().getId();
-		flightAssignments = this.repository.findFlightAssignmentsByFCMId(fcmIdLogged);
-		fcmLogged = this.repository.findFlighCrewMemberById(fcmIdLogged);
-
-		for (FlightAssignment fa : flightAssignments) {
-			authorization = fa.getFlightCrewMemberAssigned().equals(fcmLogged);
-			if (!authorization)
-				break;
-		}
-
-		super.getResponse().setAuthorised(authorization);
+		super.getResponse().setAuthorised(true);
 	}
 
 	@Override
@@ -58,12 +42,13 @@ public class ActivityLogCreateService extends AbstractGuiService<FlightCrewMembe
 
 	@Override
 	public void bind(final ActivityLog activityLog) {
-		super.bindObject(activityLog, "registrationMoment", "typeOfIncident", "description", "severityLevel");
 
+		super.bindObject(activityLog, "registrationMoment", "typeOfIncident", "description", "severityLevel");
 	}
 
 	@Override
 	public void validate(final ActivityLog activityLog) {
+
 		boolean confirmation;
 
 		confirmation = super.getRequest().getData("confirmation", boolean.class);
@@ -72,6 +57,7 @@ public class ActivityLogCreateService extends AbstractGuiService<FlightCrewMembe
 
 	@Override
 	public void perform(final ActivityLog activityLog) {
+		activityLog.setRegistrationMoment(MomentHelper.getCurrentMoment());
 		this.repository.save(activityLog);
 	}
 

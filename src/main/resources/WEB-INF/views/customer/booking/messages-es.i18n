@@ -19,3 +19,4 @@ customer.booking.form.show.passengers = Ver pasajeros
 customer.booking.form.button.create = Crear
 customer.booking.form.button.update = Actualizar
 customer.booking.form.button.publish = Publicar
+customer.booking.form.button.delete = Eliminar

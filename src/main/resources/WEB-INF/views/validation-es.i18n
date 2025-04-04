@@ -12,18 +12,43 @@ acme.validation.manager.flights.currency.not.valid = La unidad monetaria no es v
 
 acme.validation.lastCardNibble.message = Los últimos dígitos de la tarjeta no pueden estar vacios
 acme.validation.booking.flight.message = Sin vuelo asignado
-acme.validation.booking.passengers.message = Alguno de los pasajeros seleccionados está en borrador
+acme.validation.booking.passengers.message = Alguno de los pasajeros seleccionados está en borrador o no ha seleccionado a ningún pasajero
+acme.validation.passenger.duplicate-passport = Ya has creado un pasajero con este número de pasaporte
+acme.validation.passenger.dateOfBirth.message = La fecha de nacimiento tiene que ser pasada
+
+acme.validation.bookingRecord.invalid-booking-null.message = Sin reservas asociadas
+acme.validation.bookingRecord.invalid-passenger-null.message = Sin pasajeros asociados
+acme.validation.bookingRecord.invalid-passenger.message = Pasajero inválido o ya asociado
 
 acme.validation.leg.overlap.message = Solapamiento con otro tramo del mismo vuelo
 acme.validation.leg.departure.arrival.difference.message = Tiene que haber mínimo 5 minutos entre salida y llegada
 acme.validation.leg.departure.after.arrival.message = La salida tiene que ser antes que la llegada
 acme.validation.leg.operative.aircraft.message = El avión está bajo mantenimiento, debe estar operativo
 
-# Flight crew member - flight assignments messages
+# Flight crew member - flight assignment's messages (business logic)
 acme.validation.confirmation.message = Esta acción debe ser confirmada
 acme.validation.pilotExceptionPassed.message = Este vuelo ya tiene un piloto
 acme.validation.coPilotExceptionPassed.message = Este vuelo ya tiene un copiloto
+acme.validation.legNotPublished.message = Este vuelo no está publicado
+acme.validation.legNotPast.message = Este vuelo no es pasada
+acme.validation.legNotCompleted.message = Este vuelo no está completada
+acme.validation.legFromRightAirline.message = Este vuelo no opera con la aerolínea del asistente de vuelo
+acme.validation.fcmAvailable.message = El asistente de vuelo no está disponible
+acme.validation.legCompatible.message = Este asistente de vuelo ya tiene un vuelo en esa fecha
+acme.validation.isConfirmedOrCancelled.message = La asignación del vuelo debe estar confirmada o denegada
+# Flight crew member - flight assignment's messages (antiHacking)
+acme.validation.isLegNull.message = El vuelo no puede estar vacío
+acme.validation.isOriginalFlightCrewsDuty.message = No es el puesto original
+acme.validation.isOriginalLastUpdate.message = No es la ultima fecha de actualización original
+acme.validation.isOriginalCurrentStatus.message = No es el estado actual original
+acme.validation.isOriginalRemarks.message = No son las indicaciones originales
+acme.validation.isOriginalLeg.message = No es el vuelo original
+acme.validation.isOriginalFCM.message = No es el asistente de vuelo original
 
+# Activity log - activity log's messages (antiHacking)
+acme.validation.isOriginalRegistrationMoment.message = No es la fecha de registro original
+
+# Leg - leg's messages
 acme.validation.leg.same.aircraft.message = El avión es usado por otro tramo en el mismo horario
 acme.validation.leg.flight.draftMode = El vuelo está publicado, no puedes publicar un tramo de un vuelo que ya está publicado
 acme.validation.leg.iataCode.flightNumber = El número de vuelo debe contener el código IATA de la aerolínea
@@ -47,7 +72,7 @@ acme.validation.length = Es muy largo
 acme.validation.service.inspectionDueDate.message = La fecha límite de revision no puede ser anterior al momento de inspección
 acme.validation.airport.iataCode.message = No puede usar un código IATA que ya esté en uso
 acme.validation.airline.iataCode.message = Código IATA ya en uso
-acme.validation.airline.foundationMoment.message = La fecha tiene que ser pasada
+acme.validation.airline.foundationMoment.message = La fecha de fundación tiene que ser pasada
 
 acme.validation.technician.involves.message = La tarea no puede estar en modo borrador
 acme.validation.technician.invalidTask.message = Esta es una task no valida

@@ -47,3 +47,8 @@ flight-38,"Nihongo",true,EUR 250.00,"Vuelo de prueba C",manager-01,airline-01,fa
 flight-39,"Desu",true,EUR 200.00,"Vuelo de prueba D",manager-01,airline-01,true
 flight-40,"Ka",true,EUR 20.00,"Vuelo de prueba E",manager-01,airline-01,true
 
+#Examples for flight assignments
+flight-42,"omg",true,EUR 100.00,"Vuelo de prueba fa",manager-01,airline-01,false
+flight-43,"omg",true,EUR 100.00,"Vuelo de prueba fa",manager-01,airline-01,false
+
+
