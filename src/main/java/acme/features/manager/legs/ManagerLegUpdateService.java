@@ -1,6 +1,7 @@
 
 package acme.features.manager.legs;
 
+import java.text.SimpleDateFormat;
 import java.time.temporal.ChronoUnit;
 import java.util.Collection;
 import java.util.Date;
@@ -96,18 +97,15 @@ public class ManagerLegUpdateService extends AbstractGuiService<Manager, Leg> {
 			if (leg.getStatus() != LegStatus.ON_TIME)
 				super.state(false, "status", "acme.validation.leg.status.draftmode.ontime");
 		} else {
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
 			Leg originalLeg = this.repository.findLegById(leg.getId());
-			Date originalDeparture = originalLeg.getScheduledDeparture();
-			Date originalArrival = originalLeg.getScheduledArrival();
-			System.out.println(originalDeparture);
-			System.out.println(originalArrival);
-			if (originalLeg.getScheduledDeparture().getDate() != leg.getScheduledDeparture().getDate() || originalLeg.getScheduledDeparture().getMonth() != leg.getScheduledDeparture().getMonth()
-				|| originalLeg.getScheduledDeparture().getYear() != leg.getScheduledDeparture().getYear() || originalLeg.getScheduledDeparture().getHours() != leg.getScheduledDeparture().getHours()
-				|| originalLeg.getScheduledDeparture().getMinutes() != leg.getScheduledDeparture().getMinutes() || originalLeg.getScheduledArrival().getDate() != leg.getScheduledArrival().getDate()
-				|| originalLeg.getScheduledArrival().getMonth() != leg.getScheduledArrival().getMonth() || originalLeg.getScheduledArrival().getYear() != leg.getScheduledArrival().getYear()
-				|| originalLeg.getScheduledArrival().getHours() != leg.getScheduledArrival().getHours() || originalLeg.getScheduledArrival().getMinutes() != leg.getScheduledArrival().getMinutes()
-				|| !originalLeg.getFlightNumber().equals(leg.getFlightNumber()) || !originalLeg.getDepartureAirport().equals(leg.getDepartureAirport()) || !originalLeg.getArrivalAirport().equals(leg.getArrivalAirport())
-				|| !originalLeg.getAircraft().equals(leg.getAircraft()))
+			String departure = sdf.format(leg.getScheduledDeparture());
+			String arrival = sdf.format(leg.getScheduledArrival());
+			String originalDeparture = sdf.format(originalLeg.getScheduledDeparture());
+			String originalArrival = sdf.format(originalLeg.getScheduledArrival());
+
+			if (!departure.equals(originalDeparture) || !arrival.equals(originalArrival) || !originalLeg.getFlightNumber().equals(leg.getFlightNumber()) || !originalLeg.getDepartureAirport().equals(leg.getDepartureAirport())
+				|| !originalLeg.getArrivalAirport().equals(leg.getArrivalAirport()) || !originalLeg.getAircraft().equals(leg.getAircraft()))
 				super.state(false, "*", "acme.validation.leg.update.other.fields");
 		}
 
