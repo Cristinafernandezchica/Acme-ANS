@@ -9,6 +9,7 @@ acme.validation.flight.create.no.draftmode = No se puede crear un vuelo en modo 
 acme.validation.manager.flights.without.legs = El vuelo no tiene ningún tramos asignado
 acme.validation.manager.flights.no.published.leg = El vuelo tiene alguno/s tramo/s sin publicar
 acme.validation.manager.flights.currency.not.valid = La unidad monetaria no es válida
+acme.validation.manager.identifierNumber = Número de identificación inválido
 
 acme.validation.lastCardNibble.message = Los últimos dígitos de la tarjeta no pueden estar vacios
 acme.validation.booking.flight.message = Sin vuelo asignado

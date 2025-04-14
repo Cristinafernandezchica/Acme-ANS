@@ -9,6 +9,7 @@ acme.validation.flight.create.no.draftmode = You can't crate a flight with no dr
 acme.validation.manager.flights.without.legs = The flight has no leg assigned
 acme.validation.manager.flights.no.published.leg = The flight has some unpublished leg(s)
 acme.validation.manager.flights.currency.not.valid = The currency is not valid
+acme.validation.manager.identifierNumber = Invalid identifier number
 
 acme.validation.lastCardNibble.message = The last card nibble can't be empty 
 acme.validation.booking.flight.message = No flight assigned
