@@ -90,11 +90,6 @@ public class ManagerDashboardShowService extends AbstractGuiService<Manager, Man
 		standarDerivationFlightCost.setAmount(this.repository.findStandardDeviationOfFlightCost(managerId).orElse(0.));
 		standarDerivationFlightCost.setCurrency("EUR");
 
-		System.out.println(legsByStatus.get(LegStatus.ON_TIME));
-		System.out.println(legsByStatus.get(LegStatus.DELAYED));
-		System.out.println(legsByStatus.get(LegStatus.CANCELLED));
-		System.out.println(legsByStatus.get(LegStatus.LANDED));
-
 		managerDashboard.setRankingManager(rankingManager);
 		managerDashboard.setYearsToRetire(yearsToRetire);
 		managerDashboard.setRatioOnTimeDelayedLegs(ratioOnTimeDelayedLegs);
