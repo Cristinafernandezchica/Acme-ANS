@@ -88,8 +88,7 @@ public class ManagerLegUpdateService extends AbstractGuiService<Manager, Leg> {
 			super.state(operativeAircraft, "aircraft", "acme.validation.leg.operative.aircraft.message");
 		}
 
-		Airline airline = leg.getFlight().getManager().getAirline();
-		// Leg legByFlightNumber = this.repository.findLegByFlightNumber(leg.getFlightNumber());
+		Airline airline = leg.getAircraft().getAirline();
 		if (leg.isDraftMode()) {
 			if (leg.getFlightNumber().length() == 7 && !leg.getFlightNumber().substring(0, 3).equals(airline.getIataCode()))
 				super.state(false, "flightNumber", "acme.validation.leg.invalid.iata.flightNumber");
@@ -98,6 +97,10 @@ public class ManagerLegUpdateService extends AbstractGuiService<Manager, Leg> {
 				super.state(false, "status", "acme.validation.leg.status.draftmode.ontime");
 		} else {
 			Leg originalLeg = this.repository.findLegById(leg.getId());
+			Date originalDeparture = originalLeg.getScheduledDeparture();
+			Date originalArrival = originalLeg.getScheduledArrival();
+			System.out.println(originalDeparture);
+			System.out.println(originalArrival);
 			if (originalLeg.getScheduledDeparture().getDate() != leg.getScheduledDeparture().getDate() || originalLeg.getScheduledDeparture().getMonth() != leg.getScheduledDeparture().getMonth()
 				|| originalLeg.getScheduledDeparture().getYear() != leg.getScheduledDeparture().getYear() || originalLeg.getScheduledDeparture().getHours() != leg.getScheduledDeparture().getHours()
 				|| originalLeg.getScheduledDeparture().getMinutes() != leg.getScheduledDeparture().getMinutes() || originalLeg.getScheduledArrival().getDate() != leg.getScheduledArrival().getDate()
@@ -127,7 +130,7 @@ public class ManagerLegUpdateService extends AbstractGuiService<Manager, Leg> {
 		SelectChoices selectedArrivalAirport;
 
 		statuses = SelectChoices.from(LegStatus.class, leg.getStatus());
-		aircrafts = this.repository.findAllAircraftsByAirlineId(leg.getFlight().getAirline().getId());
+		aircrafts = this.repository.findAllAircraftsByAirlineId(leg.getAircraft().getAirline().getId());
 		activeAircrafts = aircrafts.stream().filter(a -> a.getStatus().equals(Status.ACTIVE_SERVICE)).collect(Collectors.toList());
 		selectedAircrafts = SelectChoices.from(activeAircrafts, "model", leg.getAircraft());
 

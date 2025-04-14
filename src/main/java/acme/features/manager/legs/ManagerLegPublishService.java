@@ -15,6 +15,7 @@ import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.aircrafts.Aircraft;
 import acme.entities.aircrafts.Status;
+import acme.entities.airline.Airline;
 import acme.entities.airports.Airport;
 import acme.entities.legs.Leg;
 import acme.entities.legs.LegStatus;
@@ -109,6 +110,11 @@ public class ManagerLegPublishService extends AbstractGuiService<Manager, Leg> {
 			boolean operativeAircraft = leg.getAircraft().getStatus().equals(Status.ACTIVE_SERVICE);
 			super.state(operativeAircraft, "aircraft", "acme.validation.leg.operative.aircraft.message");
 		}
+
+		Airline airline = leg.getAircraft().getAirline();
+		if (leg.getFlightNumber().length() == 7 && !leg.getFlightNumber().substring(0, 3).equals(airline.getIataCode()))
+			super.state(false, "flightNumber", "acme.validation.leg.invalid.iata.flightNumber");
+
 		boolean publishedFlight = leg.getFlight().isDraftMode();
 		super.state(publishedFlight, "*", "acme.validation.leg.flight.draftMode");
 
@@ -132,7 +138,7 @@ public class ManagerLegPublishService extends AbstractGuiService<Manager, Leg> {
 		SelectChoices selectedArrivalAirport;
 
 		statuses = SelectChoices.from(LegStatus.class, leg.getStatus());
-		aircrafts = this.repository.findAllAircraftsByAirlineId(leg.getFlight().getAirline().getId());
+		aircrafts = this.repository.findAllAircraftsByAirlineId(leg.getAircraft().getAirline().getId());
 		activeAircrafts = aircrafts.stream().filter(a -> a.getStatus().equals(Status.ACTIVE_SERVICE)).collect(Collectors.toList());
 		selectedAircrafts = SelectChoices.from(activeAircrafts, "model", leg.getAircraft());
 

@@ -32,7 +32,7 @@ public class LegValidator extends AbstractValidator<ValidLeg, Leg> {
 		else {
 			if (leg.getFlightNumber().length() == 7) {
 				String iataCodeFlightNumber = leg.getFlightNumber().substring(0, 3);
-				String airlineIataCode = leg.getFlight().getManager().getAirline().getIataCode();
+				String airlineIataCode = leg.getAircraft().getAirline().getIataCode();
 
 				if (!iataCodeFlightNumber.equals(airlineIataCode))
 					super.state(context, false, "flightNumber", "acme.validation.leg.iataCode.flightNumber");

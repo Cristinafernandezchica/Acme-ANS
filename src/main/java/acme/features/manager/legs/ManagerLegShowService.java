@@ -63,7 +63,7 @@ public class ManagerLegShowService extends AbstractGuiService<Manager, Leg> {
 		Collection<Airport> arrivalAirports;
 		SelectChoices selectedDepartureAirport;
 		SelectChoices selectedArrivalAirport;
-		int airlineId = leg.getFlight().getAirline().getId();
+		int airlineId = leg.getAircraft().getAirline().getId();
 
 		statuses = SelectChoices.from(LegStatus.class, leg.getStatus());
 		aircrafts = this.repository.findAllAircraftsByAirlineId(airlineId);
