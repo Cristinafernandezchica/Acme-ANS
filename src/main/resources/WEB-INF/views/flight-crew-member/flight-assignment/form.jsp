@@ -16,15 +16,15 @@
 
 <acme:form>
 	<acme:input-select code="flight-crew-member.flight-assignment.list.label.flightCrewsDuty" path="flightCrewsDuty" choices="${flightcrewsDuties}"/>
-	<acme:input-moment code="flight-crew-member.flight-assignment.list.label.lastUpdate" path="lastUpdate" placeholder="2025/01/01 00:00"/>
+	<acme:input-moment code="flight-crew-member.flight-assignment.list.label.lastUpdate" path="lastUpdate" readonly ="true"/>
 	<acme:input-select code="flight-crew-member.flight-assignment.list.label.currentStatus" path="currentStatus" choices="${statuses}"/>
 	<acme:input-textbox code="flight-crew-member.flight-assignment.list.label.remarks" path="remarks"/>
 	<acme:input-select code="flight-crew-member.flight-assignment.list.label.legs" path="legRelated" choices="${legs}"/>
-	<acme:input-select code="flight-crew-member.flight-assignment.list.label.availableFlightCrewMembers" path="flightCrewMemberAssigned" choices="${availableFlightCrewMembers}"/>
+	<acme:input-select code="flight-crew-member.flight-assignment.list.label.availableFlightCrewMembers" path="flightCrewMemberAssigned" choices="${availableFlightCrewMembers}" readonly ="true"/>
 	
 	
 	<jstl:choose>
-		<jstl:when test="${_command == 'show' && draftMode == true}"> <%-- && completed == true y draftmode == false --%>
+		<jstl:when test="${_command == 'show' && draftMode == false}"> 
 			<acme:button code="flight-crew-member.flight-assignment.form.button.activityLogs" action="/flight-crew-member/activity-log/list?faId=${id}"/>			
 		</jstl:when>
 		<jstl:when test="${acme:anyOf(_command, 'show|update|publish') && draftMode == true}">

@@ -25,11 +25,30 @@ acme.validation.leg.departure.arrival.difference.message = Tiene que haber míni
 acme.validation.leg.departure.after.arrival.message = La salida tiene que ser antes que la llegada
 acme.validation.leg.operative.aircraft.message = El avión está bajo mantenimiento, debe estar operativo
 
-# Flight crew member - flight assignments messages
+# Flight crew member - flight assignment's messages (business logic)
 acme.validation.confirmation.message = Esta acción debe ser confirmada
 acme.validation.pilotExceptionPassed.message = Este vuelo ya tiene un piloto
 acme.validation.coPilotExceptionPassed.message = Este vuelo ya tiene un copiloto
+acme.validation.legNotPublished.message = Este vuelo no está publicado
+acme.validation.legNotPast.message = Este vuelo no es pasada
+acme.validation.legNotCompleted.message = Este vuelo no está completada
+acme.validation.legFromRightAirline.message = Este vuelo no opera con la aerolínea del asistente de vuelo
+acme.validation.fcmAvailable.message = El asistente de vuelo no está disponible
+acme.validation.legCompatible.message = Este asistente de vuelo ya tiene un vuelo en esa fecha
+acme.validation.isConfirmedOrCancelled.message = La asignación del vuelo debe estar confirmada o denegada
+# Flight crew member - flight assignment's messages (antiHacking)
+acme.validation.isLegNull.message = El vuelo no puede estar vacío
+acme.validation.isOriginalFlightCrewsDuty.message = No es el puesto original
+acme.validation.isOriginalLastUpdate.message = No es la ultima fecha de actualización original
+acme.validation.isOriginalCurrentStatus.message = No es el estado actual original
+acme.validation.isOriginalRemarks.message = No son las indicaciones originales
+acme.validation.isOriginalLeg.message = No es el vuelo original
+acme.validation.isOriginalFCM.message = No es el asistente de vuelo original
 
+# Activity log - activity log's messages (antiHacking)
+acme.validation.isOriginalRegistrationMoment.message = No es la fecha de registro original
+
+# Leg - leg's messages
 acme.validation.leg.same.aircraft.message = El avión es usado por otro tramo en el mismo horario
 acme.validation.leg.flight.draftMode = El vuelo está publicado, no puedes publicar un tramo de un vuelo que ya está publicado
 acme.validation.leg.iataCode.flightNumber = El número de vuelo debe contener el código IATA de la aerolínea
@@ -60,7 +79,14 @@ acme.validation.technician.invalidTask.message = Esta es una task no valida
 acme.validation.technician.maintenance-record.unpublished-tasks.message = No puedes publicar un registro de mantenimiento con tareas sin publicar
 acme.validation.technician.maintenance-record.published-tasks.message = Necesitas al menos 1 tarea publicada
 acme.validation.maintenanceRecords.costs.message = Necesita ser una moneda aceptadaacme.validation.claim.leg.message = Solo puede elegir una de las patas de la selección
+
+acme.validation.claim.leg.message =  Puedes elegir simplemente una de las patas de la selección
 acme.validation.claim.type.message = Solo puede elegir uno de los tipos de la selección
 acme.validation.claim.draftMode.message = No se puede actualizar o borrar un reclamo si no está en modo borrador
 acme.validation.claim.accepted.message = El valor aceptado del Reclamo no es el mismo que el estado de su último Registro de Seguimiento
 acme.validation.claim.legNull.message = No puedes publicar un reclamo sin pata
+
+acme.validation.trackingLog.resolutionPercentage.message = El porcentaje de resolución no es correcto
+acme.validation.trackingLog.status.message = Ese estado no es posible
+acme.validation.trackingLog.resolutionPercentageStatus.message = Solo puedes establecer el porcentaje de resolución a 100.00 y el estado no puede ser pendiente
+acme.validation.trackingLog.draftMode.message = El registro de seguimiento debe estar en modo borrador

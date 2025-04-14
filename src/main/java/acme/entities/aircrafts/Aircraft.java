@@ -27,36 +27,36 @@ public class Aircraft extends AbstractEntity {
 
 	// Attributes -------------------------------------------------------------
 
-	@Mandatory
+	@Mandatory(message = "Must not be null")
 	@ValidString(min = 1, max = 50)
 	@Automapped
 	private String				model;
 
-	@Mandatory
+	@Mandatory(message = "Must not be null")
 	@Column(unique = true)
-	@ValidString(min = 1, max = 50)
+	@ValidString(min = 1, max = 50, message = "Its lenght must be between 1 and 50 characters")
 	private String				registrationNumber;
 
-	@Mandatory
+	@Mandatory(message = "Must not be null")
 	@Automapped
-	@ValidNumber(min = 1, max = 255)
+	@ValidNumber(min = 1, max = 255, message = "The number of passengers must be beetween 1 and 255")
 	private Integer				numberPassengers;
 
-	@Mandatory
-	@ValidNumber(min = 2000, max = 50000)
+	@Mandatory(message = "Must not be null")
+	@ValidNumber(min = 2000, max = 50000, message = "The cargo weight must be beetween 2000 kg and 50000")
 	@Automapped
 	private Integer				cargoWeight;
 
-	@Mandatory
+	@Mandatory(message = "Must not be null")
 	@Automapped
 	private Status				status;
 
 	@Optional
-	@ValidString(min = 0, max = 255)
+	@ValidString(min = 0, max = 255, message = "Its maximum lenght must be 255 characters")
 	@Automapped
 	private String				details;
 
-	@Mandatory
+	@Mandatory(message = "Must not be null")
 	@ManyToOne(optional = false)
 	@Valid
 	private Airline				airline;
