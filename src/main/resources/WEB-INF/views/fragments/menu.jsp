@@ -60,6 +60,7 @@
     
 		<acme:menu-option code="master.menu.manager" access="hasRealm('Manager')">
  			<acme:menu-suboption code="master.menu.manager.list-flights" action="/manager/flight/list"/>
+ 			<acme:menu-suboption code="master.menu.manager.show-dashboard" action="/manager/manager-dashboard/show"/>
  		</acme:menu-option>
  		
 		<acme:menu-option code="master.menu.technician" access="hasRealm('Technician')">

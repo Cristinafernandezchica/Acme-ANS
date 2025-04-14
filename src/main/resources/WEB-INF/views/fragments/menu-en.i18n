@@ -70,6 +70,7 @@ master.menu.technician.listTask = List Task
 # master.menu.manager ##########################################################
 master.menu.manager = Manager
 master.menu.manager.list-flights = List flights
+master.menu.manager.show-dashboard = Show dashboard
 
 # master.menu.assistanceAgent ##########################################################
 master.menu.assistance-agent = Assistance Agent
