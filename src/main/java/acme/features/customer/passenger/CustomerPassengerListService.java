@@ -41,7 +41,7 @@ public class CustomerPassengerListService extends AbstractGuiService<Customer, P
 			if (booking != null && booking.getCustomer().equals(customer))
 				if (super.getRequest().hasData("draftMode")) {
 					boolean requestDraftMode = super.getRequest().getData("draftMode", boolean.class);
-					boolean bookingDraftMode = booking.isDraftMode(); // Suponiendo que Booking tiene este método
+					boolean bookingDraftMode = booking.isDraftMode();
 
 					if (requestDraftMode == bookingDraftMode)
 						status = true;
