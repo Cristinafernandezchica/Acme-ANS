@@ -12,7 +12,6 @@ import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.booking.Booking;
 import acme.entities.passenger.Passenger;
-import acme.realms.Customer;
 
 @GuiService
 public class AdministratorPassengerListService extends AbstractGuiService<Administrator, Passenger> {
@@ -52,7 +51,6 @@ public class AdministratorPassengerListService extends AbstractGuiService<Admini
 	@Override
 	public void load() {
 		Collection<Passenger> passengers;
-		Customer customer;
 		int bookingId;
 
 		if (super.getRequest().getData().isEmpty())
