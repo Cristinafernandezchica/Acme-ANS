@@ -1,0 +1,13 @@
+administrator.passenger.list.title = Mis pasajeros
+administrator.passenger.list.fullName = Nombre completo
+administrator.passenger.list.passportNumber = Número de pasaporte
+administrator.passenger.list.dateOfBirth = Fecha de nacimiento
+administrator.passenger.list.specialNeeds = Necesidades especiales
+administrator.passenger.list.button.create = Crear nuevo pasajero
+
+administrator.passenger.form.title = Información del pasajero
+administrator.passenger.form.fullName = Nombre completo
+administrator.passenger.form.email = Correo electrónico
+administrator.passenger.form.passportNumber = Número de pasaporte
+administrator.passenger.form.dateOfBirth = Fecha de nacimiento
+administrator.passenger.form.specialNeeds = Necesidades especiales

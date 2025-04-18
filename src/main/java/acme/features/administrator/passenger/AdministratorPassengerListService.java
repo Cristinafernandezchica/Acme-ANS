@@ -1,24 +1,25 @@
 
-package acme.features.customer.passenger;
+package acme.features.administrator.passenger;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import acme.client.components.models.Dataset;
+import acme.client.components.principals.Administrator;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.booking.Booking;
 import acme.entities.passenger.Passenger;
-import acme.realms.Customer;
 
 @GuiService
-public class CustomerPassengerListService extends AbstractGuiService<Customer, Passenger> {
+public class AdministratorPassengerListService extends AbstractGuiService<Administrator, Passenger> {
 
 	// Internal state ---------------------------------------------------------
 
 	@Autowired
-	private CustomerPassengerRepository repository;
+	private AdministratorPassengerRepository repository;
 
 	// AbstractGuiService interface -------------------------------------------
 
@@ -27,18 +28,13 @@ public class CustomerPassengerListService extends AbstractGuiService<Customer, P
 	public void authorise() {
 		int bookingId;
 		Booking booking;
-		Customer customer;
 		boolean status = false;
 
-		customer = (Customer) super.getRequest().getPrincipal().getActiveRealm();
-
-		if (super.getRequest().getData().isEmpty())
-			status = true;
-		else {
+		if (!super.getRequest().getData().isEmpty()) {
 			bookingId = super.getRequest().getData("bookingId", int.class);
 			booking = this.repository.findBookingById(bookingId);
 
-			if (booking != null && booking.getCustomer().equals(customer))
+			if (booking != null)
 				if (super.getRequest().hasData("draftMode")) {
 					boolean requestDraftMode = super.getRequest().getData("draftMode", boolean.class);
 					boolean bookingDraftMode = booking.isDraftMode();
@@ -46,7 +42,7 @@ public class CustomerPassengerListService extends AbstractGuiService<Customer, P
 					if (requestDraftMode == bookingDraftMode)
 						status = true;
 				} else
-					status = true; // Permitir acceso si no se proporciona draftMode
+					status = false; // No permitir acceso si no se proporciona draftMode
 		}
 
 		super.getResponse().setAuthorised(status);
@@ -55,13 +51,10 @@ public class CustomerPassengerListService extends AbstractGuiService<Customer, P
 	@Override
 	public void load() {
 		Collection<Passenger> passengers;
-		Customer customer;
 		int bookingId;
 
-		customer = (Customer) super.getRequest().getPrincipal().getActiveRealm();
-
 		if (super.getRequest().getData().isEmpty())
-			passengers = this.repository.findPassengersByCustomerId(customer.getId());
+			passengers = List.of();
 		else {
 			bookingId = super.getRequest().getData("bookingId", int.class);
 			passengers = this.repository.findPassengersByBookingId(bookingId);

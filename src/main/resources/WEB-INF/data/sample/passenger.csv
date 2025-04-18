@@ -11,7 +11,7 @@ passenger-10,<marquee>Hacked</marquee>,hacked@acme.com,ES987654,2013/09/09 00:00
 passenger-11,<script>alert('Hacked!')</script>,script@acme.com,ES876543,2014/10/10 00:00,,true,customer-01
 passenger-20,Valid Name,valid@acme.com,ES12345,2003/07/19 00:00,,true,customer-02
 passenger-25,Люфтваффе Pilot,luftwaffe@acme.com,DE998877,2000/05/21 00:00,,true,customer-03
-passenger-26,สายการบินไทย First Class,thai@acme.com,TH112233,2001/06/22 00:00,,true,customer-01
+passenger-26,สายการบินไทย First Class,thai@acme.com,TH112233,2001/06/22 00:00,,false,customer-01
 passenger-27,日本航空 旅客,jal@acme.com,JP445566,2002/07/23 00:00,,true,customer-02
 passenger-28,Compagnie Aérienne Française,airfrance@acme.com,FR778899,2003/08/24 00:00,,true,customer-03
 passenger-29,شركة الطيران Passenger,airarabia@acme.com,AE223344,2004/09/25 00:00,,true,customer-01

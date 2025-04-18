@@ -1,0 +1,13 @@
+administrator.passenger.list.title = My passengers
+administrator.passenger.list.fullName = Full name
+administrator.passenger.list.passportNumber = Passport number
+administrator.passenger.list.dateOfBirth = Date of birth
+administrator.passenger.list.specialNeeds = Special needs
+administrator.passenger.list.button.create = Create new passenger
+
+administrator.passenger.form.title =  Passenger information
+administrator.passenger.form.fullName = Full name
+administrator.passenger.form.email = Email
+administrator.passenger.form.passportNumber = Passport number
+administrator.passenger.form.dateOfBirth = Date of birth
+administrator.passenger.form.specialNeeds = Special needs
