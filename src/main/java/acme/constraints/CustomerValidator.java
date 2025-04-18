@@ -6,7 +6,7 @@ import javax.validation.ConstraintValidatorContext;
 import acme.client.components.principals.DefaultUserIdentity;
 import acme.client.components.validation.AbstractValidator;
 import acme.client.components.validation.Validator;
-import acme.realms.Customer;
+import acme.realms.customer.Customer;
 
 @Validator
 public class CustomerValidator extends AbstractValidator<ValidCustomer, Customer> {
