@@ -112,9 +112,9 @@ public class ManagerLegCreateService extends AbstractGuiService<Manager, Leg> {
 		SelectChoices selectedDepartureAirport;
 		SelectChoices selectedArrivalAirport;
 
-		aircrafts = this.repository.findAllAircraftsByAirlineId(leg.getAircraft().getAirline().getId());
+		aircrafts = this.repository.findAllAircrafts();
 		activeAircrafts = aircrafts.stream().filter(a -> a.getStatus().equals(Status.ACTIVE_SERVICE)).collect(Collectors.toList());
-		selectedAircrafts = SelectChoices.from(activeAircrafts, "model", leg.getAircraft());
+		selectedAircrafts = SelectChoices.from(activeAircrafts, "aircraftLabel", leg.getAircraft());
 
 		airports = this.repository.findAllAirports();
 		selectedDepartureAirport = SelectChoices.from(airports, "iataCode", leg.getDepartureAirport());

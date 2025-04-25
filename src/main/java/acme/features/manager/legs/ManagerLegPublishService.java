@@ -3,7 +3,9 @@ package acme.features.manager.legs;
 
 import java.time.temporal.ChronoUnit;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -118,6 +120,25 @@ public class ManagerLegPublishService extends AbstractGuiService<Manager, Leg> {
 		boolean publishedFlight = leg.getFlight().isDraftMode();
 		super.state(publishedFlight, "*", "acme.validation.leg.flight.draftMode");
 
+		Collection<Leg> publishedLegs = this.repository.findAllPublishedLegsByFlightId(leg.getFlight().getId());
+		publishedLegs.add(leg);
+		List<Leg> orderedLegs = publishedLegs.stream().sorted(Comparator.comparing(Leg::getScheduledDeparture)).collect(Collectors.toList());
+		int index = orderedLegs.indexOf(leg);
+		if (index != -1 && leg.getFlight().getIndication()) {
+			// Validar leg anterior
+			if (index > 0) {
+				Leg previousLeg = orderedLegs.get(index - 1);
+				if (!leg.getDepartureAirport().equals(previousLeg.getArrivalAirport()))
+					super.state(false, "departureAirport", "acme.validation.leg.departureAirport");
+			}
+
+			// Validar siguiente leg
+			if (index < orderedLegs.size() - 1) {
+				Leg nextLeg = orderedLegs.get(index + 1);
+				if (!leg.getArrivalAirport().equals(nextLeg.getDepartureAirport()))
+					super.state(false, "arrivalAirport", "acme.validation.leg.arrivalAirport");
+			}
+		}
 	}
 
 	@Override
@@ -138,9 +159,9 @@ public class ManagerLegPublishService extends AbstractGuiService<Manager, Leg> {
 		SelectChoices selectedArrivalAirport;
 
 		statuses = SelectChoices.from(LegStatus.class, leg.getStatus());
-		aircrafts = this.repository.findAllAircraftsByAirlineId(leg.getAircraft().getAirline().getId());
+		aircrafts = this.repository.findAllAircrafts();
 		activeAircrafts = aircrafts.stream().filter(a -> a.getStatus().equals(Status.ACTIVE_SERVICE)).collect(Collectors.toList());
-		selectedAircrafts = SelectChoices.from(activeAircrafts, "model", leg.getAircraft());
+		selectedAircrafts = SelectChoices.from(activeAircrafts, "aircraftLabel", leg.getAircraft());
 
 		airports = this.repository.findAllAirports();
 		selectedDepartureAirport = SelectChoices.from(airports, "iataCode", leg.getDepartureAirport());

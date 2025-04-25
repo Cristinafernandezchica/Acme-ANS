@@ -68,7 +68,7 @@ public class ManagerLegShowService extends AbstractGuiService<Manager, Leg> {
 		statuses = SelectChoices.from(LegStatus.class, leg.getStatus());
 		aircrafts = this.repository.findAllAircraftsByAirlineId(airlineId);
 		activeAircrafts = aircrafts.stream().filter(a -> a.getStatus().equals(Status.ACTIVE_SERVICE)).collect(Collectors.toList());
-		selectedAircrafts = SelectChoices.from(activeAircrafts, "model", leg.getAircraft());
+		selectedAircrafts = SelectChoices.from(activeAircrafts, "aircraftLabel", leg.getAircraft());
 
 		airports = this.repository.findAllAirports();
 		departureAirports = airports.stream().filter(a -> !a.getIataCode().equals(leg.getArrivalAirport().getIataCode())).collect(Collectors.toList());

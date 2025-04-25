@@ -37,6 +37,7 @@ acme.validation.legFromRightAirline.message = That leg doesn't operate with your
 acme.validation.fcmAvailable.message = The flight crew member is not available
 acme.validation.legCompatible.message = The flight crew member already has a leg at that date
 acme.validation.isConfirmedOrCancelled.message = The flight assignment must be confirmed or cancelled
+
 # Flight crew member - flight assignment's messages (antiHacking)
 acme.validation.isLegNull.message = Must not be null
 acme.validation.isOriginalFlightCrewsDuty.message = That's not the original duty
@@ -67,7 +68,8 @@ acme.validation.leg.update.other.fields = You can only update the state of the l
 acme.validation.leg.flightNumber.not.unique = The flight number already exists
 acme.validation.leg.published.flight.delete = You can't delete a leg of a published flight
 acme.validation.leg.create.no.flight.draftmode = Can't create a leg, the flight is published
-
+acme.validation.leg.departureAirport = The departure airport of the leg doesn't match with the arrival airport of the previous published leg
+acme.validation.leg.arrivalAirport = The arrival airport of the leg doesn't match with the departure airport of the next published leg
 
 acme.validation.length = Is too long
 
