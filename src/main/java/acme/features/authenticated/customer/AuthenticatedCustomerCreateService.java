@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import acme.client.components.models.Dataset;
 import acme.client.components.principals.Authenticated;
+import acme.client.components.principals.DefaultUserIdentity;
 import acme.client.components.principals.UserAccount;
 import acme.client.helpers.PrincipalHelper;
 import acme.client.services.AbstractGuiService;
@@ -63,13 +64,24 @@ public class AuthenticatedCustomerCreateService extends AbstractGuiService<Authe
 
 		super.bindObject(object, "phoneNumber", "address", "city", "country");
 		object.setEarnedPoints(0);
-		object.setIdentifier(object.getCustomIdentifier());
+		object.setIdentifier(object.getCustomerIdentifier());
 
 	}
 
 	@Override
 	public void validate(final Customer object) {
-		assert object != null;
+		DefaultUserIdentity identity = object.getIdentity();
+		String identifier = object.getIdentifier();
+		String name = identity.getName();
+		String surname = identity.getSurname();
+
+		char identifierFirstChar = Character.toUpperCase(identifier.charAt(0));
+		char identifierSecondChar = Character.toUpperCase(identifier.charAt(1));
+		char nameFirstChar = Character.toUpperCase(name.charAt(0));
+		char surnameFirstChar = Character.toUpperCase(surname.charAt(0));
+		boolean isIdentifierValid = identifierFirstChar == nameFirstChar && identifierSecondChar == surnameFirstChar;
+		super.state(isIdentifierValid, "identifier", "acme.validation.customer.identifier.message");
+
 	}
 
 	@Override
