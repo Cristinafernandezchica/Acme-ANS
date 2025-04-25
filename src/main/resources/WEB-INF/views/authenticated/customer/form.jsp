@@ -16,10 +16,16 @@
 <%@taglib prefix="acme" uri="http://acme-framework.org/"%>
 
 <acme:form>
+	<jstl:if test="${acme:anyOf(_command, 'update')}">
+		<acme:input-textbox code="authenticated.customer.form.label.identifier" path="identifier" readonly="true"/>
+	</jstl:if>
 	<acme:input-textbox code="authenticated.customer.form.label.phoneNumber" path="phoneNumber"/>
 	<acme:input-textbox code="authenticated.customer.form.label.address" path="address"/>
 	<acme:input-textbox code="authenticated.customer.form.label.city" path="city"/>
 	<acme:input-textbox code="authenticated.customer.form.label.country" path="country"/>	
+	<jstl:if test="${acme:anyOf(_command, 'update')}">
+		<acme:input-textbox code="authenticated.customer.form.label.earnedPoints" path="earnedPoints" readonly="true"/>
+	</jstl:if>
 	
 	<jstl:if test="${_command == 'create'}">
 		<acme:submit code="authenticated.customer.form.button.create" action="/authenticated/customer/create"/>
