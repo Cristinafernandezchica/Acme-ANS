@@ -11,6 +11,7 @@ acme.validation.manager.flights.no.published.leg = The flight has some unpublish
 acme.validation.manager.flights.currency.not.valid = The currency is not valid
 acme.validation.manager.identifierNumber = Invalid identifier number
 
+acme.validation.customer.identifier.message = Customer identifier is not valid
 acme.validation.lastCardNibble.message = The last card nibble can't be empty 
 acme.validation.booking.flight.message = No flight assigned
 acme.validation.booking.passengers.message = Some passengers selected are in draft mode or selection is empty
