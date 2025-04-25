@@ -9,6 +9,7 @@ acme.validation.flight.create.no.draftmode = No se puede crear un vuelo en modo 
 acme.validation.manager.flights.without.legs = El vuelo no tiene ningún tramos asignado
 acme.validation.manager.flights.no.published.leg = El vuelo tiene alguno/s tramo/s sin publicar
 acme.validation.manager.flights.currency.not.valid = La unidad monetaria no es válida
+acme.validation.manager.identifierNumber = Número de identificación inválido
 
 acme.validation.lastCardNibble.message = Los últimos dígitos de la tarjeta no pueden estar vacios
 acme.validation.booking.flight.message = Sin vuelo asignado
@@ -36,6 +37,7 @@ acme.validation.legFromRightAirline.message = Este vuelo no opera con la aerolí
 acme.validation.fcmAvailable.message = El asistente de vuelo no está disponible
 acme.validation.legCompatible.message = Este asistente de vuelo ya tiene un vuelo en esa fecha
 acme.validation.isConfirmedOrCancelled.message = La asignación del vuelo debe estar confirmada o denegada
+
 # Flight crew member - flight assignment's messages (antiHacking)
 acme.validation.isLegNull.message = El vuelo no puede estar vacío
 acme.validation.isOriginalFlightCrewsDuty.message = No es el puesto original
@@ -65,7 +67,8 @@ acme.validation.leg.status.draftmode.ontime = Cuando un tramo está en modo borr
 acme.validation.leg.update.other.fields = Solo se puede actualizar el estado del tramo
 acme.validation.leg.flightNumber.not.unique = El número de vuelo ya existe
 acme.validation.leg.create.no.flight.draftmode = No se puede crear un tramo, el vuelo está publicado
-
+acme.validation.leg.departureAirport = El aeropuerto de salida del tramo no coincide con el de llegada del tramo anterior publicado
+acme.validation.leg.arrivalAirport = El aeropuerto de llegada del tramo no coincide con el aeropuerto de salida del siguiente tramo publicado
 
 acme.validation.length = Es muy largo
 

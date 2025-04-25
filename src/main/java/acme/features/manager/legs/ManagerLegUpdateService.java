@@ -1,6 +1,7 @@
 
 package acme.features.manager.legs;
 
+import java.text.SimpleDateFormat;
 import java.time.temporal.ChronoUnit;
 import java.util.Collection;
 import java.util.Date;
@@ -88,8 +89,7 @@ public class ManagerLegUpdateService extends AbstractGuiService<Manager, Leg> {
 			super.state(operativeAircraft, "aircraft", "acme.validation.leg.operative.aircraft.message");
 		}
 
-		Airline airline = leg.getFlight().getManager().getAirline();
-		// Leg legByFlightNumber = this.repository.findLegByFlightNumber(leg.getFlightNumber());
+		Airline airline = leg.getAircraft().getAirline();
 		if (leg.isDraftMode()) {
 			if (leg.getFlightNumber().length() == 7 && !leg.getFlightNumber().substring(0, 3).equals(airline.getIataCode()))
 				super.state(false, "flightNumber", "acme.validation.leg.invalid.iata.flightNumber");
@@ -97,14 +97,15 @@ public class ManagerLegUpdateService extends AbstractGuiService<Manager, Leg> {
 			if (leg.getStatus() != LegStatus.ON_TIME)
 				super.state(false, "status", "acme.validation.leg.status.draftmode.ontime");
 		} else {
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
 			Leg originalLeg = this.repository.findLegById(leg.getId());
-			if (originalLeg.getScheduledDeparture().getDate() != leg.getScheduledDeparture().getDate() || originalLeg.getScheduledDeparture().getMonth() != leg.getScheduledDeparture().getMonth()
-				|| originalLeg.getScheduledDeparture().getYear() != leg.getScheduledDeparture().getYear() || originalLeg.getScheduledDeparture().getHours() != leg.getScheduledDeparture().getHours()
-				|| originalLeg.getScheduledDeparture().getMinutes() != leg.getScheduledDeparture().getMinutes() || originalLeg.getScheduledArrival().getDate() != leg.getScheduledArrival().getDate()
-				|| originalLeg.getScheduledArrival().getMonth() != leg.getScheduledArrival().getMonth() || originalLeg.getScheduledArrival().getYear() != leg.getScheduledArrival().getYear()
-				|| originalLeg.getScheduledArrival().getHours() != leg.getScheduledArrival().getHours() || originalLeg.getScheduledArrival().getMinutes() != leg.getScheduledArrival().getMinutes()
-				|| !originalLeg.getFlightNumber().equals(leg.getFlightNumber()) || !originalLeg.getDepartureAirport().equals(leg.getDepartureAirport()) || !originalLeg.getArrivalAirport().equals(leg.getArrivalAirport())
-				|| !originalLeg.getAircraft().equals(leg.getAircraft()))
+			String departure = sdf.format(leg.getScheduledDeparture());
+			String arrival = sdf.format(leg.getScheduledArrival());
+			String originalDeparture = sdf.format(originalLeg.getScheduledDeparture());
+			String originalArrival = sdf.format(originalLeg.getScheduledArrival());
+
+			if (!departure.equals(originalDeparture) || !arrival.equals(originalArrival) || !originalLeg.getFlightNumber().equals(leg.getFlightNumber()) || !originalLeg.getDepartureAirport().equals(leg.getDepartureAirport())
+				|| !originalLeg.getArrivalAirport().equals(leg.getArrivalAirport()) || !originalLeg.getAircraft().equals(leg.getAircraft()))
 				super.state(false, "*", "acme.validation.leg.update.other.fields");
 		}
 
@@ -127,9 +128,9 @@ public class ManagerLegUpdateService extends AbstractGuiService<Manager, Leg> {
 		SelectChoices selectedArrivalAirport;
 
 		statuses = SelectChoices.from(LegStatus.class, leg.getStatus());
-		aircrafts = this.repository.findAllAircraftsByAirlineId(leg.getFlight().getAirline().getId());
+		aircrafts = this.repository.findAllAircrafts();
 		activeAircrafts = aircrafts.stream().filter(a -> a.getStatus().equals(Status.ACTIVE_SERVICE)).collect(Collectors.toList());
-		selectedAircrafts = SelectChoices.from(activeAircrafts, "model", leg.getAircraft());
+		selectedAircrafts = SelectChoices.from(activeAircrafts, "aircraftLabel", leg.getAircraft());
 
 		airports = this.repository.findAllAirports();
 		selectedDepartureAirport = SelectChoices.from(airports, "iataCode", leg.getDepartureAirport());

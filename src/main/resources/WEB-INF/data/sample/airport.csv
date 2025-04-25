@@ -45,7 +45,7 @@ airport-37,"Example Airport","EXV",DOMESTIC,"Tenerife","Francia",https://example
 airport-38,"Example Airport","EXW",DOMESTIC,"Tenerife","Canadá",https://example.acme.com,example38@acme.com,+34990000038
 
 # website - variations
-airport-40,"Example Airport","EXY",DOMESTIC,"Tenerife","España",ftp://,example40@acme.com,+34990000040
+airport-40,"Example Airport","EXY",DOMESTIC,"Tenerife","España",https://santacruzairport.acme.com,example40@acme.com,+34990000040
 airport-41,"Example Airport","EXZ",DOMESTIC,"Tenerife","España",http://www.lorem-ipsum.org/dolor/sit/amet/consectetur/adipiscing/elit/sed/do/eiusmod/tempor/incididunt/ut/labore/et/dolore/magna/aliqua/Ut/enim/ad/minim/veniam/quis/nostrud/exercitation/ullamco/laboris/nisi/ut/aliquip/ex/ea/commodo/consequat/duis/aute/XYZ,example41@acme.com,+34990000041
 # phoneNumber - variations
 

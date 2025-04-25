@@ -31,7 +31,6 @@ public class ManagerFlightCreateService extends AbstractGuiService<Manager, Flig
 		flight = new Flight();
 		flight.setDraftMode(true);
 		flight.setManager(manager);
-		flight.setAirline(manager.getAirline());
 
 		super.getBuffer().addData(flight);
 	}
