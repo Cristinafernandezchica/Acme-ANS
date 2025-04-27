@@ -1,5 +1,5 @@
 
-package acme.realms;
+package acme.realms.manager;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -23,7 +23,6 @@ import acme.client.components.validation.ValidString;
 import acme.client.components.validation.ValidUrl;
 import acme.client.helpers.SpringHelper;
 import acme.constraints.ValidManager;
-import acme.realms.customer.CustomerRepository;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -62,8 +61,8 @@ public class Manager extends AbstractRole {
 
 	@Transient
 	public String getManagerIdentifier() {
-		CustomerRepository repository;
-		repository = SpringHelper.getBean(CustomerRepository.class);
+		ManagerRepository repository;
+		repository = SpringHelper.getBean(ManagerRepository.class);
 		DefaultUserIdentity identity = this.getIdentity();
 
 		if (identity == null || identity.getName() == null || identity.getSurname() == null)

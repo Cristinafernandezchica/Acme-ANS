@@ -8,7 +8,7 @@ import acme.client.components.principals.Authenticated;
 import acme.client.helpers.PrincipalHelper;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
-import acme.realms.Manager;
+import acme.realms.manager.Manager;
 
 @GuiService
 public class AuthenticatedManagerUpdateService extends AbstractGuiService<Authenticated, Manager> {
@@ -45,13 +45,16 @@ public class AuthenticatedManagerUpdateService extends AbstractGuiService<Authen
 	public void bind(final Manager object) {
 		assert object != null;
 
-		super.bindObject(object, "yearsExperience", "dateBirth", "picture");
-		object.setIdentifierNumber(object.getIdentifierNumber());
+		super.bindObject(object, "identifierNumber", "yearsExperience", "dateBirth", "picture");
 	}
 
 	@Override
 	public void validate(final Manager object) {
 		assert object != null;
+
+		Manager manager = this.repository.findManagerById(object.getId());
+		if (object.getIdentifierNumber() != manager.getIdentifierNumber())
+			super.state(false, "identifierNumber", "acme.validation.change.identifierNumber");
 	}
 
 	@Override
@@ -66,8 +69,9 @@ public class AuthenticatedManagerUpdateService extends AbstractGuiService<Authen
 		assert object != null;
 
 		Dataset dataset;
-
-		dataset = super.unbindObject(object, "identifierNumber", "yearsExperience", "dateBirth", "picture");
+		Manager manager = this.repository.findManagerById(object.getId());
+		dataset = super.unbindObject(object, "yearsExperience", "dateBirth", "picture");
+		dataset.put("identifierNumber", manager.getIdentifierNumber());
 		super.getResponse().addData(dataset);
 	}
 

@@ -20,7 +20,7 @@ import acme.entities.airports.Airport;
 import acme.entities.flights.Flight;
 import acme.entities.legs.Leg;
 import acme.entities.legs.LegStatus;
-import acme.realms.Manager;
+import acme.realms.manager.Manager;
 
 @GuiService
 public class ManagerLegCreateService extends AbstractGuiService<Manager, Leg> {

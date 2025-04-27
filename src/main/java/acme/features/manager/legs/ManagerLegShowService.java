@@ -15,7 +15,7 @@ import acme.entities.aircrafts.Status;
 import acme.entities.airports.Airport;
 import acme.entities.legs.Leg;
 import acme.entities.legs.LegStatus;
-import acme.realms.Manager;
+import acme.realms.manager.Manager;
 
 @GuiService
 public class ManagerLegShowService extends AbstractGuiService<Manager, Leg> {

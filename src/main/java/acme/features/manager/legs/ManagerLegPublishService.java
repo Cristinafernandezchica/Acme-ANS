@@ -21,7 +21,7 @@ import acme.entities.airline.Airline;
 import acme.entities.airports.Airport;
 import acme.entities.legs.Leg;
 import acme.entities.legs.LegStatus;
-import acme.realms.Manager;
+import acme.realms.manager.Manager;
 
 @GuiService
 public class ManagerLegPublishService extends AbstractGuiService<Manager, Leg> {

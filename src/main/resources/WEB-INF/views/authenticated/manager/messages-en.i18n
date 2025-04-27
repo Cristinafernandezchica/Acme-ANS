@@ -3,7 +3,7 @@ authenticated.manager.form.title = Manager form
 authenticated.manager.form.label.identifierNumber = Identifier Number
 authenticated.manager.form.label.yearsExperience = Years of experience
 authenticated.manager.form.label.dateBirth = Date Birth
-authenticated.manager.form.label.picture = Picture
+authenticated.manager.form.label.picture = Picture (Optional)
 
 authenticated.manager.form.button.create = Register
 authenticated.manager.form.button.update = Update

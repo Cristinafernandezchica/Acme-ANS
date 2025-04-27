@@ -11,7 +11,7 @@ import acme.client.helpers.PrincipalHelper;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.features.authenticated.customer.AuthenticatedCustomerRepository;
-import acme.realms.Manager;
+import acme.realms.manager.Manager;
 
 @GuiService
 public class AuthenticatedManagerCreateService extends AbstractGuiService<Authenticated, Manager> {

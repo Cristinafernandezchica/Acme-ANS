@@ -23,7 +23,7 @@ import acme.client.helpers.SpringHelper;
 import acme.constraints.ValidFlight;
 import acme.entities.legs.Leg;
 import acme.entities.legs.LegRepository;
-import acme.realms.Manager;
+import acme.realms.manager.Manager;
 import lombok.Getter;
 import lombok.Setter;
 
