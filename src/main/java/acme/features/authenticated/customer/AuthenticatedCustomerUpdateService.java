@@ -56,7 +56,8 @@ public class AuthenticatedCustomerUpdateService extends AbstractGuiService<Authe
 	public void bind(final Customer object) {
 		assert object != null;
 
-		super.bindObject(object, "company", "sector");
+		super.bindObject(object, "phoneNumber", "address", "city", "country", "earnedPoints");
+		object.setIdentifier(object.getIdentifier());
 	}
 
 	@Override
@@ -77,7 +78,7 @@ public class AuthenticatedCustomerUpdateService extends AbstractGuiService<Authe
 
 		Dataset dataset;
 
-		dataset = super.unbindObject(object, "company", "sector");
+		dataset = super.unbindObject(object, "identifier", "phoneNumber", "address", "city", "country", "earnedPoints");
 		super.getResponse().addData(dataset);
 	}
 

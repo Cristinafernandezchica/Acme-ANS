@@ -17,6 +17,7 @@ import acme.client.components.validation.Optional;
 import acme.client.components.validation.ValidNumber;
 import acme.client.components.validation.ValidString;
 import acme.client.helpers.SpringHelper;
+import acme.constraints.ValidCustomer;
 import acme.constraints.ValidPhoneNumber;
 import lombok.Getter;
 import lombok.Setter;
@@ -24,7 +25,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-//@ValidCustomer
+@ValidCustomer
 public class Customer extends AbstractRole {
 
 	private static final long	serialVersionUID	= 1L;
@@ -61,7 +62,7 @@ public class Customer extends AbstractRole {
 
 
 	@Transient
-	public String getCustomIdentifier() {
+	public String getCustomerIdentifier() {
 		CustomerRepository repository;
 		repository = SpringHelper.getBean(CustomerRepository.class);
 		DefaultUserIdentity identity = this.getIdentity();
@@ -78,6 +79,7 @@ public class Customer extends AbstractRole {
 		String initials = "" + name.charAt(0) + surname.charAt(0);
 
 		List<String> existingIdentifiers = repository.findAllIdentifiersStartingWith(initials);
+		existingIdentifiers.remove(this.identifier);
 
 		Set<String> existingSet = new HashSet<>(existingIdentifiers);
 
@@ -90,5 +92,4 @@ public class Customer extends AbstractRole {
 		}
 		return null;
 	}
-
 }
