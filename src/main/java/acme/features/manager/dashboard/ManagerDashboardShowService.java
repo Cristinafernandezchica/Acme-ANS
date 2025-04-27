@@ -19,7 +19,7 @@ import acme.entities.airports.Airport;
 import acme.entities.legs.Leg;
 import acme.entities.legs.LegStatus;
 import acme.forms.managerDashboard.ManagerDashboard;
-import acme.realms.Manager;
+import acme.realms.manager.Manager;
 
 @GuiService
 public class ManagerDashboardShowService extends AbstractGuiService<Manager, ManagerDashboard> {

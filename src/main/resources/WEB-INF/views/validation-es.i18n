@@ -10,6 +10,7 @@ acme.validation.manager.flights.without.legs = El vuelo no tiene ningún tramos 
 acme.validation.manager.flights.no.published.leg = El vuelo tiene alguno/s tramo/s sin publicar
 acme.validation.manager.flights.currency.not.valid = La unidad monetaria no es válida
 acme.validation.manager.identifierNumber = Número de identificación inválido
+acme.validation.change.identifierNumber = No se puede modificar el número de identificación
 
 acme.validation.customer.identifier.message = El identificador del cliente no es válido
 acme.validation.lastCardNibble.message = Los últimos dígitos de la tarjeta no pueden estar vacios

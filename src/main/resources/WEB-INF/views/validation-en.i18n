@@ -10,6 +10,7 @@ acme.validation.manager.flights.without.legs = The flight has no leg assigned
 acme.validation.manager.flights.no.published.leg = The flight has some unpublished leg(s)
 acme.validation.manager.flights.currency.not.valid = The currency is not valid
 acme.validation.manager.identifierNumber = Invalid identifier number
+acme.validation.change.identifierNumber = Can't change the identifier number
 
 acme.validation.customer.identifier.message = Customer identifier is not valid
 acme.validation.lastCardNibble.message = The last card nibble can't be empty 

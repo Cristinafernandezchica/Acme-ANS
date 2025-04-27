@@ -15,7 +15,7 @@ import acme.entities.aircrafts.Status;
 import acme.entities.airports.Airport;
 import acme.entities.legs.Leg;
 import acme.entities.legs.LegStatus;
-import acme.realms.Manager;
+import acme.realms.manager.Manager;
 
 @GuiService
 public class ManagerLegShowService extends AbstractGuiService<Manager, Leg> {
@@ -63,10 +63,9 @@ public class ManagerLegShowService extends AbstractGuiService<Manager, Leg> {
 		Collection<Airport> arrivalAirports;
 		SelectChoices selectedDepartureAirport;
 		SelectChoices selectedArrivalAirport;
-		int airlineId = leg.getAircraft().getAirline().getId();
 
 		statuses = SelectChoices.from(LegStatus.class, leg.getStatus());
-		aircrafts = this.repository.findAllAircraftsByAirlineId(airlineId);
+		aircrafts = this.repository.findAllAircrafts();
 		activeAircrafts = aircrafts.stream().filter(a -> a.getStatus().equals(Status.ACTIVE_SERVICE)).collect(Collectors.toList());
 		selectedAircrafts = SelectChoices.from(activeAircrafts, "aircraftLabel", leg.getAircraft());
 
