@@ -30,7 +30,7 @@ public class LegValidator extends AbstractValidator<ValidLeg, Leg> {
 		else if (leg.getFlightNumber() == null)
 			super.state(context, false, "flightNumber", "javax.validation.constraints.NotNull.message");
 		else {
-			if (leg.getFlightNumber().length() == 7) {
+			if (leg.getFlightNumber().length() == 7 && leg.getAircraft() != null) {
 				String iataCodeFlightNumber = leg.getFlightNumber().substring(0, 3);
 				String airlineIataCode = leg.getAircraft().getAirline().getIataCode();
 

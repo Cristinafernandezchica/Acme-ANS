@@ -89,11 +89,14 @@ public class ManagerLegUpdateService extends AbstractGuiService<Manager, Leg> {
 			super.state(operativeAircraft, "aircraft", "acme.validation.leg.operative.aircraft.message");
 		}
 
-		Airline airline = leg.getAircraft().getAirline();
 		if (leg.isDraftMode()) {
-			if (leg.getFlightNumber().length() == 7 && !leg.getFlightNumber().substring(0, 3).equals(airline.getIataCode()))
-				super.state(false, "flightNumber", "acme.validation.leg.invalid.iata.flightNumber");
-
+			if (leg.getAircraft() != null) {
+				Airline airline = leg.getAircraft().getAirline();
+				if (leg.getFlightNumber().length() == 7 && !leg.getFlightNumber().substring(0, 3).equals(airline.getIataCode())) {
+					super.state(false, "flightNumber", "acme.validation.leg.invalid.iata.flightNumber");
+					super.state(false, "flightNumber", "The airline's IATA code: " + airline.getIataCode());
+				}
+			}
 			if (leg.getStatus() != LegStatus.ON_TIME)
 				super.state(false, "status", "acme.validation.leg.status.draftmode.ontime");
 		} else {

@@ -9,3 +9,4 @@
 # they accept any liabilities with respect to them.
 
 acme.placeholders.phone			  		= Use international format +99 (999) 999999
+acme.leg.placeholder.flightNumber			  		= ABC1234
