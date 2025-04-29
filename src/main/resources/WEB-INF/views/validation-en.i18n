@@ -40,6 +40,17 @@ acme.validation.fcmAvailable.message = The flight crew member is not available
 acme.validation.legCompatible.message = The flight crew member already has a leg at that date
 acme.validation.isConfirmedOrCancelled.message = The flight assignment must be confirmed or cancelled
 
+# Flight crew member - flight assignments messages
+acme.validation.confirmation.message = This action must be confirm
+acme.validation.pilotExceptionPassed.message = That leg already has a pilot
+acme.validation.coPilotExceptionPassed.message = That leg already has a co-pilot
+acme.validation.legNotPublished.message = That leg is not published
+acme.validation.legNotPast.message = That leg is not past
+acme.validation.legNotCompleted.message = That leg is not completed
+acme.validation.legFromRightAirline.message = That leg doesn't operate with your airline
+acme.validation.fcmAvailable.message = The flight crew member is not available
+acme.validation.legCompatible.message = The flight crew member already has a leg at that date
+acme.validation.isConfirmedOrCancelled.message = The flight assignment must be confirmed or cancelled
 # Flight crew member - flight assignment's messages (antiHacking)
 acme.validation.isLegNull.message = Must not be null
 acme.validation.isOriginalFlightCrewsDuty.message = That's not the original duty
@@ -48,6 +59,7 @@ acme.validation.isOriginalCurrentStatus.message = That's not the original curren
 acme.validation.isOriginalRemarks.message = Those are not the original remarks
 acme.validation.isOriginalLeg.message = That's not the original leg
 acme.validation.isOriginalFCM.message = That's not the original flight crew member
+acme.validation.existedLeg.message = That leg doesn't exist
 
 # Activity log - activity log's messages (antiHacking)
 acme.validation.isOriginalRegistrationMoment.message = That's not the original registration moment
