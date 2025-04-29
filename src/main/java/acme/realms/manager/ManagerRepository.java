@@ -15,4 +15,7 @@ public interface ManagerRepository extends AbstractRepository {
 	@Query("SELECT m.identifierNumber FROM Manager m WHERE m.identifierNumber LIKE CONCAT(:prefix, '%')")
 	List<String> findAllIdentifiersStartingWith(@Param("prefix") String prefix);
 
+	@Query("select m from Manager m where m.identifierNumber = :identifierNumber")
+	Manager findManagerByIdentifierNumber(String identifierNumber);
+
 }
