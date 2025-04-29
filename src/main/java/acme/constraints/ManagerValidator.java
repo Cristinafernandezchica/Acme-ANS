@@ -3,13 +3,19 @@ package acme.constraints;
 
 import javax.validation.ConstraintValidatorContext;
 
-import acme.client.components.principals.DefaultUserIdentity;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import acme.client.components.validation.AbstractValidator;
 import acme.client.components.validation.Validator;
 import acme.realms.manager.Manager;
+import acme.realms.manager.ManagerRepository;
 
 @Validator
 public class ManagerValidator extends AbstractValidator<ValidManager, Manager> {
+
+	@Autowired
+	private ManagerRepository repository;
+
 
 	@Override
 	protected void initialise(final ValidManager annotation) {
@@ -24,17 +30,11 @@ public class ManagerValidator extends AbstractValidator<ValidManager, Manager> {
 		else if (manager.getIdentifierNumber() == null)
 			super.state(context, false, "identifierNumber", "javax.validation.constraints.NotNull.message");
 		else {
-			DefaultUserIdentity identity = manager.getIdentity();
 			String identifierNumber = manager.getIdentifierNumber();
-			String name = identity.getName();
-			String surname = identity.getSurname();
 
-			char identifierFirstChar = Character.toUpperCase(identifierNumber.charAt(0));
-			char identifierSecondChar = Character.toUpperCase(identifierNumber.charAt(1));
-			char nameFirstChar = Character.toUpperCase(name.charAt(0));
-			char surnameFirstChar = Character.toUpperCase(surname.charAt(0));
-			if (identifierFirstChar != nameFirstChar || identifierSecondChar != surnameFirstChar)
-				super.state(context, false, "identifierNumber", "acme.validation.manager.identifierNumber");
+			Manager existingManager = this.repository.findManagerByIdentifierNumber(identifierNumber);
+			if (existingManager != null && !existingManager.equals(manager))
+				super.state(context, false, "identifierNumber", "acme.validation.manager.identifierNumber.not.unique");
 		}
 		return !super.hasErrors(context);
 	}

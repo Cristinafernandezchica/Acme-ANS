@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import acme.client.repositories.AbstractRepository;
+import acme.entities.flights.Flight;
 import acme.entities.legs.Leg;
 
 @Repository
@@ -43,5 +44,8 @@ public interface ManagerDashboardRepository extends AbstractRepository {
 
 	@Query("SELECT STDDEV(f.cost.amount) FROM Flight f WHERE f.manager.id = :managerId")
 	Optional<Double> findStandardDeviationOfFlightCost(int managerId);
+
+	@Query("select f from Flight f where f.manager.id = :managerId")
+	Collection<Flight> findFlightsByManagerId(int managerId);
 
 }
