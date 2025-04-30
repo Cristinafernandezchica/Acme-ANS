@@ -6,7 +6,7 @@
 <acme:form> 
 	<acme:input-textbox code="customer.passenger.form.fullName" path="fullName"/>
 	<acme:input-email code="customer.passenger.form.email" path="email"/>
-	<acme:input-textbox code="customer.passenger.form.passportNumber" path="passportNumber"/>
+	<acme:input-textbox code="customer.passenger.form.passportNumber" path="passportNumber" placeholder="customer.passenger.form.placeholder.passportNumber"/>
 	<acme:input-moment code="customer.passenger.form.dateOfBirth" path="dateOfBirth"/>
 	<acme:input-textbox code="customer.passenger.form.specialNeeds" path="specialNeeds"/>
 		

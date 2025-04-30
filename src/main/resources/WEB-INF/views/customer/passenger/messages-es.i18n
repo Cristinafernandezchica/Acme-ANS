@@ -16,3 +16,5 @@ customer.passenger.form.button.create = Crear
 customer.passenger.form.button.create.bookingId = Crear y asignar
 customer.passenger.form.button.update = Actualizar
 customer.passenger.form.button.publish = Publicar
+
+customer.passenger.form.placeholder.passportNumber = XXX123456
