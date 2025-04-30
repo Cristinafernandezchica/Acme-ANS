@@ -159,8 +159,10 @@ public class Flight extends AbstractEntity {
 		String arrivalTime = timeFormat.format(lastLeg.getScheduledArrival());
 		String originCity = firstLeg.getDepartureAirport().getCity();
 		String destinationCity = lastLeg.getArrivalAirport().getCity();
+		String originAirport = firstLeg.getDepartureAirport().getIataCode();
+		String destinationAirport = lastLeg.getArrivalAirport().getIataCode();
 
-		return String.format("%s %s %s %s", departureTime, originCity, arrivalTime, destinationCity);
+		return String.format("%s %s (%s) - %s %s (%s)", departureTime, originCity, originAirport, arrivalTime, destinationCity, destinationAirport);
 	}
 
 	// Relationships ------------------------------
