@@ -12,7 +12,10 @@
 
 package acme.features.authenticated.customer;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import acme.client.components.principals.UserAccount;
@@ -21,6 +24,9 @@ import acme.realms.customer.Customer;
 
 @Repository
 public interface AuthenticatedCustomerRepository extends AbstractRepository {
+
+	@Query("SELECT c.identifier FROM Customer c WHERE c.identifier LIKE CONCAT(:prefix, '%')")
+	List<String> findAllIdentifiersStartingWith(@Param("prefix") String prefix);
 
 	@Query("select ua from UserAccount ua where ua.id = :id")
 	UserAccount findUserAccountById(int id);

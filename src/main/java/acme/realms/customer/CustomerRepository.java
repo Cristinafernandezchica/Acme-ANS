@@ -15,4 +15,7 @@ public interface CustomerRepository extends AbstractRepository {
 	@Query("SELECT c.identifier FROM Customer c WHERE c.identifier LIKE CONCAT(:prefix, '%')")
 	List<String> findAllIdentifiersStartingWith(@Param("prefix") String prefix);
 
+	@Query("SELECT c FROM Customer c WHERE c.identifier = :identifier")
+	Customer findByIdentifier(@Param("identifier") String identifier);
+
 }

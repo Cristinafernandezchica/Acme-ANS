@@ -1,15 +1,24 @@
 
 package acme.constraints;
 
+import java.util.Objects;
+
 import javax.validation.ConstraintValidatorContext;
+
+import org.springframework.beans.factory.annotation.Autowired;
 
 import acme.client.components.principals.DefaultUserIdentity;
 import acme.client.components.validation.AbstractValidator;
 import acme.client.components.validation.Validator;
 import acme.realms.customer.Customer;
+import acme.realms.customer.CustomerRepository;
 
 @Validator
 public class CustomerValidator extends AbstractValidator<ValidCustomer, Customer> {
+
+	@Autowired
+	private CustomerRepository repository;
+
 
 	@Override
 	protected void initialise(final ValidCustomer annotation) {
@@ -18,30 +27,30 @@ public class CustomerValidator extends AbstractValidator<ValidCustomer, Customer
 
 	@Override
 	public boolean isValid(final Customer customer, final ConstraintValidatorContext context) {
+		boolean result = true;
 
-		boolean result = false;
-
-		if (customer == null)
+		if (customer == null) {
 			super.state(context, false, "customer", "javax.validation.constraints.NotNull.message");
-		else if (customer.getIdentifier() == null)
+			result = false;
+		} else if (customer.getIdentifier() == null) {
 			super.state(context, false, "identifier", "javax.validation.constraints.NotNull.message");
-		else {
+			result = false;
+		} else {
 			DefaultUserIdentity identity = customer.getIdentity();
 			String identifier = customer.getIdentifier();
 			String name = identity.getName();
 			String surname = identity.getSurname();
 
-			char identifierFirstChar = Character.toUpperCase(identifier.charAt(0));
-			char identifierSecondChar = Character.toUpperCase(identifier.charAt(1));
-			char nameFirstChar = Character.toUpperCase(name.charAt(0));
-			char surnameFirstChar = Character.toUpperCase(surname.charAt(0));
-			// identifier have the first character of the name and the first character of the surname in the first and second charactersValidation 
-			if (identifierFirstChar == nameFirstChar && identifierSecondChar == surnameFirstChar)
-				result = true;
-			else {
+			if (name == null || surname == null || name.isEmpty() || surname.isEmpty()) {
+				super.state(context, false, "identifier", "The customer name, surname, and identifier must be properly defined");
 				result = false;
-				context.disableDefaultConstraintViolation();
-				context.buildConstraintViolationWithTemplate("The customer identifier is not valid").addConstraintViolation();
+			} else {
+				// Check uniqueness at identifier attribute
+				Customer existing = this.repository.findByIdentifier(identifier);
+				if (existing != null && !Objects.equals(existing.getId(), customer.getId())) {
+					super.state(context, false, "identifier", "The identifier must be unique");
+					result = false;
+				}
 			}
 		}
 		return result;
