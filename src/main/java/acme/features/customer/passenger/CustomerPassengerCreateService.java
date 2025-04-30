@@ -34,7 +34,7 @@ public class CustomerPassengerCreateService extends AbstractGuiService<Customer,
 
 		customer = (Customer) super.getRequest().getPrincipal().getActiveRealm();
 
-		if (super.getRequest().getData().isEmpty() || super.getRequest().hasData("fullName"))
+		if (super.getRequest().getData().isEmpty() || super.getRequest().hasData("passportNumber"))
 			status = true;
 		else {
 			bookingId = super.getRequest().getData("bookingId", int.class);
