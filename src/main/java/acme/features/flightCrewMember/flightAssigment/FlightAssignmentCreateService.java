@@ -44,6 +44,7 @@ public class FlightAssignmentCreateService extends AbstractGuiService<FlightCrew
 
 		flightAssignment.setDraftMode(true);
 		flightAssignment.setFlightCrewMemberAssigned(flightCrewMember);
+		flightAssignment.setCurrentStatus(CurrentStatus.PENDING);
 
 		super.getBuffer().addData(flightAssignment);
 	}
@@ -79,7 +80,7 @@ public class FlightAssignmentCreateService extends AbstractGuiService<FlightCrew
 		boolean isLegNull;
 		isLegNull = flightAssignment.getLegRelated() != null;
 		if (!isLegNull)
-			super.state(isLegNull, "legRelated", "acme.validation.isLegNull.message");
+			throw new IllegalStateException("That leg doesn't exist");
 		else {
 			// Comprobación de leg no pasada
 			boolean legNotPast;
@@ -105,11 +106,6 @@ public class FlightAssignmentCreateService extends AbstractGuiService<FlightCrew
 			boolean fcmAvailable;
 			fcmAvailable = flightAssignment.getFlightCrewMemberAssigned().getAvailabilityStatus().equals(AvailabilityStatus.AVAILABLE);
 			super.state(fcmAvailable, "legRelated", "acme.validation.fcmAvailable.message");
-
-			// Comprobación de FCM no modificado
-			boolean isOriginalFCM;
-			isOriginalFCM = flightAssignment.getFlightCrewMemberAssigned() == fcmLogged;
-			super.state(isOriginalFCM, "flightCrewMemberAssigned", "acme.validation.isOriginalFCM.message");
 
 			// Comprobación de leg asignadas al fcm no sea a la vez que otra
 			boolean legCompatible = true;
@@ -164,8 +160,8 @@ public class FlightAssignmentCreateService extends AbstractGuiService<FlightCrew
 		availableFlightCrewMembers = this.repository.findAvailableFlightCrewMembers();
 		flightCrewMemberChoices = SelectChoices.from(availableFlightCrewMembers, "employeeCode", flightAssignment.getFlightCrewMemberAssigned());
 
-		dataset = super.unbindObject(flightAssignment, "flightCrewsDuty", "lastUpdate", "currentStatus", "remarks", "draftMode");
-		dataset.put("statuses", statuses);
+		dataset = super.unbindObject(flightAssignment, "flightCrewsDuty", "lastUpdate", "remarks", "draftMode");
+		dataset.put("currentStatus", CurrentStatus.PENDING);
 		dataset.put("flightcrewsDuties", flightcrewsDuties);
 		dataset.put("legRelated", legChoices.getSelected().getKey());
 		dataset.put("legs", legChoices);

@@ -53,6 +53,7 @@ acme.validation.legCompatible.message = The flight crew member already has a leg
 acme.validation.isConfirmedOrCancelled.message = The flight assignment must be confirmed or cancelled
 # Flight crew member - flight assignment's messages (antiHacking)
 acme.validation.isLegNull.message = Must not be null
+acme.validation.isFANull.message = Must not be null
 acme.validation.isOriginalFlightCrewsDuty.message = That's not the original duty
 acme.validation.isOriginalLastUpdate.message = That's not the original last update
 acme.validation.isOriginalCurrentStatus.message = That's not the original current status

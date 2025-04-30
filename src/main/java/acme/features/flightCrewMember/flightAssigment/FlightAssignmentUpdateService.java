@@ -77,17 +77,17 @@ public class FlightAssignmentUpdateService extends AbstractGuiService<FlightCrew
 		FlightCrewMember fcmLogged;
 		int fcmIdLogged = super.getRequest().getPrincipal().getActiveRealm().getId();
 		fcmLogged = this.repository.findFlighCrewMemberById(fcmIdLogged);
-		if (!(flightAssignment.getFlightCrewMemberAssigned() == null)) {
+
+		// Comprobación de leg no null
+		boolean isLegNull;
+		isLegNull = flightAssignment.getLegRelated() != null;
+		if (!isLegNull)
+			throw new IllegalStateException("That leg doesn't exist");
+		else {
 			// Comprobación de que el FCM esté AVAILABLE
 			boolean fcmAvailable;
 			fcmAvailable = flightAssignment.getFlightCrewMemberAssigned().getAvailabilityStatus().equals(AvailabilityStatus.AVAILABLE);
 			super.state(fcmAvailable, "legRelated", "acme.validation.fcmAvailable.message");
-			// Comprobación de FCM no modificado
-			boolean isOriginalFCM;
-			isOriginalFCM = flightAssignment.getFlightCrewMemberAssigned() == fcmLogged;
-			super.state(isOriginalFCM, "flightCrewMemberAssigned", "acme.validation.isOriginalFCM.message");
-		}
-		if (flightAssignment.getLegRelated() != null) {
 			// Comprobación de leg no pasada
 			boolean legNotPast;
 			legNotPast = flightAssignment.getLegRelated().getScheduledArrival().before(MomentHelper.getCurrentMoment());
