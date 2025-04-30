@@ -27,7 +27,10 @@ public class AdministratorAirlineUpdateService extends AbstractGuiService<Admini
 
 	@Override
 	public void authorise() {
-		super.getResponse().setAuthorised(true);
+		boolean auth = false;
+		if (!super.getRequest().getData().isEmpty() && super.getRequest().getData() != null)
+			auth = true;
+		super.getResponse().setAuthorised(auth);
 	}
 
 	@Override

@@ -30,16 +30,17 @@ public class CustomerBookingUpdateService extends AbstractGuiService<Customer, B
 
 	@Override
 	public void authorise() {
-		boolean status;
+		boolean status = false;
 		int bookingId;
 		Customer customer;
 		Booking booking;
 
-		bookingId = super.getRequest().getData("id", int.class);
-		booking = this.repository.findBookingById(bookingId);
-		customer = booking == null ? null : booking.getCustomer();
-		status = super.getRequest().getPrincipal().hasRealm(customer) && booking != null && booking.isDraftMode();
-
+		if (!super.getRequest().getData().isEmpty() && super.getRequest().getData() != null) {
+			bookingId = super.getRequest().getData("id", int.class);
+			booking = this.repository.findBookingById(bookingId);
+			customer = booking == null ? null : booking.getCustomer();
+			status = super.getRequest().getPrincipal().hasRealm(customer) && booking != null && booking.isDraftMode();
+		}
 		super.getResponse().setAuthorised(status);
 	}
 

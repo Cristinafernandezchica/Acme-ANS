@@ -33,12 +33,14 @@ public class CustomerBookingPublishService extends AbstractGuiService<Customer, 
 		int bookingId;
 		Booking booking;
 		Customer customer;
-		boolean status;
+		boolean status = false;
 
-		bookingId = super.getRequest().getData("id", int.class);
-		booking = this.repository.findBookingById(bookingId);
-		customer = booking == null ? null : booking.getCustomer();
-		status = booking != null && super.getRequest().getPrincipal().hasRealm(customer) && booking.isDraftMode();
+		if (!super.getRequest().getData().isEmpty() && super.getRequest().getData() != null) {
+			bookingId = super.getRequest().getData("id", int.class);
+			booking = this.repository.findBookingById(bookingId);
+			customer = booking == null ? null : booking.getCustomer();
+			status = booking != null && super.getRequest().getPrincipal().hasRealm(customer) && booking.isDraftMode();
+		}
 
 		super.getResponse().setAuthorised(status);
 
@@ -78,7 +80,7 @@ public class CustomerBookingPublishService extends AbstractGuiService<Customer, 
 
 		Collection<Passenger> passengers = this.repository.findPassengersByBookingId(booking.getId());
 		boolean hasPassengersInDraftModeOrEmpty = passengers.isEmpty() || passengers.stream().anyMatch(Passenger::isDraftMode);
-		super.state(!hasPassengersInDraftModeOrEmpty, "flight", "acme.validation.booking.passengers.message");
+		super.state(!hasPassengersInDraftModeOrEmpty, "*", "acme.validation.booking.passengers.message");
 
 		boolean hasCardNibble = booking.getLastCardNibble() != null && !booking.getLastCardNibble().trim().isEmpty();
 		super.state(hasCardNibble, "lastCardNibble", "acme.validation.lastCardNibble.message");
