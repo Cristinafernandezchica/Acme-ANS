@@ -1,6 +1,7 @@
 
 package acme.features.customer.booking;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
@@ -65,6 +66,15 @@ public class CustomerBookingPublishService extends AbstractGuiService<Customer, 
 		flightId = super.getRequest().getData("flight", int.class);
 		flight = this.repository.findFlightById(flightId);
 
+		String rawTravelClass = super.getRequest().getData("travelClass", String.class);
+
+		if (rawTravelClass != null && !rawTravelClass.trim().isEmpty() && !rawTravelClass.equals("0")) {
+			boolean travelClassValid = Arrays.stream(TravelClass.values()).anyMatch(tc -> tc.name().equals(rawTravelClass));
+
+			if (!travelClassValid)
+				throw new IllegalStateException("Travel class selected is not valid");
+		}
+
 		super.bindObject(booking, "travelClass", "lastCardNibble");
 		booking.setFlight(flight);
 
@@ -74,6 +84,9 @@ public class CustomerBookingPublishService extends AbstractGuiService<Customer, 
 	public void validate(final Booking booking) {
 		Collection<Flight> validFlights = this.repository.findAllFlights().stream().filter(flight -> flight.getScheduledDeparture() != null && !flight.isDraftMode() && flight.getScheduledDeparture().after(MomentHelper.getCurrentMoment())
 			&& this.repository.findLegsByFlightId(flight.getId()).stream().allMatch(leg -> leg.getScheduledDeparture().after(MomentHelper.getCurrentMoment()))).collect(Collectors.toList());
+
+		if (!validFlights.contains(booking.getFlight()))
+			throw new IllegalStateException("It is not possible to publish a booking with this flight.");
 
 		boolean isFlightValid = booking.getFlight() != null && validFlights.contains(booking.getFlight());
 		super.state(isFlightValid, "flight", "acme.validation.booking.flight.message");
