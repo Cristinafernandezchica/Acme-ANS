@@ -56,9 +56,18 @@ public class CustomerBookingCreateService extends AbstractGuiService<Customer, B
 		Date moment;
 
 		moment = MomentHelper.getCurrentMoment();
-		flightId = super.getRequest().getData("flight", int.class);
-		flight = this.repository.findFlightById(flightId);
+		boolean hasFlightParam = super.getRequest().getData().containsKey("flight");
 
+		if (hasFlightParam) {
+			flightId = super.getRequest().getData("flight", int.class);
+			flight = this.repository.findFlightById(flightId);
+
+			if (flight == null && flightId != 0)
+				throw new IllegalStateException("It is not possible to create a booking with this flight.");
+
+			booking.setFlight(flight);
+		} else
+			booking.setFlight(null);
 		String rawTravelClass = super.getRequest().getData("travelClass", String.class);
 
 		if (rawTravelClass != null && !rawTravelClass.trim().isEmpty() && !rawTravelClass.equals("0")) {
@@ -71,7 +80,6 @@ public class CustomerBookingCreateService extends AbstractGuiService<Customer, B
 		super.bindObject(booking, "travelClass", "lastCardNibble");
 		booking.setLocatorCode(this.generateLocatorCode());
 		booking.setPurchaseMoment(moment);
-		booking.setFlight(flight);
 		booking.setPrice(booking.getPrice());
 		booking.setDraftMode(true);
 

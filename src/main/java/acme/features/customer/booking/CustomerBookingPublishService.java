@@ -63,8 +63,18 @@ public class CustomerBookingPublishService extends AbstractGuiService<Customer, 
 		int flightId;
 		Flight flight;
 
-		flightId = super.getRequest().getData("flight", int.class);
-		flight = this.repository.findFlightById(flightId);
+		boolean hasFlightParam = super.getRequest().getData().containsKey("flight");
+
+		if (hasFlightParam) {
+			flightId = super.getRequest().getData("flight", int.class);
+			flight = this.repository.findFlightById(flightId);
+
+			if (flight == null && flightId != 0)
+				throw new IllegalStateException("It is not possible to publish a booking with this flight.");
+
+			booking.setFlight(flight);
+		} else
+			booking.setFlight(null);
 
 		String rawTravelClass = super.getRequest().getData("travelClass", String.class);
 
@@ -76,7 +86,6 @@ public class CustomerBookingPublishService extends AbstractGuiService<Customer, 
 		}
 
 		super.bindObject(booking, "travelClass", "lastCardNibble");
-		booking.setFlight(flight);
 
 	}
 
@@ -85,7 +94,7 @@ public class CustomerBookingPublishService extends AbstractGuiService<Customer, 
 		Collection<Flight> validFlights = this.repository.findAllFlights().stream().filter(flight -> flight.getScheduledDeparture() != null && !flight.isDraftMode() && flight.getScheduledDeparture().after(MomentHelper.getCurrentMoment())
 			&& this.repository.findLegsByFlightId(flight.getId()).stream().allMatch(leg -> leg.getScheduledDeparture().after(MomentHelper.getCurrentMoment()))).collect(Collectors.toList());
 
-		if (!validFlights.contains(booking.getFlight()))
+		if (!validFlights.contains(booking.getFlight()) && booking.getFlight() != null)
 			throw new IllegalStateException("It is not possible to publish a booking with this flight.");
 
 		boolean isFlightValid = booking.getFlight() != null && validFlights.contains(booking.getFlight());
@@ -128,6 +137,7 @@ public class CustomerBookingPublishService extends AbstractGuiService<Customer, 
 		dataset.put("flights", choices);
 		dataset.put("classes", classChoices);
 		dataset.put("bookingId", booking.getId());
+		dataset.put("bookingDraftMode", booking.isDraftMode());
 
 		super.getResponse().addData(dataset);
 

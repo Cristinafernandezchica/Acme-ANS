@@ -63,8 +63,18 @@ public class CustomerBookingUpdateService extends AbstractGuiService<Customer, B
 		Date moment;
 
 		moment = MomentHelper.getCurrentMoment();
-		flightId = super.getRequest().getData("flight", int.class);
-		flight = this.repository.findFlightById(flightId);
+		boolean hasFlightParam = super.getRequest().getData().containsKey("flight");
+
+		if (hasFlightParam) {
+			flightId = super.getRequest().getData("flight", int.class);
+			flight = this.repository.findFlightById(flightId);
+
+			if (flight == null && flightId != 0)
+				throw new IllegalStateException("It is not possible to update a booking with this flight.");
+
+			booking.setFlight(flight);
+		} else
+			booking.setFlight(null);
 
 		String rawTravelClass = super.getRequest().getData("travelClass", String.class);
 
@@ -77,7 +87,6 @@ public class CustomerBookingUpdateService extends AbstractGuiService<Customer, B
 
 		super.bindObject(booking, "locatorCode", "travelClass", "lastCardNibble");
 		booking.setPurchaseMoment(moment);
-		booking.setFlight(flight);
 		booking.setPrice(booking.getPrice());
 		booking.setDraftMode(true);
 	}
@@ -129,6 +138,7 @@ public class CustomerBookingUpdateService extends AbstractGuiService<Customer, B
 		dataset.put("classes", classes);
 		dataset.put("travelClass", classes.getSelected().getKey());
 		dataset.put("bookingId", booking.getId());
+		dataset.put("bookingDraftMode", booking.isDraftMode());
 
 		super.getResponse().addData(dataset);
 	}
