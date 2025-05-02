@@ -37,7 +37,7 @@ public class CustomerBookingRecordCreateService extends AbstractGuiService<Custo
 
 		customer = (Customer) super.getRequest().getPrincipal().getActiveRealm();
 
-		if (booking != null && booking.getCustomer().equals(customer))
+		if (booking != null && booking.getCustomer().equals(customer) && booking.isDraftMode())
 			status = true;
 
 		super.getResponse().setAuthorised(status);
@@ -73,7 +73,7 @@ public class CustomerBookingRecordCreateService extends AbstractGuiService<Custo
 	public void validate(final BookingRecord bookingRecord) {
 		Collection<Passenger> availablePassengers = this.repository.findAvailablePassengersByBookingId(bookingRecord.getBooking().getCustomer().getId(), bookingRecord.getBooking().getId());
 		if (bookingRecord.getPassenger() == null || !availablePassengers.contains(bookingRecord.getPassenger()))
-			throw new IllegalStateException("It is not possible to assign to this booking that passenger.");
+			throw new IllegalStateException("It is not possible to assign that passenger to this booking.");
 
 		Booking booking = bookingRecord.getBooking();
 		boolean notPublished = booking == null || booking.isDraftMode();
@@ -99,6 +99,7 @@ public class CustomerBookingRecordCreateService extends AbstractGuiService<Custo
 		dataset = super.unbindObject(bookingRecord);
 		dataset.put("booking", bookingRecord.getBooking());
 		dataset.put("bookingId", bookingRecord.getBooking().getId());
+		dataset.put("bookingDraftMode", bookingRecord.getBooking().isDraftMode());
 		dataset.put("passengers", choises);
 		dataset.put("passenger", choises.getSelected() != null && choises.getSelected().getKey() != null ? choises.getSelected().getKey() : "0");
 

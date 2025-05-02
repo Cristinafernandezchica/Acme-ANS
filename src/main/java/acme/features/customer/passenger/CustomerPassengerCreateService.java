@@ -40,7 +40,7 @@ public class CustomerPassengerCreateService extends AbstractGuiService<Customer,
 			bookingId = super.getRequest().getData("bookingId", int.class);
 			booking = this.repository.findBookingById(bookingId);
 
-			if (booking != null && booking.getCustomer().equals(customer))
+			if (booking != null && booking.getCustomer().equals(customer) && booking.isDraftMode())
 				status = true;
 		}
 
@@ -64,6 +64,7 @@ public class CustomerPassengerCreateService extends AbstractGuiService<Customer,
 			bookingId = super.getRequest().getData("bookingId", int.class);
 			booking = this.repository.findBookingById(bookingId);
 			super.getResponse().addGlobal("bookingId", bookingId);
+			super.getResponse().addGlobal("bookingDraftMode", booking.isDraftMode());
 		}
 
 		super.getBuffer().addData(passenger);

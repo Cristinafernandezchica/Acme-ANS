@@ -96,6 +96,7 @@ public class CustomerBookingShowService extends AbstractGuiService<Customer, Boo
 
 		dataset.put("classes", classChoices);
 		dataset.put("bookingId", booking.getId());
+		dataset.put("bookingDraftMode", booking.isDraftMode());
 
 		super.getResponse().addData(dataset);
 	}

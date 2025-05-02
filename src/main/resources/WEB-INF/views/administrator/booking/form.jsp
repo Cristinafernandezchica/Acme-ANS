@@ -16,7 +16,7 @@
 	<jstl:choose>
 	
 		<jstl:when test="${acme:anyOf(_command, 'show|update|delete|publish') && !draftMode}"  >		
-			<acme:button code="administrator.booking.form.show.passengers" action="/administrator/passenger/list?bookingId=${bookingId}&draftMode=${draftMode}"/>
+			<acme:button code="administrator.booking.form.show.passengers" action="/administrator/passenger/list?bookingId=${bookingId}"/>
 		</jstl:when>	
 	</jstl:choose>
 </acme:form>

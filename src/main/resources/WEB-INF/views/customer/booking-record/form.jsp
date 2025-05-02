@@ -7,7 +7,7 @@
 	<acme:input-select code="customer.passenger.list.passportNumber" path="passenger" choices="${passengers}"/>	
 	
 	<jstl:choose>
-		<jstl:when test="${_command == 'create'}">
+		<jstl:when test="${_command == 'create' && bookingDraftMode==true}">
 			<acme:submit code="customer.booking-record.form.button.create" action="/customer/booking-record/create?bookingId=${bookingId}"/>
 		</jstl:when>	
 	</jstl:choose>

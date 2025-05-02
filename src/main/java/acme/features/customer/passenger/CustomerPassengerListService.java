@@ -39,14 +39,7 @@ public class CustomerPassengerListService extends AbstractGuiService<Customer, P
 			booking = this.repository.findBookingById(bookingId);
 
 			if (booking != null && booking.getCustomer().equals(customer))
-				if (super.getRequest().hasData("draftMode")) {
-					boolean requestDraftMode = super.getRequest().getData("draftMode", boolean.class);
-					boolean bookingDraftMode = booking.isDraftMode();
-
-					if (requestDraftMode == bookingDraftMode)
-						status = true;
-				} else
-					status = true; // Permitir acceso si no se proporciona draftMode
+				status = true;
 		}
 
 		super.getResponse().setAuthorised(status);
@@ -57,6 +50,7 @@ public class CustomerPassengerListService extends AbstractGuiService<Customer, P
 		Collection<Passenger> passengers;
 		Customer customer;
 		int bookingId;
+		Booking booking;
 
 		customer = (Customer) super.getRequest().getPrincipal().getActiveRealm();
 
@@ -64,12 +58,10 @@ public class CustomerPassengerListService extends AbstractGuiService<Customer, P
 			passengers = this.repository.findPassengersByCustomerId(customer.getId());
 		else {
 			bookingId = super.getRequest().getData("bookingId", int.class);
+			booking = this.repository.findBookingById(bookingId);
 			passengers = this.repository.findPassengersByBookingId(bookingId);
 			super.getResponse().addGlobal("bookingId", bookingId);
-			if (super.getRequest().hasData("draftMode")) {
-				boolean draftMode = super.getRequest().getData("draftMode", boolean.class);
-				super.getResponse().addGlobal("draftMode", draftMode);
-			}
+			super.getResponse().addGlobal("bookingDraftMode", booking.isDraftMode());
 		}
 		super.getBuffer().addData(passengers);
 	}
