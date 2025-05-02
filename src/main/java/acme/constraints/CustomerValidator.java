@@ -27,33 +27,27 @@ public class CustomerValidator extends AbstractValidator<ValidCustomer, Customer
 
 	@Override
 	public boolean isValid(final Customer customer, final ConstraintValidatorContext context) {
-		boolean result = true;
+		assert context != null;
 
 		if (customer == null) {
-			super.state(context, false, "customer", "javax.validation.constraints.NotNull.message");
-			result = false;
-		} else if (customer.getIdentifier() == null) {
-			super.state(context, false, "identifier", "javax.validation.constraints.NotNull.message");
-			result = false;
-		} else {
-			DefaultUserIdentity identity = customer.getIdentity();
-			String identifier = customer.getIdentifier();
-			String name = identity.getName();
-			String surname = identity.getSurname();
-
-			if (name == null || surname == null || name.isEmpty() || surname.isEmpty()) {
-				super.state(context, false, "identifier", "The customer name, surname, and identifier must be properly defined");
-				result = false;
-			} else {
-				// Check uniqueness at identifier attribute
-				Customer existing = this.repository.findByIdentifier(identifier);
-				if (existing != null && !Objects.equals(existing.getId(), customer.getId())) {
-					super.state(context, false, "identifier", "The identifier must be unique");
-					result = false;
-				}
-			}
+			super.state(context, false, "*", "javax.validation.constraints.NotNull.message");
+			return false;
 		}
-		return result;
-	}
 
+		// Check if identifier is null (even though @Mandatory catches this)
+		if (customer.getIdentifier() == null)
+			super.state(context, false, "identifier", "javax.validation.constraints.NotNull.message");
+		else {
+			Customer existing = this.repository.findByIdentifier(customer.getIdentifier());
+			boolean isUnique = existing == null || Objects.equals(existing.getId(), customer.getId());
+			super.state(context, isUnique, "identifier", "acme.validation.customer.identifier.message");
+		}
+
+		// Validate identity info: name and surname must be present
+		DefaultUserIdentity identity = customer.getIdentity();
+		if (identity == null || identity.getName() == null || identity.getSurname() == null || identity.getName().trim().isEmpty() || identity.getSurname().trim().isEmpty())
+			super.state(context, false, "identifier", "javax.validation.constraints.NotNull.message");
+
+		return !super.hasErrors(context);
+	}
 }
