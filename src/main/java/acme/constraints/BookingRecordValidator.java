@@ -23,26 +23,30 @@ public class BookingRecordValidator extends AbstractValidator<ValidBookingRecord
 	}
 
 	@Override
-	public boolean isValid(final BookingRecord record, final ConstraintValidatorContext context) {
+	public boolean isValid(final BookingRecord bookingRecord, final ConstraintValidatorContext context) {
+
 		assert context != null;
 
-		if (record == null) {
+		boolean result;
+
+		if (bookingRecord == null || bookingRecord.getBooking() == null || bookingRecord.getPassenger() == null) {
 			super.state(context, false, "*", "javax.validation.constraints.NotNull.message");
-			return false;
-		}
-
-		if (record.getBooking() == null)
 			super.state(context, false, "booking", "javax.validation.constraints.NotNull.message");
-
-		if (record.getPassenger() == null)
 			super.state(context, false, "passenger", "javax.validation.constraints.NotNull.message");
+		} else {
+			boolean uniqueBookingRecord;
+			BookingRecord existingBookingRecord;
 
-		if (record.getBooking() != null && record.getPassenger() != null) {
-			boolean isUnique = this.repository.findByBookingAndPassenger(record.getBooking().getId(), record.getPassenger().getId()) == null;
+			existingBookingRecord = this.repository.findByBookingAndPassenger(bookingRecord.getBooking().getId(), bookingRecord.getPassenger().getId());
 
-			super.state(context, isUnique, "booking", "acme.validation.bookingRecord.duplicated.message");
+			uniqueBookingRecord = existingBookingRecord == null || existingBookingRecord.equals(bookingRecord);
+
+			super.state(context, uniqueBookingRecord, "booking", "acme.validation.bookingRecord.duplicated.message");
+
 		}
 
-		return !super.hasErrors(context);
+		result = !super.hasErrors(context);
+
+		return result;
 	}
 }

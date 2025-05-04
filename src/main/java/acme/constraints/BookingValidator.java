@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import acme.client.components.validation.AbstractValidator;
 import acme.client.components.validation.Validator;
-import acme.client.helpers.MomentHelper;
 import acme.client.helpers.StringHelper;
 import acme.entities.booking.Booking;
 import acme.entities.booking.BookingRepository;
@@ -58,9 +57,6 @@ public class BookingValidator extends AbstractValidator<ValidBooking, Booking> {
 			boolean validFlight = true;
 
 			if (booking.getFlight().isDraftMode())
-				validFlight = false;
-
-			if (booking.getFlight().getScheduledDeparture() == null || !booking.getFlight().getScheduledDeparture().after(MomentHelper.getCurrentMoment()))
 				validFlight = false;
 
 			super.state(context, validFlight, "flight", "acme.validation.booking.invalid-flight.message");
