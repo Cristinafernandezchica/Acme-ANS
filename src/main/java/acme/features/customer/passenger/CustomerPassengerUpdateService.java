@@ -10,7 +10,7 @@ import acme.client.helpers.MomentHelper;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.passenger.Passenger;
-import acme.realms.customer.Customer;
+import acme.realms.Customer;
 
 @GuiService
 public class CustomerPassengerUpdateService extends AbstractGuiService<Customer, Passenger> {

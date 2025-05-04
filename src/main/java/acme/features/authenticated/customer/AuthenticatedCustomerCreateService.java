@@ -25,7 +25,7 @@ import acme.client.components.principals.UserAccount;
 import acme.client.helpers.PrincipalHelper;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
-import acme.realms.customer.Customer;
+import acme.realms.Customer;
 
 @GuiService
 public class AuthenticatedCustomerCreateService extends AbstractGuiService<Authenticated, Customer> {

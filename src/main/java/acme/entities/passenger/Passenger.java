@@ -17,7 +17,7 @@ import acme.client.components.validation.ValidEmail;
 import acme.client.components.validation.ValidMoment;
 import acme.client.components.validation.ValidString;
 import acme.constraints.ValidPassenger;
-import acme.realms.customer.Customer;
+import acme.realms.Customer;
 import lombok.Getter;
 import lombok.Setter;
 

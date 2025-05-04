@@ -10,7 +10,7 @@ import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.booking.Booking;
 import acme.entities.passenger.Passenger;
-import acme.realms.customer.Customer;
+import acme.realms.Customer;
 
 @GuiService
 public class CustomerPassengerListService extends AbstractGuiService<Customer, Passenger> {

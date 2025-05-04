@@ -1,5 +1,5 @@
 
-package acme.realms.customer;
+package acme.realms;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

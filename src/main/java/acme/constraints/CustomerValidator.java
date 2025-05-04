@@ -10,8 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import acme.client.components.principals.DefaultUserIdentity;
 import acme.client.components.validation.AbstractValidator;
 import acme.client.components.validation.Validator;
-import acme.realms.customer.Customer;
-import acme.realms.customer.CustomerRepository;
+import acme.features.customer.CustomerRepository;
+import acme.realms.Customer;
 
 @Validator
 public class CustomerValidator extends AbstractValidator<ValidCustomer, Customer> {

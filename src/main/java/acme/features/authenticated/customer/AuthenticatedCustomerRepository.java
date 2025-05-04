@@ -20,7 +20,7 @@ import org.springframework.stereotype.Repository;
 
 import acme.client.components.principals.UserAccount;
 import acme.client.repositories.AbstractRepository;
-import acme.realms.customer.Customer;
+import acme.realms.Customer;
 
 @Repository
 public interface AuthenticatedCustomerRepository extends AbstractRepository {
