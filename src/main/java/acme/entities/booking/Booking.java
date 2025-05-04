@@ -22,7 +22,7 @@ import acme.client.components.validation.ValidString;
 import acme.client.helpers.SpringHelper;
 import acme.constraints.ValidBooking;
 import acme.entities.flights.Flight;
-import acme.realms.customer.Customer;
+import acme.realms.Customer;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -63,13 +63,13 @@ public class Booking extends AbstractEntity {
 	private boolean				draftMode;
 
 	@Mandatory
-	@ManyToOne(optional = false)
 	@Valid
+	@ManyToOne(optional = false)
 	private Customer			customer;
 
 	@Optional
-	@ManyToOne
 	@Valid
+	@ManyToOne
 	private Flight				flight;
 
 

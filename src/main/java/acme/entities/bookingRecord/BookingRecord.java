@@ -22,12 +22,12 @@ public class BookingRecord extends AbstractEntity {
 	private static final long	serialVersionUID	= 1L;
 
 	@Mandatory
-	@ManyToOne
 	@Valid
+	@ManyToOne
 	private Booking				booking;
 
 	@Mandatory
-	@ManyToOne
 	@Valid
+	@ManyToOne
 	private Passenger			passenger;
 }
