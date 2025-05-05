@@ -1,11 +1,11 @@
 
 package acme.forms;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import acme.client.components.basis.AbstractForm;
-import acme.entities.booking.TravelClass;
+import acme.client.components.datatypes.Money;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,21 +13,44 @@ import lombok.Setter;
 @Setter
 public class CustomerDashboard extends AbstractForm {
 
-	private static final long			serialVersionUID	= 1L;
+	private static final long	serialVersionUID				= 1L;
 
-	private List<String>				lastFiveDestinations;
-	private Map<String, Double>			moneySpentLastYear;
-	private Map<TravelClass, Integer>	bookingCountByTravelClass;
+	private List<String>		lastFiveDestinations;
 
-	private Integer						bookingCountLastFiveYears;
-	private Map<String, Double>			bookingAverageCostLastFiveYears;
-	private Map<String, Double>			bookingMinCostLastFiveYears;
-	private Map<String, Double>			bookingMaxCostLastFiveYears;
-	private Map<String, Double>			bookingStdDevCostLastFiveYears;
+	private List<String>		moneySpentLastYearDisplay;
+	private String				bookingCountByTravelClass;
 
-	private Integer						passengerCount;
-	private Double						passengerAverage;	//Cuando haga la media, el double lo tengo que redondear
-	private Integer						passengerMin;
-	private Integer						passengerMax;
-	private Double						passengerStdDev;	//Cuando haga la cuenta, el double lo tengo que redondear
+	private Integer				bookingCountLastFiveYears;
+
+	private List<String>		bookingAverageCostLastFiveYearsDisplay;
+	private List<String>		bookingMinCostLastFiveYearsDisplay;
+	private List<String>		bookingMaxCostLastFiveYearsDisplay;
+	private List<String>		bookingStdDevCostLastFiveYearsDisplay;
+
+	private Integer				passengerCount;
+	private Double				passengerAverage;
+	private Integer				passengerMin;
+	private Integer				passengerMax;
+	private Double				passengerStdDev;
+
+	// List<Money> for internal use if needed for Money <Currency, Amount>
+	private List<Money>			moneySpentLastYear				= new ArrayList<>();
+	private List<Money>			bookingAverageCostLastFiveYears	= new ArrayList<>();
+	private List<Money>			bookingMinCostLastFiveYears		= new ArrayList<>();
+	private List<Money>			bookingMaxCostLastFiveYears		= new ArrayList<>();
+	private List<Money>			bookingStdDevCostLastFiveYears	= new ArrayList<>();
+
+
+	// Constructor para valores por defecto
+	public CustomerDashboard() {
+		Money defaultMoney = new Money();
+		defaultMoney.setCurrency("EUR");
+		defaultMoney.setAmount(0.0);
+
+		this.moneySpentLastYear.add(defaultMoney);
+		this.bookingAverageCostLastFiveYears.add(defaultMoney);
+		this.bookingMinCostLastFiveYears.add(defaultMoney);
+		this.bookingMaxCostLastFiveYears.add(defaultMoney);
+		this.bookingStdDevCostLastFiveYears.add(defaultMoney);
+	}
 }

@@ -52,7 +52,8 @@ master.menu.consumer.favourite-link = Favourite link
  master.menu.customer = Customer
  master.menu.customer.booking = My bookings
  master.menu.customer.passenger = My passengers
-
+ master.menu.customer.show-dashboard = Show dashboard
+ 
 # master.menu.user-account ####################################################
 
 master.menu.user-account = Account
