@@ -32,7 +32,7 @@ leg-26,MAX0025,2020/09/09 06:00,2020/09/09 08:00,ON_TIME,airport-22,airport-37,f
 leg-27,MAX0026,2026/09/09 09:30,2026/09/09 11:30,ON_TIME,airport-28,airport-38,flight-31,aircraft-23,true
 leg-28,MAX0027,2026/09/09 13:00,2026/09/09 15:00,ON_TIME,airport-24,airport-52,flight-32,aircraft-24,true
 leg-29,MAX0028,2020/09/09 19:00,2020/09/09 21:00,ON_TIME,airport-25,airport-40,flight-33,aircraft-25,false
-leg-30,MAX0029,2025/09/09 10:00,2025/09/09 12:00,ON_TIME,airport-24,airport-52,flight-34,aircraft-24,true
+leg-30,MAX0029,2025/09/09 10:00,2025/09/09 12:00,ON_TIME,airport-24,airport-52,flight-34,aircraft-24,false
 leg-31,MAX0030,2026/09/09 10:00,2026/09/09 12:00,ON_TIME,airport-25,airport-40,flight-35,aircraft-25,true
 
 # Examples for Booking tries
