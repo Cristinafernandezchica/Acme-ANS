@@ -16,24 +16,20 @@ public class CustomerDashboard extends AbstractForm {
 	private static final long	serialVersionUID				= 1L;
 
 	private List<String>		lastFiveDestinations;
-
-	private List<String>		moneySpentLastYearDisplay;
+	private String				moneySpentLastYearDisplay;
 	private String				bookingCountByTravelClass;
-
 	private Integer				bookingCountLastFiveYears;
-
-	private List<String>		bookingAverageCostLastFiveYearsDisplay;
-	private List<String>		bookingMinCostLastFiveYearsDisplay;
-	private List<String>		bookingMaxCostLastFiveYearsDisplay;
-	private List<String>		bookingStdDevCostLastFiveYearsDisplay;
-
+	private String				bookingAverageCostLastFiveYearsDisplay;
+	private String				bookingMinCostLastFiveYearsDisplay;
+	private String				bookingMaxCostLastFiveYearsDisplay;
+	private String				bookingStdDevCostLastFiveYearsDisplay;
 	private Integer				passengerCount;
 	private Double				passengerAverage;
 	private Integer				passengerMin;
 	private Integer				passengerMax;
 	private Double				passengerStdDev;
 
-	// List<Money> for internal use if needed for Money <Currency, Amount>
+	// Campos internos para Money (opcionales para cálculo)
 	private List<Money>			moneySpentLastYear				= new ArrayList<>();
 	private List<Money>			bookingAverageCostLastFiveYears	= new ArrayList<>();
 	private List<Money>			bookingMinCostLastFiveYears		= new ArrayList<>();
@@ -43,14 +39,6 @@ public class CustomerDashboard extends AbstractForm {
 
 	// Constructor para valores por defecto
 	public CustomerDashboard() {
-		Money defaultMoney = new Money();
-		defaultMoney.setCurrency("EUR");
-		defaultMoney.setAmount(0.0);
 
-		this.moneySpentLastYear.add(defaultMoney);
-		this.bookingAverageCostLastFiveYears.add(defaultMoney);
-		this.bookingMinCostLastFiveYears.add(defaultMoney);
-		this.bookingMaxCostLastFiveYears.add(defaultMoney);
-		this.bookingStdDevCostLastFiveYears.add(defaultMoney);
 	}
 }
