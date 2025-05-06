@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import acme.client.controllers.AbstractGuiController;
 import acme.client.controllers.GuiController;
 import acme.entities.bookingRecord.BookingRecord;
-import acme.realms.customer.Customer;
+import acme.realms.Customer;
 
 @GuiController
 public class CustomerBookingRecordController extends AbstractGuiController<Customer, BookingRecord> {
@@ -16,31 +16,14 @@ public class CustomerBookingRecordController extends AbstractGuiController<Custo
 	// Internal state ---------------------------------------------------------
 
 	@Autowired
-	private CustomerBookingRecordListService	listService;
-
-	@Autowired
-	private CustomerBookingRecordCreateService	createService;
-
-	@Autowired
-	private CustomerBookingRecordShowService	showService;
-
-	@Autowired
-	private CustomerBookingRecordUpdateService	updateService;
-
-	@Autowired
-	private CustomerBookingRecordPublishService	publishService;
+	private CustomerBookingRecordCreateService createService;
 
 	// Constructors -----------------------------------------------------------
 
 
 	@PostConstruct
 	protected void initialise() {
-		super.addBasicCommand("list", this.listService);
 		super.addBasicCommand("create", this.createService);
-		super.addBasicCommand("show", this.showService);
-		super.addBasicCommand("update", this.updateService);
-		super.addCustomCommand("publish", "update", this.publishService);
-
 	}
 
 }

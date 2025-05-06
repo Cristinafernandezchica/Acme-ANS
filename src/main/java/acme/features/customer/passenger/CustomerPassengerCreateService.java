@@ -12,7 +12,7 @@ import acme.client.services.GuiService;
 import acme.entities.booking.Booking;
 import acme.entities.bookingRecord.BookingRecord;
 import acme.entities.passenger.Passenger;
-import acme.realms.customer.Customer;
+import acme.realms.Customer;
 
 @GuiService
 public class CustomerPassengerCreateService extends AbstractGuiService<Customer, Passenger> {
@@ -34,13 +34,13 @@ public class CustomerPassengerCreateService extends AbstractGuiService<Customer,
 
 		customer = (Customer) super.getRequest().getPrincipal().getActiveRealm();
 
-		if (super.getRequest().getData().isEmpty() || super.getRequest().hasData("fullName"))
+		if (super.getRequest().getData().isEmpty() || super.getRequest().hasData("passportNumber"))
 			status = true;
 		else {
 			bookingId = super.getRequest().getData("bookingId", int.class);
 			booking = this.repository.findBookingById(bookingId);
 
-			if (booking != null && booking.getCustomer().equals(customer))
+			if (booking != null && booking.getCustomer().equals(customer) && booking.isDraftMode())
 				status = true;
 		}
 
@@ -64,6 +64,7 @@ public class CustomerPassengerCreateService extends AbstractGuiService<Customer,
 			bookingId = super.getRequest().getData("bookingId", int.class);
 			booking = this.repository.findBookingById(bookingId);
 			super.getResponse().addGlobal("bookingId", bookingId);
+			super.getResponse().addGlobal("bookingDraftMode", booking.isDraftMode());
 		}
 
 		super.getBuffer().addData(passenger);

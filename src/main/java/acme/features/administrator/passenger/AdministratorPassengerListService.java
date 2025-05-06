@@ -35,14 +35,7 @@ public class AdministratorPassengerListService extends AbstractGuiService<Admini
 			booking = this.repository.findBookingById(bookingId);
 
 			if (booking != null)
-				if (super.getRequest().hasData("draftMode")) {
-					boolean requestDraftMode = super.getRequest().getData("draftMode", boolean.class);
-					boolean bookingDraftMode = booking.isDraftMode();
-
-					if (requestDraftMode == bookingDraftMode)
-						status = true;
-				} else
-					status = false; // No permitir acceso si no se proporciona draftMode
+				status = true;
 		}
 
 		super.getResponse().setAuthorised(status);
@@ -52,17 +45,17 @@ public class AdministratorPassengerListService extends AbstractGuiService<Admini
 	public void load() {
 		Collection<Passenger> passengers;
 		int bookingId;
+		Booking booking;
 
 		if (super.getRequest().getData().isEmpty())
 			passengers = List.of();
 		else {
 			bookingId = super.getRequest().getData("bookingId", int.class);
+			booking = this.repository.findBookingById(bookingId);
 			passengers = this.repository.findPassengersByBookingId(bookingId);
 			super.getResponse().addGlobal("bookingId", bookingId);
-			if (super.getRequest().hasData("draftMode")) {
-				boolean draftMode = super.getRequest().getData("draftMode", boolean.class);
-				super.getResponse().addGlobal("draftMode", draftMode);
-			}
+			super.getResponse().addGlobal("bookingDraftMode", booking.isDraftMode());
+
 		}
 		super.getBuffer().addData(passengers);
 	}

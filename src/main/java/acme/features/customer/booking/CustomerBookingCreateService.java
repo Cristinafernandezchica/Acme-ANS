@@ -1,6 +1,7 @@
 
 package acme.features.customer.booking;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
@@ -17,7 +18,7 @@ import acme.client.services.GuiService;
 import acme.entities.booking.Booking;
 import acme.entities.booking.TravelClass;
 import acme.entities.flights.Flight;
-import acme.realms.customer.Customer;
+import acme.realms.Customer;
 
 @GuiService
 public class CustomerBookingCreateService extends AbstractGuiService<Customer, Booking> {
@@ -55,20 +56,30 @@ public class CustomerBookingCreateService extends AbstractGuiService<Customer, B
 		Date moment;
 
 		moment = MomentHelper.getCurrentMoment();
-		flightId = super.getRequest().getData("flight", int.class);
-		flight = this.repository.findFlightById(flightId);
+		boolean hasFlightParam = super.getRequest().getData().containsKey("flight");
+
+		if (hasFlightParam) {
+			flightId = super.getRequest().getData("flight", int.class);
+			flight = this.repository.findFlightById(flightId);
+
+			if (flight == null && flightId != 0)
+				throw new IllegalStateException("It is not possible to create a booking with this flight.");
+
+			booking.setFlight(flight);
+		} else
+			booking.setFlight(null);
+		String rawTravelClass = super.getRequest().getData("travelClass", String.class);
+
+		if (rawTravelClass != null && !rawTravelClass.trim().isEmpty() && !rawTravelClass.equals("0")) {
+			boolean travelClassValid = Arrays.stream(TravelClass.values()).anyMatch(tc -> tc.name().equals(rawTravelClass));
+
+			if (!travelClassValid)
+				throw new IllegalStateException("Travel class selected is not valid");
+		}
 
 		super.bindObject(booking, "travelClass", "lastCardNibble");
 		booking.setLocatorCode(this.generateLocatorCode());
 		booking.setPurchaseMoment(moment);
-
-		// Si el vuelo seleccionado no es válido, asignar null
-		Collection<Flight> validFlights = this.repository.findAllFlights().stream().filter(f -> f.getScheduledDeparture() != null && !f.isDraftMode() && f.getScheduledDeparture().after(MomentHelper.getCurrentMoment())
-			&& this.repository.findLegsByFlightId(f.getId()).stream().allMatch(leg -> leg.getScheduledDeparture().after(MomentHelper.getCurrentMoment()))).collect(Collectors.toList());
-
-		if (!validFlights.contains(flight))
-			flight = null;
-		booking.setFlight(flight);
 		booking.setPrice(booking.getPrice());
 		booking.setDraftMode(true);
 
@@ -76,8 +87,10 @@ public class CustomerBookingCreateService extends AbstractGuiService<Customer, B
 
 	@Override
 	public void validate(final Booking booking) {
-		Collection<Flight> validFlights = this.repository.findAllFlights().stream().filter(flight -> flight.getScheduledDeparture() != null && !flight.isDraftMode() && flight.getScheduledDeparture().after(MomentHelper.getCurrentMoment())
-			&& this.repository.findLegsByFlightId(flight.getId()).stream().allMatch(leg -> leg.getScheduledDeparture().after(MomentHelper.getCurrentMoment()))).collect(Collectors.toList());
+		Collection<Flight> validFlights = this.repository.findAllFlights().stream().filter(f -> f.getScheduledDeparture() != null && !f.isDraftMode() && f.getScheduledDeparture().after(MomentHelper.getCurrentMoment())
+			&& this.repository.findLegsByFlightId(f.getId()).stream().allMatch(leg -> leg.getScheduledDeparture().after(MomentHelper.getCurrentMoment()))).collect(Collectors.toList());
+		if (!validFlights.contains(booking.getFlight()) && booking.getFlight() != null)
+			throw new IllegalStateException("It is not possible to create a booking with this flight.");
 
 		boolean isFlightValid = booking.getFlight() == null || validFlights.contains(booking.getFlight());
 		super.state(isFlightValid, "flight", "acme.validation.booking.flight.message");

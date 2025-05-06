@@ -16,11 +16,18 @@ acme.validation.manager.identifierNumber.not.unique = El número de identificaci
 
 acme.validation.customer.identifier.message = El identificador del cliente no es válido
 acme.validation.lastCardNibble.message = Los últimos dígitos de la tarjeta no pueden estar vacios
+
+acme.validation.booking.duplicated-locator-code.message= El código localizador de la reserva ya se encuentra en uso
+acme.validation.booking.invalid-nibble.message= Los números de la tarjeta deben ser 4 dígitos
+acme.validation.booking.invalid-flight.message= El vuelo seleccionado no está disponible
+acme.validation.booking.flight-required-when-publishing= La reserva tiene que estar asignada a un vuelo a la hora de publicar
 acme.validation.booking.flight.message = Sin vuelo asignado
 acme.validation.booking.passengers.message = Alguno de los pasajeros seleccionados está en borrador o no ha seleccionado a ningún pasajero
+
 acme.validation.passenger.duplicate-passport = Ya has creado un pasajero con este número de pasaporte
 acme.validation.passenger.dateOfBirth.message = La fecha de nacimiento tiene que ser pasada
 
+acme.validation.bookingRecord.duplicated.message= Este pasajero ya está asignado actualmente
 acme.validation.bookingRecord.invalid-booking-null.message = Sin reservas asociadas
 acme.validation.bookingRecord.invalid-passenger-null.message = Sin pasajeros asociados
 acme.validation.bookingRecord.invalid-passenger.message = Pasajero inválido o ya asociado

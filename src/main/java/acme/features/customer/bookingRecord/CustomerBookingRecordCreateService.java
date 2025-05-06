@@ -12,7 +12,7 @@ import acme.client.services.GuiService;
 import acme.entities.booking.Booking;
 import acme.entities.bookingRecord.BookingRecord;
 import acme.entities.passenger.Passenger;
-import acme.realms.customer.Customer;
+import acme.realms.Customer;
 
 @GuiService
 public class CustomerBookingRecordCreateService extends AbstractGuiService<Customer, BookingRecord> {
@@ -37,7 +37,7 @@ public class CustomerBookingRecordCreateService extends AbstractGuiService<Custo
 
 		customer = (Customer) super.getRequest().getPrincipal().getActiveRealm();
 
-		if (booking != null && booking.getCustomer().equals(customer))
+		if (booking != null && booking.getCustomer().equals(customer) && booking.isDraftMode())
 			status = true;
 
 		super.getResponse().setAuthorised(status);
@@ -66,25 +66,18 @@ public class CustomerBookingRecordCreateService extends AbstractGuiService<Custo
 		passengerId = super.getRequest().getData("passenger", int.class);
 		passenger = this.repository.findPassengerById(passengerId);
 
-		Collection<Passenger> availablePassengers = this.repository.findAvailablePassengersByBookingId(bookingRecord.getBooking().getCustomer().getId(), bookingRecord.getBooking().getId());
-
-		if (!availablePassengers.contains(passenger))
-			passenger = null;
 		bookingRecord.setPassenger(passenger);
 	}
 
 	@Override
 	public void validate(final BookingRecord bookingRecord) {
+		Collection<Passenger> availablePassengers = this.repository.findAvailablePassengersByBookingId(bookingRecord.getBooking().getCustomer().getId(), bookingRecord.getBooking().getId());
+		if (bookingRecord.getPassenger() == null || !availablePassengers.contains(bookingRecord.getPassenger()))
+			throw new IllegalStateException("It is not possible to assign that passenger to this booking.");
+
 		Booking booking = bookingRecord.getBooking();
 		boolean notPublished = booking == null || booking.isDraftMode();
 		super.state(notPublished, "booking", "acme.validation.bookingRecord.invalid-booking-publish.message");
-
-		Customer customer = (Customer) super.getRequest().getPrincipal().getActiveRealm();
-		Collection<Passenger> availablePassengers = this.repository.findAvailablePassengersByBookingId(customer.getId(), booking.getId());
-
-		boolean isPassengerValid = bookingRecord.getPassenger() != null && availablePassengers.contains(bookingRecord.getPassenger());
-		super.state(isPassengerValid, "passenger", "acme.validation.bookingRecord.invalid-passenger.message");
-
 	}
 
 	@Override
@@ -101,11 +94,12 @@ public class CustomerBookingRecordCreateService extends AbstractGuiService<Custo
 
 		customer = (Customer) super.getRequest().getPrincipal().getActiveRealm();
 		availablePassengers = this.repository.findAvailablePassengersByBookingId(customer.getId(), bookingRecord.getBooking().getId());
-		choises = SelectChoices.from(availablePassengers, "fullName", bookingRecord.getPassenger());
+		choises = SelectChoices.from(availablePassengers, "passportNumber", bookingRecord.getPassenger());
 
 		dataset = super.unbindObject(bookingRecord);
 		dataset.put("booking", bookingRecord.getBooking());
 		dataset.put("bookingId", bookingRecord.getBooking().getId());
+		dataset.put("bookingDraftMode", bookingRecord.getBooking().isDraftMode());
 		dataset.put("passengers", choises);
 		dataset.put("passenger", choises.getSelected() != null && choises.getSelected().getKey() != null ? choises.getSelected().getKey() : "0");
 

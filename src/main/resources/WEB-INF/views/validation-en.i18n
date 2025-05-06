@@ -16,11 +16,18 @@ acme.validation.manager.identifierNumber.not.unique = The identifier number alre
 
 acme.validation.customer.identifier.message = Customer identifier is not valid
 acme.validation.lastCardNibble.message = The last card nibble can't be empty 
+
+acme.validation.booking.duplicated-locator-code.message=This locator code is already in use.
+acme.validation.booking.invalid-nibble.message=Card nibble must be 4 digits.
+acme.validation.booking.invalid-flight.message=The selected flight is not available.
+acme.validation.booking.flight-required-when-publishing=Flight is required when publishing.
 acme.validation.booking.flight.message = No flight assigned
 acme.validation.booking.passengers.message = Some passengers selected are in draft mode or selection is empty
+
 acme.validation.passenger.duplicate-passport = You have already created a passenger with this passport number
 acme.validation.passenger.dateOfBirth.message = Date of birth must be past
 
+acme.validation.bookingRecord.duplicated.message= This passenger is already assigned to the selected booking.
 acme.validation.bookingRecord.invalid-booking-null.message = No booking associated
 acme.validation.bookingRecord.invalid-passenger-null.message = No passenger associated
 acme.validation.bookingRecord.invalid-passenger.message = Invalid passenger or already associated

@@ -1,0 +1,16 @@
+customer.customer-dashboard.form.title = Dashboard
+customer.dashboard.form.label.lastFiveDestinations = Last five destinations
+customer.dashboard.form.label.moneySpentLastYear = Money spent last year
+customer.dashboard.form.label.bookingCountByTravelClass = Bookings per travel class
+customer.dashboard.form.label.bookingCountLastFiveYears = Bookings last 5 years
+customer.dashboard.form.label.bookingAverageCostLastFiveYears = Avg. booking cost 
+customer.dashboard.form.label.bookingMinCostLastFiveYears = Min. booking cost
+customer.dashboard.form.label.bookingMaxCostLastFiveYears = Max. booking cost 
+customer.dashboard.form.label.bookingStdDevCostLastFiveYears = Std. dev. booking cost 
+customer.dashboard.form.label.passengerCount = Total passengers associated to bookings
+customer.dashboard.form.label.passengerAverage = Avg. passengers per booking
+customer.dashboard.form.label.passengerMin = Min. passengers in one booking
+customer.dashboard.form.label.passengerMax = Max. passengers in one booking
+customer.dashboard.form.label.passengerStdDev = Std. dev. passengers per booking
+
+customer.dashboard.form.label.noDataAvailable=No data available

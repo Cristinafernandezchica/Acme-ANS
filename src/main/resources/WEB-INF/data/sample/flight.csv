@@ -41,14 +41,13 @@ flight-34,"Lorem ipsum dolor sit ame",true,EUR 500000.00,"Lorem ipsum dolor sit 
 flight-35,"Lorem ipsum dolor sit ame",true,EUR 500000.00,"Lorem ipsum dolor sit amet,consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",manager-01,true
 
 # Examples for Booking tries
-flight-36,"Minna",true,EUR 100.00,"Vuelo de prueba A",manager-01,false
+flight-36,"Minna",true,EUR 50.00,"Vuelo de prueba A",manager-01,false
 flight-37,"No",true,EUR 150.00,"Vuelo de prueba B",manager-01,false
 flight-38,"Nihongo",true,EUR 250.00,"Vuelo de prueba C",manager-01,false
 flight-39,"Desu",true,EUR 200.00,"Vuelo de prueba D",manager-01,true
 flight-40,"Ka",true,EUR 20.00,"Vuelo de prueba E",manager-01,true
 
 #Examples for flight assignments
-flight-42,"omg",true,EUR 100.00,"Vuelo de prueba fa",manager-01,false
-flight-43,"omg",true,EUR 100.00,"Vuelo de prueba fa",manager-01,false
-
+flight-42,"omg",true,GPB 100.00,"Vuelo de prueba fa",manager-01,false
+flight-43,"omg",true,USD 100.00,"Vuelo de prueba fa",manager-01,false
 flight-44,"Alto",true,EUR 100.00,"Vuelo sin tramos",manager-02,true

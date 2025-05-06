@@ -1,6 +1,7 @@
 
 package acme.features.customer.booking;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
@@ -15,7 +16,7 @@ import acme.entities.booking.Booking;
 import acme.entities.booking.TravelClass;
 import acme.entities.flights.Flight;
 import acme.entities.passenger.Passenger;
-import acme.realms.customer.Customer;
+import acme.realms.Customer;
 
 @GuiService
 public class CustomerBookingPublishService extends AbstractGuiService<Customer, Booking> {
@@ -33,12 +34,14 @@ public class CustomerBookingPublishService extends AbstractGuiService<Customer, 
 		int bookingId;
 		Booking booking;
 		Customer customer;
-		boolean status;
+		boolean status = false;
 
-		bookingId = super.getRequest().getData("id", int.class);
-		booking = this.repository.findBookingById(bookingId);
-		customer = booking == null ? null : booking.getCustomer();
-		status = booking != null && super.getRequest().getPrincipal().hasRealm(customer) && booking.isDraftMode();
+		if (!super.getRequest().getData().isEmpty() && super.getRequest().getData() != null) {
+			bookingId = super.getRequest().getData("id", int.class);
+			booking = this.repository.findBookingById(bookingId);
+			customer = booking == null ? null : booking.getCustomer();
+			status = booking != null && super.getRequest().getPrincipal().hasRealm(customer) && booking.isDraftMode();
+		}
 
 		super.getResponse().setAuthorised(status);
 
@@ -60,11 +63,29 @@ public class CustomerBookingPublishService extends AbstractGuiService<Customer, 
 		int flightId;
 		Flight flight;
 
-		flightId = super.getRequest().getData("flight", int.class);
-		flight = this.repository.findFlightById(flightId);
+		boolean hasFlightParam = super.getRequest().getData().containsKey("flight");
+
+		if (hasFlightParam) {
+			flightId = super.getRequest().getData("flight", int.class);
+			flight = this.repository.findFlightById(flightId);
+
+			if (flight == null && flightId != 0)
+				throw new IllegalStateException("It is not possible to publish a booking with this flight.");
+
+			booking.setFlight(flight);
+		} else
+			booking.setFlight(null);
+
+		String rawTravelClass = super.getRequest().getData("travelClass", String.class);
+
+		if (rawTravelClass != null && !rawTravelClass.trim().isEmpty() && !rawTravelClass.equals("0")) {
+			boolean travelClassValid = Arrays.stream(TravelClass.values()).anyMatch(tc -> tc.name().equals(rawTravelClass));
+
+			if (!travelClassValid)
+				throw new IllegalStateException("Travel class selected is not valid");
+		}
 
 		super.bindObject(booking, "travelClass", "lastCardNibble");
-		booking.setFlight(flight);
 
 	}
 
@@ -73,12 +94,15 @@ public class CustomerBookingPublishService extends AbstractGuiService<Customer, 
 		Collection<Flight> validFlights = this.repository.findAllFlights().stream().filter(flight -> flight.getScheduledDeparture() != null && !flight.isDraftMode() && flight.getScheduledDeparture().after(MomentHelper.getCurrentMoment())
 			&& this.repository.findLegsByFlightId(flight.getId()).stream().allMatch(leg -> leg.getScheduledDeparture().after(MomentHelper.getCurrentMoment()))).collect(Collectors.toList());
 
+		if (!validFlights.contains(booking.getFlight()) && booking.getFlight() != null)
+			throw new IllegalStateException("It is not possible to publish a booking with this flight.");
+
 		boolean isFlightValid = booking.getFlight() != null && validFlights.contains(booking.getFlight());
 		super.state(isFlightValid, "flight", "acme.validation.booking.flight.message");
 
 		Collection<Passenger> passengers = this.repository.findPassengersByBookingId(booking.getId());
 		boolean hasPassengersInDraftModeOrEmpty = passengers.isEmpty() || passengers.stream().anyMatch(Passenger::isDraftMode);
-		super.state(!hasPassengersInDraftModeOrEmpty, "flight", "acme.validation.booking.passengers.message");
+		super.state(!hasPassengersInDraftModeOrEmpty, "*", "acme.validation.booking.passengers.message");
 
 		boolean hasCardNibble = booking.getLastCardNibble() != null && !booking.getLastCardNibble().trim().isEmpty();
 		super.state(hasCardNibble, "lastCardNibble", "acme.validation.lastCardNibble.message");
@@ -113,6 +137,7 @@ public class CustomerBookingPublishService extends AbstractGuiService<Customer, 
 		dataset.put("flights", choices);
 		dataset.put("classes", classChoices);
 		dataset.put("bookingId", booking.getId());
+		dataset.put("bookingDraftMode", booking.isDraftMode());
 
 		super.getResponse().addData(dataset);
 

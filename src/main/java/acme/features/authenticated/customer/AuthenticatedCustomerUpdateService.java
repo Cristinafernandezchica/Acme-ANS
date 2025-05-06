@@ -19,7 +19,7 @@ import acme.client.components.principals.Authenticated;
 import acme.client.helpers.PrincipalHelper;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
-import acme.realms.customer.Customer;
+import acme.realms.Customer;
 
 @GuiService
 public class AuthenticatedCustomerUpdateService extends AbstractGuiService<Authenticated, Customer> {
@@ -56,8 +56,9 @@ public class AuthenticatedCustomerUpdateService extends AbstractGuiService<Authe
 	public void bind(final Customer object) {
 		assert object != null;
 
-		super.bindObject(object, "phoneNumber", "address", "city", "country", "earnedPoints");
+		super.bindObject(object, "phoneNumber", "address", "city", "country");
 		object.setIdentifier(object.getIdentifier());
+		object.setEarnedPoints(object.getEarnedPoints());
 	}
 
 	@Override

@@ -16,7 +16,7 @@
 	<acme:button code="customer.passenger.list.button.create" action="/customer/passenger/create"/>
 </jstl:if>
 
-<jstl:if test="${draftMode == true}">
+<jstl:if test="${bookingDraftMode == true}">
 	<acme:button code="customer.booking-record.list.button.create" action="/customer/booking-record/create?bookingId=${bookingId}"/>
 	<acme:button code="customer.passenger.list.button.create" action="/customer/passenger/create?bookingId=${bookingId}"/>
 </jstl:if>

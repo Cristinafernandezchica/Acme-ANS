@@ -14,7 +14,7 @@ import acme.client.services.GuiService;
 import acme.entities.booking.Booking;
 import acme.entities.booking.TravelClass;
 import acme.entities.flights.Flight;
-import acme.realms.customer.Customer;
+import acme.realms.Customer;
 
 @GuiService
 public class CustomerBookingShowService extends AbstractGuiService<Customer, Booking> {
@@ -96,6 +96,7 @@ public class CustomerBookingShowService extends AbstractGuiService<Customer, Boo
 
 		dataset.put("classes", classChoices);
 		dataset.put("bookingId", booking.getId());
+		dataset.put("bookingDraftMode", booking.isDraftMode());
 
 		super.getResponse().addData(dataset);
 	}
