@@ -5,6 +5,7 @@ acme.validation.flight.legs.order = The legs are not in the right order
 acme.validation.flight.published.update = You can't update a published flight
 acme.validation.flight.published.delete = You can't delete a published flight
 acme.validation.flight.create.no.draftmode = You can't crate a flight with no draftmode
+acme.validation.manager.flights.publish.past.leg = Can't publish a flight with past leg(s)
 
 acme.validation.manager.flights.without.legs = The flight has no leg assigned
 acme.validation.manager.flights.no.published.leg = The flight has some unpublished leg(s)
@@ -54,7 +55,7 @@ acme.validation.isOriginalFCM.message = That's not the original flight crew memb
 acme.validation.isOriginalRegistrationMoment.message = That's not the original registration moment
 
 # Leg - legs messages
-acme.validation.leg.same.aircraft.message = The aircraft is used in the by other leg in the same schedule
+acme.validation.leg.same.aircraft.message = The aircraft is used by other leg in the same schedule
 acme.validation.leg.flight.draftMode = The flight is published, you can't publish a leg of a flight that is published
 acme.validation.leg.iataCode.flightNumber = The flight number must contains the airline's IATA code
 acme.validation.leg.same.departure.arrival.airport = The departure and arrival airports must be diferents

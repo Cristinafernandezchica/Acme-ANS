@@ -2,10 +2,12 @@
 package acme.features.manager.flights;
 
 import java.util.Collection;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import acme.client.components.models.Dataset;
+import acme.client.helpers.MomentHelper;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.flights.Flight;
@@ -61,12 +63,18 @@ public class ManagerFlightPublishService extends AbstractGuiService<Manager, Fli
 		}
 
 		Collection<Leg> legs = this.repository.findLegsByFlightId(flight.getId());
+		Date currentDate = MomentHelper.getCurrentMoment();
 
 		boolean hasLegs = !legs.isEmpty();
 		boolean anyDraftMode = !legs.stream().anyMatch(Leg::isDraftMode);
+		boolean noPastLeg = true;
+		for (Leg leg : legs)
+			if (MomentHelper.isBefore(leg.getScheduledDeparture(), currentDate))
+				noPastLeg = false;
 
 		super.state(hasLegs, "*", "acme.validation.manager.flights.without.legs");
 		super.state(anyDraftMode, "*", "acme.validation.manager.flights.no.published.leg");
+		super.state(noPastLeg, "*", "acme.validation.manager.flights.publish.past.leg");
 
 	}
 

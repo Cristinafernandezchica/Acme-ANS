@@ -81,10 +81,21 @@ public class ManagerLegPublishService extends AbstractGuiService<Manager, Leg> {
 				super.state(false, "scheduledArrival", "acme.validation.leg.departure.arrival.difference.message");
 		}
 
+		int airDepId = super.getRequest().getData("departureAirport", int.class);
+		int airArrId = super.getRequest().getData("arrivalAirport", int.class);
+		Airport depAirport = this.repository.findAirportById(airDepId);
+		Airport arrAirport = this.repository.findAirportById(airArrId);
+		if (depAirport == null)
+			throw new IllegalStateException("The departure airport doesn't exist");
+
+		if (arrAirport == null)
+			throw new IllegalStateException("The arrival airport doesn't exist");
+
 		if (leg.getDepartureAirport() != null && leg.getDepartureAirport().equals(leg.getArrivalAirport())) {
 			super.state(false, "arrivalAirport", "acme.validation.leg.same.departure.arrival.airport");
 			super.state(false, "departureAirport", "acme.validation.leg.same.departure.arrival.airport");
 		}
+
 
 		if (leg.getScheduledArrival() != null && leg.getScheduledDeparture() != null) {
 			Collection<Leg> allPublishedLegs = this.repository.findAllPublishedLegs();
@@ -109,6 +120,14 @@ public class ManagerLegPublishService extends AbstractGuiService<Manager, Leg> {
 
 		}
 
+		if (leg.isDraftMode() && leg.getStatus() != LegStatus.ON_TIME)
+			throw new IllegalStateException("When a leg is being published, the status must be ON_TIME");
+
+		int aircraftId = super.getRequest().getData("aircraft", int.class);
+		Aircraft validAircraft = this.repository.findAircraftById(aircraftId);
+		if (validAircraft == null)
+			throw new IllegalStateException("The aircraft doesn't exist");
+		
 		if (leg.getAircraft() != null) {
 			boolean operativeAircraft = leg.getAircraft().getStatus().equals(Status.ACTIVE_SERVICE);
 			super.state(operativeAircraft, "aircraft", "acme.validation.leg.operative.aircraft.message");

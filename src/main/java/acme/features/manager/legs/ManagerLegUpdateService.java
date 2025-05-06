@@ -80,10 +80,25 @@ public class ManagerLegUpdateService extends AbstractGuiService<Manager, Leg> {
 				super.state(false, "scheduledArrival", "acme.validation.leg.departure.arrival.difference.message");
 		}
 
+		int airDepId = super.getRequest().getData("departureAirport", int.class);
+		int airArrId = super.getRequest().getData("arrivalAirport", int.class);
+		Airport depAirport = this.repository.findAirportById(airDepId);
+		Airport arrAirport = this.repository.findAirportById(airArrId);
+		if (depAirport == null)
+			throw new IllegalStateException("The departure airport doesn't exist");
+
+		if (arrAirport == null)
+			throw new IllegalStateException("The arrival airport doesn't exist");
+
 		if (leg.getDepartureAirport() != null && leg.getDepartureAirport().equals(leg.getArrivalAirport())) {
 			super.state(false, "arrivalAirport", "acme.validation.leg.same.departure.arrival.airport");
 			super.state(false, "departureAirport", "acme.validation.leg.same.departure.arrival.airport");
 		}
+
+		int aircraftId = super.getRequest().getData("aircraft", int.class);
+		Aircraft validAircraft = this.repository.findAircraftById(aircraftId);
+		if (validAircraft == null)
+			throw new IllegalStateException("The aircraft doesn't exist");
 
 		if (leg.getAircraft() != null) {
 			boolean operativeAircraft = leg.getAircraft().getStatus().equals(Status.ACTIVE_SERVICE);
@@ -99,7 +114,7 @@ public class ManagerLegUpdateService extends AbstractGuiService<Manager, Leg> {
 				}
 			}
 			if (leg.getStatus() != LegStatus.ON_TIME)
-				super.state(false, "status", "acme.validation.leg.status.draftmode.ontime");
+				throw new IllegalStateException("When a leg is on draft mode, the status must be ON_TIME");
 		} else {
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
 			Leg originalLeg = this.repository.findLegById(leg.getId());
@@ -110,7 +125,7 @@ public class ManagerLegUpdateService extends AbstractGuiService<Manager, Leg> {
 
 			if (!departure.equals(originalDeparture) || !arrival.equals(originalArrival) || !originalLeg.getFlightNumber().equals(leg.getFlightNumber()) || !originalLeg.getDepartureAirport().equals(leg.getDepartureAirport())
 				|| !originalLeg.getArrivalAirport().equals(leg.getArrivalAirport()) || !originalLeg.getAircraft().equals(leg.getAircraft()))
-				super.state(false, "*", "acme.validation.leg.update.other.fields");
+				throw new IllegalStateException("You can only update the state of the leg");
 		}
 
 	}

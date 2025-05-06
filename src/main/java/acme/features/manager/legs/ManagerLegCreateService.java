@@ -32,18 +32,21 @@ public class ManagerLegCreateService extends AbstractGuiService<Manager, Leg> {
 	@Override
 	public void authorise() {
 
-		int flightId;
+		Integer flightId;
 		Flight flight;
 		Manager manager;
 		boolean status = false;
 
 		manager = (Manager) super.getRequest().getPrincipal().getActiveRealm();
 
-		flightId = super.getRequest().getData("flightId", int.class);
-		flight = this.repository.findFlightById(flightId);
-
-		if (flight != null && flight.getManager().equals(manager))
-			status = true;
+		if (!super.getRequest().getData().isEmpty()) {
+			flightId = super.getRequest().getData("flightId", Integer.class);
+			if (flightId != null) {
+				flight = this.repository.findFlightById(flightId);
+				if (flight != null && flight.getManager().equals(manager))
+					status = true;
+			}
+		}
 
 		super.getResponse().setAuthorised(status);
 	}
@@ -85,17 +88,30 @@ public class ManagerLegCreateService extends AbstractGuiService<Manager, Leg> {
 				super.state(false, "scheduledArrival", "acme.validation.leg.departure.arrival.difference.message");
 		}
 
+		int airDepId = super.getRequest().getData("departureAirport", int.class);
+		int airArrId = super.getRequest().getData("arrivalAirport", int.class);
+		Airport depAirport = this.repository.findAirportById(airDepId);
+		Airport arrAirport = this.repository.findAirportById(airArrId);
+		if (depAirport == null)
+			throw new IllegalStateException("The departure airport doesn't exist");
+
+		if (arrAirport == null)
+			throw new IllegalStateException("The arrival airport doesn't exist");
+
 		if (leg.getDepartureAirport() != null && leg.getDepartureAirport().equals(leg.getArrivalAirport())) {
 			super.state(false, "arrivalAirport", "acme.validation.leg.same.departure.arrival.airport");
 			super.state(false, "departureAirport", "acme.validation.leg.same.departure.arrival.airport");
 		}
 
+		int aircraftId = super.getRequest().getData("aircraft", int.class);
+		Aircraft validAircraft = this.repository.findAircraftById(aircraftId);
+		if (validAircraft == null)
+			throw new IllegalStateException("The aircraft doesn't exist");
+
 		if (leg.getAircraft() != null) {
 			boolean operativeAircraft = leg.getAircraft().getStatus().equals(Status.ACTIVE_SERVICE);
 			super.state(operativeAircraft, "aircraft", "acme.validation.leg.operative.aircraft.message");
-		}
 
-		if (leg.getAircraft() != null) {
 			Airline airline = leg.getAircraft().getAirline();
 			if (leg.getFlightNumber().length() == 7 && !leg.getFlightNumber().substring(0, 3).equals(airline.getIataCode())) {
 				super.state(false, "flightNumber", "acme.validation.leg.invalid.iata.flightNumber");
@@ -107,7 +123,7 @@ public class ManagerLegCreateService extends AbstractGuiService<Manager, Leg> {
 			super.state(false, "*", "acme.validation.leg.create.no.draftmode");
 
 		if (leg.getStatus() != LegStatus.ON_TIME)
-			super.state(false, "status", "acme.validation.leg.status.always.ontime");
+			throw new IllegalStateException("When a leg is on draft mode, the status must be ON_TIME");
 
 		if (!leg.getFlight().isDraftMode())
 			super.state(false, "*", "acme.validation.leg.create.no.flight.draftmode");

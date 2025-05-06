@@ -1,6 +1,10 @@
 
 package acme.features.authenticated.manager;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import acme.client.components.models.Dataset;
@@ -8,10 +12,12 @@ import acme.client.components.principals.Authenticated;
 import acme.client.components.principals.DefaultUserIdentity;
 import acme.client.components.principals.UserAccount;
 import acme.client.helpers.PrincipalHelper;
+import acme.client.helpers.SpringHelper;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.features.authenticated.customer.AuthenticatedCustomerRepository;
 import acme.realms.manager.Manager;
+import acme.realms.manager.ManagerRepository;
 
 @GuiService
 public class AuthenticatedManagerCreateService extends AbstractGuiService<Authenticated, Manager> {
@@ -53,8 +59,39 @@ public class AuthenticatedManagerCreateService extends AbstractGuiService<Authen
 		assert object != null;
 
 		super.bindObject(object, "yearsExperience", "dateBirth", "picture");
-		object.setIdentifierNumber(object.getManagerIdentifier());
+		object.setIdentifierNumber(this.getManagerIdentifier(object));
 
+	}
+
+	public String getManagerIdentifier(final Manager object) {
+		ManagerRepository repository;
+		repository = SpringHelper.getBean(ManagerRepository.class);
+		DefaultUserIdentity identity = object.getIdentity();
+
+		if (identity == null || identity.getName() == null || identity.getSurname() == null)
+			return null;
+
+		String name = identity.getName().trim().toUpperCase();
+		String surname = identity.getSurname().trim().toUpperCase();
+
+		if (name.isEmpty() || surname.isEmpty())
+			return null;
+
+		String initials = "" + name.charAt(0) + surname.charAt(0);
+
+		List<String> existingIdentifiers = repository.findAllIdentifiersStartingWith(initials);
+		existingIdentifiers.remove(object.getIdentifierNumber());
+
+		Set<String> existingSet = new HashSet<>(existingIdentifiers);
+
+		for (int i = 0; i <= 999999; i++) {
+			String numberPart = String.format("%06d", i);
+			String candidate = initials + numberPart;
+
+			if (!existingSet.contains(candidate))
+				return candidate;
+		}
+		return null;
 	}
 
 	@Override

@@ -12,7 +12,7 @@
     <acme:list-column code="manager.leg.list.label.arrivalAirport" path="arrivalAirport" width="15%" sortable="false"/>
 </acme:list>
 
-<jstl:if test="${_command == 'list'}">
+<jstl:if test="${_command == 'list' && showCreate == true}">
 	<acme:button code="manager.leg.list.button.create" action="/manager/leg/create?flightId=${flightId}"/>
 </jstl:if>		
 	
