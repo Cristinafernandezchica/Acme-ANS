@@ -5,7 +5,7 @@
 
 <acme:form> 
 	<jstl:if test="${acme:anyOf(_command, 'show|update') && draftMode == false}">
-		<acme:input-textbox code="manager.leg.form.label.flightNumber" path="flightNumber" readonly="true"/>
+		<acme:input-textbox code="manager.leg.form.label.flightNumber" path="flightNumber" readonly="true" placeholder="acme.leg.placeholder.flightNumber"/>
 		<acme:input-moment code="manager.leg.form.label.scheduledDeparture" path="scheduledDeparture" readonly="true"/>
 		<acme:input-moment code="manager.leg.form.label.scheduledArrival" path="scheduledArrival" readonly="true"/>
 		<acme:input-select code="manager.leg.form.label.status" path="status" choices="${statuses}"/>
@@ -15,7 +15,7 @@
 	</jstl:if>
 	
 	<jstl:if test="${acme:anyOf(_command, 'show|update|delete|publish|create') && draftMode == true}">
-		<acme:input-textbox code="manager.leg.form.label.flightNumber" path="flightNumber"/>
+		<acme:input-textbox code="manager.leg.form.label.flightNumber" path="flightNumber" placeholder="acme.leg.placeholder.flightNumber"/>
 		<acme:input-moment code="manager.leg.form.label.scheduledDeparture" path="scheduledDeparture"/>
 		<acme:input-moment code="manager.leg.form.label.scheduledArrival" path="scheduledArrival"/>
 		<acme:input-textbox code="manager.leg.form.label.status" path="status" readonly="true"/>

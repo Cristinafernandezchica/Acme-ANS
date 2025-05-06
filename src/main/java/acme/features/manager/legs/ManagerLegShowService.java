@@ -15,7 +15,7 @@ import acme.entities.aircrafts.Status;
 import acme.entities.airports.Airport;
 import acme.entities.legs.Leg;
 import acme.entities.legs.LegStatus;
-import acme.realms.Manager;
+import acme.realms.manager.Manager;
 
 @GuiService
 public class ManagerLegShowService extends AbstractGuiService<Manager, Leg> {
@@ -26,16 +26,21 @@ public class ManagerLegShowService extends AbstractGuiService<Manager, Leg> {
 
 	@Override
 	public void authorise() {
-		boolean status;
-		int masterId;
+		boolean status = false;
+		Integer masterId;
 		Leg leg;
 		Manager manager;
 
 		int managerId = super.getRequest().getPrincipal().getActiveRealm().getId();
-		masterId = super.getRequest().getData("id", int.class);
-		leg = this.repository.findLegById(masterId);
-		manager = leg == null ? null : leg.getFlight().getManager();
-		status = (super.getRequest().getPrincipal().hasRealm(manager) || leg != null) && managerId == manager.getId();
+
+		if (!super.getRequest().getData().isEmpty()) {
+			masterId = super.getRequest().getData("id", Integer.class);
+			if (masterId != null) {
+				leg = this.repository.findLegById(masterId);
+				manager = leg == null ? null : leg.getFlight().getManager();
+				status = leg != null && super.getRequest().getPrincipal().hasRealm(manager) && managerId == manager.getId();
+			}
+		}
 
 		super.getResponse().setAuthorised(status);
 	}
@@ -59,22 +64,17 @@ public class ManagerLegShowService extends AbstractGuiService<Manager, Leg> {
 		SelectChoices selectedAircrafts;
 		Collection<Aircraft> activeAircrafts;
 		Collection<Airport> airports;
-		Collection<Airport> departureAirports;
-		Collection<Airport> arrivalAirports;
 		SelectChoices selectedDepartureAirport;
 		SelectChoices selectedArrivalAirport;
-		int airlineId = leg.getFlight().getAirline().getId();
 
 		statuses = SelectChoices.from(LegStatus.class, leg.getStatus());
-		aircrafts = this.repository.findAllAircraftsByAirlineId(airlineId);
+		aircrafts = this.repository.findAllAircrafts();
 		activeAircrafts = aircrafts.stream().filter(a -> a.getStatus().equals(Status.ACTIVE_SERVICE)).collect(Collectors.toList());
-		selectedAircrafts = SelectChoices.from(activeAircrafts, "model", leg.getAircraft());
+		selectedAircrafts = SelectChoices.from(activeAircrafts, "aircraftLabel", leg.getAircraft());
 
 		airports = this.repository.findAllAirports();
-		departureAirports = airports.stream().filter(a -> !a.getIataCode().equals(leg.getArrivalAirport().getIataCode())).collect(Collectors.toList());
-		arrivalAirports = airports.stream().filter(a -> !a.getIataCode().equals(leg.getDepartureAirport().getIataCode())).collect(Collectors.toList());
-		selectedDepartureAirport = SelectChoices.from(departureAirports, "iataCode", leg.getDepartureAirport());
-		selectedArrivalAirport = SelectChoices.from(arrivalAirports, "iataCode", leg.getArrivalAirport());
+		selectedDepartureAirport = SelectChoices.from(airports, "iataCode", leg.getDepartureAirport());
+		selectedArrivalAirport = SelectChoices.from(airports, "iataCode", leg.getArrivalAirport());
 
 		dataset = super.unbindObject(leg, "flightNumber", "scheduledDeparture", "scheduledArrival", "draftMode");
 		if (leg.isDraftMode())

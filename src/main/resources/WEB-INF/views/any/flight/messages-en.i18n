@@ -1,0 +1,35 @@
+any.flight.form.title = Flight form 
+any.flight.list.title = Listing of flights
+
+any.flight.form.label.tag = Tag:
+any.flight.form.label.airline = Airline: 
+any.flight.form.label.indication = Self transfer:
+any.flight.form.label.cost = Cost:
+any.flight.form.label.description = Description (Optional):
+
+		
+any.flight.form.button.legs = Legs
+any.flight.form.button.update = Update
+any.flight.form.button.delete = Delete
+any.flight.form.button.publish = Publish
+any.flight.form.button.create = Create
+
+any.flight.list.label.tag = Tag
+any.flight.list.label.indication = Self Transfer
+any.flight.list.label.cost = Cost
+any.flight.list.label.originCity = Origin City
+any.flight.list.label.destinationCity = Destination City
+any.flight.list.label.scheduledDeparture = Scheduled Departure
+any.flight.list.label.scheduledArrival = Scheduled Arrival
+any.flight.list.label.layovers = Layovers
+any.flight.list.label.description = Description
+
+any.flight.list.button.create = Create
+
+any.flight.form.label.draftMode = Draft Mode
+any.flight.form.label.scheduledDeparture = Scheduled Departure
+any.flight.form.label.scheduledArrival = Scheduled Arrival
+any.flight.form.label.originCity = Origin City
+any.flight.form.label.destinationCity = Destination City
+any.flight.form.label.layovers = Layovers
+any.flight.form.label.airline = Airline

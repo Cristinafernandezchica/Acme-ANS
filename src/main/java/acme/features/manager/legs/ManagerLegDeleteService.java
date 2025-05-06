@@ -7,7 +7,7 @@ import acme.client.components.models.Dataset;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.legs.Leg;
-import acme.realms.Manager;
+import acme.realms.manager.Manager;
 
 @GuiService
 public class ManagerLegDeleteService extends AbstractGuiService<Manager, Leg> {
@@ -18,13 +18,18 @@ public class ManagerLegDeleteService extends AbstractGuiService<Manager, Leg> {
 
 	@Override
 	public void authorise() {
-		boolean status;
-		int managerId = super.getRequest().getPrincipal().getActiveRealm().getId();
-		int masterId = super.getRequest().getData("id", int.class);
-		Leg leg = this.repository.findLegById(masterId);
-		Manager manager = leg == null ? null : leg.getFlight().getManager();
-		status = leg != null && leg.isDraftMode() && super.getRequest().getPrincipal().hasRealm(manager) && managerId == manager.getId();
+		boolean status = false;
+		int masterId;
+		Leg leg;
+		Manager manager;
 
+		if (!super.getRequest().getData().isEmpty() && super.getRequest().getData() != null) {
+			int managerId = super.getRequest().getPrincipal().getActiveRealm().getId();
+			masterId = super.getRequest().getData("id", int.class);
+			leg = this.repository.findLegById(masterId);
+			manager = leg == null ? null : leg.getFlight().getManager();
+			status = leg != null && super.getRequest().getPrincipal().hasRealm(manager) && managerId == manager.getId();
+		}
 		super.getResponse().setAuthorised(status);
 	}
 

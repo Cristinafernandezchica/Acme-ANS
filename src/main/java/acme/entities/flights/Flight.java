@@ -21,10 +21,9 @@ import acme.client.components.validation.ValidMoney;
 import acme.client.components.validation.ValidString;
 import acme.client.helpers.SpringHelper;
 import acme.constraints.ValidFlight;
-import acme.entities.airline.Airline;
 import acme.entities.legs.Leg;
 import acme.entities.legs.LegRepository;
-import acme.realms.Manager;
+import acme.realms.manager.Manager;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -69,76 +68,93 @@ public class Flight extends AbstractEntity {
 
 	@Transient
 	public Date getScheduledDeparture() {
-		Date res;
+		Date res = null;
 		LegRepository repository;
 		List<Leg> wrapper;
-		List<Leg> orderedWrapper;
 
 		repository = SpringHelper.getBean(LegRepository.class);
 		wrapper = repository.findLegsByFlightId(this.getId());
-		orderedWrapper = wrapper.stream().sorted(Comparator.comparing(Leg::getScheduledDeparture)).collect(Collectors.toList());
-		res = orderedWrapper.getFirst().getScheduledDeparture();
+
+		if (!wrapper.isEmpty()) {
+			Leg earliestLeg = wrapper.get(0);
+			for (Leg leg : wrapper)
+				if (leg.getScheduledDeparture().before(earliestLeg.getScheduledDeparture()))
+					earliestLeg = leg;
+			res = earliestLeg.getScheduledDeparture();
+		}
 
 		return res;
 	}
 
 	@Transient
 	public Date getScheduledArrival() {
-		Date res;
+		Date res = null;
 		LegRepository repository;
 		List<Leg> wrapper;
-		List<Leg> orderedWrapper;
 
 		repository = SpringHelper.getBean(LegRepository.class);
 		wrapper = repository.findLegsByFlightId(this.getId());
-		orderedWrapper = wrapper.stream().sorted(Comparator.comparing(Leg::getScheduledArrival)).collect(Collectors.toList());
-		res = orderedWrapper.getLast().getScheduledArrival();
+
+		if (!wrapper.isEmpty()) {
+			Leg latestLeg = wrapper.get(0);
+			for (Leg leg : wrapper)
+				if (leg.getScheduledArrival().after(latestLeg.getScheduledArrival()))
+					latestLeg = leg;
+			res = latestLeg.getScheduledArrival();
+		}
 
 		return res;
 	}
 
 	@Transient
 	public String originCity() {
-		String res;
+		String res = null;
 		LegRepository repository;
 		List<Leg> wrapper;
-		List<Leg> orderedWrapper;
 
 		repository = SpringHelper.getBean(LegRepository.class);
 		wrapper = repository.findLegsByFlightId(this.getId());
-		orderedWrapper = wrapper.stream().sorted(Comparator.comparing(Leg::getScheduledDeparture)).collect(Collectors.toList());
-		res = orderedWrapper.getFirst().getDepartureAirport().getCity();
+
+		if (!wrapper.isEmpty()) {
+			Leg earliestLeg = wrapper.get(0);
+			for (Leg leg : wrapper)
+				if (leg.getScheduledDeparture().before(earliestLeg.getScheduledDeparture()))
+					earliestLeg = leg;
+			res = earliestLeg.getDepartureAirport().getCity();
+		}
 
 		return res;
 	}
 
 	@Transient
 	public String destinationCity() {
-		String res;
+		String res = null;
 		LegRepository repository;
 		List<Leg> wrapper;
-		List<Leg> orderedWrapper;
 
 		repository = SpringHelper.getBean(LegRepository.class);
 		wrapper = repository.findLegsByFlightId(this.getId());
-		orderedWrapper = wrapper.stream().sorted(Comparator.comparing(Leg::getScheduledArrival)).collect(Collectors.toList());
-		res = orderedWrapper.getLast().getArrivalAirport().getCity();
+
+		if (!wrapper.isEmpty()) {
+			Leg latestLeg = wrapper.get(0);
+			for (Leg leg : wrapper)
+				if (leg.getScheduledArrival().after(latestLeg.getScheduledArrival()))
+					latestLeg = leg;
+			res = latestLeg.getArrivalAirport().getCity();
+		}
 
 		return res;
 	}
 
 	@Transient
 	public Integer layovers() {
-		Integer res;
 		LegRepository repository;
 		List<Leg> wrapper;
 
 		repository = SpringHelper.getBean(LegRepository.class);
 		wrapper = repository.findLegsByFlightId(this.getId());
-		res = wrapper.size();
 
-		return res;
-
+		return wrapper.size();
 	}
 
 	@Transient
@@ -171,10 +187,6 @@ public class Flight extends AbstractEntity {
 	@Mandatory
 	@ManyToOne(optional = false)
 	@Valid
-	private Manager	manager;
+	private Manager manager;
 
-	@Mandatory
-	@ManyToOne(optional = false)
-	@Valid
-	private Airline	airline;
 }

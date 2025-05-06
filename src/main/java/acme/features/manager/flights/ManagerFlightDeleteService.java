@@ -10,7 +10,7 @@ import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.flights.Flight;
 import acme.entities.legs.Leg;
-import acme.realms.Manager;
+import acme.realms.manager.Manager;
 
 @GuiService
 public class ManagerFlightDeleteService extends AbstractGuiService<Manager, Flight> {
@@ -23,16 +23,18 @@ public class ManagerFlightDeleteService extends AbstractGuiService<Manager, Flig
 
 	@Override
 	public void authorise() {
-		boolean status;
+		boolean status = false;
 		int masterId;
 		Flight flight;
 		Manager manager;
 
-		int managerId = super.getRequest().getPrincipal().getActiveRealm().getId();
-		masterId = super.getRequest().getData("id", int.class);
-		flight = this.repository.findFlightById(masterId);
-		manager = flight == null ? null : flight.getManager();
-		status = flight != null && flight.isDraftMode() && super.getRequest().getPrincipal().hasRealm(manager) && managerId == manager.getId();
+		if (!super.getRequest().getData().isEmpty() && super.getRequest().getData() != null) {
+			int managerId = super.getRequest().getPrincipal().getActiveRealm().getId();
+			masterId = super.getRequest().getData("id", int.class);
+			flight = this.repository.findFlightById(masterId);
+			manager = flight == null ? null : flight.getManager();
+			status = flight != null && flight.isDraftMode() && super.getRequest().getPrincipal().hasRealm(manager) && managerId == manager.getId();
+		}
 
 		super.getResponse().setAuthorised(status);
 	}

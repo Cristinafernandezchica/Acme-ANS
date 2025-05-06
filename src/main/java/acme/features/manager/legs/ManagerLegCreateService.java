@@ -2,11 +2,8 @@
 package acme.features.manager.legs;
 
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Date;
-import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +20,7 @@ import acme.entities.airports.Airport;
 import acme.entities.flights.Flight;
 import acme.entities.legs.Leg;
 import acme.entities.legs.LegStatus;
-import acme.realms.Manager;
+import acme.realms.manager.Manager;
 
 @GuiService
 public class ManagerLegCreateService extends AbstractGuiService<Manager, Leg> {
@@ -34,7 +31,24 @@ public class ManagerLegCreateService extends AbstractGuiService<Manager, Leg> {
 
 	@Override
 	public void authorise() {
-		super.getResponse().setAuthorised(true);
+
+		Integer flightId;
+		Flight flight;
+		Manager manager;
+		boolean status = false;
+
+		manager = (Manager) super.getRequest().getPrincipal().getActiveRealm();
+
+		if (!super.getRequest().getData().isEmpty()) {
+			flightId = super.getRequest().getData("flightId", Integer.class);
+			if (flightId != null) {
+				flight = this.repository.findFlightById(flightId);
+				if (flight != null && flight.getManager().equals(manager))
+					status = true;
+			}
+		}
+
+		super.getResponse().setAuthorised(status);
 	}
 
 	@Override
@@ -42,12 +56,10 @@ public class ManagerLegCreateService extends AbstractGuiService<Manager, Leg> {
 		Leg leg;
 		int flightId = super.getRequest().getData("flightId", int.class);
 		Flight flight = this.repository.findFlightById(flightId);
-		Airline airline = flight.getManager().getAirline();
 
 		leg = new Leg();
 		leg.setDraftMode(true);
 		leg.setFlight(flight);
-		leg.setFlightNumber(airline.getIataCode() + this.numberOfFlightNumber(airline));
 		leg.setStatus(LegStatus.ON_TIME);
 
 		super.getBuffer().addData(leg);
@@ -56,34 +68,6 @@ public class ManagerLegCreateService extends AbstractGuiService<Manager, Leg> {
 	@Override
 	public void bind(final Leg leg) {
 		super.bindObject(leg, "flightNumber", "scheduledDeparture", "scheduledArrival", "status", "departureAirport", "arrivalAirport", "aircraft");
-	}
-
-	private String numberOfFlightNumber(final Airline airline) {
-		String newNumber = null;
-		List<Integer> numbers = new ArrayList<>();
-		Collection<String> airlineFlightNumbers = this.repository.findAllLegsFlightNumberByAirlineId(airline.getId());
-		if (!airlineFlightNumbers.isEmpty()) {
-			for (String flightNumber : airlineFlightNumbers) {
-				String numberPart = flightNumber.substring(3);
-				int number = Integer.parseInt(numberPart);
-				numbers.add(number);
-			}
-			Collections.sort(numbers);
-			int maxNumber = numbers.get(numbers.size() - 1);
-			if (maxNumber == 9999) {
-				for (int nextNumber = 0; nextNumber <= 9999; nextNumber++)
-					if (!numbers.contains(nextNumber)) {
-						newNumber = String.format("%04d", nextNumber);
-						break;
-					}
-			} else {
-				int nextNumber = maxNumber + 1;
-				newNumber = String.format("%04d", nextNumber);
-			}
-
-		} else
-			newNumber = String.format("%04d", 0);
-		return newNumber;
 	}
 
 	@Override
@@ -104,28 +88,45 @@ public class ManagerLegCreateService extends AbstractGuiService<Manager, Leg> {
 				super.state(false, "scheduledArrival", "acme.validation.leg.departure.arrival.difference.message");
 		}
 
+		int airDepId = super.getRequest().getData("departureAirport", int.class);
+		int airArrId = super.getRequest().getData("arrivalAirport", int.class);
+		Airport depAirport = this.repository.findAirportById(airDepId);
+		Airport arrAirport = this.repository.findAirportById(airArrId);
+		if (depAirport == null)
+			throw new IllegalStateException("The departure airport doesn't exist");
+
+		if (arrAirport == null)
+			throw new IllegalStateException("The arrival airport doesn't exist");
+
 		if (leg.getDepartureAirport() != null && leg.getDepartureAirport().equals(leg.getArrivalAirport())) {
 			super.state(false, "arrivalAirport", "acme.validation.leg.same.departure.arrival.airport");
 			super.state(false, "departureAirport", "acme.validation.leg.same.departure.arrival.airport");
 		}
 
-		Airline airline = leg.getFlight().getManager().getAirline();
-		if (leg.getFlightNumber().length() == 7 && !leg.getFlightNumber().substring(0, 3).equals(airline.getIataCode()))
-			super.state(false, "flightNumber", "acme.validation.leg.invalid.iata.flightNumber");
+		int aircraftId = super.getRequest().getData("aircraft", int.class);
+		Aircraft validAircraft = this.repository.findAircraftById(aircraftId);
+		if (validAircraft == null)
+			throw new IllegalStateException("The aircraft doesn't exist");
+
+		if (leg.getAircraft() != null) {
+			boolean operativeAircraft = leg.getAircraft().getStatus().equals(Status.ACTIVE_SERVICE);
+			super.state(operativeAircraft, "aircraft", "acme.validation.leg.operative.aircraft.message");
+
+			Airline airline = leg.getAircraft().getAirline();
+			if (leg.getFlightNumber().length() == 7 && !leg.getFlightNumber().substring(0, 3).equals(airline.getIataCode())) {
+				super.state(false, "flightNumber", "acme.validation.leg.invalid.iata.flightNumber");
+				super.state(false, "flightNumber", "The airline's IATA code: " + airline.getIataCode());
+			}
+		}
 
 		if (!leg.isDraftMode())
 			super.state(false, "*", "acme.validation.leg.create.no.draftmode");
 
 		if (leg.getStatus() != LegStatus.ON_TIME)
-			super.state(false, "status", "acme.validation.leg.status.always.ontime");
+			throw new IllegalStateException("When a leg is on draft mode, the status must be ON_TIME");
 
 		if (!leg.getFlight().isDraftMode())
 			super.state(false, "*", "acme.validation.leg.create.no.flight.draftmode");
-
-		if (leg.getAircraft() != null) {
-			boolean operativeAircraft = leg.getAircraft().getStatus().equals(Status.ACTIVE_SERVICE);
-			super.state(operativeAircraft, "aircraft", "acme.validation.leg.operative.aircraft.message");
-		}
 
 	}
 
@@ -145,10 +146,9 @@ public class ManagerLegCreateService extends AbstractGuiService<Manager, Leg> {
 		SelectChoices selectedDepartureAirport;
 		SelectChoices selectedArrivalAirport;
 
-		// statuses = SelectChoices.from(LegStatus.class, leg.getStatus());
-		aircrafts = this.repository.findAllAircraftsByAirlineId(leg.getFlight().getAirline().getId());
+		aircrafts = this.repository.findAllAircrafts();
 		activeAircrafts = aircrafts.stream().filter(a -> a.getStatus().equals(Status.ACTIVE_SERVICE)).collect(Collectors.toList());
-		selectedAircrafts = SelectChoices.from(activeAircrafts, "model", leg.getAircraft());
+		selectedAircrafts = SelectChoices.from(activeAircrafts, "aircraftLabel", leg.getAircraft());
 
 		airports = this.repository.findAllAirports();
 		selectedDepartureAirport = SelectChoices.from(airports, "iataCode", leg.getDepartureAirport());

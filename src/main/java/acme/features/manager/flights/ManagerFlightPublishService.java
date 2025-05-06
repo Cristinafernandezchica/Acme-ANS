@@ -2,15 +2,17 @@
 package acme.features.manager.flights;
 
 import java.util.Collection;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import acme.client.components.models.Dataset;
+import acme.client.helpers.MomentHelper;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.flights.Flight;
 import acme.entities.legs.Leg;
-import acme.realms.Manager;
+import acme.realms.manager.Manager;
 
 @GuiService
 public class ManagerFlightPublishService extends AbstractGuiService<Manager, Flight> {
@@ -21,16 +23,20 @@ public class ManagerFlightPublishService extends AbstractGuiService<Manager, Fli
 
 	@Override
 	public void authorise() {
-		boolean status;
-		int flightId;
+		boolean status = false;
+		Integer masterId;
 		Flight flight;
 		Manager manager;
 
 		int managerId = super.getRequest().getPrincipal().getActiveRealm().getId();
-		flightId = super.getRequest().getData("id", int.class);
-		flight = this.repository.findFlightById(flightId);
-		manager = flight == null ? null : flight.getManager();
-		status = flight != null && flight.isDraftMode() && super.getRequest().getPrincipal().hasRealm(manager) && managerId == manager.getId();
+		if (!super.getRequest().getData().isEmpty()) {
+			masterId = super.getRequest().getData("id", Integer.class);
+			if (masterId != null) {
+				flight = this.repository.findFlightById(masterId);
+				manager = flight == null ? null : flight.getManager();
+				status = flight != null && flight.isDraftMode() && super.getRequest().getPrincipal().hasRealm(manager) && managerId == manager.getId();
+			}
+		}
 
 		super.getResponse().setAuthorised(status);
 	}
@@ -59,12 +65,18 @@ public class ManagerFlightPublishService extends AbstractGuiService<Manager, Fli
 		}
 
 		Collection<Leg> legs = this.repository.findLegsByFlightId(flight.getId());
+		Date currentDate = MomentHelper.getCurrentMoment();
 
 		boolean hasLegs = !legs.isEmpty();
 		boolean anyDraftMode = !legs.stream().anyMatch(Leg::isDraftMode);
+		boolean noPastLeg = true;
+		for (Leg leg : legs)
+			if (MomentHelper.isBefore(leg.getScheduledDeparture(), currentDate))
+				noPastLeg = false;
 
 		super.state(hasLegs, "*", "acme.validation.manager.flights.without.legs");
 		super.state(anyDraftMode, "*", "acme.validation.manager.flights.no.published.leg");
+		super.state(noPastLeg, "*", "acme.validation.manager.flights.publish.past.leg");
 
 	}
 

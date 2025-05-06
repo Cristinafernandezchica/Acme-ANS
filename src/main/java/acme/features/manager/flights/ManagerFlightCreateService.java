@@ -7,7 +7,7 @@ import acme.client.components.models.Dataset;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.flights.Flight;
-import acme.realms.Manager;
+import acme.realms.manager.Manager;
 
 @GuiService
 public class ManagerFlightCreateService extends AbstractGuiService<Manager, Flight> {
@@ -18,7 +18,9 @@ public class ManagerFlightCreateService extends AbstractGuiService<Manager, Flig
 
 	@Override
 	public void authorise() {
-		super.getResponse().setAuthorised(true);
+		boolean status;
+		status = super.getRequest().getPrincipal().hasRealmOfType(Manager.class);
+		super.getResponse().setAuthorised(status);
 	}
 
 	@Override
@@ -31,7 +33,6 @@ public class ManagerFlightCreateService extends AbstractGuiService<Manager, Flig
 		flight = new Flight();
 		flight.setDraftMode(true);
 		flight.setManager(manager);
-		flight.setAirline(manager.getAirline());
 
 		super.getBuffer().addData(flight);
 	}

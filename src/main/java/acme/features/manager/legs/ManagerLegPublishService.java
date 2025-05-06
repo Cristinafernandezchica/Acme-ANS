@@ -3,7 +3,9 @@ package acme.features.manager.legs;
 
 import java.time.temporal.ChronoUnit;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +17,11 @@ import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.aircrafts.Aircraft;
 import acme.entities.aircrafts.Status;
+import acme.entities.airline.Airline;
 import acme.entities.airports.Airport;
 import acme.entities.legs.Leg;
 import acme.entities.legs.LegStatus;
-import acme.realms.Manager;
+import acme.realms.manager.Manager;
 
 @GuiService
 public class ManagerLegPublishService extends AbstractGuiService<Manager, Leg> {
@@ -29,17 +32,18 @@ public class ManagerLegPublishService extends AbstractGuiService<Manager, Leg> {
 
 	@Override
 	public void authorise() {
-		boolean status;
+		boolean status = false;
 		int masterId;
 		Leg leg;
 		Manager manager;
 
-		int managerId = super.getRequest().getPrincipal().getActiveRealm().getId();
-		masterId = super.getRequest().getData("id", int.class);
-		leg = this.repository.findLegById(masterId);
-		manager = leg == null ? null : leg.getFlight().getManager();
-		status = leg != null && leg.isDraftMode() && super.getRequest().getPrincipal().hasRealm(manager) && managerId == manager.getId();
-
+		if (!super.getRequest().getData().isEmpty() && super.getRequest().getData() != null) {
+			int managerId = super.getRequest().getPrincipal().getActiveRealm().getId();
+			masterId = super.getRequest().getData("id", int.class);
+			leg = this.repository.findLegById(masterId);
+			manager = leg == null ? null : leg.getFlight().getManager();
+			status = leg != null && super.getRequest().getPrincipal().hasRealm(manager) && managerId == manager.getId();
+		}
 		super.getResponse().setAuthorised(status);
 	}
 
@@ -77,10 +81,21 @@ public class ManagerLegPublishService extends AbstractGuiService<Manager, Leg> {
 				super.state(false, "scheduledArrival", "acme.validation.leg.departure.arrival.difference.message");
 		}
 
+		int airDepId = super.getRequest().getData("departureAirport", int.class);
+		int airArrId = super.getRequest().getData("arrivalAirport", int.class);
+		Airport depAirport = this.repository.findAirportById(airDepId);
+		Airport arrAirport = this.repository.findAirportById(airArrId);
+		if (depAirport == null)
+			throw new IllegalStateException("The departure airport doesn't exist");
+
+		if (arrAirport == null)
+			throw new IllegalStateException("The arrival airport doesn't exist");
+
 		if (leg.getDepartureAirport() != null && leg.getDepartureAirport().equals(leg.getArrivalAirport())) {
 			super.state(false, "arrivalAirport", "acme.validation.leg.same.departure.arrival.airport");
 			super.state(false, "departureAirport", "acme.validation.leg.same.departure.arrival.airport");
 		}
+
 
 		if (leg.getScheduledArrival() != null && leg.getScheduledDeparture() != null) {
 			Collection<Leg> allPublishedLegs = this.repository.findAllPublishedLegs();
@@ -105,13 +120,49 @@ public class ManagerLegPublishService extends AbstractGuiService<Manager, Leg> {
 
 		}
 
+		if (leg.isDraftMode() && leg.getStatus() != LegStatus.ON_TIME)
+			throw new IllegalStateException("When a leg is being published, the status must be ON_TIME");
+
+		int aircraftId = super.getRequest().getData("aircraft", int.class);
+		Aircraft validAircraft = this.repository.findAircraftById(aircraftId);
+		if (validAircraft == null)
+			throw new IllegalStateException("The aircraft doesn't exist");
+		
 		if (leg.getAircraft() != null) {
 			boolean operativeAircraft = leg.getAircraft().getStatus().equals(Status.ACTIVE_SERVICE);
 			super.state(operativeAircraft, "aircraft", "acme.validation.leg.operative.aircraft.message");
 		}
+
+		if (leg.getAircraft() != null) {
+			Airline airline = leg.getAircraft().getAirline();
+			if (leg.getFlightNumber().length() == 7 && !leg.getFlightNumber().substring(0, 3).equals(airline.getIataCode())) {
+				super.state(false, "flightNumber", "acme.validation.leg.invalid.iata.flightNumber");
+				super.state(false, "flightNumber", "The airline's IATA code: " + airline.getIataCode());
+			}
+		}
+
 		boolean publishedFlight = leg.getFlight().isDraftMode();
 		super.state(publishedFlight, "*", "acme.validation.leg.flight.draftMode");
 
+		Collection<Leg> publishedLegs = this.repository.findAllPublishedLegsByFlightId(leg.getFlight().getId());
+		publishedLegs.add(leg);
+		List<Leg> orderedLegs = publishedLegs.stream().sorted(Comparator.comparing(Leg::getScheduledDeparture)).collect(Collectors.toList());
+		int index = orderedLegs.indexOf(leg);
+		if (index != -1 && leg.getFlight().getIndication()) {
+			// Validar leg anterior
+			if (index > 0) {
+				Leg previousLeg = orderedLegs.get(index - 1);
+				if (!leg.getDepartureAirport().equals(previousLeg.getArrivalAirport()))
+					super.state(false, "departureAirport", "acme.validation.leg.departureAirport");
+			}
+
+			// Validar siguiente leg
+			if (index < orderedLegs.size() - 1) {
+				Leg nextLeg = orderedLegs.get(index + 1);
+				if (!leg.getArrivalAirport().equals(nextLeg.getDepartureAirport()))
+					super.state(false, "arrivalAirport", "acme.validation.leg.arrivalAirport");
+			}
+		}
 	}
 
 	@Override
@@ -132,9 +183,9 @@ public class ManagerLegPublishService extends AbstractGuiService<Manager, Leg> {
 		SelectChoices selectedArrivalAirport;
 
 		statuses = SelectChoices.from(LegStatus.class, leg.getStatus());
-		aircrafts = this.repository.findAllAircraftsByAirlineId(leg.getFlight().getAirline().getId());
+		aircrafts = this.repository.findAllAircrafts();
 		activeAircrafts = aircrafts.stream().filter(a -> a.getStatus().equals(Status.ACTIVE_SERVICE)).collect(Collectors.toList());
-		selectedAircrafts = SelectChoices.from(activeAircrafts, "model", leg.getAircraft());
+		selectedAircrafts = SelectChoices.from(activeAircrafts, "aircraftLabel", leg.getAircraft());
 
 		airports = this.repository.findAllAirports();
 		selectedDepartureAirport = SelectChoices.from(airports, "iataCode", leg.getDepartureAirport());

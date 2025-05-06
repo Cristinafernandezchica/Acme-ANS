@@ -1,54 +1,53 @@
-key,tag,indication,cost,description,key:manager,key:airline,draftMode
+key,tag,indication,cost,description,key:manager,draftMode
 # base entity
-flight-00,"Turco",true,EUR 100.00,"Lorem ipsum dolor sit amet,consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",manager-01,airline-01,true
+flight-00,"Turco",true,EUR 100.00,"Lorem ipsum dolor sit amet,consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",manager-01,true
 # tag - variations
-flight-01,"L",true,EUR 120.00,"Lorem ipsum dolor sit amet,consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",manager-01,airline-01,false
-flight-02,"Lo",true,EUR 500.00,"Lorem ipsum dolor sit amet,consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",manager-01,airline-01,true
+flight-01,"L",true,EUR 120.00,"Lorem ipsum dolor sit amet,consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",manager-01,false
+flight-02,"Lo",true,EUR 500.00,"Lorem ipsum dolor sit amet,consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",manager-01,true
 
-flight-03,"Lorem ipsum dolor sit amet, consectetur adipiscin",true,EUR 500000.00,"Lorem ipsum dolor sit amet,consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",manager-01,airline-01,true
-flight-04,"Lorem ipsum dolor sit amet, consectetur adipiscing",true,EUR 500000.00,"Lorem ipsum dolor sit amet,consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",manager-01,airline-01,true
+flight-03,"Lorem ipsum dolor sit amet, consectetur adipiscin",true,EUR 500000.00,"Lorem ipsum dolor sit amet,consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",manager-01,true
+flight-04,"Lorem ipsum dolor sit amet, consectetur adipiscing",true,EUR 500000.00,"Lorem ipsum dolor sit amet,consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",manager-01,true
 
-flight-06,"โลเร็ม อิปซัม",true,EUR 500000.00,"Lorem ipsum dolor sit amet,consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",manager-01,airline-01,true
-flight-07,"لوريم إيبسوم",true,EUR 500000.00,"Lorem ipsum dolor sit amet,consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",manager-01,airline-01,true
-flight-08,"洛伦·伊普森",true,EUR 500000.00,"Lorem ipsum dolor sit amet,consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",manager-01,airline-01,true
-flight-09,"<marquee>Hacked</marquee>",true,EUR 500000.00,"Lorem ipsum dolor sit amet,consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",manager-01,airline-01,true
-flight-10,"<script>alert(‘Hacked!’);</script>",true,EUR 500000.00,"Lorem ipsum dolor sit amet,consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",manager-01,airline-01,true
-flight-11,"' or 'A' = 'A",true,EUR 500000.00,"Lorem ipsum dolor sit amet,consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",manager-01,airline-01,true
+flight-06,"โลเร็ม อิปซัม",true,EUR 500000.00,"Lorem ipsum dolor sit amet,consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",manager-01,true
+flight-07,"لوريم إيبسوم",true,EUR 500000.00,"Lorem ipsum dolor sit amet,consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",manager-01,true
+flight-08,"洛伦·伊普森",true,EUR 500000.00,"Lorem ipsum dolor sit amet,consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",manager-01,true
+flight-09,"<marquee>Hacked</marquee>",true,EUR 500000.00,"Lorem ipsum dolor sit amet,consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",manager-01,true
+flight-10,"<script>alert(‘Hacked!’);</script>",true,EUR 500000.00,"Lorem ipsum dolor sit amet,consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",manager-01,true
+flight-11,"' or 'A' = 'A",true,EUR 500000.00,"Lorem ipsum dolor sit amet,consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",manager-01,true
 
 # cost - variations
-flight-15,"Turco",false,EUR 500000.00,"Lorem ipsum dolor sit amet,consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",manager-01,airline-01,true
+flight-15,"Turco",false,EUR 500000.00,"Lorem ipsum dolor sit amet,consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",manager-01,true
 
-flight-17,"Lo",true,EUR 0.00,"Lorem ipsum dolor sit amet,consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",manager-01,airline-01,true
-flight-18,"Lo",true,EUR 0.01,"Lorem ipsum dolor sit amet,consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",manager-01,airline-01,true
-flight-19,"Lo",true,EUR 999999.99,"Lorem ipsum dolor sit amet,consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",manager-01,airline-01,true
-flight-20,"Lo",true,EUR 1000000.00,"Lorem ipsum dolor sit amet,consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",manager-01,airline-01,true
+flight-17,"Lo",true,EUR 0.00,"Lorem ipsum dolor sit amet,consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",manager-01,true
+flight-18,"Lo",true,EUR 0.01,"Lorem ipsum dolor sit amet,consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",manager-01,true
+flight-19,"Lo",true,EUR 999999.99,"Lorem ipsum dolor sit amet,consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",manager-01,true
+flight-20,"Lo",true,EUR 1000000.00,"Lorem ipsum dolor sit amet,consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",manager-01,true
 
 # description - variations
-flight-23,"Lo",true,EUR 500000.00,"L",manager-01,airline-01,true
-flight-24,"Lo",true,EUR 500000.00,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut enim ad minim veniam? Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor",manager-01,airline-01,true
-flight-25,"Lo",true,EUR 500000.00,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut enim ad minim veniam? Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor*",manager-01,airline-01,true
-flight-26,"Lo",true,EUR 500000.00,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut enim ad minim veniam? Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor",manager-01,airline-01,true
-flight-27,"Lo",true,EUR 500000.00,"โลเร็ม อิปซัม",manager-01,airline-01,true
-flight-28,"Lo",true,EUR 500000.00,"لوريم إيبسوم",manager-01,airline-01,true
-flight-29,"Lo",true,EUR 500000.00,"洛伦·伊普森",manager-01,airline-01,true
-flight-30,"Lo",true,EUR 500000.00,"<marquee>Hacked</marquee>",manager-01,airline-01,true
-flight-31,"Lo",true,EUR 500000.00,"<script>alert(‘Hacked!’);</script>",manager-01,airline-01,true
-flight-32,"Lo",true,EUR 500000.00,"' or 'A' = 'A",manager-01,airline-01,true
-flight-33,"Lo",true,EUR 500000.00,"",manager-01,airline-01,true
+flight-23,"Lo",true,EUR 500000.00,"L",manager-01,true
+flight-24,"Lo",true,EUR 500000.00,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut enim ad minim veniam? Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor",manager-01,true
+flight-25,"Lo",true,EUR 500000.00,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut enim ad minim veniam? Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor*",manager-01,true
+flight-26,"Lo",true,EUR 500000.00,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut enim ad minim veniam? Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor",manager-01,true
+flight-27,"Lo",true,EUR 500000.00,"โลเร็ม อิปซัม",manager-01,true
+flight-28,"Lo",true,EUR 500000.00,"لوريم إيبسوم",manager-01,true
+flight-29,"Lo",true,EUR 500000.00,"洛伦·伊普森",manager-01,true
+flight-30,"Lo",true,EUR 500000.00,"<marquee>Hacked</marquee>",manager-01,true
+flight-31,"Lo",true,EUR 500000.00,"<script>alert(‘Hacked!’);</script>",manager-01,true
+flight-32,"Lo",true,EUR 500000.00,"' or 'A' = 'A",manager-01,true
+flight-33,"Lo",true,EUR 500000.00,"",manager-01,false
 
 # manager - variations eliminated
-flight-34,"Lorem ipsum dolor sit ame",true,EUR 500000.00,"Lorem ipsum dolor sit amet,consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",manager-01,airline-01,true
-flight-35,"Lorem ipsum dolor sit ame",true,EUR 500000.00,"Lorem ipsum dolor sit amet,consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",manager-01,airline-01,true
+flight-34,"Lorem ipsum dolor sit ame",true,EUR 500000.00,"Lorem ipsum dolor sit amet,consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",manager-01,true
+flight-35,"Lorem ipsum dolor sit ame",true,EUR 500000.00,"Lorem ipsum dolor sit amet,consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",manager-01,true
 
 # Examples for Booking tries
-flight-36,"Minna",true,EUR 50.00,"Vuelo de prueba A",manager-01,airline-01,false
-flight-37,"No",true,EUR 150.00,"Vuelo de prueba B",manager-01,airline-01,false
-flight-38,"Nihongo",true,EUR 250.00,"Vuelo de prueba C",manager-01,airline-01,false
-flight-39,"Desu",true,EUR 200.00,"Vuelo de prueba D",manager-01,airline-01,true
-flight-40,"Ka",true,EUR 20.00,"Vuelo de prueba E",manager-01,airline-01,true
+flight-36,"Minna",true,EUR 50.00,"Vuelo de prueba A",manager-01,false
+flight-37,"No",true,EUR 150.00,"Vuelo de prueba B",manager-01,false
+flight-38,"Nihongo",true,EUR 250.00,"Vuelo de prueba C",manager-01,false
+flight-39,"Desu",true,EUR 200.00,"Vuelo de prueba D",manager-01,true
+flight-40,"Ka",true,EUR 20.00,"Vuelo de prueba E",manager-01,true
 
 #Examples for flight assignments
-flight-42,"omg",true,GPB 100.00,"Vuelo de prueba fa",manager-01,airline-01,false
-flight-43,"omg",true,USD 100.00,"Vuelo de prueba fa",manager-01,airline-01,false
-
-
+flight-42,"omg",true,GPB 100.00,"Vuelo de prueba fa",manager-01,false
+flight-43,"omg",true,USD 100.00,"Vuelo de prueba fa",manager-01,false
+flight-44,"Alto",true,EUR 100.00,"Vuelo sin tramos",manager-02,true

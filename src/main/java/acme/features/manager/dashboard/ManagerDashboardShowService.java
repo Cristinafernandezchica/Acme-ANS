@@ -16,10 +16,11 @@ import acme.client.components.models.Dataset;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.airports.Airport;
+import acme.entities.flights.Flight;
 import acme.entities.legs.Leg;
 import acme.entities.legs.LegStatus;
 import acme.forms.managerDashboard.ManagerDashboard;
-import acme.realms.Manager;
+import acme.realms.manager.Manager;
 
 @GuiService
 public class ManagerDashboardShowService extends AbstractGuiService<Manager, ManagerDashboard> {
@@ -51,7 +52,6 @@ public class ManagerDashboardShowService extends AbstractGuiService<Manager, Man
 		Money standarDerivationFlightCost = new Money();
 
 		Map<Airport, Integer> popularAirports = new HashMap<>();
-		;
 		Collection<Leg> managerLegs = this.repository.findLegsByManagerId(managerId);
 
 		Integer onTimeLegs = this.repository.findOnTimeLegs(managerId).orElse(0);
@@ -72,12 +72,19 @@ public class ManagerDashboardShowService extends AbstractGuiService<Manager, Man
 			popularAirports.put(destinationAirport, popularAirports.getOrDefault(destinationAirport, 0) + 1);
 		}
 
-		LinkedHashMap<Airport, Integer> sortedMap = popularAirports.entrySet().stream().sorted((a1, a2) -> a2.getValue().compareTo(a1.getValue()))
-			.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (oldValue, newValue) -> oldValue, LinkedHashMap::new));
+		Collection<Flight> flights = this.repository.findFlightsByManagerId(managerId);
 
-		mostPopularAirport = sortedMap.entrySet().iterator().next().getKey().getName();
-		lessPopularAirport = new ArrayList<>(sortedMap.keySet()).get(sortedMap.size() - 1).getName();
+		if (!flights.isEmpty()) {
 
+			LinkedHashMap<Airport, Integer> sortedMap = popularAirports.entrySet().stream().sorted((a1, a2) -> a2.getValue().compareTo(a1.getValue()))
+				.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (oldValue, newValue) -> oldValue, LinkedHashMap::new));
+
+			mostPopularAirport = sortedMap.entrySet().iterator().next().getKey().getName();
+			lessPopularAirport = new ArrayList<>(sortedMap.keySet()).get(sortedMap.size() - 1).getName();
+		} else {
+			mostPopularAirport = null;
+			lessPopularAirport = null;
+		}
 		legsByStatus = this.getLegsGroupedByStatus(managerId);
 
 		averageFlightCost.setAmount(this.repository.findAverageFlightCost(managerId).orElse(0.));
@@ -89,11 +96,6 @@ public class ManagerDashboardShowService extends AbstractGuiService<Manager, Man
 
 		standarDerivationFlightCost.setAmount(this.repository.findStandardDeviationOfFlightCost(managerId).orElse(0.));
 		standarDerivationFlightCost.setCurrency("EUR");
-
-		System.out.println(legsByStatus.get(LegStatus.ON_TIME));
-		System.out.println(legsByStatus.get(LegStatus.DELAYED));
-		System.out.println(legsByStatus.get(LegStatus.CANCELLED));
-		System.out.println(legsByStatus.get(LegStatus.LANDED));
 
 		managerDashboard.setRankingManager(rankingManager);
 		managerDashboard.setYearsToRetire(yearsToRetire);

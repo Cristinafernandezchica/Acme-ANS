@@ -11,12 +11,18 @@
 # master.menu.anonymous #######################################################
 
 master.menu.anonymous = Anonymous
+master.menu.anonymous.list-flights = List flights
 master.menu.anonymous.favourite-link = Favourite link
 master.menu.anonymous.favourite-link-Candela = 45939364S: Gutiérrez González, Candela Jazmín
 master.menu.anonymous.favourite-link-Cristina = 77926002R: Fernández Chica, Cristina
 master.menu.anonymous.favourite-link-Emmanuel = Y9992811S: Chavez Malave, Luis Emmanuel
 master.menu.anonymous.favourite-link-Marta = 29643895T: Aguilar Morcillo, Marta
 master.menu.anonymous.favourite-link-Angel = 24484826S: Amo Sánchez, Ángel
+
+# master.menu.authenticated ###################################################
+
+master.menu.authenticated = Authenticated
+master.menu.authenticated.list-flights = List flights
 
 # master.menu.administrator ###################################################
 
@@ -64,6 +70,8 @@ master.menu.user-account.become-consumer = Become a consumer
 master.menu.user-account.consumer-profile = Consumer profile
 master.menu.user-account.become-customer = Become a customer
 master.menu.user-account.customer-profile = Customer profile
+master.menu.user-account.become-manager = Become a manager
+master.menu.user-account.manager-profile = Manager profile
 
 
 # master.menu.technician ##########################################################

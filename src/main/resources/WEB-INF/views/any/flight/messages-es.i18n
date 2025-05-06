@@ -1,0 +1,35 @@
+any.flight.form.title = Formulario vuelo
+any.flight.list.title = Lista de vuelos
+
+any.flight.form.label.tag = Etiqueta:
+any.flight.form.label.airline = Aerolínea: 
+any.flight.form.label.indication = Transporte:
+any.flight.form.label.cost = Coste:
+any.flight.form.label.description = Descrición (Opcional):
+
+		
+any.flight.form.button.legs = Tramos
+any.flight.form.button.update = Actualizar
+any.flight.form.button.delete = Borrar
+any.flight.form.button.publish = Publicar
+any.flight.form.button.create = Crear
+
+any.flight.list.label.tag = Etiqueta
+any.flight.list.label.indication = Transporte
+any.flight.list.label.cost = Coste
+any.flight.list.label.originCity = Ciudad Origen
+any.flight.list.label.destinationCity = Ciudad Destino
+any.flight.list.label.scheduledDeparture = Horario Salida
+any.flight.list.label.scheduledArrival = Horario Llegada
+any.flight.list.label.layovers = Aterrizajes
+any.flight.list.label.description = Descripción
+
+any.flight.list.button.create = Crear
+
+any.flight.form.label.draftMode = Borrador
+any.flight.form.label.scheduledDeparture = Horario de Salida
+any.flight.form.label.scheduledArrival = Horario de Llegada
+any.flight.form.label.originCity = Ciudad Origen
+any.flight.form.label.destinationCity = Ciudad Destino
+any.flight.form.label.layovers = Aterrizajes
+any.flight.form.label.airline = Aerolínea

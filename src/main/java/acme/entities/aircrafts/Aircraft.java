@@ -4,6 +4,7 @@ package acme.entities.aircrafts;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 import javax.validation.Valid;
 
 import acme.client.components.basis.AbstractEntity;
@@ -60,5 +61,11 @@ public class Aircraft extends AbstractEntity {
 	@ManyToOne(optional = false)
 	@Valid
 	private Airline				airline;
+
+
+	@Transient
+	public String getAircraftLabel() {
+		return String.format("%s - %s - Passangers: %s", this.getRegistrationNumber(), this.getModel(), this.getNumberPassengers());
+	}
 
 }

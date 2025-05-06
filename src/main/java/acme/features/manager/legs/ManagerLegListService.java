@@ -1,17 +1,20 @@
 
 package acme.features.manager.legs;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
-import java.util.stream.Collectors;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import acme.client.components.models.Dataset;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
+import acme.entities.flights.Flight;
 import acme.entities.legs.Leg;
-import acme.realms.Manager;
+import acme.realms.manager.Manager;
 
 @GuiService
 public class ManagerLegListService extends AbstractGuiService<Manager, Leg> {
@@ -22,10 +25,16 @@ public class ManagerLegListService extends AbstractGuiService<Manager, Leg> {
 
 	@Override
 	public void authorise() {
+		final boolean showCreate;
 		int managerId = super.getRequest().getPrincipal().getActiveRealm().getId();
 		int flightId = super.getRequest().getData("flightId", int.class);
-		Manager manager = this.repository.findFlightById(flightId).getManager();
+
+		Flight flight = this.repository.findFlightById(flightId);
+		showCreate = flight.isDraftMode() && super.getRequest().getPrincipal().hasRealm(flight.getManager());
+		Manager manager = flight.getManager();
+
 		boolean status = super.getRequest().getPrincipal().hasRealm(manager) && managerId == manager.getId();
+		super.getResponse().addGlobal("showCreate", showCreate);
 		super.getResponse().setAuthorised(status);
 	}
 
@@ -33,12 +42,11 @@ public class ManagerLegListService extends AbstractGuiService<Manager, Leg> {
 	public void load() {
 		int flightId = super.getRequest().getData("flightId", int.class);
 		Collection<Leg> legs;
-		Collection<Leg> orderedByMomentLegs;
 
 		legs = this.repository.findAllLegsByFlightId(flightId);
+		List<Leg> orderedByMomentLegs = new ArrayList<>(legs);
 
-		orderedByMomentLegs = legs.stream().sorted(Comparator.comparing(Leg::getScheduledDeparture)).collect(Collectors.toList());
-
+		Collections.sort(orderedByMomentLegs, Comparator.comparing(Leg::getScheduledDeparture));
 		super.getResponse().addGlobal("flightId", flightId);
 		super.getBuffer().addData(orderedByMomentLegs);
 

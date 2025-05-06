@@ -10,7 +10,7 @@ import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.flights.Flight;
 import acme.entities.legs.Leg;
-import acme.realms.Manager;
+import acme.realms.manager.Manager;
 
 @GuiService
 public class ManagerFlightShowService extends AbstractGuiService<Manager, Flight> {
@@ -21,16 +21,20 @@ public class ManagerFlightShowService extends AbstractGuiService<Manager, Flight
 
 	@Override
 	public void authorise() {
-		boolean status;
-		int masterId;
+		boolean status = false;
+		Integer masterId;
 		Flight flight;
 		Manager manager;
 
 		int managerId = super.getRequest().getPrincipal().getActiveRealm().getId();
-		masterId = super.getRequest().getData("id", int.class);
-		flight = this.repository.findFlightById(masterId);
-		manager = flight == null ? null : flight.getManager();
-		status = (super.getRequest().getPrincipal().hasRealm(manager) || flight != null) && managerId == manager.getId();
+		if (!super.getRequest().getData().isEmpty()) {
+			masterId = super.getRequest().getData("id", Integer.class);
+			if (masterId != null) {
+				flight = this.repository.findFlightById(masterId);
+				manager = flight == null ? null : flight.getManager();
+				status = flight != null && super.getRequest().getPrincipal().hasRealm(manager) && managerId == manager.getId();
+			}
+		}
 
 		super.getResponse().setAuthorised(status);
 	}
