@@ -26,7 +26,15 @@ public class AnyLegShowService extends AbstractGuiService<Any, Leg> {
 
 	@Override
 	public void authorise() {
-		super.getResponse().setAuthorised(true);
+		boolean status;
+		int id;
+		Leg leg;
+
+		id = super.getRequest().getData("id", int.class);
+		leg = this.repository.findLegById(id);
+		status = leg != null && !leg.isDraftMode();
+
+		super.getResponse().setAuthorised(status);
 	}
 
 	@Override

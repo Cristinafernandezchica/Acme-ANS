@@ -34,7 +34,7 @@ flight-29,"Lo",true,EUR 500000.00,"洛伦·伊普森",manager-01,true
 flight-30,"Lo",true,EUR 500000.00,"<marquee>Hacked</marquee>",manager-01,true
 flight-31,"Lo",true,EUR 500000.00,"<script>alert(‘Hacked!’);</script>",manager-01,true
 flight-32,"Lo",true,EUR 500000.00,"' or 'A' = 'A",manager-01,true
-flight-33,"Lo",true,EUR 500000.00,"",manager-01,true
+flight-33,"Lo",true,EUR 500000.00,"",manager-01,false
 
 # manager - variations eliminated
 flight-34,"Lorem ipsum dolor sit ame",true,EUR 500000.00,"Lorem ipsum dolor sit amet,consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",manager-01,true

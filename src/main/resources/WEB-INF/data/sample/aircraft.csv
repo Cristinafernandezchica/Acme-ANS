@@ -49,3 +49,5 @@ aircraft-42,"Airbus 360","42",250,2400,ACTIVE_SERVICE,"Lorem ipsum dolor sit ame
 aircraft-43,"Airbus 360","43",250,2400,ACTIVE_SERVICE,"L",airline-01
 aircraft-44,"Airbus 360","44",250,2400,ACTIVE_SERVICE,"",airline-01
 aircraft-45,"Airbus 360","45",250,2400,ACTIVE_SERVICE,"",airline-01
+
+aircraft-46,"Boeing","46",245,2600,ACTIVE_SERVICE,"",airline-02
