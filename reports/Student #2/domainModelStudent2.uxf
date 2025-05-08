@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="15.1">
-  <zoom_level>3</zoom_level>
+  <zoom_level>1</zoom_level>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>33</x>
-      <y>180</y>
-      <w>255</w>
-      <h>51</h>
+      <x>118</x>
+      <y>488</y>
+      <w>85</w>
+      <h>19</h>
     </coordinates>
     <panel_attributes>&lt;&lt;AbstractEntity&gt;&gt;
+@ValidBooking
 booking::Booking 
 --
-+ locatorCode: String {Mandatory, Column(unique=true), ValidString(pattern = "^[A-Z0-9]{6,8}$")}
-+ purchaseMoment: Date {Mandatory, Temporal(TemporalType.TIMESTAMP), ValidMoment(min = "2000/01/01 00:00", past = true)}
++ locatorCode: String {Mandatory, ValidString(pattern = "^[A-Z0-9]{6,8}$"), Column(unique=true)}
++ purchaseMoment: Date {Mandatory, ValidMoment(min = "2000/01/01 00:00", past = true), Temporal(TemporalType.TIMESTAMP)}
 + travelClass: TravelClass {Mandatory, Automapped}
 + price: Money {Mandatory, ValidMoney(min = 0, max = 10000000.00), Automapped}
 - lastCardNibble: String {Optional, ValidString(pattern = "^\\d{4}$"), Automapped}
@@ -25,10 +26,10 @@ booking::Booking
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>105</x>
-      <y>114</y>
-      <w>48</w>
-      <h>24</h>
+      <x>142</x>
+      <y>467</y>
+      <w>16</w>
+      <h>8</h>
     </coordinates>
     <panel_attributes>&lt;&lt;AbstractEntity&gt;&gt;
 flights::Flight
@@ -39,44 +40,46 @@ flights::Flight
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>93</x>
-      <y>264</y>
-      <w>51</w>
-      <h>27</h>
+      <x>138</x>
+      <y>517</y>
+      <w>41</w>
+      <h>10</h>
     </coordinates>
     <panel_attributes>&lt;&lt;AbstractEntity&gt;&gt;
-BookingRecord
+@ValidBookingRecord
+bookingRecord::BookingRecord
 --
-+ booking: Booking
-+ passenger: Passenger</panel_attributes>
++ booking: Booking {Mandatory, Valid, ManyToOne}
++ passenger: Passenger {Mandatory, Valid, ManyToOne}</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>48</x>
-      <y>339</y>
-      <w>240</w>
-      <h>42</h>
+      <x>123</x>
+      <y>542</y>
+      <w>80</w>
+      <h>17</h>
     </coordinates>
     <panel_attributes>&lt;&lt;AbstractEntity&gt;&gt;
+@ValidPassenger
 passenger::Passenger
 --
-+ fullName: String {Mandatory, Automapped, ValidString(min=1, max = 255)}
-+ email: String {Mandatory, Automapped, ValidEmail}
-+ passportNumber: String {Mandatory, Automapped, ValidString(pattern = "^[A-Z0-9]{6,9}$")}
-+ dateOfBirth: Date {Mandatory, Temporal(TemporalType.TIMESTAMP), ValidMoment(min = "2000/01/01 00:00", past = true)}
-- specialNeeds: String {Optional, Automapped, ValidString(max = 50)}
++ fullName: String {Mandatory, ValidString(min=1, max = 255), Automapped}
++ email: String {Mandatory, ValidEmail, Automapped}
++ passportNumber: String {Mandatory, ValidString(pattern = "^[A-Z0-9]{6,9}$"), Automapped}
++ dateOfBirth: Date {Mandatory, ValidMoment(min = "2000/01/01 00:00", past = true), Temporal(TemporalType.TIMESTAMP)}
+- specialNeeds: String {Optional, ValidString(max = 50), Automapped}
 + draftMode: boolean {Mandatory, Automapped}</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>216</x>
-      <y>129</y>
-      <w>51</w>
-      <h>24</h>
+      <x>179</x>
+      <y>472</y>
+      <w>17</w>
+      <h>8</h>
     </coordinates>
     <panel_attributes>&lt;&lt;Enumeration&gt;&gt;
 booking::TravelClass
@@ -88,90 +91,122 @@ BUSINESS</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>111</x>
-      <y>135</y>
-      <w>27</w>
-      <h>51</h>
+      <x>144</x>
+      <y>474</y>
+      <w>9</w>
+      <h>16</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=0..1
 m2=0..n
 flying at &gt;</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;150.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;140.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>348</x>
-      <y>177</y>
-      <w>189</w>
-      <h>45</h>
+      <x>221</x>
+      <y>488</y>
+      <w>63</w>
+      <h>17</h>
     </coordinates>
     <panel_attributes>&lt;&lt;AbstractRole&gt;&gt;
+@ValidCustomer
 realms::Customer
 --
-+ identifier: String {Mandatory, Column(unique = true), ValidString(pattern = "^[A-Z]{2,3}\\d{6}$")}
-+ phoneNumber: String {Mandatory, Automapped, ValidPhoneNumber}
-+ address: String {Mandatory, Automapped, ValidString(min = 1, max = 255)}
-+ city: String {Mandatory, Automapped, ValidString(min = 1, max = 50)}
-+ country: String {Mandatory, Automapped, ValidString(min = 1, max = 50)}
-- earnedPoints: Integer {Optional, Automapped, ValidNumber(min = 0, max = 500000)}</panel_attributes>
++ identifier: String {Mandatory, ValidString(pattern = "^[A-Z]{2,3}\\d{6}$"), Column(unique = true)}
++ phoneNumber: String {Mandatory, ValidPhoneNumber, Automapped}
++ address: String {Mandatory, ValidString(min = 1, max = 255), Automapped}
++ city: String {Mandatory, ValidString(min = 1, max = 50), Automapped}
++ country: String {Mandatory, ValidString(min = 1, max = 50), Automapped}
+- earnedPoints: Integer {Optional, ValidNumber(min = 0, max = 500000), Automapped}</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>111</x>
-      <y>288</y>
-      <w>33</w>
-      <h>57</h>
+      <x>144</x>
+      <y>526</y>
+      <w>11</w>
+      <h>18</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=0..n
 m2=0..1
 booked by &gt;</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;170.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;160.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>111</x>
-      <y>228</y>
-      <w>36</w>
-      <h>42</h>
+      <x>144</x>
+      <y>506</y>
+      <w>12</w>
+      <h>13</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=0..1
 m2=0..n
 registered to &gt;</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;120.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;110.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>285</x>
-      <y>198</y>
-      <w>69</w>
-      <h>15</h>
+      <x>202</x>
+      <y>495</y>
+      <w>21</w>
+      <h>5</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=0..n
 m2=0..1
 bought by &gt;</panel_attributes>
-    <additional_attributes>10.0;20.0;210.0;20.0</additional_attributes>
+    <additional_attributes>10.0;20.0;190.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>285</x>
-      <y>219</y>
-      <w>168</w>
-      <h>153</h>
+      <x>202</x>
+      <y>504</y>
+      <w>34</w>
+      <h>49</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=0..n
 m2=0..1
 &lt; register</panel_attributes>
-    <additional_attributes>10.0;480.0;530.0;480.0;520.0;10.0</additional_attributes>
+    <additional_attributes>10.0;460.0;260.0;460.0;260.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>243</x>
+      <y>521</y>
+      <w>39</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;AbstractForm&gt;&gt;
+form::CustomerDashboard
+--
++ lastFiveDestinations: List&lt;String&gt;
++ moneySpentLastYearDisplay: String
++ bookingCountByTravelClass: String
++ bookingCountLastFiveYears: Integer
++ bookingAverageCostLastFiveYearsDisplay: String
++ bookingMinCostLastFiveYearsDisplay: String
++ bookingMaxCostLastFiveYearsDisplay: String
++ bookingStdDevCostLastFiveYearsDisplay: String
++ passengerCount: Integer
++ passengerAverage: Double
++ passengerMin: Integer
++ passengerMax: Integer
++ passengerStdDev: Double
+
+--
++ moneySpentLastYear(): List&lt;Money&gt;
++ bookingCostsLastFiveYears(): List&lt;Money&gt;
+</panel_attributes>
+    <additional_attributes/>
   </element>
 </diagram>
