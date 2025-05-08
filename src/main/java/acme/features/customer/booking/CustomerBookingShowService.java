@@ -2,6 +2,8 @@
 package acme.features.customer.booking;
 
 import java.util.Collection;
+import java.util.Comparator;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,9 @@ import acme.client.services.GuiService;
 import acme.entities.booking.Booking;
 import acme.entities.booking.TravelClass;
 import acme.entities.flights.Flight;
+import acme.entities.legs.Leg;
+import acme.entities.recommendation.Recommendation;
+import acme.features.customer.recommendation.RecommendationApiService;
 import acme.realms.Customer;
 
 @GuiService
@@ -22,7 +27,10 @@ public class CustomerBookingShowService extends AbstractGuiService<Customer, Boo
 	// Internal state ---------------------------------------------------------
 
 	@Autowired
-	private CustomerBookingRepository repository;
+	private CustomerBookingRepository	repository;
+
+	@Autowired
+	private RecommendationApiService	recommendationService;
 
 	// AbstractGuiService interface -------------------------------------------
 
@@ -81,6 +89,24 @@ public class CustomerBookingShowService extends AbstractGuiService<Customer, Boo
 			dataset.put("flight", generalChoices.getSelected() != null ? generalChoices.getSelected().getKey() : "0");
 			dataset.put("flights", generalChoices);
 
+			// Añadir las recomendaciones según el destino
+			if (booking.getFlight() != null) {
+				List<Leg> orderedLegs = this.repository.findLegsByFlightId(booking.getFlight().getId()).stream().sorted(Comparator.comparing(Leg::getScheduledDeparture)).collect(Collectors.toList());
+				Leg lastLeg = orderedLegs.get(orderedLegs.size() - 1);
+
+				String destinationCity = booking.getFlight().destinationCity();
+				String destinationCountry = lastLeg.getArrivalAirport().getCountry();
+
+				if (destinationCity != null && destinationCountry != null) {
+					List<Recommendation> recommendations = this.recommendationService.fetchRecommendationsForCityAndCountry(destinationCity, destinationCountry);
+
+					StringBuilder recommendationsText = new StringBuilder();
+					for (Recommendation rec : recommendations)
+						recommendationsText.append(rec.getTitle()).append(" - ").append(rec.getCategory()).append("\n").append(rec.getEstimatedCost()).append("\n").append(rec.getDescription()).append("\n\n");
+
+					dataset.put("recommendationsDisplay", recommendationsText.toString());
+				}
+			}
 		} else {
 			// Si la booking está en draftmode, usa solo vuelos disponibles
 			boolean flightStillValid = flights.contains(booking.getFlight());
