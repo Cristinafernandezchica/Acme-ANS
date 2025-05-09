@@ -26,7 +26,9 @@ public class AssistanceAgentClaimCreateService extends AbstractGuiService<Assist
 
 	@Override
 	public void authorise() {
-		super.getResponse().setAuthorised(true);
+		boolean status;
+		status = super.getRequest().getPrincipal().hasRealmOfType(AssistanceAgent.class);
+		super.getResponse().setAuthorised(status);
 	}
 
 	@Override
@@ -86,8 +88,10 @@ public class AssistanceAgentClaimCreateService extends AbstractGuiService<Assist
 			isCorrectLeg = legs.contains(leg);
 		}
 
-		super.state(isCorrectType, "type", "acme.validation.claim.type.message");
-		super.state(isCorrectLeg, "leg", "acme.validation.claim.leg.message");
+		if (!isCorrectType)
+			throw new IllegalStateException("It is not posible to create a claim with this type");
+		if (!isCorrectLeg)
+			throw new IllegalStateException("It is not posible to create a claim with this leg");
 		super.state(isNullLeg, "leg", "acme.validation.claim.legNull.message");
 		super.state(claim.isDraftMode(), "draftMode", "acme.validation.claim.draftMode.message");
 	}

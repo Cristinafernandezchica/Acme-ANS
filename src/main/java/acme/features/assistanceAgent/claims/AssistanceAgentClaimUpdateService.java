@@ -25,15 +25,17 @@ public class AssistanceAgentClaimUpdateService extends AbstractGuiService<Assist
 
 	@Override
 	public void authorise() {
-		boolean status;
+		boolean status = false;
 		int id;
 		Claim claim;
 		AssistanceAgent assistanceAgent;
 
-		id = super.getRequest().getData("id", int.class);
-		claim = this.repository.findClaimById(id);
-		assistanceAgent = claim == null ? null : claim.getAssistanceAgent();
-		status = super.getRequest().getPrincipal().hasRealm(assistanceAgent) && claim != null && claim.isDraftMode();
+		if (!super.getRequest().getData().isEmpty() && super.getRequest().getData() != null) {
+			id = super.getRequest().getData("id", int.class);
+			claim = this.repository.findClaimById(id);
+			assistanceAgent = claim == null ? null : claim.getAssistanceAgent();
+			status = super.getRequest().getPrincipal().hasRealm(assistanceAgent) && claim != null && claim.isDraftMode();
+		}
 
 		super.getResponse().setAuthorised(status);
 	}
@@ -89,8 +91,10 @@ public class AssistanceAgentClaimUpdateService extends AbstractGuiService<Assist
 			isCorrectLeg = legs.contains(leg);
 		}
 
-		super.state(isCorrectType, "type", "acme.validation.claim.type.message");
-		super.state(isCorrectLeg, "leg", "acme.validation.claim.leg.message");
+		if (!isCorrectType)
+			throw new IllegalStateException("It is not posible to update a claim with this type");
+		if (!isCorrectLeg)
+			throw new IllegalStateException("It is not posible to update a claim with this leg");
 		super.state(isNullLeg, "leg", "acme.validation.claim.legNull.message");
 		super.state(claim.isDraftMode(), "draftMode", "acme.validation.claim.draftMode.message");
 	}
