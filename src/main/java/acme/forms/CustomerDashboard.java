@@ -13,7 +13,7 @@ import lombok.Setter;
 @Setter
 public class CustomerDashboard extends AbstractForm {
 
-	private static final long	serialVersionUID				= 1L;
+	private static final long	serialVersionUID			= 1L;
 
 	private List<String>		lastFiveDestinations;
 	private String				moneySpentLastYearDisplay;
@@ -29,16 +29,12 @@ public class CustomerDashboard extends AbstractForm {
 	private Integer				passengerMax;
 	private Double				passengerStdDev;
 
-	// Campos internos para Money (opcionales para cálculo)
-	private List<Money>			moneySpentLastYear				= new ArrayList<>();
-	private List<Money>			bookingAverageCostLastFiveYears	= new ArrayList<>();
-	private List<Money>			bookingMinCostLastFiveYears		= new ArrayList<>();
-	private List<Money>			bookingMaxCostLastFiveYears		= new ArrayList<>();
-	private List<Money>			bookingStdDevCostLastFiveYears	= new ArrayList<>();
+	// Campos para almacenar los Money directamente
+	private List<Money>			moneySpentLastYear			= new ArrayList<>();
+	private List<Money>			bookingCostsLastFiveYears	= new ArrayList<>();
 
 
-	// Constructor para valores por defecto
 	public CustomerDashboard() {
-
+		// Constructor por defecto
 	}
 }

@@ -18,6 +18,7 @@
 			<acme:submit code="customer.booking.form.button.create" action="/customer/booking/create"/>
 		</jstl:when>	
 		<jstl:when test="${acme:anyOf(_command, 'show|update|delete|publish') && !draftMode}"  >		
+			<acme:input-textarea code="customer.booking.recommendations.title" path="recommendationsDisplay" readonly="true"/>
 			<acme:button code="customer.booking.form.show.passengers" action="/customer/passenger/list?bookingId=${bookingId}"/>
 		</jstl:when> 
 		<jstl:when test="${acme:anyOf(_command, 'show|update|delete|publish') && draftMode}"  >		

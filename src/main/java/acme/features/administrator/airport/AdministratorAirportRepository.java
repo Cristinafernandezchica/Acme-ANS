@@ -2,6 +2,7 @@
 package acme.features.administrator.airport;
 
 import java.util.Collection;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -20,5 +21,8 @@ public interface AdministratorAirportRepository extends AbstractRepository {
 
 	@Query("SELECT (COUNT(a) + COUNT(al)) FROM Airport a, Airline al WHERE (a.iataCode = :iataCode OR al.iataCode = :iataCode) AND (a.id <> :airportId OR al.iataCode = :iataCode)")
 	long countByIataCodeExcludingAirport(String iataCode, int airportId);
+
+	@Query("select a from Airport a where a.iataCode = :iataCode")
+	Optional<Airport> findByIataCode(String iataCode);
 
 }
