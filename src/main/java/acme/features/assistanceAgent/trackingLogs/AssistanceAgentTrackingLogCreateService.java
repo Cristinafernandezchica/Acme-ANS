@@ -81,7 +81,7 @@ public class AssistanceAgentTrackingLogCreateService extends AbstractGuiService<
 		isCorrectStatus = statuses.contains(status);
 
 		percentage = super.getRequest().getData("resolutionPercentage", Double.class);
-		if (percentage.equals(100.00) && status.equals(TrackingLogStatus.PENDING))
+		if (percentage.equals(100.00) && status.equals(TrackingLogStatus.PENDING) || !percentage.equals(100.00) && !status.equals(TrackingLogStatus.PENDING))
 			isCorrectPercentageStatus = false;
 
 		claimId = super.getRequest().getData("claimId", int.class);
@@ -99,9 +99,10 @@ public class AssistanceAgentTrackingLogCreateService extends AbstractGuiService<
 				isCorrectPercentage = false;
 		}
 
+		if (!isCorrectStatus)
+			throw new IllegalStateException("It is not posible to create a tracking log with this status");
 		super.state(isCorrectPercentage, "resolutionPercentage", "acme.validation.trackingLog.resolutionPercentage.message");
 		super.state(isCorrectPercentageStatus, "status", "acme.validation.trackingLog.resolutionPercentageStatus.message");
-		super.state(isCorrectStatus, "status", "acme.validation.trackingLog.status.message");
 		super.state(!trackingLog.getClaim().isDraftMode(), "draftMode", "acme.validation.claim.draftMode.message");
 	}
 
