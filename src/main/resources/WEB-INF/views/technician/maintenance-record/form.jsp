@@ -6,11 +6,30 @@
 
 <acme:form>
 
-<acme:input-select code = "technician.maintenance-record.form.label.aircraft" path = "aircraft" choices="${aircrafts}"/>
+<jstl:choose>
+
+	<jstl:when test ="${draftMode != false}">
+		<acme:input-select code = "technician.maintenance-record.form.label.aircraft" path = "aircraft" choices="${aircrafts}"/>
+</jstl:when>
+	<jstl:when test ="${draftMode == false}">
+		<acme:input-select code = "technician.maintenance-record.form.label.aircraft" path = "aircraft" choices="${aircrafts}" readonly="true"/>
+</jstl:when>
+
+</jstl:choose>
 <acme:input-select code= "technician.maintenance-record.form.label.status" path="status" choices="${statuses}"/>
 <acme:input-moment code="technician.maintenance-record.form.label.inspectionDueDate" path= "inspectionDueDate"/>
-<acme:input-money code="technician.maintenance-record.form.label.estimatedCost" path= "estimatedCost"/>
-<acme:input-textbox code="technician.maintenance-record.form.label.notes" path= "notes"/>
+
+<jstl:choose>
+
+	<jstl:when test ="${draftMode !=false}">
+		<acme:input-money code="technician.maintenance-record.form.label.estimatedCost" path= "estimatedCost"/>
+</jstl:when>
+	<jstl:when test ="${draftMode == false}">
+		<acme:input-money code="technician.maintenance-record.form.label.estimatedCost" path= "estimatedCost" readonly="true"/>
+</jstl:when>
+</jstl:choose>
+
+<acme:input-textbox code="technician.maintenance-record.form.label.notes" path= "notes" />
 
 
 <jstl:choose>

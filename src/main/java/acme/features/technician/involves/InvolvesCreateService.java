@@ -30,9 +30,11 @@ public class InvolvesCreateService extends AbstractGuiService<Technician, Involv
 		maintenanceRecordId = super.getRequest().getData("id", int.class);
 		Technician technician = (Technician) super.getRequest().getPrincipal().getActiveRealm();
 
+		boolean showCreate;
 		mr = this.repository.findMRById(maintenanceRecordId);
-
-		if (mr.getTechnician().equals(technician))
+		showCreate = mr.isDraftMode();
+		super.getResponse().addGlobal("showCreate", showCreate);
+		if (mr.getTechnician().equals(technician) && mr.isDraftMode())
 			authored = true;
 
 		super.getResponse().setAuthorised(authored);
@@ -60,10 +62,10 @@ public class InvolvesCreateService extends AbstractGuiService<Technician, Involv
 	public void validate(final Involves involves) {
 		if (!this.getBuffer().getErrors().hasErrors("task") && involves.getTask() != null)
 			super.state(!involves.getTask().isDraftMode(), "task", "acme.validation.technician.involves.message", involves);
-		Task newTask = super.getRequest().getData("task", Task.class);
+		Integer newTask = super.getRequest().getData("task", int.class);
 		Collection<Task> publishTasks = this.repository.findAllPublishTasks();
-		if (!this.getBuffer().getErrors().hasErrors("task") && involves.getTask() != null)
-			super.state(newTask != null || publishTasks.contains(newTask), "task", "acme.validation.technician.invalidTask.message", involves);
+		if (newTask == null || !publishTasks.stream().map(x -> x.getId()).toList().contains(newTask))
+			throw new IllegalStateException("Task not valid");
 	}
 
 	@Override
@@ -79,7 +81,7 @@ public class InvolvesCreateService extends AbstractGuiService<Technician, Involv
 		Collection<Task> tasks;
 
 		tasks = this.repository.findAllPublishTasks();
-		choiceTask = SelectChoices.from(tasks, "id", involves.getTask());
+		choiceTask = SelectChoices.from(tasks, "taskLabel", involves.getTask());
 
 		dataset = super.unbindObject(involves, "task");
 
