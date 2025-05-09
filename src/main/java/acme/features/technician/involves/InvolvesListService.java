@@ -22,13 +22,15 @@ public class InvolvesListService extends AbstractGuiService<Technician, Involves
 	@Override
 	public void authorise() {
 		boolean authored = false;
+		boolean showCreate;
 		MaintenanceRecord mr;
 		int maintenanceRecordId;
 		maintenanceRecordId = super.getRequest().getData("id", int.class);
 		Technician technician = (Technician) super.getRequest().getPrincipal().getActiveRealm();
 
 		mr = this.repository.findMRById(maintenanceRecordId);
-
+		showCreate = mr.isDraftMode();
+		super.getResponse().addGlobal("showCreate", showCreate);
 		if (mr.getTechnician().equals(technician))
 			authored = true;
 
@@ -51,7 +53,6 @@ public class InvolvesListService extends AbstractGuiService<Technician, Involves
 	public void unbind(final Involves involves) {
 
 		Dataset dataset;
-
 		dataset = super.unbindObject(involves, "task.id", "task.type", "task.priority");
 
 		super.getResponse().addData(dataset);

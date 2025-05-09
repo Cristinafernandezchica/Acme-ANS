@@ -26,15 +26,16 @@ public class InvolvesShowService extends AbstractGuiService<Technician, Involves
 	public void authorise() {
 		boolean authored = false;
 		Involves involves;
+		boolean showCreate;
 		int involvesId;
 		involvesId = super.getRequest().getData("id", int.class);
 		Technician technician = (Technician) super.getRequest().getPrincipal().getActiveRealm();
 
 		involves = this.repository.findInvolvesById(involvesId);
-
+		showCreate = involves.getMaintenanceRecord().isDraftMode();
 		if (involves.getMaintenanceRecord().getTechnician().equals(technician))
 			authored = true;
-
+		super.getResponse().addGlobal("showCreate", showCreate);
 		super.getResponse().setAuthorised(authored);
 
 	}
@@ -60,7 +61,7 @@ public class InvolvesShowService extends AbstractGuiService<Technician, Involves
 
 		tasks = this.repository.findAllTasks();
 
-		selectTask = SelectChoices.from(tasks, "id", involves.getTask());
+		selectTask = SelectChoices.from(tasks, "taskLabel", involves.getTask());
 
 		dataset = super.unbindObject(involves, "task");
 		dataset.put("tasks", selectTask);

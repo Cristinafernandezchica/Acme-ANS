@@ -61,9 +61,9 @@ public class MaintenanceRecordPublisService extends AbstractGuiService<Technicia
 		int publishedNumberTasks = this.repository.findAllInvolvesByMRId(id).stream().filter(x -> x.getTask().isDraftMode() == false).toList().size();
 
 		if (!this.getBuffer().getErrors().hasErrors("notes") && mr.isDraftMode() == true)
-			super.state(unpublishedNumberTasks == 0, "notes", "acme.validation.technician.maintenance-record.unpublished-tasks.message", mr);
+			super.state(unpublishedNumberTasks == 0, "*", "acme.validation.technician.maintenance-record.unpublished-tasks.message", mr);
 		if (!this.getBuffer().getErrors().hasErrors("notes") && mr.isDraftMode() == true)
-			super.state(publishedNumberTasks > 0, "notes", "acme.validation.technician.maintenance-record.published-tasks.message", mr);
+			super.state(publishedNumberTasks > 0, "*", "acme.validation.technician.maintenance-record.published-tasks.message", mr);
 
 	}
 

@@ -58,8 +58,10 @@ public class MaintenanceRecordUpdateService extends AbstractGuiService<Technicia
 
 	@Override
 	public void bind(final MaintenanceRecord mr) {
-
-		super.bindObject(mr, "status", "inspectionDueDate", "estimatedCost", "notes", "aircraft");
+		if (mr.isDraftMode())
+			super.bindObject(mr, "status", "inspectionDueDate", "estimatedCost", "notes", "aircraft");
+		else
+			super.bindObject(mr, "status", "inspectionDueDate", "notes");
 	}
 
 	@Override
@@ -83,7 +85,7 @@ public class MaintenanceRecordUpdateService extends AbstractGuiService<Technicia
 
 		statuses = SelectChoices.from(Status.class, mr.getStatus());
 		aircrafts = this.repository.findAllAircraft();
-		choiceAircraft = SelectChoices.from(aircrafts, "id", mr.getAircraft());
+		choiceAircraft = SelectChoices.from(aircrafts, "aircraftLabel", mr.getAircraft());
 
 		dataset = super.unbindObject(mr, "status", "inspectionDueDate", "estimatedCost", "notes", "aircraft", "moment", "draftMode");
 

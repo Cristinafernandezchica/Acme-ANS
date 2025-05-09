@@ -29,8 +29,7 @@ public class InvolvesDeleteService extends AbstractGuiService<Technician, Involv
 		Technician technician = (Technician) super.getRequest().getPrincipal().getActiveRealm();
 
 		involves = this.repository.findInvolvesById(involvesId);
-
-		if (involves.getMaintenanceRecord().getTechnician().equals(technician))
+		if (involves.getMaintenanceRecord().getTechnician().equals(technician) && involves.getMaintenanceRecord().isDraftMode())
 			authored = true;
 
 		super.getResponse().setAuthorised(authored);
@@ -71,7 +70,7 @@ public class InvolvesDeleteService extends AbstractGuiService<Technician, Involv
 
 		tasks = this.repository.findAllTasks();
 
-		selectTask = SelectChoices.from(tasks, "id", involves.getTask());
+		selectTask = SelectChoices.from(tasks, "taskLabel", involves.getTask());
 
 		dataset = super.unbindObject(involves, "task");
 		dataset.put("tasks", selectTask);

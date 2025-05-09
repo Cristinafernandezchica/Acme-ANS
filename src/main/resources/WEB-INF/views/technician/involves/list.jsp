@@ -9,4 +9,9 @@
 	<acme:list-column code="technician.involves.list.label.taskPriority" path="task.priority" width="33%"/>
 	<acme:list-column code="technician.involves.list.label.taskType" path="task.type" width="33%"/>
 </acme:list>
+
+<jstl:choose>
+	<jstl:when test ="${showCreate == true}">
 <acme:button code="technician.involves.list.button.create" action ="/technician/involves/create?id=${$request.data.id}"/>
+</jstl:when>
+</jstl:choose>

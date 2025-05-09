@@ -83,10 +83,12 @@ acme.validation.leg.arrivalAirport = El aeropuerto de llegada del tramo no coinc
 
 acme.validation.length = Es muy largo
 
+acme.validation.service.aircraftDraftMode.message = no puedes modificar el aircraft si ya esta publicado
 acme.validation.service.inspectionDueDate.message = La fecha límite de revision no puede ser anterior al momento de inspección
 acme.validation.airport.iataCode.message = No puede usar un código IATA que ya esté en uso
 acme.validation.airline.iataCode.message = Código IATA ya en uso
 acme.validation.airline.foundationMoment.message = La fecha de fundación tiene que ser pasada
+acme.validation.service.estimatedCostDraftMode.message = no puedes modificar el costo estimado si esta no esta en modo borrador
 
 acme.validation.technician.involves.message = La tarea no puede estar en modo borrador
 acme.validation.technician.invalidTask.message = Esta es una task no valida

@@ -58,6 +58,7 @@ public class MaintenanceRecordCreateService extends AbstractGuiService<Technicia
 	public void validate(final MaintenanceRecord mr) {
 		if (!this.getBuffer().getErrors().hasErrors("inspectionDate") && mr.getInspectionDueDate() != null)
 			super.state(mr.getInspectionDueDate().after(mr.getMoment()), "inspectionDueDate", "acme.validation.service.inspectionDueDate.message", mr);
+
 	}
 
 	@Override
@@ -75,7 +76,7 @@ public class MaintenanceRecordCreateService extends AbstractGuiService<Technicia
 
 		statuses = SelectChoices.from(Status.class, mr.getStatus());
 		aircrafts = this.repository.findAllAircraft();
-		choiceAircraft = SelectChoices.from(aircrafts, "registrationNumber", mr.getAircraft());
+		choiceAircraft = SelectChoices.from(aircrafts, "aircraftLabel", mr.getAircraft());
 
 		dataset = super.unbindObject(mr, "status", "inspectionDueDate", "estimatedCost", "notes", "aircraft", "moment");
 
