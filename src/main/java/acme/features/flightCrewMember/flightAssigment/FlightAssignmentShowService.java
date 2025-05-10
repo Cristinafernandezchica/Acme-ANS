@@ -72,7 +72,7 @@ public class FlightAssignmentShowService extends AbstractGuiService<FlightCrewMe
 		flightcrewsDuties = SelectChoices.from(FlightCrewsDuty.class, flightAssignment.getFlightCrewsDuty());
 
 		legs = this.repository.findAllLegs();
-		legChoices = SelectChoices.from(legs, "flightNumber", flightAssignment.getLegRelated());
+		legChoices = SelectChoices.from(legs, "label", flightAssignment.getLegRelated());
 
 		availableFlightCrewMembers = this.repository.findAvailableFlightCrewMembers();
 		flightCrewMemberChoices = SelectChoices.from(availableFlightCrewMembers, "employeeCode", flightAssignment.getFlightCrewMemberAssigned());
