@@ -3,6 +3,7 @@ package acme.entities.airports;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Transient;
 
 import acme.client.components.basis.AbstractEntity;
 import acme.client.components.mappings.Automapped;
@@ -64,5 +65,12 @@ public class Airport extends AbstractEntity {
 	@ValidString(pattern = "^\\+?\\d{6,15}$")
 	@Automapped
 	private String					phoneNumber;
+
+
+	@Transient
+	public String getAirportLabel() {
+		return String.format("%s, %s (%s)", this.getCity(), this.getCountry(), this.getIataCode());
+
+	}
 
 }

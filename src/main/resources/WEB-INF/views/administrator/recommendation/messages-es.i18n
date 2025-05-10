@@ -1,0 +1,16 @@
+# Administrator Recommendation
+administrator.recommendation.form.title=Poblar Recomendaciones
+administrator.recommendation.form.label.airport=Ciudad del aeropuerto
+administrator.recommendation.form.label.title=Titulo
+administrator.recommendation.form.label.description=Descripción
+administrator.recommendation.form.label.category=Categoría
+administrator.recommendation.form.label.startDate=Fecha de inicio
+administrator.recommendation.form.label.endDate=Fecha de finalización
+administrator.recommendation.form.label.estimatedCost=Coste estimado
+administrator.recommendation.form.label.link=Página web adicional
+administrator.recommendation.form.button.populate=Añadir nueva recomendación
+
+# Errors
+administrator.recommendation.error.cityNotFound=Ciudad no encontrada
+administrator.recommendation.error.invalidDates=La fecha de finalización debe ser posterior a la de inicio
+administrator.recommendation.error.currency.not.valid= La moneda seleccionada no es valida

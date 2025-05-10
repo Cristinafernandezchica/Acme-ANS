@@ -32,6 +32,7 @@ master.menu.administrator.list-aircraft = List of aircrafts
 master.menu.administrator.list-airports = List of airports
 master.menu.administrator.list-airlines = List of airlines
 master.menu.administrator.list-bookings = List of bookings
+master.menu.administrator.populate-recommendations= Populate recommendations
 master.menu.administrator.populate-db-initial = Populate DB (initial)
 master.menu.administrator.populate-db-sample = Populate DB (samples)
 master.menu.administrator.shut-system-down = Shut system down

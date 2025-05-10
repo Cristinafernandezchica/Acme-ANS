@@ -25,4 +25,7 @@ public interface AdministratorAirportRepository extends AbstractRepository {
 	@Query("select a from Airport a where a.iataCode = :iataCode")
 	Optional<Airport> findByIataCode(String iataCode);
 
+	@Query("select count(a) > 0 from Airport a where a.city = :city")
+	boolean existsByCity(String city);
+
 }
