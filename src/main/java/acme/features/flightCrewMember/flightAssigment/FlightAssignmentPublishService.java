@@ -2,6 +2,7 @@
 package acme.features.flightCrewMember.flightAssigment;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -109,6 +110,15 @@ public class FlightAssignmentPublishService extends AbstractGuiService<FlightCre
 			boolean legNotPublished;
 			legNotPublished = !flightAssignment.getLegRelated().isDraftMode();
 			super.state(legNotPublished, "legRelated", "acme.validation.legNotPublished.message");
+
+			//Comprobación de leg no en vuelo
+			boolean legOnAir = false;
+			if (flightAssignment.getLegRelated().getStatus().equals(LegStatus.ON_TIME) || flightAssignment.getLegRelated().getStatus().equals(LegStatus.DELAYED)) {
+				Date departureTime = flightAssignment.getLegRelated().getScheduledDeparture();
+				Date arrivalTime = flightAssignment.getLegRelated().getScheduledDeparture();
+				legOnAir = MomentHelper.isInRange(MomentHelper.getCurrentMoment(), departureTime, arrivalTime);
+			}
+			super.state(legOnAir, "legRelated", "acme.validation.legOnAir.message");
 
 			// Comprobación de leg operada con la aerolínea del FCM
 			boolean legFromRightAirline;
