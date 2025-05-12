@@ -1,0 +1,11 @@
+flightCrewMember.dashboard.form.label.lastDestinationsAssigned = Últimos 5 destinos asignados
+flightCrewMember.dashboard.form.label.numberOfLegsMediumIncident = Número de vuelos con algún reporte de nivel incidencia entre 0 y 3
+flightCrewMember.dashboard.form.label.numberOfLegsHighIncident = Número de vuelos con algún reporte de nivel incidencia entre 4 y 7
+flightCrewMember.dashboard.form.label.crewMembersLastLeg = Número de vuelos con algún reporte de nivel incidencia entre 8 y 10
+flightCrewMember.dashboard.form.label.confirmedFlightAssignments = Asignaciones de vuelo confirmadas
+flightCrewMember.dashboard.form.label.pendingFlightAssignments = Asignaciones de vuelo pendientes
+flightCrewMember.dashboard.form.label.cancelledFlightAssignments = Asignaciones de vuelo canceladas
+flightCrewMember.dashboard.form.label.averageDeviationNumberOfFlights = Desviación media del número de asignaciones de vuelo del mes pasado
+flightCrewMember.dashboard.form.label.minimumDeviationNumberOfFlights = Desviación mínima del número de asignaciones de vuelo del mes pasado
+flightCrewMember.dashboard.form.label.maximumDeviationNumberOfFlights = Desviación máxima del número de asignaciones de vuelo del mes pasado
+flightCrewMember.dashboard.form.label.standardDeviationNumberOfFlights = Desviación estándar del número de asignaciones de vuelo del mes pasado
