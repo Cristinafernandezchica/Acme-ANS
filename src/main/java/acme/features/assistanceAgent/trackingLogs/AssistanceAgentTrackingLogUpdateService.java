@@ -68,6 +68,7 @@ public class AssistanceAgentTrackingLogUpdateService extends AbstractGuiService<
 		Collection<TrackingLogStatus> statuses;
 		TrackingLogStatus status;
 		int trackingLogId;
+		TrackingLog oldTrackingLog;
 		Double percentage;
 		Double minPercentage;
 		Collection<TrackingLog> trackingLogs;
@@ -85,17 +86,21 @@ public class AssistanceAgentTrackingLogUpdateService extends AbstractGuiService<
 
 		trackingLogId = super.getRequest().getData("id", int.class);
 		trackingLogs = this.repository.findTrackingLogsByClaimIdExcludingOne(trackingLog.getClaim().getId(), trackingLogId);
+		oldTrackingLog = this.repository.findTrackingLogById(trackingLogId);
 
 		if (!trackingLogs.isEmpty()) {
 			minPercentage = trackingLogs.stream().findFirst().map(t -> t.getResolutionPercentage()).orElse(0.00);
 			Long maximumTrackingLogs = trackingLogs.stream().filter(t -> t.getResolutionPercentage().equals(100.00)).count();
 			if (Long.valueOf(0).equals(maximumTrackingLogs))
-				isCorrectPercentage = percentage > minPercentage;
+				isCorrectPercentage = percentage > minPercentage || percentage.equals(oldTrackingLog.getResolutionPercentage());
 			else if (Long.valueOf(1).equals(maximumTrackingLogs)) {
 				TrackingLog maximumTrackingLog = trackingLogs.stream().findFirst().get();
-				isCorrectPercentageStatus = percentage.equals(100.00) && status.equals(maximumTrackingLog.getStatus());
+				if (percentage.equals(100.00))
+					isCorrectPercentageStatus = status.equals(maximumTrackingLog.getStatus());
+				else
+					isCorrectPercentage = percentage.equals(oldTrackingLog.getResolutionPercentage());
 			} else if (Long.valueOf(2).equals(maximumTrackingLogs))
-				isCorrectPercentage = false;
+				isCorrectPercentage = percentage.equals(oldTrackingLog.getResolutionPercentage());
 		}
 
 		if (!isCorrectStatus)
