@@ -16,6 +16,7 @@ assistance-agent.tracking-log.form.label.step = Step
 assistance-agent.tracking-log.form.label.resolutionPercentage = Resolution Percentage
 assistance-agent.tracking-log.form.label.resolution = Resolution
 assistance-agent.tracking-log.form.label.status = Status
+assistance-agent.tracking-log.form.placeholder.resolutionPercentage = 0.00
 
 assistance-agent.tracking-log.form.button.create = Create
 assistance-agent.tracking-log.form.button.update = Update

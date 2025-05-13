@@ -48,18 +48,20 @@ acme.validation.legFromRightAirline.message = Este vuelo no opera con la aerolí
 acme.validation.fcmAvailable.message = El asistente de vuelo no está disponible
 acme.validation.legCompatible.message = Este asistente de vuelo ya tiene un vuelo en esa fecha
 acme.validation.isConfirmedOrCancelled.message = La asignación del vuelo debe estar confirmada o denegada
-
 # Flight crew member - flight assignment's messages (antiHacking)
 acme.validation.isLegNull.message = El vuelo no puede estar vacío
+acme.validation.isFANull.message = La asignación de vuelo no debe estar vacío.
 acme.validation.isOriginalFlightCrewsDuty.message = No es el puesto original
 acme.validation.isOriginalLastUpdate.message = No es la ultima fecha de actualización original
 acme.validation.isOriginalCurrentStatus.message = No es el estado actual original
 acme.validation.isOriginalRemarks.message = No son las indicaciones originales
 acme.validation.isOriginalLeg.message = No es el vuelo original
 acme.validation.isOriginalFCM.message = No es el asistente de vuelo original
+acme.validation.existedLeg.message = El vuelo no existe
 
 # Activity log - activity log's messages (antiHacking)
 acme.validation.isOriginalRegistrationMoment.message = No es la fecha de registro original
+
 
 # Leg - leg's messages
 acme.validation.leg.same.aircraft.message = El avión es usado por otro tramo en el mismo horario

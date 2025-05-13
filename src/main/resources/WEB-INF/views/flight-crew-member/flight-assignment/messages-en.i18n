@@ -1,3 +1,7 @@
+flight-crew-member.activity-log.list.label.severityLevel = Severity level
+flight-crew-member.activity-log.list.label.typeOfIncident = Type of incident
+flight-crew-member.activity-log.list.button.create = Create activity log
+flight-crew-member.activity-log.list.title = Activity logs
 flight-crew-member.flight-assignment.list.title = Flight Assignments
 flight-crew-member.flight-assignment.list.label.flightCrewsDuty = Flight crew's duty
 flight-crew-member.flight-assignment.list.label.lastUpdate = Last update
@@ -7,6 +11,16 @@ flight-crew-member.flight-assignment.list.label.legs = Leg
 flight-crew-member.flight-assignment.list.label.availableFlightCrewMembers = Flight crew member
 flight-crew-member.flight-assignment.list.button.create = Create a Flight assignment
 
+flight-crew-member.activity-log.form.title = Activity log
+flight-crew-member.activity-log.form.label.registrationMoment = Registration moment
+flight-crew-member.activity-log.form.label.typeOfIncident = Type of incident
+flight-crew-member.activity-log.form.label.description = Description
+flight-crew-member.activity-log.form.label.severityLevel = Severity Level
+flight-crew-member.activity-log.form.label.flightAssignmentRelated = Flight assignment related
+flight-crew-member.activity-log.form.button.update = Update
+flight-crew-member.activity-log.form.button.create = Create
+flight-crew-member.activity-log.form.button.publish = Publish
+flight-crew-member.activity-log.form.button.delete = Delete
 flight-crew-member.flight-assignment.form.title = Flight Assignments
 flight-crew-member.flight-assignment.form.button.create = Create a Flight assignment
 flight-crew-member.flight-assignment.form.label.confirmation = Confirm

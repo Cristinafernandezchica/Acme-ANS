@@ -26,17 +26,19 @@ public class AssistanceAgentTrackingLogUpdateService extends AbstractGuiService<
 
 	@Override
 	public void authorise() {
-		boolean status;
+		boolean status = false;
 		Claim claim;
 		int id;
 		TrackingLog trackingLog;
 
-		id = super.getRequest().getData("id", int.class);
-		trackingLog = this.repository.findTrackingLogById(id);
+		if (!super.getRequest().getData().isEmpty() && super.getRequest().getData() != null) {
+			id = super.getRequest().getData("id", int.class);
+			trackingLog = this.repository.findTrackingLogById(id);
 
-		claim = this.repository.findClaimByTrackingLogId(id);
+			claim = this.repository.findClaimByTrackingLogId(id);
 
-		status = claim != null && !claim.isDraftMode() && super.getRequest().getPrincipal().hasRealm(claim.getAssistanceAgent()) && trackingLog != null && trackingLog.isDraftMode();
+			status = claim != null && !claim.isDraftMode() && super.getRequest().getPrincipal().hasRealm(claim.getAssistanceAgent()) && trackingLog != null && trackingLog.isDraftMode();
+		}
 
 		super.getResponse().setAuthorised(status);
 	}
@@ -66,6 +68,7 @@ public class AssistanceAgentTrackingLogUpdateService extends AbstractGuiService<
 		Collection<TrackingLogStatus> statuses;
 		TrackingLogStatus status;
 		int trackingLogId;
+		TrackingLog oldTrackingLog;
 		Double percentage;
 		Double minPercentage;
 		Collection<TrackingLog> trackingLogs;
@@ -83,22 +86,27 @@ public class AssistanceAgentTrackingLogUpdateService extends AbstractGuiService<
 
 		trackingLogId = super.getRequest().getData("id", int.class);
 		trackingLogs = this.repository.findTrackingLogsByClaimIdExcludingOne(trackingLog.getClaim().getId(), trackingLogId);
+		oldTrackingLog = this.repository.findTrackingLogById(trackingLogId);
 
 		if (!trackingLogs.isEmpty()) {
 			minPercentage = trackingLogs.stream().findFirst().map(t -> t.getResolutionPercentage()).orElse(0.00);
 			Long maximumTrackingLogs = trackingLogs.stream().filter(t -> t.getResolutionPercentage().equals(100.00)).count();
 			if (Long.valueOf(0).equals(maximumTrackingLogs))
-				isCorrectPercentage = percentage > minPercentage;
+				isCorrectPercentage = percentage > minPercentage || percentage.equals(oldTrackingLog.getResolutionPercentage());
 			else if (Long.valueOf(1).equals(maximumTrackingLogs)) {
 				TrackingLog maximumTrackingLog = trackingLogs.stream().findFirst().get();
-				isCorrectPercentageStatus = percentage.equals(100.00) && status.equals(maximumTrackingLog.getStatus());
+				if (percentage.equals(100.00))
+					isCorrectPercentageStatus = status.equals(maximumTrackingLog.getStatus());
+				else
+					isCorrectPercentage = percentage.equals(oldTrackingLog.getResolutionPercentage());
 			} else if (Long.valueOf(2).equals(maximumTrackingLogs))
-				isCorrectPercentage = false;
+				isCorrectPercentage = percentage.equals(oldTrackingLog.getResolutionPercentage());
 		}
 
+		if (!isCorrectStatus)
+			throw new IllegalStateException("It is not posible to create a tracking log with this status");
 		super.state(isCorrectPercentage, "resolutionPercentage", "acme.validation.trackingLog.resolutionPercentage.message");
 		super.state(isCorrectPercentageStatus, "status", "acme.validation.trackingLog.resolutionPercentageStatus.message");
-		super.state(isCorrectStatus, "status", "acme.validation.trackingLog.status.message");
 		super.state(!trackingLog.getClaim().isDraftMode(), "draftMode", "acme.validation.claim.NoDraftMode.message");
 	}
 

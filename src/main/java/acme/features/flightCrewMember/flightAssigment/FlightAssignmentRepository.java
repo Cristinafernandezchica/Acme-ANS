@@ -54,4 +54,7 @@ public interface FlightAssignmentRepository extends AbstractRepository {
 	@Query("select count(fa) > 0 from FlightAssignment fa where fa.flightCrewsDuty = 'CO_PILOT' and fa.legRelated.id = :idLeg")
 	boolean findCoPilotInLeg(int idLeg);
 
+	//@Query("select al from ActivityLog al where al.flightAssignmentRelated.id = :idFA")
+	//List<ActivityLog> findActivityLogsByFAId(int idFA);
+
 }

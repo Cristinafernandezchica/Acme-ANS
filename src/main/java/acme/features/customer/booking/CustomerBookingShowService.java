@@ -18,6 +18,7 @@ import acme.entities.booking.TravelClass;
 import acme.entities.flights.Flight;
 import acme.entities.legs.Leg;
 import acme.entities.recommendation.Recommendation;
+import acme.features.administrator.recommendation.AdministratorRecommendationRepository;
 import acme.features.customer.recommendation.RecommendationApiService;
 import acme.realms.Customer;
 
@@ -27,10 +28,13 @@ public class CustomerBookingShowService extends AbstractGuiService<Customer, Boo
 	// Internal state ---------------------------------------------------------
 
 	@Autowired
-	private CustomerBookingRepository	repository;
+	private CustomerBookingRepository				repository;
 
 	@Autowired
-	private RecommendationApiService	recommendationService;
+	private RecommendationApiService				recommendationService;
+
+	@Autowired
+	private AdministratorRecommendationRepository	recommendationRepository;
 
 	// AbstractGuiService interface -------------------------------------------
 
@@ -99,6 +103,14 @@ public class CustomerBookingShowService extends AbstractGuiService<Customer, Boo
 
 				if (destinationCity != null && destinationCountry != null) {
 					List<Recommendation> recommendations = this.recommendationService.fetchRecommendationsForCityAndCountry(destinationCity, destinationCountry);
+					List<Recommendation> cityRecommendations = this.recommendationRepository.findByCity(destinationCity);
+
+					for (Recommendation cityRec : cityRecommendations) {
+						boolean alreadyExists = recommendations.stream().anyMatch(existing -> existing.getTitle().equals(cityRec.getTitle()));
+
+						if (!alreadyExists)
+							recommendations.add(cityRec);
+					}
 
 					StringBuilder recommendationsText = new StringBuilder();
 					for (Recommendation rec : recommendations)

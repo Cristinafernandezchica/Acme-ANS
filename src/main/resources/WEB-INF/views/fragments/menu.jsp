@@ -39,6 +39,8 @@
 			<acme:menu-suboption code="master.menu.administrator.list-aircraft" action="/administrator/aircraft/list"/>
 			<acme:menu-suboption code="master.menu.administrator.list-bookings" action="/administrator/booking/list"/>
 			<acme:menu-separator/>
+			<acme:menu-suboption code="master.menu.administrator.populate-recommendations" action="/administrator/recommendation/populate"/>
+			<acme:menu-separator/>
 			<acme:menu-suboption code="master.menu.administrator.populate-db-initial" action="/administrator/system/populate-initial"/>
 			<acme:menu-suboption code="master.menu.administrator.populate-db-sample" action="/administrator/system/populate-sample"/>			
 			<acme:menu-separator/>
@@ -49,6 +51,7 @@
 		<acme:menu-option code="master.menu.flight-crew-member" access="hasRealm('FlightCrewMember')">
 			<acme:menu-suboption code="master.menu.flight-crew-member.flight-assignment.plannedList" action="/flight-crew-member/flight-assignment/planned-list"/>
 			<acme:menu-suboption code="master.menu.flight-crew-member.flight-assignment.completedList" action="/flight-crew-member/flight-assignment/completed-list"/>
+			<acme:menu-suboption code="master.menu.flight-crew-member.show-dashboard" action="/flight-crew-member/flight-crew-member-dashboard/show"/>
 		</acme:menu-option>
 
 		<acme:menu-option code="master.menu.provider" access="hasRealm('Provider')">

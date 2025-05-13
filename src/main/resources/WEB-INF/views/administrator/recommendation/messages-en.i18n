@@ -1,0 +1,16 @@
+# Administrator Recommendation
+administrator.recommendation.form.title=Populate Recommendations
+administrator.recommendation.form.label.airport=Airport city
+administrator.recommendation.form.label.title=Title
+administrator.recommendation.form.label.description=Description
+administrator.recommendation.form.label.category=Category
+administrator.recommendation.form.label.startDate=Start Date
+administrator.recommendation.form.label.endDate=End Date
+administrator.recommendation.form.label.estimatedCost=Estimated Cost
+administrator.recommendation.form.label.link=More Info URL
+administrator.recommendation.form.button.populate=Add new recommendation
+
+# Errors
+administrator.recommendation.error.cityNotFound=City not found in our airports database
+administrator.recommendation.error.invalidDates=End date must be after start date
+administrator.recommendation.error.currency.not.valid = Estimated cost currency is not valid
