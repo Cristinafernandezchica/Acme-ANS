@@ -1,3 +1,4 @@
+flight-crew-member.flight-crew-member-dashboard.form.title = Dashboard
 flightCrewMember.dashboard.form.label.lastDestinationsAssigned = Últimos 5 destinos asignados
 flightCrewMember.dashboard.form.label.numberOfLegsMediumIncident = Número de vuelos con algún reporte de nivel incidencia entre 0 y 3
 flightCrewMember.dashboard.form.label.numberOfLegsHighIncident = Número de vuelos con algún reporte de nivel incidencia entre 4 y 7

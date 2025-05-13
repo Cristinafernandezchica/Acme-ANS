@@ -22,8 +22,14 @@ public interface FlightCrewMemberDashboardRepository extends AbstractRepository 
 
 	// Number of incidents classified by their severity level
 
-	@Query("SELECT COUNT(DISTINCT CASE WHEN al.severityLevel BETWEEN 0 AND 3 THEN l.id END), COUNT(DISTINCT CASE WHEN al.severityLevel BETWEEN 4 AND 7 THEN l.id END), COUNT(DISTINCT CASE WHEN al.severityLevel BETWEEN 8 AND 10 THEN l.id END) FROM ActivityLog al JOIN al.flightAssignmentRelated.legRelated l")
-	List<Integer> findLegsCountBySeverityLevels();
+	@Query("SELECT COUNT(DISTINCT CASE WHEN al.severityLevel BETWEEN 0 AND 3 THEN l.id END) FROM ActivityLog al JOIN al.flightAssignmentRelated.legRelated l")
+	Integer findLegsCountBySeverityLevelsLow();
+
+	@Query("SELECT COUNT(DISTINCT CASE WHEN al.severityLevel BETWEEN 4 AND 7 THEN l.id END) FROM ActivityLog al JOIN al.flightAssignmentRelated.legRelated l")
+	Integer findLegsCountBySeverityLevelsMedium();
+
+	@Query("SELECT COUNT(DISTINCT CASE WHEN al.severityLevel BETWEEN 8 AND 10 THEN l.id END) FROM ActivityLog al JOIN al.flightAssignmentRelated.legRelated l")
+	Integer findLegsCountBySeverityLevelsHigh();
 
 	// Crew members from the last leg
 
@@ -39,5 +45,8 @@ public interface FlightCrewMemberDashboardRepository extends AbstractRepository 
 
 	@Query("SELECT AVG(COUNT(fa)), MIN(COUNT(fa)), MAX(COUNT(fa)), STDDEV(COUNT(fa)) FROM FlightAssignment fa WHERE fa.lastUpdate BETWEEN :startDate AND :endDate AND fa.flightCrewMemberAssigned.id = :crewMemberId")
 	List<Integer> calculateFlightAssignmentStats(Date startDate, Date endDate, int crewMemberId);
+
+	@Query("SELECT COUNT(fa) FROM FlightAssignment fa WHERE fa.lastUpdate BETWEEN :startDate AND :endDate AND fa.flightCrewMemberAssigned.id = :crewMemberId GROUP BY FUNCTION('DATE', fa.lastUpdate)")
+	List<Long> getDailyAssignmentCounts(Date startDate, Date endDate, int crewMemberId);
 
 }

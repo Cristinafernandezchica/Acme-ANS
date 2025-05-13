@@ -3,9 +3,7 @@ package acme.features.flightCrewMember.dashboard;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -14,7 +12,6 @@ import acme.client.helpers.MomentHelper;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.flightAssignment.CurrentStatus;
-import acme.entities.flightAssignment.FlightAssignment;
 import acme.forms.flightCrewMemberDashboard.FlightCrewMemberDashboard;
 import acme.realms.flightCrewMember.FlightCrewMember;
 
@@ -40,11 +37,10 @@ public class FlightCrewMemberDashboardShowService extends AbstractGuiService<Fli
 		Integer numberOfLegsMediumIncident;
 		Integer numberOfLegsHighIncident;
 		List<String> crewMembersLastLeg;
-		Map<CurrentStatus, List<FlightAssignment>> flightAssignmentsByStatus = new HashMap<>();
-		Integer averageDeviationNumberOfFlights;
+		Double averageDeviationNumberOfFlights;
 		Integer minimumDeviationNumberOfFlights;
 		Integer maximumDeviationNumberOfFlights;
-		Integer standardDeviationNumberOfFlights;
+		Double standardDeviationNumberOfFlights;
 
 		int fcmIdLogged = super.getRequest().getPrincipal().getActiveRealm().getId();
 
@@ -54,11 +50,9 @@ public class FlightCrewMemberDashboardShowService extends AbstractGuiService<Fli
 		else if (lastDestinationsAssigned.size() >= 5)
 			lastDestinationsAssigned = lastDestinationsAssigned.subList(0, 5);
 
-		List<Integer> incidentsClassified = this.repository.findLegsCountBySeverityLevels();
-		// hacerlo por llamadas distintas por que si el resultado es 0 no pone 0, el length es 1
-		numberOfLegsLowIncident = incidentsClassified.get(0);
-		numberOfLegsMediumIncident = incidentsClassified.get(1);
-		numberOfLegsHighIncident = incidentsClassified.get(2);
+		numberOfLegsLowIncident = this.repository.findLegsCountBySeverityLevelsLow();
+		numberOfLegsMediumIncident = this.repository.findLegsCountBySeverityLevelsMedium();
+		numberOfLegsHighIncident = this.repository.findLegsCountBySeverityLevelsHigh();
 
 		crewMembersLastLeg = this.repository.findCrewNamesInLastLeg(fcmIdLogged).stream().map(fcm -> fcm.getIdentity().getFullName()).toList();
 
@@ -72,11 +66,11 @@ public class FlightCrewMemberDashboardShowService extends AbstractGuiService<Fli
 		startDate.setDate(1);
 		endDate.setMonth(startDate.getMonth() - 1);
 		endDate.setDate(30);
-		List<Integer> statsDeviationsFlights = this.repository.calculateFlightAssignmentStats(startDate, endDate, fcmIdLogged);
-		averageDeviationNumberOfFlights = statsDeviationsFlights.get(0);
-		minimumDeviationNumberOfFlights = statsDeviationsFlights.get(1);
-		maximumDeviationNumberOfFlights = statsDeviationsFlights.get(2);
-		standardDeviationNumberOfFlights = statsDeviationsFlights.get(3);
+		List<Long> counts = this.repository.getDailyAssignmentCounts(startDate, endDate, fcmIdLogged);
+		minimumDeviationNumberOfFlights = counts.stream().min(Long::compare).orElse(0L).intValue();
+		maximumDeviationNumberOfFlights = counts.stream().max(Long::compare).orElse(0L).intValue();
+		averageDeviationNumberOfFlights = counts.stream().mapToLong(Long::longValue).average().orElse(0.0);
+		standardDeviationNumberOfFlights = Math.sqrt(counts.stream().mapToDouble(c -> Math.pow(c - averageDeviationNumberOfFlights, 2)).average().orElse(0.0));
 
 		fcmDashboard.setLastDestinationsAssigned(lastDestinationsAssigned);
 		fcmDashboard.setNumberOfLegsLowIncident(numberOfLegsLowIncident);

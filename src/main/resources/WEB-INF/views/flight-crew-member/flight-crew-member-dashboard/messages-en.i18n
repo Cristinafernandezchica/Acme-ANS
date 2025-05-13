@@ -1,3 +1,4 @@
+flight-crew-member.flight-crew-member-dashboard.form.title = Dashboard
 flightCrewMember.dashboard.form.label.lastDestinationsAssigned = Last 5 destinations assigned
 flightCrewMember.dashboard.form.label.numberOfLegsMediumIncident = Number of legs with at least an activity log whose incident level is between 0 and 3
 flightCrewMember.dashboard.form.label.numberOfLegsHighIncident = Number of legs with at least an activity log whose incident level is between 4 and 7

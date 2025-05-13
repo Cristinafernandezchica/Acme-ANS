@@ -25,9 +25,9 @@ public class FlightCrewMemberDashboard extends AbstractForm {
 	private List<String>		confirmedFlightAssignments;
 	private List<String>		pendingFlightAssignments;
 	private List<String>		cancelledFlightAssignments;
-	private Integer				averageDeviationNumberOfFlights;
+	private Double				averageDeviationNumberOfFlights;
 	private Integer				minimumDeviationNumberOfFlights;
 	private Integer				maximumDeviationNumberOfFlights;
-	private Integer				standardDeviationNumberOfFlights;
+	private Double				standardDeviationNumberOfFlights;
 
 }
