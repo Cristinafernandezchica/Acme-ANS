@@ -20,3 +20,6 @@ technician.task.form.button.create = Create
 technician.task.form.button.update = Update
 technician.task.form.button.publish = Publish
 technician.task.form.button.delete = Delete
+
+technician.task.form.placeholder.estimatedDuration = 1
+technician.task.form.placeholder.priority = 1
