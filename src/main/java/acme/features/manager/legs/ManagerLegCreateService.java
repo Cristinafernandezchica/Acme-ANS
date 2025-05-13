@@ -36,6 +36,10 @@ public class ManagerLegCreateService extends AbstractGuiService<Manager, Leg> {
 		Flight flight;
 		Manager manager;
 		boolean status = false;
+		Airport depAirport = null;
+		Airport arrAirport = null;
+		Aircraft validAircraft = null;
+		String legStatus;
 
 		manager = (Manager) super.getRequest().getPrincipal().getActiveRealm();
 
@@ -45,10 +49,53 @@ public class ManagerLegCreateService extends AbstractGuiService<Manager, Leg> {
 				flight = this.repository.findFlightById(flightId);
 				if (flight != null && flight.getManager().equals(manager))
 					status = true;
+
+				// Validaciones
+				if (super.getRequest().getMethod().equals("POST")) {
+					// Departure airport and arrival airport
+					Integer airDepId = super.getRequest().getData("departureAirport", Integer.class);
+					Integer airArrId = super.getRequest().getData("arrivalAirport", Integer.class);
+
+					if (airDepId != null) {
+						depAirport = this.repository.findAirportById(airDepId);
+						if (depAirport == null)
+							status = false;
+						if (airDepId == 0)
+							status = true;
+					} else
+						status = false;
+
+					if (airArrId != null) {
+						arrAirport = this.repository.findAirportById(airArrId);
+						if (arrAirport == null)
+							status = false;
+						if (airArrId == 0)
+							status = true;
+					} else
+						status = false;
+
+					// Aircraft null
+					Integer aircraftId = super.getRequest().getData("aircraft", Integer.class);
+					if (aircraftId != null) {
+						validAircraft = this.repository.findAircraftById(aircraftId);
+						if (validAircraft == null)
+							status = false;
+						if (aircraftId == 0)
+							status = true;
+					} else
+						status = false;
+
+					// Status different of ON_TIME
+					legStatus = super.getRequest().getData("status", String.class);
+					if (legStatus != null && !legStatus.equals(LegStatus.ON_TIME.toString()))
+						status = false;
+
+				}
 			}
 		}
 
 		super.getResponse().setAuthorised(status);
+
 	}
 
 	@Override
@@ -88,25 +135,10 @@ public class ManagerLegCreateService extends AbstractGuiService<Manager, Leg> {
 				super.state(false, "scheduledArrival", "acme.validation.leg.departure.arrival.difference.message");
 		}
 
-		int airDepId = super.getRequest().getData("departureAirport", int.class);
-		int airArrId = super.getRequest().getData("arrivalAirport", int.class);
-		Airport depAirport = this.repository.findAirportById(airDepId);
-		Airport arrAirport = this.repository.findAirportById(airArrId);
-		if (depAirport == null)
-			throw new IllegalStateException("The departure airport doesn't exist");
-
-		if (arrAirport == null)
-			throw new IllegalStateException("The arrival airport doesn't exist");
-
 		if (leg.getDepartureAirport() != null && leg.getDepartureAirport().equals(leg.getArrivalAirport())) {
 			super.state(false, "arrivalAirport", "acme.validation.leg.same.departure.arrival.airport");
 			super.state(false, "departureAirport", "acme.validation.leg.same.departure.arrival.airport");
 		}
-
-		int aircraftId = super.getRequest().getData("aircraft", int.class);
-		Aircraft validAircraft = this.repository.findAircraftById(aircraftId);
-		if (validAircraft == null)
-			throw new IllegalStateException("The aircraft doesn't exist");
 
 		if (leg.getAircraft() != null) {
 			boolean operativeAircraft = leg.getAircraft().getStatus().equals(Status.ACTIVE_SERVICE);
@@ -122,9 +154,6 @@ public class ManagerLegCreateService extends AbstractGuiService<Manager, Leg> {
 		if (!leg.isDraftMode())
 			super.state(false, "*", "acme.validation.leg.create.no.draftmode");
 
-		if (leg.getStatus() != LegStatus.ON_TIME)
-			throw new IllegalStateException("When a leg is on draft mode, the status must be ON_TIME");
-
 		if (!leg.getFlight().isDraftMode())
 			super.state(false, "*", "acme.validation.leg.create.no.flight.draftmode");
 
@@ -137,7 +166,6 @@ public class ManagerLegCreateService extends AbstractGuiService<Manager, Leg> {
 
 	@Override
 	public void unbind(final Leg leg) {
-		// SelectChoices statuses;
 		Dataset dataset;
 		Collection<Aircraft> aircrafts;
 		SelectChoices selectedAircrafts;
