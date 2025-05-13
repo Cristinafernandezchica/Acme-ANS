@@ -13,11 +13,6 @@ import acme.client.repositories.AbstractRepository;
 @Repository
 public interface RecommendationRepository extends AbstractRepository {
 
-	@Query("SELECT r FROM Recommendation r WHERE r.airport.iataCode = :iataCode ORDER BY r.category, r.estimatedCost.amount")
-	List<Recommendation> findByAirportIataCode(@Param("iataCode") String iataCode);
-
-	@Query("SELECT r FROM Recommendation r WHERE r.airport.city = :city AND r.airport.country = :country")
-	List<Recommendation> findByCityAndCountry(@Param("city") String city, @Param("country") String country);
-
-	Optional<Recommendation> findByExternalIdAndProviderName(String externalId, String providerName);
+	@Query("select r from Recommendation r where r.externalId = :externalId and r.providerName = :provider")
+	Optional<Recommendation> findByExternalIdAndProvider(@Param("externalId") String externalId, @Param("provider") String provider);
 }
