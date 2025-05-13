@@ -43,6 +43,7 @@ master.menu.administrator.shut-system-down = Parar el sistema
 master.menu.flight-crew-member = Asistente de vuelo
 master.menu.flight-crew-member.flight-assignment.plannedList = Lista de asignaciones de vuelo planeadas
 master.menu.flight-crew-member.flight-assignment.completedList = Lista de asignaciones de vuelo completadas
+master.menu.flight-crew-member.show-dashboard = Ver dashboard
 
 # master.menu.provider ########################################################
 

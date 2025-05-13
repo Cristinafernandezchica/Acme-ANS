@@ -43,6 +43,7 @@ master.menu.administrator.shut-system-down = Shut system down
 master.menu.flight-crew-member = Flight crew member
 master.menu.flight-crew-member.flight-assignment.plannedList = List planned flight assignments
 master.menu.flight-crew-member.flight-assignment.completedList = List completed flight assignments
+master.menu.flight-crew-member.show-dashboard = Show dashboard
 
 # master.menu.provider ########################################################
 
