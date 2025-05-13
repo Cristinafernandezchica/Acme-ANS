@@ -110,7 +110,7 @@ public class FlightAssignmentCreateService extends AbstractGuiService<FlightCrew
 				Date arrivalTime = flightAssignment.getLegRelated().getScheduledDeparture();
 				legOnAir = MomentHelper.isInRange(MomentHelper.getCurrentMoment(), departureTime, arrivalTime);
 			}
-			super.state(legOnAir, "legRelated", "acme.validation.legOnAir.message");
+			super.state(!legOnAir, "legRelated", "acme.validation.legOnAir.message");
 
 			// Comprobación de que el FCM esté AVAILABLE
 			boolean fcmAvailable;

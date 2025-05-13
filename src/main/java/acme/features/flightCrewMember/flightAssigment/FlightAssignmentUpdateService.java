@@ -108,7 +108,7 @@ public class FlightAssignmentUpdateService extends AbstractGuiService<FlightCrew
 				Date arrivalTime = flightAssignment.getLegRelated().getScheduledDeparture();
 				legOnAir = MomentHelper.isInRange(MomentHelper.getCurrentMoment(), departureTime, arrivalTime);
 			}
-			super.state(legOnAir, "legRelated", "acme.validation.legOnAir.message");
+			super.state(!legOnAir, "legRelated", "acme.validation.legOnAir.message");
 			// Comprobación de leg operada con la aerolínea del FCM
 			boolean legFromRightAirline;
 			legFromRightAirline = flightAssignment.getLegRelated().getAircraft().getAirline().equals(fcmLogged.getAirline());
