@@ -43,7 +43,24 @@ public class FlightAssignmentPublishService extends AbstractGuiService<FlightCre
 		faSelected = this.repository.findFlightAssignmentById(faId);
 		isFlightAssignmentOwner = faSelected.getFlightCrewMemberAssigned() == fcmLogged;
 
-		super.getResponse().setAuthorised(isFlightAssignmentOwner);
+		String metodo = super.getRequest().getMethod();
+		boolean hacked = true;
+		int memberId = super.getRequest().getPrincipal().getActiveRealm().getId();
+		FlightCrewMember fcm = this.repository.findFlighCrewMemberById(memberId);
+
+		if (metodo.equals("POST")) {
+			int legId = super.getRequest().getData("legRelated", int.class);
+
+			Leg leg = this.repository.findLegById(legId);
+			List<Leg> allLegs = this.repository.findAllLegs();
+
+			if (leg == null && legId != 0 || !allLegs.contains(leg) && legId != 0)
+				hacked = false;
+		}
+
+		boolean authorization = isFlightAssignmentOwner && hacked;
+
+		super.getResponse().setAuthorised(authorization);
 	}
 
 	@Override
@@ -87,9 +104,7 @@ public class FlightAssignmentPublishService extends AbstractGuiService<FlightCre
 		// Comprobación de leg no null
 		boolean isLegNull;
 		isLegNull = flightAssignment.getLegRelated() != null;
-		if (!isLegNull)
-			throw new IllegalStateException("That leg doesn't exist");
-		else {
+		if (isLegNull) {
 
 			// Comprobación de FCM no modificado
 			boolean isOriginalFCM;

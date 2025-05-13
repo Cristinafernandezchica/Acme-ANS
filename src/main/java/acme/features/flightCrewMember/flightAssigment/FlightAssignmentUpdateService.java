@@ -38,13 +38,30 @@ public class FlightAssignmentUpdateService extends AbstractGuiService<FlightCrew
 		FlightCrewMember fcmLogged;
 		FlightAssignment flightAssignment;
 		int faIdSolicitud;
+
 		fcmIdLogged = super.getRequest().getPrincipal().getActiveRealm().getId();
 		fcmLogged = this.repository.findFlighCrewMemberById(fcmIdLogged);
 		faIdSolicitud = super.getRequest().getData("id", int.class);
 		flightAssignment = this.repository.findFlightAssignmentById(faIdSolicitud);
 		status = flightAssignment.isDraftMode();
 		isFCMAssignedToTheFA = flightAssignment.getFlightCrewMemberAssigned().equals(fcmLogged);
-		authorization = status && isFCMAssignedToTheFA;
+
+		String metodo = super.getRequest().getMethod();
+		boolean hacked = true;
+		int memberId = super.getRequest().getPrincipal().getActiveRealm().getId();
+		FlightCrewMember fcm = this.repository.findFlighCrewMemberById(memberId);
+
+		if (metodo.equals("POST")) {
+			int legId = super.getRequest().getData("legRelated", int.class);
+
+			Leg leg = this.repository.findLegById(legId);
+			List<Leg> allLegs = this.repository.findAllLegs();
+
+			if (leg == null && legId != 0 || !allLegs.contains(leg) && legId != 0)
+				hacked = false;
+		}
+
+		authorization = status && isFCMAssignedToTheFA && hacked;
 		super.getResponse().setAuthorised(authorization);
 	}
 	@Override
@@ -82,9 +99,7 @@ public class FlightAssignmentUpdateService extends AbstractGuiService<FlightCrew
 		// Comprobación de leg no null
 		boolean isLegNull;
 		isLegNull = flightAssignment.getLegRelated() != null;
-		if (!isLegNull)
-			throw new IllegalStateException("That leg doesn't exist");
-		else {
+		if (isLegNull) {
 			// Comprobación de que el FCM esté AVAILABLE
 			boolean fcmAvailable;
 			fcmAvailable = flightAssignment.getFlightCrewMemberAssigned().getAvailabilityStatus().equals(AvailabilityStatus.AVAILABLE);
@@ -123,10 +138,12 @@ public class FlightAssignmentUpdateService extends AbstractGuiService<FlightCrew
 					break;
 				}
 		}
+
 		boolean confirmation;
 		confirmation = super.getRequest().getData("confirmation", boolean.class);
 		super.state(confirmation, "confirmation", "acme.validation.confirmation.message");
 	}
+
 	private boolean legIsCompatible(final Leg finalLeg, final Leg legToCompare) {
 		boolean departureCompatible = MomentHelper.isInRange(finalLeg.getScheduledDeparture(), legToCompare.getScheduledDeparture(), legToCompare.getScheduledArrival());
 		boolean arrivalCompatible = MomentHelper.isInRange(finalLeg.getScheduledArrival(), legToCompare.getScheduledDeparture(), legToCompare.getScheduledArrival());
