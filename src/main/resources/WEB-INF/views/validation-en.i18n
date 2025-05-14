@@ -18,7 +18,6 @@ acme.validation.customer.identifier.message = Customer identifier is not valid
 acme.validation.lastCardNibble.message = The last card nibble can't be empty 
 
 acme.validation.booking.duplicated-locator-code.message=This locator code is already in use.
-acme.validation.booking.invalid-nibble.message=Card nibble must be 4 digits.
 acme.validation.booking.invalid-flight.message=The selected flight is not available.
 acme.validation.booking.flight-required-when-publishing=Flight is required when publishing.
 acme.validation.booking.flight.message = No flight assigned

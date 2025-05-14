@@ -29,11 +29,7 @@ public class BookingRecordValidator extends AbstractValidator<ValidBookingRecord
 
 		boolean result;
 
-		if (bookingRecord == null || bookingRecord.getBooking() == null || bookingRecord.getPassenger() == null) {
-			super.state(context, false, "*", "javax.validation.constraints.NotNull.message");
-			super.state(context, false, "booking", "javax.validation.constraints.NotNull.message");
-			super.state(context, false, "passenger", "javax.validation.constraints.NotNull.message");
-		} else {
+		if (bookingRecord != null && bookingRecord.getBooking() != null && bookingRecord.getPassenger() != null) {
 			boolean uniqueBookingRecord;
 			BookingRecord existingBookingRecord;
 

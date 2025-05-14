@@ -16,7 +16,6 @@ import acme.client.components.validation.ValidEmail;
 import acme.client.components.validation.ValidMoment;
 import acme.client.components.validation.ValidString;
 import acme.client.components.validation.ValidUrl;
-import acme.constraints.ValidAirline;
 import acme.constraints.ValidAirportIATACode;
 import lombok.Getter;
 import lombok.Setter;
@@ -24,7 +23,6 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@ValidAirline
 public class Airline extends AbstractEntity {
 
 	private static final long	serialVersionUID	= 1L;

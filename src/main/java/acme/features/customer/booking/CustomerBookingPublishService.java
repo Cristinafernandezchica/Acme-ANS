@@ -32,8 +32,10 @@ public class CustomerBookingPublishService extends AbstractGuiService<Customer, 
 	@Override
 	public void authorise() {
 		int bookingId;
+		int flightId;
 		Booking booking;
 		Customer customer;
+		Flight flight;
 		boolean status = false;
 
 		if (!super.getRequest().getData().isEmpty() && super.getRequest().getData() != null) {
@@ -41,6 +43,31 @@ public class CustomerBookingPublishService extends AbstractGuiService<Customer, 
 			booking = this.repository.findBookingById(bookingId);
 			customer = booking == null ? null : booking.getCustomer();
 			status = booking != null && super.getRequest().getPrincipal().hasRealm(customer) && booking.isDraftMode();
+
+			boolean hasFlightParam = super.getRequest().getData().containsKey("flight");
+
+			if (hasFlightParam) {
+				flightId = super.getRequest().getData("flight", int.class);
+				flight = this.repository.findFlightById(flightId);
+				Collection<Flight> validFlights = this.repository.findAllFlights().stream().filter(f -> f.getScheduledDeparture() != null && !f.isDraftMode() && f.getScheduledDeparture().after(MomentHelper.getCurrentMoment())
+					&& this.repository.findLegsByFlightId(f.getId()).stream().allMatch(leg -> leg.getScheduledDeparture().after(MomentHelper.getCurrentMoment()))).collect(Collectors.toList());
+
+				if (flight == null && flightId != 0)
+					status = false;
+
+				if (!validFlights.contains(flight) && flight != null)
+					status = false;
+			}
+
+			String rawTravelClass = super.getRequest().getData("travelClass", String.class);
+
+			if (rawTravelClass != null && !rawTravelClass.trim().isEmpty() && !rawTravelClass.equals("0")) {
+				boolean travelClassValid = Arrays.stream(TravelClass.values()).anyMatch(tc -> tc.name().equals(rawTravelClass));
+
+				if (!travelClassValid)
+					status = false;
+			}
+
 		}
 
 		super.getResponse().setAuthorised(status);
@@ -69,21 +96,9 @@ public class CustomerBookingPublishService extends AbstractGuiService<Customer, 
 			flightId = super.getRequest().getData("flight", int.class);
 			flight = this.repository.findFlightById(flightId);
 
-			if (flight == null && flightId != 0)
-				throw new IllegalStateException("It is not possible to publish a booking with this flight.");
-
 			booking.setFlight(flight);
 		} else
 			booking.setFlight(null);
-
-		String rawTravelClass = super.getRequest().getData("travelClass", String.class);
-
-		if (rawTravelClass != null && !rawTravelClass.trim().isEmpty() && !rawTravelClass.equals("0")) {
-			boolean travelClassValid = Arrays.stream(TravelClass.values()).anyMatch(tc -> tc.name().equals(rawTravelClass));
-
-			if (!travelClassValid)
-				throw new IllegalStateException("Travel class selected is not valid");
-		}
 
 		super.bindObject(booking, "travelClass", "lastCardNibble");
 
@@ -93,9 +108,6 @@ public class CustomerBookingPublishService extends AbstractGuiService<Customer, 
 	public void validate(final Booking booking) {
 		Collection<Flight> validFlights = this.repository.findAllFlights().stream().filter(flight -> flight.getScheduledDeparture() != null && !flight.isDraftMode() && flight.getScheduledDeparture().after(MomentHelper.getCurrentMoment())
 			&& this.repository.findLegsByFlightId(flight.getId()).stream().allMatch(leg -> leg.getScheduledDeparture().after(MomentHelper.getCurrentMoment()))).collect(Collectors.toList());
-
-		if (!validFlights.contains(booking.getFlight()) && booking.getFlight() != null)
-			throw new IllegalStateException("It is not possible to publish a booking with this flight.");
 
 		boolean isFlightValid = booking.getFlight() != null && validFlights.contains(booking.getFlight());
 		super.state(isFlightValid, "flight", "acme.validation.booking.flight.message");
