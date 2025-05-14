@@ -39,6 +39,14 @@ public class CustomerBookingRecordCreateService extends AbstractGuiService<Custo
 
 		if (booking != null && booking.getCustomer().equals(customer) && booking.isDraftMode())
 			status = true;
+		else if (super.getRequest().getMethod().equals("POST")) {
+			int pId = super.getRequest().getData("passenger", int.class);
+			Passenger passenger = this.repository.findPassengerById(pId);
+			Collection<Passenger> availablePassengers = this.repository.findAvailablePassengersByBookingId(customer.getId(), booking.getId());
+
+			if (passenger == null && pId != 0 || passenger != null && !availablePassengers.contains(passenger))
+				status = false;
+		}
 
 		super.getResponse().setAuthorised(status);
 	}
@@ -63,17 +71,20 @@ public class CustomerBookingRecordCreateService extends AbstractGuiService<Custo
 		int passengerId;
 		Passenger passenger;
 
-		passengerId = super.getRequest().getData("passenger", int.class);
-		passenger = this.repository.findPassengerById(passengerId);
+		boolean hasPassengerParam = super.getRequest().getData().containsKey("passenger");
 
-		bookingRecord.setPassenger(passenger);
+		if (hasPassengerParam) {
+			passengerId = super.getRequest().getData("passenger", int.class);
+			passenger = this.repository.findPassengerById(passengerId);
+
+			bookingRecord.setPassenger(passenger);
+		} else
+			bookingRecord.setPassenger(null);
+
 	}
 
 	@Override
 	public void validate(final BookingRecord bookingRecord) {
-		Collection<Passenger> availablePassengers = this.repository.findAvailablePassengersByBookingId(bookingRecord.getBooking().getCustomer().getId(), bookingRecord.getBooking().getId());
-		if (bookingRecord.getPassenger() == null || !availablePassengers.contains(bookingRecord.getPassenger()))
-			throw new IllegalStateException("It is not possible to assign that passenger to this booking.");
 
 		Booking booking = bookingRecord.getBooking();
 		boolean notPublished = booking == null || booking.isDraftMode();
