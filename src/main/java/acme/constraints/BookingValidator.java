@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import acme.client.components.validation.AbstractValidator;
 import acme.client.components.validation.Validator;
-import acme.client.helpers.StringHelper;
 import acme.entities.booking.Booking;
 import acme.entities.booking.BookingRepository;
 
@@ -43,16 +42,7 @@ public class BookingValidator extends AbstractValidator<ValidBooking, Booking> {
 		boolean isUnique = existingBooking == null || existingBooking.equals(booking);
 		super.state(context, isUnique, "locatorCode", "acme.validation.booking.duplicated-locator-code.message");
 
-		// 2. LastCardNibble is following the pattern if it is required?
-
-		String lastNibble = booking.getLastCardNibble();
-		if (!StringHelper.isBlank(lastNibble)) {
-			boolean formatValid = lastNibble.matches("\\d{4}");
-
-			super.state(context, formatValid, "lastCardNibble", "acme.validation.booking.invalid-nibble.message");
-		}
-
-		// 3. If flight is assign, it is published and scheduled in future?
+		// 2. If flight is assign, it is published?
 		if (booking.getFlight() != null) {
 			boolean validFlight = true;
 
@@ -62,7 +52,7 @@ public class BookingValidator extends AbstractValidator<ValidBooking, Booking> {
 			super.state(context, validFlight, "flight", "acme.validation.booking.invalid-flight.message");
 		}
 
-		// 4. Only in draftMode is allowed to have null flight value
+		// 3. Only in draftMode is allowed to have null flight value
 
 		if (booking.getFlight() == null && !booking.isDraftMode())
 			super.state(context, false, "flight", "acme.validation.booking.flight-required-when-publishing");
