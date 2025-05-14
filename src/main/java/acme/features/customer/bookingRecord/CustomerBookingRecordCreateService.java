@@ -37,15 +37,16 @@ public class CustomerBookingRecordCreateService extends AbstractGuiService<Custo
 
 		customer = (Customer) super.getRequest().getPrincipal().getActiveRealm();
 
-		if (booking != null && booking.getCustomer().equals(customer) && booking.isDraftMode())
+		if (booking != null && booking.getCustomer().equals(customer) && booking.isDraftMode()) {
 			status = true;
-		else if (super.getRequest().getMethod().equals("POST")) {
-			int pId = super.getRequest().getData("passenger", int.class);
-			Passenger passenger = this.repository.findPassengerById(pId);
-			Collection<Passenger> availablePassengers = this.repository.findAvailablePassengersByBookingId(customer.getId(), booking.getId());
+			if (super.getRequest().getMethod().equals("POST")) {
+				int pId = super.getRequest().getData("passenger", int.class);
+				Passenger passenger = this.repository.findPassengerById(pId);
+				Collection<Passenger> availablePassengers = this.repository.findAvailablePassengersByBookingId(customer.getId(), booking.getId());
 
-			if (passenger == null && pId != 0 || passenger != null && !availablePassengers.contains(passenger))
-				status = false;
+				if (passenger == null && pId != 0 || passenger != null && !availablePassengers.contains(passenger))
+					status = false;
+			}
 		}
 
 		super.getResponse().setAuthorised(status);
