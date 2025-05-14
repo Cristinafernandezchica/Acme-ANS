@@ -36,6 +36,10 @@ public class ManagerLegPublishService extends AbstractGuiService<Manager, Leg> {
 		int masterId;
 		Leg leg;
 		Manager manager;
+		Airport depAirport = null;
+		Airport arrAirport = null;
+		Aircraft validAircraft = null;
+		String legStatus;
 
 		if (!super.getRequest().getData().isEmpty() && super.getRequest().getData() != null) {
 			int managerId = super.getRequest().getPrincipal().getActiveRealm().getId();
@@ -43,6 +47,47 @@ public class ManagerLegPublishService extends AbstractGuiService<Manager, Leg> {
 			leg = this.repository.findLegById(masterId);
 			manager = leg == null ? null : leg.getFlight().getManager();
 			status = leg != null && super.getRequest().getPrincipal().hasRealm(manager) && managerId == manager.getId();
+			// Validaciones
+			if (super.getRequest().getMethod().equals("POST")) {
+				// Departure airport and arrival airport
+				Integer airDepId = super.getRequest().getData("departureAirport", Integer.class);
+				Integer airArrId = super.getRequest().getData("arrivalAirport", Integer.class);
+
+				if (airDepId != null) {
+					depAirport = this.repository.findAirportById(airDepId);
+					if (depAirport == null)
+						status = false;
+					if (airDepId == 0)
+						status = true;
+				} else
+					status = false;
+
+				if (airArrId != null) {
+					arrAirport = this.repository.findAirportById(airArrId);
+					if (arrAirport == null)
+						status = false;
+					if (airArrId == 0)
+						status = true;
+				} else
+					status = false;
+
+				// Aircraft null
+				Integer aircraftId = super.getRequest().getData("aircraft", Integer.class);
+				if (aircraftId != null) {
+					validAircraft = this.repository.findAircraftById(aircraftId);
+					if (validAircraft == null)
+						status = false;
+					if (aircraftId == 0)
+						status = true;
+				} else
+					status = false;
+
+				// Status different of ON_TIME
+				legStatus = super.getRequest().getData("status", String.class);
+				if (legStatus != null && !legStatus.equals(LegStatus.ON_TIME.toString()))
+					status = false;
+
+			}
 		}
 		super.getResponse().setAuthorised(status);
 	}
@@ -81,21 +126,10 @@ public class ManagerLegPublishService extends AbstractGuiService<Manager, Leg> {
 				super.state(false, "scheduledArrival", "acme.validation.leg.departure.arrival.difference.message");
 		}
 
-		int airDepId = super.getRequest().getData("departureAirport", int.class);
-		int airArrId = super.getRequest().getData("arrivalAirport", int.class);
-		Airport depAirport = this.repository.findAirportById(airDepId);
-		Airport arrAirport = this.repository.findAirportById(airArrId);
-		if (depAirport == null)
-			throw new IllegalStateException("The departure airport doesn't exist");
-
-		if (arrAirport == null)
-			throw new IllegalStateException("The arrival airport doesn't exist");
-
 		if (leg.getDepartureAirport() != null && leg.getDepartureAirport().equals(leg.getArrivalAirport())) {
 			super.state(false, "arrivalAirport", "acme.validation.leg.same.departure.arrival.airport");
 			super.state(false, "departureAirport", "acme.validation.leg.same.departure.arrival.airport");
 		}
-
 
 		if (leg.getScheduledArrival() != null && leg.getScheduledDeparture() != null) {
 			Collection<Leg> allPublishedLegs = this.repository.findAllPublishedLegs();
@@ -120,20 +154,10 @@ public class ManagerLegPublishService extends AbstractGuiService<Manager, Leg> {
 
 		}
 
-		if (leg.isDraftMode() && leg.getStatus() != LegStatus.ON_TIME)
-			throw new IllegalStateException("When a leg is being published, the status must be ON_TIME");
-
-		int aircraftId = super.getRequest().getData("aircraft", int.class);
-		Aircraft validAircraft = this.repository.findAircraftById(aircraftId);
-		if (validAircraft == null)
-			throw new IllegalStateException("The aircraft doesn't exist");
-		
 		if (leg.getAircraft() != null) {
 			boolean operativeAircraft = leg.getAircraft().getStatus().equals(Status.ACTIVE_SERVICE);
 			super.state(operativeAircraft, "aircraft", "acme.validation.leg.operative.aircraft.message");
-		}
 
-		if (leg.getAircraft() != null) {
 			Airline airline = leg.getAircraft().getAirline();
 			if (leg.getFlightNumber().length() == 7 && !leg.getFlightNumber().substring(0, 3).equals(airline.getIataCode())) {
 				super.state(false, "flightNumber", "acme.validation.leg.invalid.iata.flightNumber");
@@ -148,7 +172,7 @@ public class ManagerLegPublishService extends AbstractGuiService<Manager, Leg> {
 		publishedLegs.add(leg);
 		List<Leg> orderedLegs = publishedLegs.stream().sorted(Comparator.comparing(Leg::getScheduledDeparture)).collect(Collectors.toList());
 		int index = orderedLegs.indexOf(leg);
-		if (index != -1 && leg.getFlight().getIndication()) {
+		if (index != -1 && leg.getFlight().getIndication() && leg.getDepartureAirport() != null && leg.getArrivalAirport() != null) {
 			// Validar leg anterior
 			if (index > 0) {
 				Leg previousLeg = orderedLegs.get(index - 1);

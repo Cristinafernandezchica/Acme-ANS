@@ -50,6 +50,8 @@ public class ManagerLegCreateService extends AbstractGuiService<Manager, Leg> {
 				if (flight != null && flight.getManager().equals(manager))
 					status = true;
 
+				if (!flight.isDraftMode())
+					status = false;
 				// Validaciones
 				if (super.getRequest().getMethod().equals("POST")) {
 					// Departure airport and arrival airport
