@@ -1,11 +1,11 @@
 key,fullName,email,passportNumber,dateOfBirth,specialNeeds,draftMode,key:customer
 passenger-01,Angel Customer1,angel@acme.com,ES123456,2004/01/01 00:00,,true,customer-01
-passenger-02,Rafael Customer2,rafael@acme.com,ES789012,2005/01/01 00:00,Blind Assistant,false,customer-02
+passenger-02,Rafael Customer2,rafael@acme.com,ES789012,2005/01/01 00:00,Blind Assistant,true,customer-02
 passenger-04,A,a@acme.com,ES654321,2007/03/03 00:00,,true,customer-03
-passenger-05,An,an@acme.com,ES445566,2008/04/04 00:00,,true,customer-01
+passenger-05,An,an@acme.com,ES445566,2008/04/04 00:00,,false,customer-01
 passenger-06,Angel Customer With Extra Name,angelc@acme.com,ES432109,2009/05/05 00:00,,true,customer-02
 passenger-07,Lorem Ipsum Passenger,lorem@ipsum.com,ES321098,2010/06/06 00:00,,true,customer-03
-passenger-08,مُسَافِرُ عَرَبِي,arab@acme.com,AF210987,2011/07/07 00:00,,true,customer-01
+passenger-08,مُسَافِرُ عَرَبِي,arab@acme.com,AF210987,2011/07/07 00:00,,false,customer-01
 passenger-09,乘客,china@acme.com,CH109876,2012/08/08 00:00,,true,customer-02
 passenger-10,<marquee>Hacked</marquee>,hacked@acme.com,ES987654,2013/09/09 00:00,,true,customer-03
 passenger-11,<script>alert('Hacked!')</script>,script@acme.com,ES876543,2014/10/10 00:00,,true,customer-01
