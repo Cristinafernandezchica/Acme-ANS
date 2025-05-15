@@ -36,6 +36,13 @@ public class InvolvesCreateService extends AbstractGuiService<Technician, Involv
 		super.getResponse().addGlobal("showCreate", showCreate);
 		if (mr.getTechnician().equals(technician) && mr.isDraftMode())
 			authored = true;
+		if (super.getRequest().getMethod().equals("POST"))
+			if (authored) {
+				Integer newTask = super.getRequest().getData("task", int.class);
+				Collection<Task> publishTasks = this.repository.findAllPublishTasks();
+				if (newTask != 0 && (newTask == null || !publishTasks.stream().map(x -> x.getId()).toList().contains(newTask)))
+					authored = false;
+			}
 
 		super.getResponse().setAuthorised(authored);
 	}
@@ -62,10 +69,7 @@ public class InvolvesCreateService extends AbstractGuiService<Technician, Involv
 	public void validate(final Involves involves) {
 		if (!this.getBuffer().getErrors().hasErrors("task") && involves.getTask() != null)
 			super.state(!involves.getTask().isDraftMode(), "task", "acme.validation.technician.involves.message", involves);
-		Integer newTask = super.getRequest().getData("task", int.class);
-		Collection<Task> publishTasks = this.repository.findAllPublishTasks();
-		if (newTask == null || !publishTasks.stream().map(x -> x.getId()).toList().contains(newTask))
-			throw new IllegalStateException("Task not valid");
+
 	}
 
 	@Override

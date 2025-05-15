@@ -3,6 +3,7 @@ package acme.features.technician.maintenanceRecord;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -28,7 +29,22 @@ public class MaintenanceRecordCreateService extends AbstractGuiService<Technicia
 	// AbstractGuiService interface -------------------------------------------
 	@Override
 	public void authorise() {
-		super.getResponse().setAuthorised(true);
+		boolean authored = true;
+		if (super.getRequest().getMethod().equals("POST")) {
+			if (authored) {
+				String newStatus = super.getRequest().getData("status", String.class);
+				List<String> listaDeStatus = List.of(Status.COMPLETED.name(), Status.INPROGRESS.name(), Status.PENDING.name());
+				if (!newStatus.equals("0") && (newStatus == null || !listaDeStatus.contains(newStatus)))
+					authored = false;
+			}
+			if (authored) {
+				Integer newAircraft = super.getRequest().getData("aircraft", int.class);
+				List<Integer> listaDeAircraft = this.repository.findAllAircraft().stream().map(x -> x.getId()).toList();
+				if (newAircraft != 0 && (newAircraft == null || !listaDeAircraft.contains(newAircraft)))
+					authored = false;
+			}
+		}
+		super.getResponse().setAuthorised(authored);
 	}
 
 	@Override
