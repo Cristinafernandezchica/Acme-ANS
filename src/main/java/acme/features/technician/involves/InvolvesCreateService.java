@@ -36,13 +36,13 @@ public class InvolvesCreateService extends AbstractGuiService<Technician, Involv
 		super.getResponse().addGlobal("showCreate", showCreate);
 		if (mr.getTechnician().equals(technician) && mr.isDraftMode())
 			authored = true;
-
-		if (authored) {
-			Integer newTask = super.getRequest().getData("task", int.class);
-			Collection<Task> publishTasks = this.repository.findAllPublishTasks();
-			if (newTask == null || !publishTasks.stream().map(x -> x.getId()).toList().contains(newTask))
-				authored = false;
-		}
+		if (super.getRequest().getMethod().equals("POST"))
+			if (authored) {
+				Integer newTask = super.getRequest().getData("task", int.class);
+				Collection<Task> publishTasks = this.repository.findAllPublishTasks();
+				if (newTask != 0 && (newTask == null || !publishTasks.stream().map(x -> x.getId()).toList().contains(newTask)))
+					authored = false;
+			}
 
 		super.getResponse().setAuthorised(authored);
 	}

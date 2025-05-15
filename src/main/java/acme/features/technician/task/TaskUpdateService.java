@@ -1,6 +1,8 @@
 
 package acme.features.technician.task;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import acme.client.components.models.Dataset;
@@ -23,13 +25,23 @@ public class TaskUpdateService extends AbstractGuiService<Technician, Task> {
 		Task task;
 		Technician technician;
 		int taskId;
+		boolean authored = false;
 
 		taskId = super.getRequest().getData("id", int.class);
 		task = this.repository.findByTaskId(taskId);
 
 		technician = (Technician) super.getRequest().getPrincipal().getActiveRealm();
 		if (technician.equals(task.getTechnician()) && task.isDraftMode())
-			super.getResponse().setAuthorised(true);
+			authored = true;
+
+		if (super.getRequest().getMethod().equals("POST"))
+			if (authored) {
+				String newType = super.getRequest().getData("type", String.class);
+				List<String> listaDeStatus = List.of(Type.INSPECTION.name(), Type.MAINTENANCE.name(), Type.REPAIR.name(), Type.SYSTEMCHECK.name());
+				if (!newType.equals("0") && (newType == null || !listaDeStatus.contains(newType)))
+					authored = false;
+			}
+		super.getResponse().setAuthorised(authored);
 	}
 
 	@Override
