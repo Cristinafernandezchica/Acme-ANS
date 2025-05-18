@@ -59,6 +59,7 @@ public class ActivityLogPublishService extends AbstractGuiService<FlightCrewMemb
 		int id = super.getRequest().getData("id", int.class);
 		ActivityLog activityLogBaseData = this.repository.findActivityLogById(id);
 
+		// Cambiar a authorise y corregir warnings: mirar managerLeg
 		boolean isOriginalRegistrationMoment;
 		isOriginalRegistrationMoment = activityLog.getRegistrationMoment().getDate() == activityLogBaseData.getRegistrationMoment().getDate() && activityLog.getRegistrationMoment().getMonth() == activityLogBaseData.getRegistrationMoment().getMonth()
 			&& activityLog.getRegistrationMoment().getYear() == activityLogBaseData.getRegistrationMoment().getYear() && activityLog.getRegistrationMoment().getMinutes() == activityLogBaseData.getRegistrationMoment().getMinutes()

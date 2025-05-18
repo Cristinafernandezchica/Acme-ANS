@@ -1,6 +1,7 @@
 
 package acme.features.flightCrewMember.flightAssigment;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -44,21 +45,32 @@ public class FlightAssignmentPublishService extends AbstractGuiService<FlightCre
 		isFlightAssignmentOwner = faSelected.getFlightCrewMemberAssigned() == fcmLogged;
 
 		String metodo = super.getRequest().getMethod();
-		boolean hacked = true;
-		int memberId = super.getRequest().getPrincipal().getActiveRealm().getId();
-		FlightCrewMember fcm = this.repository.findFlighCrewMemberById(memberId);
+		boolean validLeg = true;
+		boolean validDuty = true;
+		boolean validStatus = true;
 
 		if (metodo.equals("POST")) {
-			int legId = super.getRequest().getData("legRelated", int.class);
+			Integer legId = super.getRequest().getData("legRelated", Integer.class);
 
-			Leg leg = this.repository.findLegById(legId);
-			List<Leg> allLegs = this.repository.findAllLegs();
+			if (legId == null)
+				validLeg = false;
+			else {
+				Leg leg = this.repository.findLegById(legId);
+				List<Leg> allLegs = this.repository.findAllLegs();
+				if (leg == null && legId != 0 || !allLegs.contains(leg) && legId != 0)
+					validLeg = false;
+			}
 
-			if (leg == null && legId != 0 || !allLegs.contains(leg) && legId != 0)
-				hacked = false;
+			String duty = super.getRequest().getData("flightCrewsDuty", String.class);
+			if (duty == null && !duty.trim().isEmpty() && !duty.equals("0") || Arrays.stream(FlightCrewsDuty.values()).noneMatch(d -> d.name().equals(duty)))
+				validDuty = false;
+
+			String currentStatus = super.getRequest().getData("currentStatus", String.class);
+			if (currentStatus == null && !currentStatus.trim().isEmpty() && !currentStatus.equals("0") || Arrays.stream(CurrentStatus.values()).noneMatch(cs -> cs.name().equals(currentStatus)))
+				validStatus = false;
 		}
 
-		boolean authorization = isFlightAssignmentOwner && hacked;
+		boolean authorization = isFlightAssignmentOwner && validLeg && validDuty && validStatus;
 
 		super.getResponse().setAuthorised(authorization);
 	}

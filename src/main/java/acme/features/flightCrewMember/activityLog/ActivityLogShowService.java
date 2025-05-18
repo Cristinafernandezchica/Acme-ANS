@@ -22,13 +22,19 @@ public class ActivityLogShowService extends AbstractGuiService<FlightCrewMember,
 
 		FlightCrewMember fcmLogged;
 		ActivityLog alSelected;
-		int alId = super.getRequest().getData("id", int.class);
 
-		// Comprobación de que la activityLog sea del FCM logeado
 		int fcmIdLogged = super.getRequest().getPrincipal().getActiveRealm().getId();
-		fcmLogged = this.repository.findFlighCrewMemberById(fcmIdLogged);
-		alSelected = this.repository.findActivityLogById(alId);
-		isFlightAssignmentOwner = alSelected.getFlightAssignmentRelated().getFlightCrewMemberAssigned() == fcmLogged;
+
+		if (!super.getRequest().getData().isEmpty()) {
+			Integer alId = super.getRequest().getData("id", Integer.class);
+			if (alId != null) {
+				// Comprobación de que la activityLog sea del FCM logeado
+				fcmLogged = this.repository.findFlighCrewMemberById(fcmIdLogged);
+				alSelected = this.repository.findActivityLogById(alId);
+				if (alSelected != null)
+					isFlightAssignmentOwner = alSelected.getFlightAssignmentRelated().getFlightCrewMemberAssigned() == fcmLogged;
+			}
+		}
 
 		super.getResponse().setAuthorised(isFlightAssignmentOwner);
 	}

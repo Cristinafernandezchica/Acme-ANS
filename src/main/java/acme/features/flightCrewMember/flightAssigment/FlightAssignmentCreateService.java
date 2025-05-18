@@ -1,6 +1,7 @@
 
 package acme.features.flightCrewMember.flightAssigment;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -35,19 +36,32 @@ public class FlightAssignmentCreateService extends AbstractGuiService<FlightCrew
 
 		// Comprobacion de leg
 		String metodo = super.getRequest().getMethod();
-		boolean authorised = true;
+		boolean authorised;
 		int memberId = super.getRequest().getPrincipal().getActiveRealm().getId();
 		FlightCrewMember fcm = this.repository.findFlighCrewMemberById(memberId);
 
+		boolean validLeg = true;
+		boolean validDuty = true;
+
 		if (metodo.equals("POST")) {
-			int legId = super.getRequest().getData("legRelated", int.class);
+			Integer legId = super.getRequest().getData("legRelated", Integer.class);
 
-			Leg leg = this.repository.findLegById(legId);
-			List<Leg> allLegs = this.repository.findAllLegs();
+			if (legId == null)
+				validLeg = false;
+			else {
+				Leg leg = this.repository.findLegById(legId);
+				List<Leg> allLegs = this.repository.findAllLegs();
+				if (leg == null && legId != 0 || !allLegs.contains(leg) && legId != 0)
+					validLeg = false;
+			}
 
-			if (leg == null && legId != 0 || !allLegs.contains(leg) && legId != 0)
-				authorised = false;
+			String duty = super.getRequest().getData("flightCrewsDuty", String.class);
+			if (duty == null && !duty.trim().isEmpty() && !duty.equals("0") || Arrays.stream(FlightCrewsDuty.values()).noneMatch(tc -> tc.name().equals(duty)))
+				validDuty = false;
+
 		}
+
+		authorised = validLeg && validDuty;
 
 		super.getResponse().setAuthorised(authorised);
 	}
