@@ -50,7 +50,7 @@ public class ManagerLegCreateService extends AbstractGuiService<Manager, Leg> {
 				if (flight != null && flight.getManager().equals(manager))
 					status = true;
 
-				if (!flight.isDraftMode())
+				if (flight != null && !flight.isDraftMode())
 					status = false;
 				// Validaciones
 				if (super.getRequest().getMethod().equals("POST")) {
@@ -156,7 +156,7 @@ public class ManagerLegCreateService extends AbstractGuiService<Manager, Leg> {
 		if (!leg.isDraftMode())
 			super.state(false, "*", "acme.validation.leg.create.no.draftmode");
 
-		if (!leg.getFlight().isDraftMode())
+		if (leg.getFlight() != null && !leg.getFlight().isDraftMode())
 			super.state(false, "*", "acme.validation.leg.create.no.flight.draftmode");
 
 	}
