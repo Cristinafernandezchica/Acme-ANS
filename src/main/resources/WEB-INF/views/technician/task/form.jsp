@@ -8,8 +8,8 @@
 
 <acme:input-select code = "technician.task.form.label.type" path = "type" choices="${types}" />
 <acme:input-textbox code= "technician.task.form.label.description" path="description" />
-<acme:input-integer code="technician.task.form.label.priority" path= "priority" />
-<acme:input-integer code="technician.task.form.label.estimatedDuration" path= "estimatedDuration" />
+<acme:input-integer code="technician.task.form.label.priority" path= "priority" placeholder="technician.task.form.placeholder.priority" />
+<acme:input-integer code="technician.task.form.label.estimatedDuration" path= "estimatedDuration" placeholder="technician.task.form.placeholder.estimatedDuration" />
 
 <jstl:choose>
 

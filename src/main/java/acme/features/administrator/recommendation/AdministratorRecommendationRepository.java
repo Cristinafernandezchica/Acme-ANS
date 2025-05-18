@@ -17,9 +17,6 @@ public interface AdministratorRecommendationRepository extends AbstractRepositor
 	@Query("select r from Recommendation r where r.airport.city = :city")
 	List<Recommendation> findByCity(@Param("city") String city);
 
-	@Query("select distinct a.city from Airport a order by a.city")
-	List<String> findDistinctCities();
-
 	@Query("select r from Recommendation r where r.externalId = :externalId and r.providerName = :provider")
 	Optional<Recommendation> findByExternalIdAndProvider(@Param("externalId") String externalId, @Param("provider") String provider);
 }

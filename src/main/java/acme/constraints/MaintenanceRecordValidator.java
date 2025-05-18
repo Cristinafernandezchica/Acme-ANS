@@ -24,12 +24,14 @@ public class MaintenanceRecordValidator extends AbstractValidator<ValidMaintenan
 			super.state(context, false, "*", "javax.validation.constraints.NotNull.message");
 		else {
 			List<String> aceptedCurrencys = List.of("USD", "EUR", "GBP");
-			boolean haveAnAceptedCurrency = aceptedCurrencys.contains(mr.getEstimatedCost().getCurrency());
-			if (!haveAnAceptedCurrency) {
-				result = false;
-				super.state(context, haveAnAceptedCurrency, "estimatedCost", "acme.validation.maintenanceRecords.costs.message");
-			}
+			if (mr.getEstimatedCost() != null) {
+				boolean haveAnAceptedCurrency = aceptedCurrencys.contains(mr.getEstimatedCost().getCurrency());
+				if (!haveAnAceptedCurrency) {
+					result = false;
+					super.state(context, haveAnAceptedCurrency, "estimatedCost", "acme.validation.maintenanceRecords.costs.message");
+				}
 
+			}
 		}
 		return result;
 	}

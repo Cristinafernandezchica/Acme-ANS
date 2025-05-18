@@ -20,9 +20,6 @@ public interface CustomerBookingRepository extends AbstractRepository {
 	@Query("select b from Booking b where b.customer.id = :customerId")
 	List<Booking> findBookingsByCustomerId(int customerId);
 
-	@Query("select distinct br.passenger from BookingRecord br where br.booking.id in (select b.id from Booking b where b.customer.id = :customerId)")
-	List<Passenger> findPassengerByCustomerBookings(int customerId);
-
 	@Query("select f from Flight f")
 	Collection<Flight> findAllFlights();
 
@@ -40,13 +37,4 @@ public interface CustomerBookingRepository extends AbstractRepository {
 
 	@Query("select distinct br.passenger from BookingRecord br where br.booking.id = :bookingId")
 	Collection<Passenger> findPassengersByBookingId(int bookingId);
-
-	@Query("select br.passenger from BookingRecord br where br.booking.id = :bookingId and br.passenger.draftMode = true")
-	Collection<Passenger> getPassengersInDraftMode(int bookingId);
-
-	@Query("select b from Booking b where b.customer.id = :customerId and b.draftMode = true")
-	Collection<Booking> findDraftBookingsByCustomerId(final int customerId);
-
-	@Query("select b from Booking b where b.customer.id = :customerId and b.draftMode = false")
-	Collection<Booking> findPublishedBookingsByCustomerId(final int customerId);
 }
