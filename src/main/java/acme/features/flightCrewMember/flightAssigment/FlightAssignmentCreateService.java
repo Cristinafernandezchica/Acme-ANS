@@ -149,7 +149,7 @@ public class FlightAssignmentCreateService extends AbstractGuiService<FlightCrew
 			// Comprobación de leg asignadas al fcm no sea a la vez que otra
 			boolean legCompatible = true;
 
-			List<Leg> legByFCM = this.repository.findLegsByFlightCrewMemberId(flightAssignment.getFlightCrewMemberAssigned().getId());
+			List<Leg> legByFCM = this.repository.findLegsByFlightCrewMemberId(flightAssignment.getFlightCrewMemberAssigned().getId()).stream().filter(fa -> !fa.isDraftMode()).toList();
 			for (Leg l : legByFCM)
 				if (this.legIsCompatible(flightAssignment.getLegRelated(), l)) {
 					legCompatible = false;
