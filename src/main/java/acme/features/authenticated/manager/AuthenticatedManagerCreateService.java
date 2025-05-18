@@ -12,12 +12,9 @@ import acme.client.components.principals.Authenticated;
 import acme.client.components.principals.DefaultUserIdentity;
 import acme.client.components.principals.UserAccount;
 import acme.client.helpers.PrincipalHelper;
-import acme.client.helpers.SpringHelper;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
-import acme.features.authenticated.customer.AuthenticatedCustomerRepository;
 import acme.realms.manager.Manager;
-import acme.realms.manager.ManagerRepository;
 
 @GuiService
 public class AuthenticatedManagerCreateService extends AbstractGuiService<Authenticated, Manager> {
@@ -25,7 +22,7 @@ public class AuthenticatedManagerCreateService extends AbstractGuiService<Authen
 	// Internal state ---------------------------------------------------------
 
 	@Autowired
-	private AuthenticatedCustomerRepository repository;
+	private AuthenticatedManagerRepository repository;
 
 	// AbstractService<Authenticated, Consumer> ---------------------------
 
@@ -64,8 +61,6 @@ public class AuthenticatedManagerCreateService extends AbstractGuiService<Authen
 	}
 
 	public String getManagerIdentifier(final Manager object) {
-		ManagerRepository repository;
-		repository = SpringHelper.getBean(ManagerRepository.class);
 		DefaultUserIdentity identity = object.getIdentity();
 
 		if (identity == null || identity.getName() == null || identity.getSurname() == null)
@@ -79,7 +74,7 @@ public class AuthenticatedManagerCreateService extends AbstractGuiService<Authen
 
 		String initials = "" + name.charAt(0) + surname.charAt(0);
 
-		List<String> existingIdentifiers = repository.findAllIdentifiersStartingWith(initials);
+		List<String> existingIdentifiers = this.repository.findAllIdentifiersStartingWith(initials);
 		existingIdentifiers.remove(object.getIdentifierNumber());
 
 		Set<String> existingSet = new HashSet<>(existingIdentifiers);
