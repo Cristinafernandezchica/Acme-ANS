@@ -63,11 +63,6 @@ public class ActivityLogListService extends AbstractGuiService<FlightCrewMember,
 	}
 
 	@Override
-	public void validate(final ActivityLog activityLog) {
-
-	}
-
-	@Override
 	public void unbind(final ActivityLog activityLog) {
 		Dataset dataset;
 
