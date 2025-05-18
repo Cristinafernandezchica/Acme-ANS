@@ -33,16 +33,25 @@ public class FlightAssignmentPublishService extends AbstractGuiService<FlightCre
 
 	@Override
 	public void authorise() {
-		boolean isFlightAssignmentOwner;
 
 		FlightCrewMember fcmLogged;
 		FlightAssignment faSelected;
-		int faId = super.getRequest().getData("id", int.class);
+
+		boolean existingFA = false;
+		boolean isFlightAssignmentOwner = false;
 
 		int fcmIdLogged = super.getRequest().getPrincipal().getActiveRealm().getId();
-		fcmLogged = this.repository.findFlighCrewMemberById(fcmIdLogged);
-		faSelected = this.repository.findFlightAssignmentById(faId);
-		isFlightAssignmentOwner = faSelected.getFlightCrewMemberAssigned() == fcmLogged;
+		if (!super.getRequest().getData().isEmpty()) {
+			Integer faId = super.getRequest().getData("id", Integer.class);
+			if (faId != null) {
+				fcmLogged = this.repository.findFlighCrewMemberById(fcmIdLogged);
+				List<FlightAssignment> allFA = this.repository.findAllFlightAssignments();
+				faSelected = this.repository.findFlightAssignmentById(faId);
+				existingFA = faSelected != null || allFA.contains(faSelected);
+				if (faSelected != null)
+					isFlightAssignmentOwner = faSelected.getFlightCrewMemberAssigned() == fcmLogged;
+			}
+		}
 
 		String metodo = super.getRequest().getMethod();
 		boolean validLeg = true;

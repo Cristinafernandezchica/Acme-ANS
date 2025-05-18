@@ -33,19 +33,25 @@ public class FlightAssignmentUpdateService extends AbstractGuiService<FlightCrew
 	@Override
 	public void authorise() {
 		boolean authorization;
-		boolean status;
-		boolean isFCMAssignedToTheFA;
-		int fcmIdLogged;
-		FlightCrewMember fcmLogged;
-		FlightAssignment flightAssignment;
-		int faIdSolicitud;
 
-		fcmIdLogged = super.getRequest().getPrincipal().getActiveRealm().getId();
-		fcmLogged = this.repository.findFlighCrewMemberById(fcmIdLogged);
-		faIdSolicitud = super.getRequest().getData("id", int.class);
-		flightAssignment = this.repository.findFlightAssignmentById(faIdSolicitud);
-		status = flightAssignment.isDraftMode();
-		isFCMAssignedToTheFA = flightAssignment.getFlightCrewMemberAssigned().equals(fcmLogged);
+		FlightCrewMember fcmLogged;
+		FlightAssignment faSelected;
+
+		boolean existingFA = false;
+		boolean isFlightAssignmentOwner = false;
+
+		int fcmIdLogged = super.getRequest().getPrincipal().getActiveRealm().getId();
+		if (!super.getRequest().getData().isEmpty()) {
+			Integer faId = super.getRequest().getData("id", Integer.class);
+			if (faId != null) {
+				fcmLogged = this.repository.findFlighCrewMemberById(fcmIdLogged);
+				List<FlightAssignment> allFA = this.repository.findAllFlightAssignments();
+				faSelected = this.repository.findFlightAssignmentById(faId);
+				existingFA = faSelected != null || allFA.contains(faSelected);
+				if (faSelected != null)
+					isFlightAssignmentOwner = faSelected.getFlightCrewMemberAssigned() == fcmLogged;
+			}
+		}
 
 		String metodo = super.getRequest().getMethod();
 		boolean validLeg = true;
@@ -74,7 +80,7 @@ public class FlightAssignmentUpdateService extends AbstractGuiService<FlightCrew
 
 		}
 
-		authorization = status && isFCMAssignedToTheFA && validLeg && validDuty && validStatus;
+		authorization = isFlightAssignmentOwner && validLeg && validDuty && validStatus;
 		super.getResponse().setAuthorised(authorization);
 	}
 	@Override
