@@ -39,6 +39,7 @@ public class FlightAssignmentPublishService extends AbstractGuiService<FlightCre
 
 		boolean existingFA = false;
 		boolean isFlightAssignmentOwner = false;
+		boolean isPublished = false;
 
 		int fcmIdLogged = super.getRequest().getPrincipal().getActiveRealm().getId();
 		if (!super.getRequest().getData().isEmpty()) {
@@ -58,6 +59,12 @@ public class FlightAssignmentPublishService extends AbstractGuiService<FlightCre
 		boolean validDuty = true;
 		boolean validStatus = true;
 
+		if (metodo.equals("GET")) {
+			Integer faId = super.getRequest().getData("id", Integer.class);
+			faSelected = this.repository.findFlightAssignmentById(faId);
+			isPublished = !faSelected.isDraftMode();
+		}
+
 		if (metodo.equals("POST")) {
 			Integer legId = super.getRequest().getData("legRelated", Integer.class);
 
@@ -71,15 +78,15 @@ public class FlightAssignmentPublishService extends AbstractGuiService<FlightCre
 			}
 
 			String duty = super.getRequest().getData("flightCrewsDuty", String.class);
-			if (duty == null && !duty.trim().isEmpty() && !duty.equals("0") || Arrays.stream(FlightCrewsDuty.values()).noneMatch(d -> d.name().equals(duty)))
+			if (duty == null || duty.trim().isEmpty() || Arrays.stream(FlightCrewsDuty.values()).noneMatch(tc -> tc.name().equals(duty)) && !duty.equals("0"))
 				validDuty = false;
 
 			String currentStatus = super.getRequest().getData("currentStatus", String.class);
-			if (currentStatus == null && !currentStatus.trim().isEmpty() && !currentStatus.equals("0") || Arrays.stream(CurrentStatus.values()).noneMatch(cs -> cs.name().equals(currentStatus)))
+			if (currentStatus == null || currentStatus.trim().isEmpty() || Arrays.stream(CurrentStatus.values()).noneMatch(cs -> cs.name().equals(currentStatus)) && !currentStatus.equals("0"))
 				validStatus = false;
 		}
 
-		boolean authorization = isFlightAssignmentOwner && validLeg && validDuty && validStatus;
+		boolean authorization = isFlightAssignmentOwner && validLeg && validDuty && validStatus && !isPublished;
 
 		super.getResponse().setAuthorised(authorization);
 	}

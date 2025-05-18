@@ -39,6 +39,8 @@ public class FlightAssignmentUpdateService extends AbstractGuiService<FlightCrew
 
 		boolean existingFA = false;
 		boolean isFlightAssignmentOwner = false;
+		boolean isPublished = false;
+		String metodo = super.getRequest().getMethod();
 
 		int fcmIdLogged = super.getRequest().getPrincipal().getActiveRealm().getId();
 		if (!super.getRequest().getData().isEmpty()) {
@@ -51,9 +53,15 @@ public class FlightAssignmentUpdateService extends AbstractGuiService<FlightCrew
 				if (faSelected != null)
 					isFlightAssignmentOwner = faSelected.getFlightCrewMemberAssigned() == fcmLogged;
 			}
+
 		}
 
-		String metodo = super.getRequest().getMethod();
+		if (metodo.equals("GET")) {
+			Integer faId = super.getRequest().getData("id", Integer.class);
+			faSelected = this.repository.findFlightAssignmentById(faId);
+			isPublished = !faSelected.isDraftMode();
+		}
+
 		boolean validLeg = true;
 		boolean validDuty = true;
 		boolean validStatus = true;
@@ -71,16 +79,16 @@ public class FlightAssignmentUpdateService extends AbstractGuiService<FlightCrew
 			}
 
 			String duty = super.getRequest().getData("flightCrewsDuty", String.class);
-			if (duty == null && !duty.trim().isEmpty() && !duty.equals("0") || Arrays.stream(FlightCrewsDuty.values()).noneMatch(d -> d.name().equals(duty)))
+			if (duty == null || duty.trim().isEmpty() || Arrays.stream(FlightCrewsDuty.values()).noneMatch(tc -> tc.name().equals(duty)) && !duty.equals("0"))
 				validDuty = false;
 
 			String currentStatus = super.getRequest().getData("currentStatus", String.class);
-			if (currentStatus == null && !currentStatus.trim().isEmpty() && !currentStatus.equals("0") || Arrays.stream(CurrentStatus.values()).noneMatch(cs -> cs.name().equals(currentStatus)))
+			if (currentStatus == null || currentStatus.trim().isEmpty() || Arrays.stream(CurrentStatus.values()).noneMatch(cs -> cs.name().equals(currentStatus)) && !currentStatus.equals("0"))
 				validStatus = false;
 
 		}
 
-		authorization = isFlightAssignmentOwner && validLeg && validDuty && validStatus;
+		authorization = isFlightAssignmentOwner && validLeg && validDuty && validStatus && !isPublished;
 		super.getResponse().setAuthorised(authorization);
 	}
 	@Override

@@ -56,7 +56,7 @@ public class FlightAssignmentCreateService extends AbstractGuiService<FlightCrew
 			}
 
 			String duty = super.getRequest().getData("flightCrewsDuty", String.class);
-			if (duty == null && !duty.trim().isEmpty() && !duty.equals("0") || Arrays.stream(FlightCrewsDuty.values()).noneMatch(tc -> tc.name().equals(duty)))
+			if (duty == null || duty.trim().isEmpty() || Arrays.stream(FlightCrewsDuty.values()).noneMatch(tc -> tc.name().equals(duty)) && !duty.equals("0"))
 				validDuty = false;
 
 		}
@@ -64,6 +64,7 @@ public class FlightAssignmentCreateService extends AbstractGuiService<FlightCrew
 		authorised = validLeg && validDuty;
 
 		super.getResponse().setAuthorised(authorised);
+
 	}
 
 	@Override

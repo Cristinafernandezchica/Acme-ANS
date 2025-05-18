@@ -32,6 +32,14 @@ public class FlightAssignmentDeleteService extends AbstractGuiService<FlightCrew
 
 		boolean existingFA = false;
 		boolean isFlightAssignmentOwner = false;
+		boolean isPublished = false;
+
+		String metodo = super.getRequest().getMethod();
+		if (metodo.equals("GET")) {
+			Integer faId = super.getRequest().getData("id", Integer.class);
+			faSelected = this.repository.findFlightAssignmentById(faId);
+			isPublished = !faSelected.isDraftMode();
+		}
 
 		int fcmIdLogged = super.getRequest().getPrincipal().getActiveRealm().getId();
 		if (!super.getRequest().getData().isEmpty()) {
@@ -46,7 +54,7 @@ public class FlightAssignmentDeleteService extends AbstractGuiService<FlightCrew
 			}
 		}
 
-		super.getResponse().setAuthorised(isFlightAssignmentOwner);
+		super.getResponse().setAuthorised(isFlightAssignmentOwner && !isPublished);
 	}
 
 	@Override
