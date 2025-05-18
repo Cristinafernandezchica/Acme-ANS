@@ -22,7 +22,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(indexes = {
-	@Index(columnList = "iataCode"), 
+	@Index(columnList = "iata_code"), 
 	@Index(columnList = "city")
 })
 public class Airport extends AbstractEntity {
