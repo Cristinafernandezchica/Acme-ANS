@@ -7,6 +7,9 @@ task-03,洛伦·伊普森,12,8,INSPECTION,technician-01,true
 task-04,<marquee>Hacked</marquee>,12,8,INSPECTION,technician-01,true
 task-05,XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX,12,8,INSPECTION,technician-01,true
 task-06,X,12,8,INSPECTION,technician-01,true
+task-25,XX,12,8,INSPECTION,technician-01,true
+task-26,โลเร็ม อิปซัม,12,8,INSPECTION,technician-01,true
+task-27,<marquee>Hacked</marquee>,12,8,INSPECTION,technician-01,true
 # variaciones estimated_duration
 task-07,Revisar el motor,5000,8,INSPECTION,technician-01,true
 task-08,Revisar el motor,0,8,INSPECTION,technician-01,true
@@ -30,3 +33,6 @@ task-21,Reparar el avion,12,8,REPAIR,technician-01,false
 task-22,mantenimiento rutinario del avion,12,8,MAINTENANCE,technician-01,false
 task-23,Reparar el avion,12,8,REPAIR,technician-02,false
 task-24,Revisar el avion,12,8,INSPECTION,technician-02,false
+task-28,Revisar las ruedas,12,8,INSPECTION,technician-02,false
+task-30,Revisar luces,12,8,INSPECTION,technician-02,false
+task-31,Revisar el asiento del copiloto,12,8,INSPECTION,technician-02,false
