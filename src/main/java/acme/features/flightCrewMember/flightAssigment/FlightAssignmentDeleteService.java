@@ -33,17 +33,15 @@ public class FlightAssignmentDeleteService extends AbstractGuiService<FlightCrew
 		boolean existingFA = false;
 		boolean isFlightAssignmentOwner = false;
 		boolean isPublished = false;
+		boolean falseDelete = false;
+		Integer faId;
 
 		String metodo = super.getRequest().getMethod();
-		if (metodo.equals("GET")) {
-			Integer faId = super.getRequest().getData("id", Integer.class);
-			faSelected = this.repository.findFlightAssignmentById(faId);
-			isPublished = !faSelected.isDraftMode();
-		}
 
 		int fcmIdLogged = super.getRequest().getPrincipal().getActiveRealm().getId();
-		if (!super.getRequest().getData().isEmpty()) {
-			Integer faId = super.getRequest().getData("id", Integer.class);
+		if (!super.getRequest().getData().isEmpty() && super.getRequest().getData() != null) {
+			falseDelete = true;
+			faId = super.getRequest().getData("id", Integer.class);
 			if (faId != null) {
 				fcmLogged = this.repository.findFlighCrewMemberById(fcmIdLogged);
 				List<FlightAssignment> allFA = this.repository.findAllFlightAssignments();
@@ -51,10 +49,16 @@ public class FlightAssignmentDeleteService extends AbstractGuiService<FlightCrew
 				existingFA = faSelected != null || allFA.contains(faSelected) && faSelected != null;
 				if (existingFA)
 					isFlightAssignmentOwner = faSelected.getFlightCrewMemberAssigned() == fcmLogged;
+				if (metodo.equals("GET")) {
+					faId = super.getRequest().getData("id", Integer.class);
+					faSelected = this.repository.findFlightAssignmentById(faId);
+					isPublished = !faSelected.isDraftMode();
+				}
+
 			}
 		}
 
-		super.getResponse().setAuthorised(isFlightAssignmentOwner && !isPublished);
+		super.getResponse().setAuthorised(isFlightAssignmentOwner && !isPublished && falseDelete);
 	}
 
 	@Override

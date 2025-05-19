@@ -41,10 +41,16 @@ public class FlightAssignmentUpdateService extends AbstractGuiService<FlightCrew
 		boolean isFlightAssignmentOwner = false;
 		boolean isPublished = false;
 		String metodo = super.getRequest().getMethod();
+		boolean falseUpdate = false;
+		Integer faId;
+		boolean validLeg = true;
+		boolean validDuty = true;
+		boolean validStatus = true;
 
 		int fcmIdLogged = super.getRequest().getPrincipal().getActiveRealm().getId();
-		if (!super.getRequest().getData().isEmpty()) {
-			Integer faId = super.getRequest().getData("id", Integer.class);
+		if (!super.getRequest().getData().isEmpty() && super.getRequest().getData() != null) {
+			falseUpdate = true;
+			faId = super.getRequest().getData("id", Integer.class);
 			if (faId != null) {
 				fcmLogged = this.repository.findFlighCrewMemberById(fcmIdLogged);
 				List<FlightAssignment> allFA = this.repository.findAllFlightAssignments();
@@ -52,43 +58,36 @@ public class FlightAssignmentUpdateService extends AbstractGuiService<FlightCrew
 				existingFA = faSelected != null || allFA.contains(faSelected) && faSelected != null;
 				if (existingFA)
 					isFlightAssignmentOwner = faSelected.getFlightCrewMemberAssigned() == fcmLogged;
+				if (metodo.equals("GET")) {
+					faId = super.getRequest().getData("id", Integer.class);
+					faSelected = this.repository.findFlightAssignmentById(faId);
+					isPublished = !faSelected.isDraftMode();
+				}
 			}
+			if (metodo.equals("POST")) {
+				Integer legId = super.getRequest().getData("legRelated", Integer.class);
 
-		}
-
-		if (metodo.equals("GET")) {
-			Integer faId = super.getRequest().getData("id", Integer.class);
-			faSelected = this.repository.findFlightAssignmentById(faId);
-			isPublished = !faSelected.isDraftMode();
-		}
-
-		boolean validLeg = true;
-		boolean validDuty = true;
-		boolean validStatus = true;
-
-		if (metodo.equals("POST")) {
-			Integer legId = super.getRequest().getData("legRelated", Integer.class);
-
-			if (legId == null)
-				validLeg = false;
-			else {
-				Leg leg = this.repository.findLegById(legId);
-				List<Leg> allLegs = this.repository.findAllLegs();
-				if (leg == null && legId != 0 || !allLegs.contains(leg) && legId != 0)
+				if (legId == null)
 					validLeg = false;
+				else {
+					Leg leg = this.repository.findLegById(legId);
+					List<Leg> allLegs = this.repository.findAllLegs();
+					if (leg == null && legId != 0 || !allLegs.contains(leg) && legId != 0)
+						validLeg = false;
+				}
+
+				String duty = super.getRequest().getData("flightCrewsDuty", String.class);
+				if (duty == null || duty.trim().isEmpty() || Arrays.stream(FlightCrewsDuty.values()).noneMatch(tc -> tc.name().equals(duty)) && !duty.equals("0"))
+					validDuty = false;
+
+				String currentStatus = super.getRequest().getData("currentStatus", String.class);
+				if (currentStatus == null || currentStatus.trim().isEmpty() || Arrays.stream(CurrentStatus.values()).noneMatch(cs -> cs.name().equals(currentStatus)) && !currentStatus.equals("0"))
+					validStatus = false;
+
 			}
-
-			String duty = super.getRequest().getData("flightCrewsDuty", String.class);
-			if (duty == null || duty.trim().isEmpty() || Arrays.stream(FlightCrewsDuty.values()).noneMatch(tc -> tc.name().equals(duty)) && !duty.equals("0"))
-				validDuty = false;
-
-			String currentStatus = super.getRequest().getData("currentStatus", String.class);
-			if (currentStatus == null || currentStatus.trim().isEmpty() || Arrays.stream(CurrentStatus.values()).noneMatch(cs -> cs.name().equals(currentStatus)) && !currentStatus.equals("0"))
-				validStatus = false;
-
 		}
 
-		authorization = isFlightAssignmentOwner && validLeg && validDuty && validStatus && !isPublished;
+		authorization = isFlightAssignmentOwner && validLeg && validDuty && validStatus && !isPublished && falseUpdate;
 		super.getResponse().setAuthorised(authorization);
 	}
 	@Override
