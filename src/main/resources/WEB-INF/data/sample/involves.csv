@@ -3,8 +3,8 @@ key,key:maintenance-record,key:task
 involves-01,MR-01,task-21
 # un maintenance con multiples tasks
 involves-02,MR-02,task-21
-involves-03,MR-02,task-21
-involves-04,MR-02,task-21
+involves-03,MR-02,task-22
+involves-04,MR-02,task-23
 # un maintenance con task de diferentes technicians
 involves-05,MR-03,task-21
 involves-06,MR-02,task-20

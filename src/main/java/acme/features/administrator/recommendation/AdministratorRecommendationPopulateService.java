@@ -34,7 +34,28 @@ public class AdministratorRecommendationPopulateService extends AbstractGuiServi
 
 	@Override
 	public void authorise() {
-		super.getResponse().setAuthorised(true);
+		boolean status = true;
+
+		if (super.getRequest().getMethod().equals("POST")) {
+			int airportId;
+			Airport airport;
+
+			airportId = super.getRequest().getData("airport", int.class);
+			airport = this.airportRepository.findAirportById(airportId);
+
+			if (airport == null && airportId != 0)
+				status = false;
+
+			String rawCategory = super.getRequest().getData("category", String.class);
+
+			if (rawCategory != null && !rawCategory.trim().isEmpty() && !rawCategory.equals("0")) {
+				boolean categoryValid = Arrays.stream(Category.values()).anyMatch(tc -> tc.name().equals(rawCategory));
+
+				if (!categoryValid)
+					status = false;
+			}
+		}
+		super.getResponse().setAuthorised(status);
 	}
 
 	@Override
@@ -51,19 +72,7 @@ public class AdministratorRecommendationPopulateService extends AbstractGuiServi
 		airportId = super.getRequest().getData("airport", int.class);
 		airport = this.airportRepository.findAirportById(airportId);
 
-		if (airport == null && airportId != 0)
-			throw new IllegalStateException("Airport selected is not valid or do not exists");
-
 		recommendation.setAirport(airport);
-
-		String rawCategory = super.getRequest().getData("category", String.class);
-
-		if (rawCategory != null && !rawCategory.trim().isEmpty() && !rawCategory.equals("0")) {
-			boolean categoryValid = Arrays.stream(Category.values()).anyMatch(tc -> tc.name().equals(rawCategory));
-
-			if (!categoryValid)
-				throw new IllegalStateException("Category selected is not valid");
-		}
 
 		super.bindObject(recommendation, "title", "description", "startDate", "endDate", "category", "estimatedCost", "link");
 	}
