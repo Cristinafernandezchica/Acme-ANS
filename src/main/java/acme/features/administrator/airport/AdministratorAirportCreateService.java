@@ -2,7 +2,6 @@
 package acme.features.administrator.airport;
 
 import java.util.Arrays;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -27,7 +26,17 @@ public class AdministratorAirportCreateService extends AbstractGuiService<Admini
 
 	@Override
 	public void authorise() {
-		super.getResponse().setAuthorised(true);
+		boolean status = true;
+		String operationalScope;
+
+		if (super.getRequest().getMethod().equals("POST")) {
+			operationalScope = super.getRequest().getData("operationalScope", String.class);
+
+			if (!Arrays.toString(OperationalScopeType.values()).concat("0").contains(operationalScope) || operationalScope == null)
+				status = false;
+		}
+
+		super.getResponse().setAuthorised(status);
 	}
 
 	@Override
@@ -50,9 +59,6 @@ public class AdministratorAirportCreateService extends AbstractGuiService<Admini
 		int id;
 		String iataCodeValue;
 		boolean isIataCodeUnique;
-		List<OperationalScopeType> operationalScopes;
-		OperationalScopeType operationalScope;
-		boolean isCorrectOperationalScope;
 
 		confirmation = super.getRequest().getData("confirmation", boolean.class);
 		super.state(confirmation, "confirmation", "acme.validation.confirmation.message");
@@ -64,12 +70,6 @@ public class AdministratorAirportCreateService extends AbstractGuiService<Admini
 
 		isIataCodeUnique = count == 0;
 		super.state(isIataCodeUnique, "iataCode", "acme.validation.airport.iataCode.message");
-
-		operationalScopes = Arrays.asList(OperationalScopeType.values());
-		operationalScope = super.getRequest().getData("operationalScope", OperationalScopeType.class);
-		isCorrectOperationalScope = operationalScopes.contains(operationalScope);
-		if (!isCorrectOperationalScope)
-			throw new IllegalStateException("It is not posible to create an airport with this operational scope");
 
 	}
 

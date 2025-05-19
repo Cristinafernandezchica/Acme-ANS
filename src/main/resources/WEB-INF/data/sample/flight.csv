@@ -50,4 +50,9 @@ flight-40,"Ka",true,EUR 20.00,"Vuelo de prueba E",manager-01,true
 #Examples for flight assignments
 flight-42,"omg",true,GPB 100.00,"Vuelo de prueba fa",manager-01,false
 flight-43,"omg",true,USD 100.00,"Vuelo de prueba fa",manager-01,false
-flight-44,"Alto",true,EUR 100.00,"Vuelo sin tramos",manager-02,true
+flight-44,"Alto",true,EUR 100.00,"Vuelo sin tramos",manager-02,false
+flight-45,"lol",true,EUR 100.00,"Vuelo sin tramos",manager-01,false
+flight-46,"lol11",true,EUR 100.00,"Vuelo sin tramos",manager-01,false
+flight-47,"lol22",true,EUR 100.00,"Vuelo sin tramos",manager-01,false
+flight-48,"lol33",true,EUR 100.00,"Vuelo sin tramos",manager-01,false
+flight-49,"lol44",true,EUR 100.00,"Vuelo sin tramos",manager-01,false

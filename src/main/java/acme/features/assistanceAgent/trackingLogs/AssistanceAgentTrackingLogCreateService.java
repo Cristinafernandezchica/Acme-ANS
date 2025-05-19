@@ -27,13 +27,24 @@ public class AssistanceAgentTrackingLogCreateService extends AbstractGuiService<
 	@Override
 	public void authorise() {
 		boolean status;
+		boolean isCorrectClaim;
+		boolean isCorrectStatus = true;
+		String trackingLogStatus;
 		int claimId;
 		Claim claim;
 
 		claimId = super.getRequest().getData("claimId", int.class);
 		claim = this.repository.findClaimById(claimId);
-		status = claim != null && !claim.isDraftMode() && super.getRequest().getPrincipal().hasRealm(claim.getAssistanceAgent());
+		isCorrectClaim = claim != null && !claim.isDraftMode() && super.getRequest().getPrincipal().hasRealm(claim.getAssistanceAgent());
 
+		if (super.getRequest().getMethod().equals("POST")) {
+			trackingLogStatus = super.getRequest().getData("status", String.class);
+
+			if (!Arrays.toString(TrackingLogStatus.values()).concat("0").contains(trackingLogStatus) || trackingLogStatus == null)
+				isCorrectStatus = false;
+		}
+
+		status = isCorrectClaim && isCorrectStatus;
 		super.getResponse().setAuthorised(status);
 	}
 
@@ -66,21 +77,17 @@ public class AssistanceAgentTrackingLogCreateService extends AbstractGuiService<
 
 	@Override
 	public void validate(final TrackingLog trackingLog) {
-		Collection<TrackingLogStatus> statuses;
 		TrackingLogStatus status;
 		int claimId;
 		Double percentage;
 		Double minPercentage;
 		Collection<TrackingLog> trackingLogs;
-		boolean isCorrectStatus;
 		boolean isCorrectPercentage = true;
 		boolean isCorrectPercentageStatus = true;
 
-		statuses = Arrays.asList(TrackingLogStatus.values());
 		status = super.getRequest().getData("status", TrackingLogStatus.class);
-		isCorrectStatus = statuses.contains(status);
-
 		percentage = super.getRequest().getData("resolutionPercentage", Double.class);
+
 		if (percentage.equals(100.00) && status.equals(TrackingLogStatus.PENDING) || !percentage.equals(100.00) && !status.equals(TrackingLogStatus.PENDING))
 			isCorrectPercentageStatus = false;
 
@@ -94,13 +101,11 @@ public class AssistanceAgentTrackingLogCreateService extends AbstractGuiService<
 				isCorrectPercentage = percentage > minPercentage;
 			else if (Long.valueOf(1).equals(maximumTrackingLogs)) {
 				TrackingLog maximumTrackingLog = trackingLogs.stream().findFirst().get();
-				isCorrectPercentageStatus = percentage.equals(100.00) && status.equals(maximumTrackingLog.getStatus());
+				isCorrectPercentage = !maximumTrackingLog.isDraftMode() && percentage.equals(100.00) && status.equals(maximumTrackingLog.getStatus());
 			} else if (Long.valueOf(2).equals(maximumTrackingLogs))
 				isCorrectPercentage = false;
 		}
 
-		if (!isCorrectStatus)
-			throw new IllegalStateException("It is not posible to create a tracking log with this status");
 		super.state(isCorrectPercentage, "resolutionPercentage", "acme.validation.trackingLog.resolutionPercentage.message");
 		super.state(isCorrectPercentageStatus, "status", "acme.validation.trackingLog.resolutionPercentageStatus.message");
 		super.state(!trackingLog.getClaim().isDraftMode(), "draftMode", "acme.validation.claim.draftMode.message");

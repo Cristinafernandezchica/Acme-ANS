@@ -28,18 +28,29 @@ public class FlightAssignmentShowService extends AbstractGuiService<FlightCrewMe
 
 	@Override
 	public void authorise() {
-		boolean isFlightAssignmentOwner;
+		boolean isFlightAssignmentOwner = false;
+		boolean existingFA = false;
+		boolean authorization;
 
 		FlightCrewMember fcmLogged;
 		FlightAssignment faSelected;
-		int faId = super.getRequest().getData("id", int.class);
 
 		int fcmIdLogged = super.getRequest().getPrincipal().getActiveRealm().getId();
-		fcmLogged = this.repository.findFlighCrewMemberById(fcmIdLogged);
-		faSelected = this.repository.findFlightAssignmentById(faId);
-		isFlightAssignmentOwner = faSelected.getFlightCrewMemberAssigned() == fcmLogged;
+		if (!super.getRequest().getData().isEmpty()) {
+			Integer faId = super.getRequest().getData("id", Integer.class);
+			if (faId != null) {
+				fcmLogged = this.repository.findFlighCrewMemberById(fcmIdLogged);
+				List<FlightAssignment> allFA = this.repository.findAllFlightAssignments();
+				faSelected = this.repository.findFlightAssignmentById(faId);
+				existingFA = faSelected != null || allFA.contains(faSelected);
+				if (faSelected != null)
+					isFlightAssignmentOwner = faSelected.getFlightCrewMemberAssigned() == fcmLogged;
+			}
+		}
 
-		super.getResponse().setAuthorised(isFlightAssignmentOwner);
+		authorization = isFlightAssignmentOwner && existingFA;
+
+		super.getResponse().setAuthorised(authorization);
 	}
 
 	@Override

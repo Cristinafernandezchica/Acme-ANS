@@ -2,17 +2,22 @@
 package acme.features.administrator.aircraft;
 
 import java.util.Collection;
+import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import acme.client.components.models.Dataset;
 import acme.client.components.principals.Administrator;
 import acme.client.components.views.SelectChoices;
+import acme.client.helpers.MomentHelper;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.aircrafts.Aircraft;
 import acme.entities.aircrafts.Status;
 import acme.entities.airline.Airline;
+import acme.entities.legs.Leg;
+import acme.entities.legs.LegStatus;
 
 @GuiService
 public class AircraftUpdateService extends AbstractGuiService<Administrator, Aircraft> {
@@ -42,14 +47,24 @@ public class AircraftUpdateService extends AbstractGuiService<Administrator, Air
 
 	@Override
 	public void bind(final Aircraft aircraft) {
-		super.bindObject(aircraft, "model", "registrationNumber", "numberPassengers", "cargoWeight", "status", "details", "airline");
+		super.bindObject(aircraft, "status", "details", "airline");
 
 	}
 
 	@Override
 	public void validate(final Aircraft aircraft) {
-		boolean confirmation;
 
+		boolean isFlying = false;
+		List<Leg> legs = this.repository.findLegsByAircraft(aircraft.getId());
+		for (Leg l : legs)
+			if (l.getStatus().equals(LegStatus.ON_TIME) || l.getStatus().equals(LegStatus.DELAYED)) {
+				Date departureTime = l.getScheduledDeparture();
+				Date arrivalTime = l.getScheduledDeparture();
+				isFlying = MomentHelper.isInRange(MomentHelper.getCurrentMoment(), departureTime, arrivalTime);
+			}
+		super.state(!isFlying, "*", "acme.validation.legOnAir.message");
+
+		boolean confirmation;
 		confirmation = super.getRequest().getData("confirmation", boolean.class);
 		super.state(confirmation, "confirmation", "acme.validation.confirmation.message");
 	}

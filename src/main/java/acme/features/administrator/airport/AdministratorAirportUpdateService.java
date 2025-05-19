@@ -2,7 +2,6 @@
 package acme.features.administrator.airport;
 
 import java.util.Arrays;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -27,14 +26,28 @@ public class AdministratorAirportUpdateService extends AbstractGuiService<Admini
 
 	@Override
 	public void authorise() {
-		boolean status = false;
+		boolean status;
+		boolean isCorrectAirport = false;
 		int id;
 		Airport airport;
+
+		boolean isCorrectOperationalScope = true;
+		String operationalScope;
+
 		if (!super.getRequest().getData().isEmpty() && super.getRequest().getData() != null) {
 			id = super.getRequest().getData("id", int.class);
 			airport = this.repository.findAirportById(id);
-			status = airport != null;
+			isCorrectAirport = airport != null;
+
+			if (super.getRequest().getMethod().equals("POST")) {
+				operationalScope = super.getRequest().getData("operationalScope", String.class);
+
+				if (!Arrays.toString(OperationalScopeType.values()).concat("0").contains(operationalScope) || operationalScope == null)
+					isCorrectOperationalScope = false;
+			}
 		}
+
+		status = isCorrectAirport && isCorrectOperationalScope;
 
 		super.getResponse().setAuthorised(status);
 	}
@@ -61,9 +74,6 @@ public class AdministratorAirportUpdateService extends AbstractGuiService<Admini
 		int id;
 		String iataCodeValue;
 		boolean isIataCodeUnique;
-		List<OperationalScopeType> operationalScopes;
-		OperationalScopeType operationalScope;
-		boolean isCorrectOperationalScope;
 
 		confirmation = super.getRequest().getData("confirmation", boolean.class);
 		super.state(confirmation, "confirmation", "acme.validation.confirmation.message");
@@ -75,12 +85,6 @@ public class AdministratorAirportUpdateService extends AbstractGuiService<Admini
 
 		isIataCodeUnique = count == 0;
 		super.state(isIataCodeUnique, "iataCode", "acme.validation.airport.iataCode.message");
-
-		operationalScopes = Arrays.asList(OperationalScopeType.values());
-		operationalScope = super.getRequest().getData("operationalScope", OperationalScopeType.class);
-		isCorrectOperationalScope = operationalScopes.contains(operationalScope);
-		if (!isCorrectOperationalScope)
-			throw new IllegalStateException("It is not posible to update an airport with this operational scope");
 	}
 
 	@Override

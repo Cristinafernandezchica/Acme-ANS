@@ -54,7 +54,7 @@ public class FlightCrewMemberDashboardShowService extends AbstractGuiService<Fli
 		numberOfLegsMediumIncident = this.repository.findLegsCountBySeverityLevelsMedium();
 		numberOfLegsHighIncident = this.repository.findLegsCountBySeverityLevelsHigh();
 
-		crewMembersLastLeg = this.repository.findCrewNamesInLastLeg(fcmIdLogged).stream().map(fcm -> fcm.getIdentity().getFullName()).toList();
+		crewMembersLastLeg = this.repository.findCrewNamesInLastLeg(fcmIdLogged).stream().map(fcm -> fcm.getIdentity().getFullName().replace(",", "-")).toList();
 
 		List<String> faConfirmed = this.repository.findFlightAssignmentsByCrewMember(fcmIdLogged, CurrentStatus.CONFIRMED).stream().map(fa -> fa.getLegRelated().getLabel()).toList();
 		List<String> faPending = this.repository.findFlightAssignmentsByCrewMember(fcmIdLogged, CurrentStatus.CANCELLED).stream().map(fa -> fa.getLegRelated().getLabel()).toList();

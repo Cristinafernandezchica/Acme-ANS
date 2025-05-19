@@ -1,22 +1,22 @@
 key,name,iataCode,website,type,foundationMoment,email,phoneNumber
-airline-01,pegasus,MAX,http://pegasus.com/pegasus,LOW_COST,2000/01/02 23:00,pegasus@gmail.com,999999999
-airline-02,ryanair,RAX,http://ryanair.com/ryanair,LOW_COST,2000/02/02 10:00,ryanair@gamil.com,666666666
-airline-04,P,PEP,http://p.com,LOW_COST,2000/04/10 12:30,p@acme.com,222222222
-airline-05,Pa,QWQ,http://pa.com,STANDARD,2000/05/20 08:15,pa@acme.com,333333333
-airline-06,Pegasus Airlines,MAP,http://pegasusair.com,LUXURY,2000/06/25 19:45,contact@pegasusair.com,444444444
-airline-07,Lorem Ipsum Airways,MAQ,http://loremipsum.com,LOW_COST,2000/07/30 14:20,info@loremipsum.com,555555555
-airline-08,航空会社,MAC,http://japanair.com,STANDARD,2000/08/05 09:10,contact@japanair.com,666666666
-airline-09,<marquee>Hacked</marquee>,MAD,http://hacked.com,LUXURY,2000/09/09 16:55,hacked@hacked.com,777777777
-airline-10,"Lorem ipsum dolor sit amet, consectetur adipiscing",MAE,http://malicious.com,LOW_COST,2000/10/10 22:05,hacker@malware.com,888888888
-airline-13,Pangea,MAZ,http://pegasus.com,STANDARD,2000/12/12 12:12,pegasus@acme.com,101010101
-airline-15,EasyJet,RAY,http://ryanair.com,LUXURY,2001/02/02 02:02,contact@ryanair.com,303030303
-airline-16,Condor,RAZ,http://ryanair.com,STANDARD,2001/03/03 03:03,contact@ryanair.com,404040404
-airline-17,Lipassam,RAP,http://ryanair.com,LOW_COST,2001/04/04 04:04,contact@ryanair.com,505050505
-airline-22,CanaryLines,RAR,http://www.super-long-url-example.com/path/to/resource,LOW_COST,2003/06/06 06:06,ryanair@acme.com,909090909
-airline-27,Salmorejo,YAY,http://pegasus.com,STANDARD,2008/11/11 11:11,pegasus@acme.com,692555867
-airline-28,Tussam,PAY,http://ryanair.com,LOW_COST,2009/12/12 12:12,ryanair@acme.com,+806493
-airline-29,Люфтваффе,RBA,http://luftwaffe.com,LUXURY,2010/01/01 13:13,contact@luftwaffe.com,+498877665544
+airline-01,pegasus,MAX,http://pegasus.com/pegasus,LOW_COST,2000/01/02 23:00,pegasus@gmail.com,999999
+airline-02,ryanair,RAX,http://a.b,LOW_COST,2000/02/02 10:00,ryanair@gamil.com,666666666666666
+airline-04,P,PEP,"http://www.lorem-ipsum.org/dolor/sit/amet,/consectetur/adipiscing/elit,/sed/do/eiusmod/tempor/incididunt/ut/labore/et/dolore/magna/aliqua/Ut/enim/ad/minim/veniam/quis/nostrud/exercitation/ullamco/laboris/nisi/ut/aliquip/ex/ea/commodo/consequat/duis/aute/",LOW_COST,2000/04/10 12:30,p@acme.com,222222222
+airline-05,Pa,QWQ,"http://www.lorem-ipsum.org/dolor/sit/amet,/consectetur/adipiscing/elit,/sed/do/eiusmod/tempor/incididunt/ut/labore/et/dolore/magna/aliqua/Ut/enim/ad/minim/veniam/quis/nostrud/exercitation/ullamco/laboris/nisi/ut/aliquip/ex/ea/commodo/consequat/duis/aute/X",STANDARD,2000/05/20 08:15,pa@acme.com,333333333
+airline-06,Pegasus Airlines,MAP,http://www.lorem-ipsum.org,LUXURY,2000/06/25 19:45,contact@pegasusair.com,444444444
+airline-07,Lorem Ipsum Airways,MAQ,https://www.lorem-ipsum.org,LOW_COST,2000/07/30 14:20,info@loremipsum.com,555555555
+airline-08,航空会社,MAC,http://www.lorem-ipsum.org/dolor/sit.html,STANDARD,2000/08/05 09:10,contact@japanair.com,+66666666666666
+airline-09,<marquee>Hacked</marquee>,MAD,http://www.lorem-ipsum.org/dolor/sit.html#dolor,LUXURY,2000/09/09 16:55,hacked@hacked.com,777777777
+airline-10,Lorem ipsum dolor sit ametf consectetur adipiscin,MAE,http://example.org?a=1&b=2,LOW_COST,2000/10/10 22:05,hacker@malware.com,888888888
+airline-13,"Lorem ipsum dolor sit amet, consectetur adipiscing",MAZ,http://example.org?,STANDARD,2000/12/12 12:12,pegasus@acme.com,101010101
+airline-15,' or 'A' = 'A,RAY,http://example.org?a,LUXURY,2001/02/02 02:02,contact@ryanair.com,303030303
+airline-16,<marquee>Hacked</marquee>,RAZ,http://example.org?a&b,STANDARD,2001/03/03 03:03,contact@ryanair.com,404040404
+airline-17,"<script>alert(‘Hacked!’);</script>",RAP,http://example.org/,LOW_COST,2001/04/04 04:04,contact@ryanair.com,505050505
+airline-22,CanaryLines,RAR,http://example.org/a,LOW_COST,2003/06/06 06:06,ryanair@acme.com,909090909
+airline-27,Salmorejo,YAY,http://example.org/a/b,STANDARD,2008/11/11 11:11,pegasus@acme.com,692555867
+airline-28,Tussam,PAY,http://example.org/a/b?,LOW_COST,2009/12/12 12:12,ryanair@acme.com,+806493
+airline-29,Люфтваффе,RBA,http://example.org/a/b?a&b,LUXURY,2010/01/01 13:13,contact@luftwaffe.com,+498877665544
 airline-30,สายการบินไทย,RBB,http://thaiairways.com,STANDARD,2011/02/02 14:14,contact@thaiairways.com,+669988776655
 airline-31,日本航空,RBC,http://jal.co.jp,LOW_COST,2012/03/03 15:15,contact@jal.co.jp,+818877665544
 airline-32,Compagnie Aérienne Française,RBD,http://airfrance.com,LUXURY,2013/04/04 16:16,contact@airfrance.com,+33188776655
-airline-33,شركة الطيران,RBE,http://airarabia.com,STANDARD,2014/05/05 17:17,contact@airarabia.com,+97188776655
+airline-33,شركة الطيران,ZZZ,http://airarabia.com,STANDARD,2014/05/05 17:17,contact@airarabia.com,+97188776655
