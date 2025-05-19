@@ -25,18 +25,49 @@ public class AssistanceAgentClaimUpdateService extends AbstractGuiService<Assist
 
 	@Override
 	public void authorise() {
-		boolean status = false;
+		boolean status;
+		boolean isCorrectClaim = false;
+		boolean isCorrectType = true;
+		boolean isCorrectLeg = true;
+		boolean hasLegs = true;
 		int id;
 		Claim claim;
 		AssistanceAgent assistanceAgent;
+		String type;
+		Collection<Leg> legs;
+		int legId;
+		Leg leg;
+		int agentId;
 
 		if (!super.getRequest().getData().isEmpty() && super.getRequest().getData() != null) {
 			id = super.getRequest().getData("id", int.class);
 			claim = this.repository.findClaimById(id);
 			assistanceAgent = claim == null ? null : claim.getAssistanceAgent();
-			status = super.getRequest().getPrincipal().hasRealm(assistanceAgent) && claim != null && claim.isDraftMode();
+			isCorrectClaim = super.getRequest().getPrincipal().hasRealm(assistanceAgent) && claim != null && claim.isDraftMode();
 		}
 
+		agentId = super.getRequest().getPrincipal().getActiveRealm().getId();
+		assistanceAgent = this.repository.findAssistanceAgentById(agentId);
+		legs = this.repository.findAllPublishedLegs(MomentHelper.getCurrentMoment(), assistanceAgent.getAirline().getId());
+
+		if (legs.isEmpty())
+			hasLegs = false;
+
+		if (super.getRequest().getMethod().equals("POST")) {
+			type = super.getRequest().getData("type", String.class);
+			legId = super.getRequest().getData("leg", int.class);
+
+			if (!Arrays.toString(ClaimType.values()).concat("0").contains(type) || type == null)
+				isCorrectType = false;
+
+			if (legId != 0) {
+				leg = this.repository.findLegById(legId);
+				if (!legs.contains(leg) || leg == null)
+					isCorrectLeg = false;
+			}
+		}
+
+		status = isCorrectClaim && hasLegs && isCorrectType && isCorrectLeg;
 		super.getResponse().setAuthorised(status);
 	}
 
@@ -64,38 +95,6 @@ public class AssistanceAgentClaimUpdateService extends AbstractGuiService<Assist
 
 	@Override
 	public void validate(final Claim claim) {
-		Collection<Leg> legs;
-		Collection<ClaimType> types;
-		ClaimType type;
-		int legId;
-		Leg leg;
-		int agentId;
-		AssistanceAgent assistanceAgent;
-		boolean isCorrectLeg = true;
-		boolean isNullLeg = true;
-		boolean isCorrectType;
-
-		types = Arrays.asList(ClaimType.values());
-		type = super.getRequest().getData("type", ClaimType.class);
-		isCorrectType = types.contains(type);
-
-		agentId = super.getRequest().getPrincipal().getActiveRealm().getId();
-		assistanceAgent = this.repository.findAssistanceAgentById(agentId);
-		legs = this.repository.findAllPublishedLegs(MomentHelper.getCurrentMoment(), assistanceAgent.getAirline().getId());
-
-		if (legs.isEmpty())
-			isNullLeg = false;
-		else {
-			legId = super.getRequest().getData("leg", int.class);
-			leg = this.repository.findLegById(legId);
-			isCorrectLeg = legs.contains(leg);
-		}
-
-		if (!isCorrectType)
-			throw new IllegalStateException("It is not posible to update a claim with this type");
-		if (!isCorrectLeg)
-			throw new IllegalStateException("It is not posible to update a claim with this leg");
-		super.state(isNullLeg, "leg", "acme.validation.claim.legNull.message");
 		super.state(claim.isDraftMode(), "draftMode", "acme.validation.claim.draftMode.message");
 	}
 

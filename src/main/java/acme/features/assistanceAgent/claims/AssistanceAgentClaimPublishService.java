@@ -1,6 +1,7 @@
 
 package acme.features.assistanceAgent.claims;
 
+import java.util.Arrays;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,18 +27,49 @@ public class AssistanceAgentClaimPublishService extends AbstractGuiService<Assis
 
 	@Override
 	public void authorise() {
-		boolean status = false;
+		boolean status;
+		boolean isCorrectClaim = false;
+		boolean isCorrectType = true;
+		boolean isCorrectLeg = true;
+		boolean hasLegs = true;
 		int id;
 		Claim claim;
 		AssistanceAgent assistanceAgent;
+		String type;
+		Collection<Leg> legs;
+		int legId;
+		Leg leg;
+		int agentId;
 
 		if (!super.getRequest().getData().isEmpty() && super.getRequest().getData() != null) {
 			id = super.getRequest().getData("id", int.class);
 			claim = this.repository.findClaimById(id);
 			assistanceAgent = claim == null ? null : claim.getAssistanceAgent();
-			status = super.getRequest().getPrincipal().hasRealm(assistanceAgent) && claim != null && claim.isDraftMode();
+			isCorrectClaim = super.getRequest().getPrincipal().hasRealm(assistanceAgent) && claim != null && claim.isDraftMode();
 		}
 
+		agentId = super.getRequest().getPrincipal().getActiveRealm().getId();
+		assistanceAgent = this.repository.findAssistanceAgentById(agentId);
+		legs = this.repository.findAllPublishedLegs(MomentHelper.getCurrentMoment(), assistanceAgent.getAirline().getId());
+
+		if (legs.isEmpty())
+			hasLegs = false;
+
+		if (super.getRequest().getMethod().equals("POST")) {
+			type = super.getRequest().getData("type", String.class);
+			legId = super.getRequest().getData("leg", int.class);
+
+			if (!Arrays.toString(ClaimType.values()).concat("0").contains(type) || type == null)
+				isCorrectType = false;
+
+			if (legId != 0) {
+				leg = this.repository.findLegById(legId);
+				if (!legs.contains(leg) || leg == null)
+					isCorrectLeg = false;
+			}
+		}
+
+		status = isCorrectClaim && hasLegs && isCorrectType && isCorrectLeg;
 		super.getResponse().setAuthorised(status);
 	}
 
