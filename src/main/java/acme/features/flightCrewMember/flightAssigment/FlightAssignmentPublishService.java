@@ -135,11 +135,6 @@ public class FlightAssignmentPublishService extends AbstractGuiService<FlightCre
 		isLegNull = flightAssignment.getLegRelated() != null;
 		if (isLegNull) {
 
-			// Comprobación de FCM no modificado
-			boolean isOriginalFCM;
-			isOriginalFCM = flightAssignment.getFlightCrewMemberAssigned() == fcmLogged;
-			super.state(isOriginalFCM, "flightCrewMemberAssigned", "acme.validation.isOriginalFCM.message");
-
 			// Comprobación de leg no pasada
 			boolean legNotPast;
 			legNotPast = flightAssignment.getLegRelated().getScheduledArrival().before(MomentHelper.getCurrentMoment());
