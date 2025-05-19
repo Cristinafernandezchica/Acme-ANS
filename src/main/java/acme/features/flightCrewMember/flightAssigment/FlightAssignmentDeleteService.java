@@ -48,8 +48,8 @@ public class FlightAssignmentDeleteService extends AbstractGuiService<FlightCrew
 				fcmLogged = this.repository.findFlighCrewMemberById(fcmIdLogged);
 				List<FlightAssignment> allFA = this.repository.findAllFlightAssignments();
 				faSelected = this.repository.findFlightAssignmentById(faId);
-				existingFA = faSelected != null || allFA.contains(faSelected);
-				if (faSelected != null)
+				existingFA = faSelected != null || allFA.contains(faSelected) && faSelected != null;
+				if (existingFA)
 					isFlightAssignmentOwner = faSelected.getFlightCrewMemberAssigned() == fcmLogged;
 			}
 		}

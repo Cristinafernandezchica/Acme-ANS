@@ -49,8 +49,8 @@ public class FlightAssignmentUpdateService extends AbstractGuiService<FlightCrew
 				fcmLogged = this.repository.findFlighCrewMemberById(fcmIdLogged);
 				List<FlightAssignment> allFA = this.repository.findAllFlightAssignments();
 				faSelected = this.repository.findFlightAssignmentById(faId);
-				existingFA = faSelected != null || allFA.contains(faSelected);
-				if (faSelected != null)
+				existingFA = faSelected != null || allFA.contains(faSelected) && faSelected != null;
+				if (existingFA)
 					isFlightAssignmentOwner = faSelected.getFlightCrewMemberAssigned() == fcmLogged;
 			}
 
@@ -157,7 +157,7 @@ public class FlightAssignmentUpdateService extends AbstractGuiService<FlightCrew
 			super.state(legFromRightAirline, "legRelated", "acme.validation.legFromRightAirline.message");
 			// Comprobación de leg asignadas simultáneamente
 			boolean legCompatible = true;
-			List<Leg> legByFCM = this.repository.findLegsByFlightCrewMemberId(flightAssignment.getFlightCrewMemberAssigned().getId()).stream().filter(fa -> !fa.isDraftMode()).toList();
+			List<Leg> legByFCM = this.repository.findLegsByFlightCrewMemberId(flightAssignment.getFlightCrewMemberAssigned().getId(), flightAssignment.getId()).stream().toList();
 			for (Leg l : legByFCM)
 				if (this.legIsCompatible(flightAssignment.getLegRelated(), l)) {
 					legCompatible = false;

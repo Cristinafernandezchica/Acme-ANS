@@ -48,8 +48,8 @@ public class FlightAssignmentPublishService extends AbstractGuiService<FlightCre
 				fcmLogged = this.repository.findFlighCrewMemberById(fcmIdLogged);
 				List<FlightAssignment> allFA = this.repository.findAllFlightAssignments();
 				faSelected = this.repository.findFlightAssignmentById(faId);
-				existingFA = faSelected != null || allFA.contains(faSelected);
-				if (faSelected != null)
+				existingFA = faSelected != null || allFA.contains(faSelected) && faSelected != null;
+				if (existingFA)
 					isFlightAssignmentOwner = faSelected.getFlightCrewMemberAssigned() == fcmLogged;
 			}
 		}
@@ -196,9 +196,9 @@ public class FlightAssignmentPublishService extends AbstractGuiService<FlightCre
 			// Comprobación de leg asignadas simultáneamente
 			boolean legCompatible = true;
 
-			List<Leg> legByFCM = this.repository.findLegsByFlightCrewMemberId(flightAssignment.getFlightCrewMemberAssigned().getId()).stream().filter(fa -> !fa.isDraftMode()).toList();
+			List<Leg> legByFCM = this.repository.findLegsByFlightCrewMemberId(flightAssignment.getFlightCrewMemberAssigned().getId(), flightAssignment.getId()).stream().toList();
 			for (Leg l : legByFCM)
-				if (this.legIsCompatible(flightAssignment.getLegRelated(), l)) {
+				if (this.legIsCompatible(flightAssignment, l)) {
 					legCompatible = false;
 					super.state(legCompatible, "legRelated", "acme.validation.legCompatible.message");
 					break;
@@ -211,7 +211,8 @@ public class FlightAssignmentPublishService extends AbstractGuiService<FlightCre
 
 	}
 
-	private boolean legIsCompatible(final Leg finalLeg, final Leg legToCompare) {
+	private boolean legIsCompatible(final FlightAssignment fa, final Leg legToCompare) {
+		Leg finalLeg = fa.getLegRelated();
 		boolean departureCompatible = MomentHelper.isInRange(finalLeg.getScheduledDeparture(), legToCompare.getScheduledDeparture(), legToCompare.getScheduledArrival());
 		boolean arrivalCompatible = MomentHelper.isInRange(finalLeg.getScheduledArrival(), legToCompare.getScheduledDeparture(), legToCompare.getScheduledArrival());
 		return departureCompatible && arrivalCompatible;
@@ -219,6 +220,7 @@ public class FlightAssignmentPublishService extends AbstractGuiService<FlightCre
 
 	@Override
 	public void perform(final FlightAssignment flightAssignment) {
+		flightAssignment.setDraftMode(false);
 		this.repository.save(flightAssignment);
 	}
 

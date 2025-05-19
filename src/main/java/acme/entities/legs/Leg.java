@@ -105,7 +105,7 @@ public class Leg extends AbstractEntity {
 		String departureTime = timeFormat.format(this.getScheduledDeparture());
 		String arrivalTime = timeFormat.format(this.getScheduledArrival());
 
-		return String.format("%s, %s - %s, %s %s-%s", departureCity, departureCountry, arrivalCity, arrivalCountry, departureTime, arrivalTime);
+		return String.format("%s: %s - %s: %s %s-%s", departureCountry, departureCity, arrivalCountry, arrivalCity, departureTime, arrivalTime);
 
 	}
 
