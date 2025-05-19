@@ -23,17 +23,22 @@ public class ActivityLogListService extends AbstractGuiService<FlightCrewMember,
 	// AbstractGuiService interface -----------------------------------------------------
 	@Override
 	public void authorise() {
-		boolean isFlightAssignmentOwner;
+		boolean isFlightAssignmentOwner = false;
 
 		FlightCrewMember fcmLogged;
 		FlightAssignment faSelected;
-		int faId = super.getRequest().getData("faId", int.class);
 
-		// Comprobación de que la flight assignments relacionadas al activityLog sean asiganadas al fcm
-		int fcmIdLogged = super.getRequest().getPrincipal().getActiveRealm().getId();
-		fcmLogged = this.repository.findFlighCrewMemberById(fcmIdLogged);
-		faSelected = this.repository.findFlightAssignmentById(faId);
-		isFlightAssignmentOwner = faSelected.getFlightCrewMemberAssigned() == fcmLogged;
+		if (!super.getRequest().getData().isEmpty()) {
+			Integer faId = super.getRequest().getData("faId", Integer.class);
+			if (faId != null) {
+				// Comprobación de que la flight assignments relacionadas al activityLog sean asiganadas al fcm
+				int fcmIdLogged = super.getRequest().getPrincipal().getActiveRealm().getId();
+				fcmLogged = this.repository.findFlighCrewMemberById(fcmIdLogged);
+				faSelected = this.repository.findFlightAssignmentById(faId);
+				if (faSelected != null)
+					isFlightAssignmentOwner = faSelected.getFlightCrewMemberAssigned() == fcmLogged;
+			}
+		}
 
 		super.getResponse().setAuthorised(isFlightAssignmentOwner);
 
@@ -54,11 +59,6 @@ public class ActivityLogListService extends AbstractGuiService<FlightCrewMember,
 	@Override
 	public void bind(final ActivityLog activityLog) {
 		super.bindObject(activityLog, "typeOfIncident", "description", "severityLevel");
-
-	}
-
-	@Override
-	public void validate(final ActivityLog activityLog) {
 
 	}
 

@@ -1,6 +1,7 @@
 
 package acme.features.flightCrewMember.flightAssigment;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -32,7 +33,36 @@ public class FlightAssignmentCreateService extends AbstractGuiService<FlightCrew
 
 	@Override
 	public void authorise() {
-		super.getResponse().setAuthorised(true);
+
+		// Comprobacion de leg
+		String metodo = super.getRequest().getMethod();
+		boolean authorised;
+
+		boolean validLeg = true;
+		boolean validDuty = true;
+
+		if (metodo.equals("POST")) {
+			Integer legId = super.getRequest().getData("legRelated", Integer.class);
+
+			if (legId == null)
+				validLeg = false;
+			else {
+				Leg leg = this.repository.findLegById(legId);
+				List<Leg> allLegs = this.repository.findAllLegs();
+				if (leg == null && legId != 0 || !allLegs.contains(leg) && legId != 0)
+					validLeg = false;
+			}
+
+			String duty = super.getRequest().getData("flightCrewsDuty", String.class);
+			if (duty == null || duty.trim().isEmpty() || Arrays.stream(FlightCrewsDuty.values()).noneMatch(tc -> tc.name().equals(duty)) && !duty.equals("0"))
+				validDuty = false;
+
+		}
+
+		authorised = validLeg && validDuty;
+
+		super.getResponse().setAuthorised(authorised);
+
 	}
 
 	@Override
@@ -64,7 +94,7 @@ public class FlightAssignmentCreateService extends AbstractGuiService<FlightCrew
 		legId = super.getRequest().getData("legRelated", int.class);
 		leg = this.repository.findLegById(legId);
 
-		super.bindObject(flightAssignment, "flightCrewsDuty", "lastUpdate", "currentStatus", "remarks");
+		super.bindObject(flightAssignment, "flightCrewsDuty", "currentStatus", "remarks");
 		flightAssignment.setLastUpdate(MomentHelper.getCurrentMoment());
 		flightAssignment.setFlightCrewMemberAssigned(flightCrewMember);
 		flightAssignment.setLegRelated(leg);
@@ -77,12 +107,10 @@ public class FlightAssignmentCreateService extends AbstractGuiService<FlightCrew
 		int fcmIdLogged = super.getRequest().getPrincipal().getActiveRealm().getId();
 		fcmLogged = this.repository.findFlighCrewMemberById(fcmIdLogged);
 
-		// Comprobación de leg no null
 		boolean isLegNull;
 		isLegNull = flightAssignment.getLegRelated() != null;
-		if (!isLegNull)
-			throw new IllegalStateException("That leg doesn't exist");
-		else {
+		if (isLegNull) {
+
 			// Comprobación de leg no pasada
 			boolean legNotPast;
 			legNotPast = flightAssignment.getLegRelated().getScheduledArrival().before(MomentHelper.getCurrentMoment());
@@ -110,7 +138,7 @@ public class FlightAssignmentCreateService extends AbstractGuiService<FlightCrew
 				Date arrivalTime = flightAssignment.getLegRelated().getScheduledDeparture();
 				legOnAir = MomentHelper.isInRange(MomentHelper.getCurrentMoment(), departureTime, arrivalTime);
 			}
-			super.state(legOnAir, "legRelated", "acme.validation.legOnAir.message");
+			super.state(!legOnAir, "legRelated", "acme.validation.legOnAir.message");
 
 			// Comprobación de que el FCM esté AVAILABLE
 			boolean fcmAvailable;
@@ -120,19 +148,19 @@ public class FlightAssignmentCreateService extends AbstractGuiService<FlightCrew
 			// Comprobación de leg asignadas al fcm no sea a la vez que otra
 			boolean legCompatible = true;
 
-			List<Leg> legByFCM = this.repository.findLegsByFlightCrewMemberId(flightAssignment.getFlightCrewMemberAssigned().getId());
+			List<Leg> legByFCM = this.repository.findLegsByFlightCrewMemberId(flightAssignment.getFlightCrewMemberAssigned().getId(), flightAssignment.getId()).stream().toList();
 			for (Leg l : legByFCM)
 				if (this.legIsCompatible(flightAssignment.getLegRelated(), l)) {
 					legCompatible = false;
 					super.state(legCompatible, "legRelated", "acme.validation.legCompatible.message");
 					break;
 				}
-
-			boolean confirmation;
-			confirmation = super.getRequest().getData("confirmation", boolean.class);
-			super.state(confirmation, "confirmation", "acme.validation.confirmation.message");
-
 		}
+
+		boolean confirmation;
+		confirmation = super.getRequest().getData("confirmation", boolean.class);
+		super.state(confirmation, "confirmation", "acme.validation.confirmation.message");
+
 	}
 
 	private boolean legIsCompatible(final Leg finalLeg, final Leg legToCompare) {
@@ -150,8 +178,6 @@ public class FlightAssignmentCreateService extends AbstractGuiService<FlightCrew
 	public void unbind(final FlightAssignment flightAssignment) {
 		Dataset dataset;
 
-		SelectChoices statuses;
-
 		SelectChoices flightcrewsDuties;
 
 		SelectChoices legChoices;
@@ -159,8 +185,6 @@ public class FlightAssignmentCreateService extends AbstractGuiService<FlightCrew
 
 		SelectChoices flightCrewMemberChoices;
 		Collection<FlightCrewMember> availableFlightCrewMembers;
-
-		statuses = SelectChoices.from(CurrentStatus.class, flightAssignment.getCurrentStatus());
 
 		flightcrewsDuties = SelectChoices.from(FlightCrewsDuty.class, flightAssignment.getFlightCrewsDuty());
 

@@ -17,9 +17,9 @@
 
 <acme:form> 
 	<acme:input-moment code="flight-crew-member.activity-log.form.label.registrationMoment" path="registrationMoment" readonly ="true"/>
-	<acme:input-textbox code="flight-crew-member.activity-log.form.label.typeOfIncident" path="typeOfIncident"/>	
-	<acme:input-textbox code="flight-crew-member.activity-log.form.label.description" path="description"/>	
-	<acme:input-integer code="flight-crew-member.activity-log.form.label.severityLevel" path="severityLevel"/>
+	<acme:input-textbox code="flight-crew-member.activity-log.form.label.typeOfIncident" path="typeOfIncident" placeholder="acme.activityLog.placeholder.typeOfIncident"/>	
+	<acme:input-textbox code="flight-crew-member.activity-log.form.label.description" path="description" placeholder="acme.activityLog.placeholder.description"/>	
+	<acme:input-integer code="flight-crew-member.activity-log.form.label.severityLevel" path="severityLevel" placeholder="acme.activityLog.placeholder.severityLevel"/>
 	
 	<jstl:choose>
 		<jstl:when test="${acme:anyOf(_command, 'show|update|publish|delete') && draftMode == true}">

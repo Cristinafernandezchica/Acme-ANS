@@ -10,3 +10,15 @@
 
 acme.placeholders.phone			  		= Use formato internacional +99 (999) 999999
 acme.leg.placeholder.flightNumber			  		= ABC1234
+
+acme.aicraft.placeholder.model = Vueling
+acme.aicraft.placeholder.registrationNumber = avión-es-056
+acme.aicraft.placeholder.numberPassengers = 150
+acme.aicraft.placeholder.cargoWeight = 000,000
+acme.aicraft.placeholder.details = Detalles
+
+acme.flightAssignment.placeholder.remarks = Detalles
+
+acme.activityLog.placeholder.typeOfIncident = Clasifica el incidente
+acme.activityLog.placeholder.description = Describe el incidente
+acme.activityLog.placeholder.severityLevel = 5
