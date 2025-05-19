@@ -5,4 +5,31 @@ flight-assignment-03,LEAD_ATTENDANT,2020/08/30 12:00,CONFIRMED,"",flightCrewMemb
 flight-assignment-04,CABIN_ATTENDANT,2020/08/30 12:00,CONFIRMED,"",flightCrewMember-04,leg-42,true
 
 # Base Entity
-flight-assignment-05,CABIN_ATTENDANT,2020/08/30 12:00,CONFIRMED,"",flightCrewMember-02,leg-42,false
+flight-assignment-05,CABIN_ATTENDANT,2020/08/30 12:00,CONFIRMED,"",flightCrewMember-01,leg-42,false
+
+# flightCrewsDuty
+flight-assignment-06,LEAD_ATTENDANT,2019/01/01 12:00,CONFIRMED,"",flightCrewMember-01,leg-48,false
+flight-assignment-07,PILOT,2019/01/01 12:00,CONFIRMED,"",flightCrewMember-01,leg-48,false
+flight-assignment-08,CO_PILOT,2019/01/01 12:00,CONFIRMED,"",flightCrewMember-01,leg-48,false
+
+# lastUpdate
+flight-assignment-09,CABIN_ATTENDANT,2025/01/01 00:00,CONFIRMED,"",flightCrewMember-01,leg-42,false
+flight-assignment-10,CABIN_ATTENDANT,2024/12/31 23:59,CONFIRMED,"",flightCrewMember-01,leg-42,false
+
+# CurrentStatus
+flight-assignment-13,CABIN_ATTENDANT,2020/08/30 12:00,PENDING,"",flightCrewMember-01,leg-42,false
+flight-assignment-14,CABIN_ATTENDANT,2020/08/30 12:00,CANCELLED,"",flightCrewMember-01,leg-42,false
+
+# Remarks
+flight-assignment-15,CABIN_ATTENDANT,2020/08/30 12:00,CONFIRMED,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",flightCrewMember-01,leg-42,false
+flight-assignment-16,CABIN_ATTENDANT,2020/08/30 12:00,CONFIRMED,"",flightCrewMember-01,leg-42,false
+flight-assignment-17,CABIN_ATTENDANT,2020/08/30 12:00,CONFIRMED,"L",flightCrewMember-01,leg-42,false
+flight-assignment-18,CABIN_ATTENDANT,2020/08/30 12:00,CONFIRMED,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut enim ad minim veniam? Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor",flightCrewMember-01,leg-42,false
+flight-assignment-19,CABIN_ATTENDANT,2020/08/30 12:00,CONFIRMED,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut enim ad minim veniam? Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor*",flightCrewMember-01,leg-42,false
+flight-assignment-20,CABIN_ATTENDANT,2020/08/30 12:00,CONFIRMED,"โลเร็ม อิปซัม",flightCrewMember-01,leg-42,false
+flight-assignment-21,CABIN_ATTENDANT,2020/08/30 12:00,CONFIRMED,"لوريم إيبسوم",flightCrewMember-01,leg-42,false
+flight-assignment-22,CABIN_ATTENDANT,2020/08/30 12:00,CONFIRMED,"洛伦·伊普森",flightCrewMember-01,leg-42,false
+
+# Testing - fa
+flight-assignment-23,PILOT,2020/08/30 12:00,CONFIRMED,"",flightCrewMember-01,leg-49,false
+flight-assignment-24,CO_PILOT,2020/08/30 12:00,CONFIRMED,"",flightCrewMember-03,leg-49,false
