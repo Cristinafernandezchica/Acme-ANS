@@ -27,8 +27,9 @@ public class ManagerLegDeleteService extends AbstractGuiService<Manager, Leg> {
 			int managerId = super.getRequest().getPrincipal().getActiveRealm().getId();
 			masterId = super.getRequest().getData("id", int.class);
 			leg = this.repository.findLegById(masterId);
+			boolean fN = super.getRequest().hasData("flightNumber");
 			manager = leg == null ? null : leg.getFlight().getManager();
-			status = leg != null && super.getRequest().getPrincipal().hasRealm(manager) && managerId == manager.getId();
+			status = leg != null && super.getRequest().getPrincipal().hasRealm(manager) && managerId == manager.getId() && fN;
 		}
 		super.getResponse().setAuthorised(status);
 	}

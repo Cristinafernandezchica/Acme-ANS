@@ -26,13 +26,16 @@ public class MaintenanceRecordPublisService extends AbstractGuiService<Technicia
 		MaintenanceRecord mr;
 		Technician technician;
 		int mrId;
+		boolean authored = false;
+		if (!super.getRequest().getData().isEmpty() && super.getRequest().getData() != null) {
+			mrId = super.getRequest().getData("id", int.class);
+			mr = this.repository.findMRById(mrId);
 
-		mrId = super.getRequest().getData("id", int.class);
-		mr = this.repository.findMRById(mrId);
-
-		technician = (Technician) super.getRequest().getPrincipal().getActiveRealm();
-		if (technician.equals(mr.getTechnician()) && mr.isDraftMode())
-			super.getResponse().setAuthorised(true);
+			technician = (Technician) super.getRequest().getPrincipal().getActiveRealm();
+			if (technician.equals(mr.getTechnician()) && mr.isDraftMode())
+				authored = true;
+		}
+		super.getResponse().setAuthorised(authored);
 	}
 
 	@Override
