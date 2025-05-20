@@ -1,0 +1,12 @@
+administrator.administrator-dashboard.form.title = Tabla de estadísticas
+administrator.dashboard.form.label.airportCountByScope=Aeropuertos por alcance operativo
+administrator.dashboard.form.label.airlineCountByType=Aerolíneas por tipo
+administrator.dashboard.form.label.airlineWithContactRatio=Ratio de aerolíneas con ambos email y número de teléfono
+administrator.dashboard.form.label.activeAircraftRatio=Ratio de aviones activos
+administrator.dashboard.form.label.inactiveAircraftRatio=Ratio de aviones inactivos
+administrator.dashboard.form.label.highScoreReviewRatio=Ratio de reseñas con puntuación mayor a 5.0
+administrator.dashboard.form.label.reviewCountLast10Weeks=Cantidad de reseñas (últimas 10 semanas)
+administrator.dashboard.form.label.reviewAverageLast10Weeks=Media de reseñas (últimas 10 semanas)
+administrator.dashboard.form.label.reviewMinLast10Weeks=Mínimas reseñas (últimas 10 semanas)
+administrator.dashboard.form.label.reviewMaxLast10Weeks=Máximas reseñas (últimas 10 semanas)
+administrator.dashboard.form.label.reviewStdDevLast10Weeks=Deviación estándar de revisiones (últimas 10 semanas)
