@@ -1,12 +1,15 @@
 
 package acme.features.flightCrewMember.activityLog;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import acme.client.components.models.Dataset;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.activitylog.ActivityLog;
+import acme.entities.flightAssignment.FlightAssignment;
 import acme.realms.flightCrewMember.FlightCrewMember;
 
 @GuiService
@@ -22,17 +25,24 @@ public class ActivityLogPublishService extends AbstractGuiService<FlightCrewMemb
 
 	@Override
 	public void authorise() {
-		boolean isFlightAssignmentOwner = true;
-
 		FlightCrewMember fcmLogged;
 		ActivityLog alSelected;
-		int alId = super.getRequest().getData("id", int.class);
 
-		// Comprobación de que la activityLog sea del FCM logeado
+		boolean existingAL = false;
+		boolean isFlightAssignmentOwner = false;
+
 		int fcmIdLogged = super.getRequest().getPrincipal().getActiveRealm().getId();
-		fcmLogged = this.repository.findFlighCrewMemberById(fcmIdLogged);
-		alSelected = this.repository.findActivityLogById(alId);
-		isFlightAssignmentOwner = alSelected.getFlightAssignmentRelated().getFlightCrewMemberAssigned() == fcmLogged;
+		if (!super.getRequest().getData().isEmpty()) {
+			Integer alId = super.getRequest().getData("id", Integer.class);
+			if (alId != null) {
+				fcmLogged = this.repository.findFlighCrewMemberById(fcmIdLogged);
+				List<FlightAssignment> allFA = this.repository.findAllFlightAssignments();
+				alSelected = this.repository.findActivityLogById(alId);
+				existingAL = alSelected != null || allFA.contains(alSelected);
+				if (alSelected != null)
+					isFlightAssignmentOwner = alSelected.getFlightAssignmentRelated().getFlightCrewMemberAssigned() == fcmLogged;
+			}
+		}
 
 		super.getResponse().setAuthorised(isFlightAssignmentOwner);
 	}
@@ -50,7 +60,7 @@ public class ActivityLogPublishService extends AbstractGuiService<FlightCrewMemb
 
 	@Override
 	public void bind(final ActivityLog activityLog) {
-		super.bindObject(activityLog, "registrationMoment", "typeOfIncident", "description", "severityLevel");
+		super.bindObject(activityLog, "typeOfIncident", "description", "severityLevel");
 	}
 
 	@Override
@@ -59,6 +69,7 @@ public class ActivityLogPublishService extends AbstractGuiService<FlightCrewMemb
 		int id = super.getRequest().getData("id", int.class);
 		ActivityLog activityLogBaseData = this.repository.findActivityLogById(id);
 
+		// Cambiar a authorise y corregir warnings: mirar managerLeg
 		boolean isOriginalRegistrationMoment;
 		isOriginalRegistrationMoment = activityLog.getRegistrationMoment().getDate() == activityLogBaseData.getRegistrationMoment().getDate() && activityLog.getRegistrationMoment().getMonth() == activityLogBaseData.getRegistrationMoment().getMonth()
 			&& activityLog.getRegistrationMoment().getYear() == activityLogBaseData.getRegistrationMoment().getYear() && activityLog.getRegistrationMoment().getMinutes() == activityLogBaseData.getRegistrationMoment().getMinutes()

@@ -27,18 +27,38 @@ public class FlightAssignmentDeleteService extends AbstractGuiService<FlightCrew
 
 	@Override
 	public void authorise() {
-		boolean isFlightAssignmentOwner;
-
 		FlightCrewMember fcmLogged;
 		FlightAssignment faSelected;
-		int faId = super.getRequest().getData("id", int.class);
+
+		boolean existingFA = false;
+		boolean isFlightAssignmentOwner = false;
+		boolean isPublished = false;
+		boolean falseDelete = false;
+		Integer faId;
+
+		String metodo = super.getRequest().getMethod();
 
 		int fcmIdLogged = super.getRequest().getPrincipal().getActiveRealm().getId();
-		fcmLogged = this.repository.findFlighCrewMemberById(fcmIdLogged);
-		faSelected = this.repository.findFlightAssignmentById(faId);
-		isFlightAssignmentOwner = faSelected.getFlightCrewMemberAssigned() == fcmLogged;
+		if (!super.getRequest().getData().isEmpty() && super.getRequest().getData() != null) {
+			falseDelete = true;
+			faId = super.getRequest().getData("id", Integer.class);
+			if (faId != null) {
+				fcmLogged = this.repository.findFlighCrewMemberById(fcmIdLogged);
+				List<FlightAssignment> allFA = this.repository.findAllFlightAssignments();
+				faSelected = this.repository.findFlightAssignmentById(faId);
+				existingFA = faSelected != null || allFA.contains(faSelected) && faSelected != null;
+				if (existingFA)
+					isFlightAssignmentOwner = faSelected.getFlightCrewMemberAssigned() == fcmLogged;
+				if (metodo.equals("GET")) {
+					faId = super.getRequest().getData("id", Integer.class);
+					faSelected = this.repository.findFlightAssignmentById(faId);
+					isPublished = !faSelected.isDraftMode();
+				}
 
-		super.getResponse().setAuthorised(isFlightAssignmentOwner);
+			}
+		}
+
+		super.getResponse().setAuthorised(isFlightAssignmentOwner && !isPublished && falseDelete);
 	}
 
 	@Override
@@ -61,7 +81,6 @@ public class FlightAssignmentDeleteService extends AbstractGuiService<FlightCrew
 	@Override
 	public void validate(final FlightAssignment flightAssignment) {
 		boolean confirmation;
-
 		confirmation = super.getRequest().getData("confirmation", boolean.class);
 		super.state(confirmation, "confirmation", "acme.validation.confirmation.message");
 	}

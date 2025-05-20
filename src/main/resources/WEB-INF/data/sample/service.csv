@@ -15,11 +15,15 @@ service-10,10.0,,"servicio de wi-fi","serviceImages/wifiEnElAvion.jpg",EFGH-25,a
 # variación name
 service-11,10.00,100.0,"服务的Wi-Fi","serviceImages/wifiEnElAvion.jpg",EFGH-25,airport-01
 service-12,10.00,100.0,"A","serviceImages/wifiEnElAvion.jpg",EFGH-25,airport-01
-service-13,10.00,100.0,"Esta es una frase con exactamente 49 caracteres..","serviceImages/wifiEnElAvion.jpg",EFGH-25,airport-01
+service-13,10.00,100.0,"50vecesXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX","serviceImages/wifiEnElAvion.jpg",EFGH-25,airport-01
+service-24,10.00,100.0,"AB","serviceImages/wifiEnElAvion.jpg",EFGH-25,airport-01
+service-25,10.00,100.0,"49vecesXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX","serviceImages/wifiEnElAvion.jpg",EFGH-25,airport-01
+service-26,10.00,100.0,"<marquee>Hacked</marquee>","serviceImages/wifiEnElAvion.jpg",EFGH-25,airport-01
+service-27,10.00,100.0,"' or 'A' = 'A'","serviceImages/wifiEnElAvion.jpg",EFGH-25,airport-01
 # variaciones picture
 service-14,10.00,100,"servicio de wi-fi","serviceImages/wifiEnElAvion.jpg",EFGH-25,airport-01
-service-15,10.00,100,"servicio de wi-fi","serviceImages/wifiEnElAvion.jpg",EFGH-25,airport-01
-service-16,10.00,100,"servicio de wi-fi","serviceImages/wifiEnElAvion.jpg",EFGH-25,airport-01
+service-15,10.00,100,"servicio de wi-fi","serviceImages/maletasExtra.jpg",EFGH-25,airport-01
+service-16,10.00,100,"servicio de wi-fi","serviceImages/comidaDeAvion.jpg",EFGH-25,airport-01
 # variaciones de promotioncode
 service-17,10.00,100,"servicio de wi-fi","serviceImages/wifiEnElAvion.jpg",EFGH-25,airport-01
 service-18,10.00,100,"servicio de wi-fi","serviceImages/wifiEnElAvion.jpg",XYZW-25,airport-01

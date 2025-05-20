@@ -15,14 +15,27 @@
 <%@taglib prefix="acme" uri="http://acme-framework.org/"%>
 
 <acme:form>
-	<acme:input-textbox code="administrator.aircraft.form.label.model" path="model"/>
-	<acme:input-select code="administrator.aircraft.form.label.airline" path="airline" choices="${airlines}"/>
-	<acme:input-textbox code="administrator.aircraft.form.label.registrationNumber" path="registrationNumber"/>
-	<acme:input-integer code="administrator.aircraft.form.label.numberPassengers" path="numberPassengers"/>
-	<acme:input-select code="administrator.aircraft.form.label.status" path="status" choices="${statuses}"/>
-	<acme:input-integer code="administrator.aircraft.form.label.cargoWeight" path="cargoWeight"/>
-	<acme:input-textbox code="administrator.aircraft.form.label.details" path="details"/>
-	
+	<jstl:choose>
+		<jstl:when test="${_command == 'create'}">
+			<acme:input-textbox code="administrator.aircraft.form.label.model" path="model" placeholder="acme.aicraft.placeholder.model"/>
+			<acme:input-select code="administrator.aircraft.form.label.airline" path="airline" choices="${airlines}"/>
+			<acme:input-textbox code="administrator.aircraft.form.label.registrationNumber" path="registrationNumber" placeholder="acme.aicraft.placeholder.registrationNumber"/>
+			<acme:input-integer code="administrator.aircraft.form.label.numberPassengers" path="numberPassengers" placeholder="acme.aicraft.placeholder.numberPassengers"/>
+			<acme:input-select code="administrator.aircraft.form.label.status" path="status" choices="${statuses}"/>
+			<acme:input-integer code="administrator.aircraft.form.label.cargoWeight" path="cargoWeight" placeholder="acme.aicraft.placeholder.cargoWeight"/>
+			<acme:input-textbox code="administrator.aircraft.form.label.details" path="details" placeholder="acme.aicraft.placeholder.details"/>
+		</jstl:when>
+		
+		<jstl:when test="${acme:anyOf(_command, 'show|update')}">
+			<acme:input-textbox code="administrator.aircraft.form.label.model" path="model" readonly ="true"/>
+			<acme:input-select code="administrator.aircraft.form.label.airline" path="airline" choices="${airlines}"/>
+			<acme:input-textbox code="administrator.aircraft.form.label.registrationNumber" path="registrationNumber" readonly ="true" />
+			<acme:input-integer code="administrator.aircraft.form.label.numberPassengers" path="numberPassengers" readonly ="true"/>
+			<acme:input-select code="administrator.aircraft.form.label.status" path="status" choices="${statuses}"/>
+			<acme:input-integer code="administrator.aircraft.form.label.cargoWeight" path="cargoWeight" readonly ="true"/>
+			<acme:input-textbox code="administrator.aircraft.form.label.details" path="details" placeholder="acme.aicraft.placeholder.details"/>
+		</jstl:when>
+	</jstl:choose>		
 	
 	<jstl:choose>
 		<jstl:when test="${acme:anyOf(_command, 'show|update')}">
