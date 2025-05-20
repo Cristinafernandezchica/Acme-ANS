@@ -20,3 +20,6 @@ claim-17,2011/04/16 00:00,acme@lorem-ipsum.org,"Lorem ipsum dolor sit amet, cons
 claim-18,2011/04/16 00:00,acme@lorem-ipsum.org,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",FLIGHTISSUES,leg-08,agent-01,true
 claim-19,2011/04/16 00:00,acme@lorem-ipsum.org,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",FLIGHTISSUES,leg-01,agent-01,false
 claim-20,2011/04/16 00:00,acme@lorem-ipsum.org,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",FLIGHTISSUES,leg-05,agent-01,false
+claim-21,2011/04/16 00:00,acme@lorem-ipsum.org,Claim sin Tracking Logs,FLIGHTISSUES,leg-05,agent-01,false
+claim-22,2011/04/16 00:00,acme@lorem-ipsum.org,Claim con un Tracking Log a 100,FLIGHTISSUES,leg-05,agent-01,false
+claim-23,2011/04/16 00:00,acme@lorem-ipsum.org,Claim con dos Tracking Logs a 100,FLIGHTISSUES,leg-05,agent-01,false
