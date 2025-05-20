@@ -65,7 +65,7 @@ public class Aircraft extends AbstractEntity {
 
 	@Transient
 	public String getAircraftLabel() {
-		return String.format("%s - %s - Passangers: %s", this.getRegistrationNumber(), this.getModel(), this.getNumberPassengers());
+		return String.format("%s - %s - Passengers: %s", this.getRegistrationNumber(), this.getModel(), this.getNumberPassengers());
 	}
 
 }
