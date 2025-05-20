@@ -126,3 +126,4 @@ acme.validation.trackingLog.resolutionPercentage.message = The resolution percen
 acme.validation.trackingLog.status.message = That status is not possible
 acme.validation.trackingLog.resolutionPercentageStatus.message = You can only set the resolution percentage to 100.00 and the status cannot be pending
 acme.validation.trackingLog.draftMode.message = Tracking Log must be in draft mode
+acme.validation.trackingLog.publish.message = You cannot publish a tracking log to 100 if the previous tracking logs have not been published

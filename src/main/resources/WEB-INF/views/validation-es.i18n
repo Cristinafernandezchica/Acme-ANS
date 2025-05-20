@@ -114,3 +114,4 @@ acme.validation.trackingLog.resolutionPercentage.message = El porcentaje de reso
 acme.validation.trackingLog.status.message = Ese estado no es posible
 acme.validation.trackingLog.resolutionPercentageStatus.message = Solo puedes establecer el porcentaje de resolución a 100.00 y el estado no puede ser pendiente
 acme.validation.trackingLog.draftMode.message = El registro de seguimiento debe estar en modo borrador
+acme.validation.trackingLog.publish.message = No puedes publicar un tracking log a 100, si los tracking logs anteriores no han sido publicados
