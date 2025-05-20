@@ -25,15 +25,22 @@ public class ManagerLegListService extends AbstractGuiService<Manager, Leg> {
 
 	@Override
 	public void authorise() {
-		final boolean showCreate;
+		boolean showCreate = false;
 		int managerId = super.getRequest().getPrincipal().getActiveRealm().getId();
-		int flightId = super.getRequest().getData("flightId", int.class);
+		Integer flightId = null;
+		boolean status = false;
 
-		Flight flight = this.repository.findFlightById(flightId);
-		showCreate = flight.isDraftMode() && super.getRequest().getPrincipal().hasRealm(flight.getManager());
-		Manager manager = flight.getManager();
+		if (!super.getRequest().getData().isEmpty()) {
+			flightId = super.getRequest().getData("flightId", Integer.class);
+			if (flightId != null) {
+				Flight flight = this.repository.findFlightById(flightId);
+				showCreate = flight != null ? flight.isDraftMode() && super.getRequest().getPrincipal().hasRealm(flight.getManager()) : false;
+				Manager manager = flight == null ? null : flight.getManager();
+				status = flight != null && super.getRequest().getPrincipal().hasRealm(manager) && managerId == manager.getId();
 
-		boolean status = super.getRequest().getPrincipal().hasRealm(manager) && managerId == manager.getId();
+			}
+		}
+
 		super.getResponse().addGlobal("showCreate", showCreate);
 		super.getResponse().setAuthorised(status);
 	}
