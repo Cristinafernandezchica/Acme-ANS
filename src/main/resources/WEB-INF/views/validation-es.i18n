@@ -82,6 +82,7 @@ acme.validation.leg.flightNumber.not.unique = El número de vuelo ya existe
 acme.validation.leg.create.no.flight.draftmode = No se puede crear un tramo, el vuelo está publicado
 acme.validation.leg.departureAirport = El aeropuerto de salida del tramo no coincide con el de llegada del tramo anterior publicado
 acme.validation.leg.arrivalAirport = El aeropuerto de llegada del tramo no coincide con el aeropuerto de salida del siguiente tramo publicado
+acme.validation.leg.change.status.no.published.flight = No se puede cambiar el estado de un tramo si el vuelo no está publicado
 
 acme.validation.length = Es muy largo
 

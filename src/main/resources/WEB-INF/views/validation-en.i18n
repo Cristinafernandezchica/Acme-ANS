@@ -93,6 +93,7 @@ acme.validation.leg.published.flight.delete = You can't delete a leg of a publis
 acme.validation.leg.create.no.flight.draftmode = Can't create a leg, the flight is published
 acme.validation.leg.departureAirport = The departure airport of the leg doesn't match with the arrival airport of the previous published leg
 acme.validation.leg.arrivalAirport = The arrival airport of the leg doesn't match with the departure airport of the next published leg
+acme.validation.leg.change.status.no.published.flight = Can't change the status of the leg with the flight no published
 
 acme.validation.length = Is too long
 
