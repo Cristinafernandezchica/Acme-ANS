@@ -167,7 +167,7 @@ public class ManagerLegUpdateService extends AbstractGuiService<Manager, Leg> {
 					super.state(false, "flightNumber", "The airline's IATA code: " + airline.getIataCode());
 				}
 			}
-		} else if (leg.getFlight().isDraftMode())
+		} else if (leg.getFlight().isDraftMode() && !leg.getStatus().equals(this.repository.findLegById(leg.getId()).getStatus()))
 			super.state(false, "status", "acme.validation.leg.change.status.no.published.flight");
 	}
 
