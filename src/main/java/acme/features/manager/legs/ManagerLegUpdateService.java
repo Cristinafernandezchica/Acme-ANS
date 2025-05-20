@@ -47,8 +47,9 @@ public class ManagerLegUpdateService extends AbstractGuiService<Manager, Leg> {
 			int managerId = super.getRequest().getPrincipal().getActiveRealm().getId();
 			masterId = super.getRequest().getData("id", int.class);
 			leg = this.repository.findLegById(masterId);
+			boolean fN = super.getRequest().hasData("flightNumber");
 			manager = leg == null ? null : leg.getFlight().getManager();
-			status = leg != null && super.getRequest().getPrincipal().hasRealm(manager) && managerId == manager.getId();
+			status = leg != null && super.getRequest().getPrincipal().hasRealm(manager) && managerId == manager.getId() && fN;
 
 			if (super.getRequest().getMethod().equals("POST")) {
 				// Departure airport and arrival airport
@@ -166,7 +167,7 @@ public class ManagerLegUpdateService extends AbstractGuiService<Manager, Leg> {
 					super.state(false, "flightNumber", "The airline's IATA code: " + airline.getIataCode());
 				}
 			}
-		} else if (leg.getFlight().isDraftMode())
+		} else if (leg.getFlight().isDraftMode() && !leg.getStatus().equals(this.repository.findLegById(leg.getId()).getStatus()))
 			super.state(false, "status", "acme.validation.leg.change.status.no.published.flight");
 	}
 

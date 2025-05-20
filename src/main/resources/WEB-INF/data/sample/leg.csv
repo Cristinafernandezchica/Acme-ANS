@@ -17,7 +17,7 @@ leg-11,MAX0010,2020/09/05 09:30,2020/09/05 11:30,ON_TIME,airport-06,airport-20,f
 leg-12,MAX0011,2020/09/05 14:00,2020/09/05 16:00,ON_TIME,airport-07,airport-21,flight-10,aircraft-08,true
 leg-13,MAX0012,2020/09/05 19:00,2020/09/05 21:00,ON_TIME,airport-08,airport-22,flight-11,aircraft-02,true
 leg-14,MAX0013,2020/09/06 07:00,2020/09/06 09:00,ON_TIME,airport-10,airport-25,flight-15,aircraft-10,false
-leg-15,MAX0014,2020/09/06 10:00,2020/09/06 12:00,ON_TIME,airport-11,airport-26,flight-17,aircraft-11,true
+leg-15,MAX0014,2020/09/06 10:00,2020/09/06 12:00,ON_TIME,airport-11,airport-26,flight-18,aircraft-11,true
 leg-16,MAX0015,2020/09/06 14:00,2020/09/06 16:00,ON_TIME,airport-12,airport-27,flight-18,aircraft-12,true
 leg-17,MAX0016,2020/09/06 18:30,2020/09/06 20:30,CANCELLED,airport-12,airport-28,flight-19,aircraft-13,false
 leg-18,MAX0017,2027/09/07 06:00,2027/09/07 08:00,ON_TIME,airport-16,airport-29,flight-20,aircraft-14,true
