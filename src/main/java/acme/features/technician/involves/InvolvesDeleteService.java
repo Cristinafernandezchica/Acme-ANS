@@ -25,13 +25,13 @@ public class InvolvesDeleteService extends AbstractGuiService<Technician, Involv
 		boolean authored = false;
 		Involves involves;
 		int involvesId;
-		involvesId = super.getRequest().getData("id", int.class);
-		Technician technician = (Technician) super.getRequest().getPrincipal().getActiveRealm();
-
-		involves = this.repository.findInvolvesById(involvesId);
-		if (involves.getMaintenanceRecord().getTechnician().equals(technician) && involves.getMaintenanceRecord().isDraftMode())
-			authored = true;
-
+		if (!super.getRequest().getData().isEmpty() && super.getRequest().getData() != null) {
+			involvesId = super.getRequest().getData("id", int.class);
+			Technician technician = (Technician) super.getRequest().getPrincipal().getActiveRealm();
+			involves = this.repository.findInvolvesById(involvesId);
+			if (involves.getMaintenanceRecord().getTechnician().equals(technician) && involves.getMaintenanceRecord().isDraftMode())
+				authored = true;
+		}
 		super.getResponse().setAuthorised(authored);
 	}
 

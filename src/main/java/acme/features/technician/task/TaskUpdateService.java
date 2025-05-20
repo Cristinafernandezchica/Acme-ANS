@@ -26,21 +26,22 @@ public class TaskUpdateService extends AbstractGuiService<Technician, Task> {
 		Technician technician;
 		int taskId;
 		boolean authored = false;
+		if (!super.getRequest().getData().isEmpty() && super.getRequest().getData() != null) {
+			taskId = super.getRequest().getData("id", int.class);
+			task = this.repository.findByTaskId(taskId);
 
-		taskId = super.getRequest().getData("id", int.class);
-		task = this.repository.findByTaskId(taskId);
+			technician = (Technician) super.getRequest().getPrincipal().getActiveRealm();
+			if (technician.equals(task.getTechnician()) && task.isDraftMode())
+				authored = true;
 
-		technician = (Technician) super.getRequest().getPrincipal().getActiveRealm();
-		if (technician.equals(task.getTechnician()) && task.isDraftMode())
-			authored = true;
-
-		if (super.getRequest().getMethod().equals("POST"))
-			if (authored) {
-				String newType = super.getRequest().getData("type", String.class);
-				List<String> listaDeStatus = List.of(Type.INSPECTION.name(), Type.MAINTENANCE.name(), Type.REPAIR.name(), Type.SYSTEMCHECK.name());
-				if (!newType.equals("0") && (newType == null || !listaDeStatus.contains(newType)))
-					authored = false;
-			}
+			if (super.getRequest().getMethod().equals("POST"))
+				if (authored) {
+					String newType = super.getRequest().getData("type", String.class);
+					List<String> listaDeStatus = List.of(Type.INSPECTION.name(), Type.MAINTENANCE.name(), Type.REPAIR.name(), Type.SYSTEMCHECK.name());
+					if (!newType.equals("0") && (newType == null || !listaDeStatus.contains(newType)))
+						authored = false;
+				}
+		}
 		super.getResponse().setAuthorised(authored);
 	}
 

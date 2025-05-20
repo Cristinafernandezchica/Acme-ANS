@@ -30,25 +30,26 @@ public class InvolvesCreateService extends AbstractGuiService<Technician, Involv
 		int maintenanceRecordId;
 		maintenanceRecordId = super.getRequest().getData("id", int.class);
 		Technician technician = (Technician) super.getRequest().getPrincipal().getActiveRealm();
-
-		boolean showCreate;
-		mr = this.repository.findMRById(maintenanceRecordId);
-		showCreate = mr.isDraftMode();
-		super.getResponse().addGlobal("showCreate", showCreate);
-		if (mr.getTechnician().equals(technician) && mr.isDraftMode())
-			authored = true;
-		if (super.getRequest().getMethod().equals("POST")) {
-			if (authored) {
-				Integer newTask = super.getRequest().getData("task", int.class);
-				Collection<Task> publishTasks = this.repository.findAllPublishTasks();
-				if (newTask != 0 && (newTask == null || !publishTasks.stream().map(x -> x.getId()).toList().contains(newTask)))
-					authored = false;
-			}
-			if (authored) {
-				Integer newTask = super.getRequest().getData("task", int.class);
-				List<Integer> taskDeUnMr = this.repository.findAllInvolvesByMRId(maintenanceRecordId).stream().map(x -> x.getTask().getId()).toList();
-				if (newTask != 0 && (newTask == null || taskDeUnMr.contains(newTask)))
-					authored = false;
+		if (!super.getRequest().getData().isEmpty() && super.getRequest().getData() != null) {
+			boolean showCreate;
+			mr = this.repository.findMRById(maintenanceRecordId);
+			showCreate = mr.isDraftMode();
+			super.getResponse().addGlobal("showCreate", showCreate);
+			if (mr.getTechnician().equals(technician) && mr.isDraftMode())
+				authored = true;
+			if (super.getRequest().getMethod().equals("POST")) {
+				if (authored) {
+					Integer newTask = super.getRequest().getData("task", int.class);
+					Collection<Task> publishTasks = this.repository.findAllPublishTasks();
+					if (newTask != 0 && (newTask == null || !publishTasks.stream().map(x -> x.getId()).toList().contains(newTask)))
+						authored = false;
+				}
+				if (authored) {
+					Integer newTask = super.getRequest().getData("task", int.class);
+					List<Integer> taskDeUnMr = this.repository.findAllInvolvesByMRId(maintenanceRecordId).stream().map(x -> x.getTask().getId()).toList();
+					if (newTask != 0 && (newTask == null || taskDeUnMr.contains(newTask)))
+						authored = false;
+				}
 			}
 		}
 		super.getResponse().setAuthorised(authored);
