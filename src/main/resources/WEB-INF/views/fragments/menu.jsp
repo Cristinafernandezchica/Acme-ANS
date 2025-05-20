@@ -20,6 +20,7 @@
 	<acme:menu-left>
 		<acme:menu-option code="master.menu.anonymous" access="isAnonymous()">
 			<acme:menu-suboption code="master.menu.anonymous.list-flights" action="/any/flight/list"/>
+			<acme:menu-suboption code="master.menu.anonymous.list-flight-assignments" action="/any/flight-assignment/list"/>
 			<acme:menu-suboption code="master.menu.anonymous.favourite-link" action="http://www.example.com/"/>
 			<acme:menu-suboption code="master.menu.anonymous.favourite-link-Candela" action="https://www.frivclassic.com/fc-es.html"/>
 			<acme:menu-suboption code="master.menu.anonymous.favourite-link-Cristina" action="https://oldgameshelf.com/es/games/nes/elevator-action-314"/>
@@ -97,6 +98,8 @@
 			<acme:menu-suboption code="master.menu.user-account.customer-profile" action="/authenticated/customer/update" access="hasRealm('Customer')"/>
 			<acme:menu-suboption code="master.menu.user-account.become-manager" action="/authenticated/manager/create" access="!hasRealm('Manager')"/>
 			<acme:menu-suboption code="master.menu.user-account.manager-profile" action="/authenticated/manager/update" access="hasRealm('Manager')"/>
+			<acme:menu-suboption code="master.menu.user-account.become-flight-crew-member" action="/authenticated/flight-crew-member/create" access="!hasRealm('FlightCrewMember')"/>
+			<acme:menu-suboption code="master.menu.user-account.flight-crew-member-profile" action="/authenticated/flight-crew-member/update" access="hasRealm('FlightCrewMember')"/>
 		</acme:menu-option>
 	</acme:menu-right>
 </acme:menu-bar>

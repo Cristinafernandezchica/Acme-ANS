@@ -37,6 +37,11 @@ acme.validation.leg.departure.arrival.difference.message = Tiene que haber míni
 acme.validation.leg.departure.after.arrival.message = La salida tiene que ser antes que la llegada
 acme.validation.leg.operative.aircraft.message = El avión está bajo mantenimiento, debe estar operativo
 
+# Flight crew member
+acme.validation.flightCrewMember.employeeCode = Código de empleado no válido
+acme.validation.flightCrewMember.salary.not.valid = Salario no válido
+acme.validation.change.employeeCode = No puedes modificar tu código de empleado
+
 # Flight crew member - flight assignment's messages (business logic)
 acme.validation.confirmation.message = Esta acción debe ser confirmada
 acme.validation.pilotExceptionPassed.message = Este vuelo ya tiene un piloto

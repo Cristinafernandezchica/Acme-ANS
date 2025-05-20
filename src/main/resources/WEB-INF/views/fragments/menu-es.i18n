@@ -12,6 +12,7 @@
 
 master.menu.anonymous = Anónimo
 master.menu.anonymous.list-flights = Ver vuelos
+master.menu.anonymous.list-flight-assignments = Ver asignaciones de vuelo
 master.menu.anonymous.favourite-link = Enlace favorito
 master.menu.anonymous.favourite-link-Candela = 45939364S: Gutiérrez González, Candela Jazmín
 master.menu.anonymous.favourite-link-Cristina = 77926002R: Fernández Chica, Cristina
@@ -74,6 +75,8 @@ master.menu.user-account.become-customer = Hacerse cliente
 master.menu.user-account.customer-profile = Perfil de cliente
 master.menu.user-account.become-manager = Hacerse manager
 master.menu.user-account.manager-profile = Perfil de manager
+master.menu.user-account.flight-crew-member-profile = Perfil de asistente de vuelo
+master.menu.user-account.become-flight-crew-member = Hacerse asistente de vuelo
 
 
 # master.menu.technician ##########################################################
