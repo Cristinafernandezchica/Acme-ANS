@@ -1,0 +1,12 @@
+administrator.administrator-dashboard.form.title = Administrator Dashboard
+administrator.dashboard.form.label.airportCountByScope=Airports by operational scope
+administrator.dashboard.form.label.airlineCountByType=Airlines by type
+administrator.dashboard.form.label.airlineWithContactRatio=Ratio of airlines with both email and phone
+administrator.dashboard.form.label.activeAircraftRatio=Active aircrafts ratio
+administrator.dashboard.form.label.inactiveAircraftRatio=Inactive aircrafts ratio
+administrator.dashboard.form.label.highScoreReviewRatio=Ratio of reviews with score up to 5.0
+administrator.dashboard.form.label.reviewCountLast10Weeks=Review count (last 10 weeks)
+administrator.dashboard.form.label.reviewAverageLast10Weeks=Average reviews (last 10 weeks)
+administrator.dashboard.form.label.reviewMinLast10Weeks=Minimum reviews (last 10 weeks)
+administrator.dashboard.form.label.reviewMaxLast10Weeks=Maximum reviews (last 10 weeks)
+administrator.dashboard.form.label.reviewStdDevLast10Weeks=Standard deviation of reviews (last 10 weeks)

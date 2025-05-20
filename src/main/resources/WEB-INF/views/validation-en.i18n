@@ -48,6 +48,11 @@ acme.validation.fcmAvailable.message = The flight crew member is not available
 acme.validation.legCompatible.message = The flight crew member already has a leg at that date
 acme.validation.isConfirmedOrCancelled.message = The flight assignment must be confirmed or cancelled
 
+# Flight crew member
+acme.validation.flightCrewMember.employeeCode = Not valid employeeCode
+acme.validation.flightCrewMember.salary.not.valid = Not valid salary
+acme.validation.change.employeeCode = You cannot change your employeeCode
+
 # Flight crew member - flight assignments messages
 acme.validation.confirmation.message = This action must be confirm
 acme.validation.pilotExceptionPassed.message = That leg already has a pilot

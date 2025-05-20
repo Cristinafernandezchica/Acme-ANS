@@ -12,6 +12,7 @@
 
 master.menu.anonymous = Anonymous
 master.menu.anonymous.list-flights = List flights
+master.menu.anonymous.list-flight-assignments = List flight assignments
 master.menu.anonymous.favourite-link = Favourite link
 master.menu.anonymous.favourite-link-Candela = 45939364S: Gutiérrez González, Candela Jazmín
 master.menu.anonymous.favourite-link-Cristina = 77926002R: Fernández Chica, Cristina
@@ -32,6 +33,7 @@ master.menu.administrator.list-aircraft = List of aircrafts
 master.menu.administrator.list-airports = List of airports
 master.menu.administrator.list-airlines = List of airlines
 master.menu.administrator.list-bookings = List of bookings
+master.menu.administrator.show-dashboard = Show dashboard
 master.menu.administrator.populate-recommendations= Populate recommendations
 master.menu.administrator.populate-db-initial = Populate DB (initial)
 master.menu.administrator.populate-db-sample = Populate DB (samples)
@@ -57,10 +59,10 @@ master.menu.consumer.favourite-link = Favourite link
 
 # master.menu.customer ##########################################################
  
- master.menu.customer = Customer
- master.menu.customer.booking = My bookings
- master.menu.customer.passenger = My passengers
- master.menu.customer.show-dashboard = Show dashboard
+master.menu.customer = Customer
+master.menu.customer.booking = My bookings
+master.menu.customer.passenger = My passengers
+master.menu.customer.show-dashboard = Show dashboard
  
 # master.menu.user-account ####################################################
 
@@ -74,6 +76,8 @@ master.menu.user-account.become-customer = Become a customer
 master.menu.user-account.customer-profile = Customer profile
 master.menu.user-account.become-manager = Become a manager
 master.menu.user-account.manager-profile = Manager profile
+master.menu.user-account.flight-crew-member-profile = Flight crew member profile
+master.menu.user-account.become-flight-crew-member = Become a flight crew member
 
 
 # master.menu.technician ##########################################################

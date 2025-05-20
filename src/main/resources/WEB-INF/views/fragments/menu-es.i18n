@@ -12,6 +12,7 @@
 
 master.menu.anonymous = Anónimo
 master.menu.anonymous.list-flights = Ver vuelos
+master.menu.anonymous.list-flight-assignments = Ver asignaciones de vuelo
 master.menu.anonymous.favourite-link = Enlace favorito
 master.menu.anonymous.favourite-link-Candela = 45939364S: Gutiérrez González, Candela Jazmín
 master.menu.anonymous.favourite-link-Cristina = 77926002R: Fernández Chica, Cristina
@@ -32,6 +33,7 @@ master.menu.administrator.list-aircraft = Lista de aviones
 master.menu.administrator.list-airports = Lista de aeropuertos
 master.menu.administrator.list-airlines = Lista de aerolíneas
 master.menu.administrator.list-bookings = Lista de reservas
+master.menu.administrator.show-dashboard = Mostrar tabla de estadísticas
 master.menu.administrator.populate-recommendations= Poblar recomendaciones
 master.menu.administrator.populate-db-initial = Poblar BD (inicial)
 master.menu.administrator.populate-db-sample = Poblar BD (ejemplos)
@@ -57,10 +59,10 @@ master.menu.consumer.favourite-link = Enlace favorito
 
 # master.menu.customer ##########################################################
  
- master.menu.customer = Cliente
- master.menu.customer.booking = Mis reservas
- master.menu.customer.passenger = Mis pasajeros
- master.menu.customer.show-dashboard = Mostrar tabla de estadísticas
+master.menu.customer = Cliente
+master.menu.customer.booking = Mis reservas
+master.menu.customer.passenger = Mis pasajeros
+master.menu.customer.show-dashboard = Mostrar tabla de estadísticas
 
 # master.menu.user-account ####################################################
 
@@ -74,6 +76,8 @@ master.menu.user-account.become-customer = Hacerse cliente
 master.menu.user-account.customer-profile = Perfil de cliente
 master.menu.user-account.become-manager = Hacerse manager
 master.menu.user-account.manager-profile = Perfil de manager
+master.menu.user-account.flight-crew-member-profile = Perfil de asistente de vuelo
+master.menu.user-account.become-flight-crew-member = Hacerse asistente de vuelo
 
 
 # master.menu.technician ##########################################################

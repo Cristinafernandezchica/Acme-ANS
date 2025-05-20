@@ -1,6 +1,6 @@
 key,fullName,email,passportNumber,dateOfBirth,specialNeeds,draftMode,key:customer
 passenger-01,Angel Customer1,angel@acme.com,ES123456,2000/01/01 00:00,,true,customer-01
-passenger-02,Rafael Customer2,a@b.e,ES789012,2000/01/01 00:01,Blind Assistant,true,customer-02
+passenger-02,Rafael Customer2,a@b.e,ES789012,2000/01/01 00:01,Blind Assistant,false,customer-02
 passenger-04,A,a@b.es,ES654321,2024/12/31 23:59,,true,customer-03
 passenger-05,An,a@b.esx,ES445566,2025/01/01 00:00,,false,customer-01
 passenger-06,Angel Customer With Extra Name,lorem-ipsum@dolor.sit.amet.consectetur.adipiscing.elit.sed.do.eiusmod.tempor.incididunt.ut.labore.et.dolore.magna.aliqua.Ut.enim.ad.minim.veniam.quis.nostrud.exercitation.ullamco.laboris.nisi.ut.aliquip.ex.ea.commodo.consequat.duis.aute.irure.doloris.edu,ES432109,2009/05/05 00:00,,true,customer-02
