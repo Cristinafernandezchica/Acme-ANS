@@ -124,6 +124,8 @@ acme.validation.claim.legNull.message = You can not publish a claim without a le
 
 acme.validation.trackingLog.resolutionPercentage.message = The resolution percentage is not correct
 acme.validation.trackingLog.status.message = That status is not possible
-acme.validation.trackingLog.resolutionPercentageStatus.message = You can only set the resolution percentage to 100.00 and the status cannot be pending
+acme.validation.trackingLog.resolutionPercentageStatus.message = The status can only be different from pending if the resolution percentage is 100.00
 acme.validation.trackingLog.draftMode.message = Tracking Log must be in draft mode
 acme.validation.trackingLog.publish.message = You cannot publish a tracking log to 100 if the previous tracking logs have not been published
+acme.validation.trackingLog.percentage100.message = Tracking log must have resolution percentage 100 and status equal to the status of the previous tracking log at 100
+acme.validation.trackingLog.noMore.message = You cannot create more tracking logs for this claim
