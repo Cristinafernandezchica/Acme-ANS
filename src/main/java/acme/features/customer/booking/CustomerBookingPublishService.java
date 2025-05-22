@@ -59,15 +59,16 @@ public class CustomerBookingPublishService extends AbstractGuiService<Customer, 
 					status = false;
 			}
 
-			String rawTravelClass = super.getRequest().getData("travelClass", String.class);
+			if (super.getRequest().hasData("travelClass")) {
+				String rawTravelClass = super.getRequest().getData("travelClass", String.class);
 
-			if (rawTravelClass != null && !rawTravelClass.trim().isEmpty() && !rawTravelClass.equals("0")) {
-				boolean travelClassValid = Arrays.stream(TravelClass.values()).anyMatch(tc -> tc.name().equals(rawTravelClass));
+				if (rawTravelClass != null && !rawTravelClass.trim().isEmpty() && !rawTravelClass.equals("0")) {
+					boolean travelClassValid = Arrays.stream(TravelClass.values()).anyMatch(tc -> tc.name().equals(rawTravelClass));
 
-				if (!travelClassValid)
-					status = false;
+					if (!travelClassValid)
+						status = false;
+				}
 			}
-
 		}
 
 		super.getResponse().setAuthorised(status);
