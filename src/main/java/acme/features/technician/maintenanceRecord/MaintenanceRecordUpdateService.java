@@ -31,25 +31,27 @@ public class MaintenanceRecordUpdateService extends AbstractGuiService<Technicia
 		int mrId;
 		boolean authored = false;
 
-		mrId = super.getRequest().getData("id", int.class);
-		mr = this.repository.findMRById(mrId);
+		if (!super.getRequest().getData().isEmpty() && super.getRequest().getData() != null) {
+			mrId = super.getRequest().getData("id", int.class);
+			mr = this.repository.findMRById(mrId);
 
-		technician = (Technician) super.getRequest().getPrincipal().getActiveRealm();
-		if (technician.equals(mr.getTechnician()))
-			authored = true;
+			technician = (Technician) super.getRequest().getPrincipal().getActiveRealm();
+			if (technician.equals(mr.getTechnician()))
+				authored = true;
 
-		if (super.getRequest().getMethod().equals("POST")) {
-			if (authored) {
-				String newStatus = super.getRequest().getData("status", String.class);
-				List<String> listaDeStatus = List.of(Status.COMPLETED.name(), Status.INPROGRESS.name(), Status.PENDING.name());
-				if (!newStatus.equals("0") && (newStatus == null || !listaDeStatus.contains(newStatus)))
-					authored = false;
-			}
-			if (authored) {
-				Integer newAircraft = super.getRequest().getData("aircraft", int.class);
-				List<Integer> listaDeAircraft = this.repository.findAllAircraft().stream().map(x -> x.getId()).toList();
-				if (newAircraft != 0 && (newAircraft == null || !listaDeAircraft.contains(newAircraft)))
-					authored = false;
+			if (super.getRequest().getMethod().equals("POST")) {
+				if (authored) {
+					String newStatus = super.getRequest().getData("status", String.class);
+					List<String> listaDeStatus = List.of(Status.COMPLETED.name(), Status.INPROGRESS.name(), Status.PENDING.name());
+					if (!newStatus.equals("0") && (newStatus == null || !listaDeStatus.contains(newStatus)))
+						authored = false;
+				}
+				if (authored) {
+					Integer newAircraft = super.getRequest().getData("aircraft", int.class);
+					List<Integer> listaDeAircraft = this.repository.findAllAircraft().stream().map(x -> x.getId()).toList();
+					if (newAircraft != 0 && (newAircraft == null || !listaDeAircraft.contains(newAircraft)))
+						authored = false;
+				}
 			}
 		}
 		super.getResponse().setAuthorised(authored);

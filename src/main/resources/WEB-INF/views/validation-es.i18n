@@ -112,5 +112,8 @@ acme.validation.claim.legNull.message = No puedes publicar un reclamo sin pata
 
 acme.validation.trackingLog.resolutionPercentage.message = El porcentaje de resolución no es correcto
 acme.validation.trackingLog.status.message = Ese estado no es posible
-acme.validation.trackingLog.resolutionPercentageStatus.message = Solo puedes establecer el porcentaje de resolución a 100.00 y el estado no puede ser pendiente
+acme.validation.trackingLog.resolutionPercentageStatus.message = El estado solo puede ser distinto de pending si el porcentaje de resolución es 100.00
 acme.validation.trackingLog.draftMode.message = El registro de seguimiento debe estar en modo borrador
+acme.validation.trackingLog.publish.message = No puedes publicar un tracking log a 100, si los tracking logs anteriores no han sido publicados
+acme.validation.trackingLog.percentage100.message = Tracking log debe tener porcentaje de resolución 100 y estado igual al estado del anterior tracking log a 100
+acme.validation.trackingLog.noMore.message = No puede crear más tracking logs para este claim

@@ -27,15 +27,17 @@ public class AssistanceAgentTrackingLogCreateService extends AbstractGuiService<
 	@Override
 	public void authorise() {
 		boolean status;
-		boolean isCorrectClaim;
+		boolean isCorrectClaim = false;
 		boolean isCorrectStatus = true;
 		String trackingLogStatus;
-		int claimId;
+		Integer claimId;
 		Claim claim;
 
-		claimId = super.getRequest().getData("claimId", int.class);
-		claim = this.repository.findClaimById(claimId);
-		isCorrectClaim = claim != null && !claim.isDraftMode() && super.getRequest().getPrincipal().hasRealm(claim.getAssistanceAgent());
+		claimId = super.getRequest().getData("claimId", Integer.class);
+		if (claimId != null) {
+			claim = this.repository.findClaimById(claimId);
+			isCorrectClaim = claim != null && !claim.isDraftMode() && super.getRequest().getPrincipal().hasRealm(claim.getAssistanceAgent());
+		}
 
 		if (super.getRequest().getMethod().equals("POST")) {
 			trackingLogStatus = super.getRequest().getData("status", String.class);
@@ -84,6 +86,8 @@ public class AssistanceAgentTrackingLogCreateService extends AbstractGuiService<
 		Collection<TrackingLog> trackingLogs;
 		boolean isCorrectPercentage = true;
 		boolean isCorrectPercentageStatus = true;
+		boolean isPercentage100 = true;
+		boolean moreToCreate = true;
 
 		status = super.getRequest().getData("status", TrackingLogStatus.class);
 		percentage = super.getRequest().getData("resolutionPercentage", Double.class);
@@ -101,12 +105,14 @@ public class AssistanceAgentTrackingLogCreateService extends AbstractGuiService<
 				isCorrectPercentage = percentage > minPercentage;
 			else if (Long.valueOf(1).equals(maximumTrackingLogs)) {
 				TrackingLog maximumTrackingLog = trackingLogs.stream().findFirst().get();
-				isCorrectPercentage = !maximumTrackingLog.isDraftMode() && percentage.equals(100.00) && status.equals(maximumTrackingLog.getStatus());
+				isPercentage100 = !maximumTrackingLog.isDraftMode() && percentage.equals(100.00) && status.equals(maximumTrackingLog.getStatus());
 			} else if (Long.valueOf(2).equals(maximumTrackingLogs))
-				isCorrectPercentage = false;
+				moreToCreate = false;
 		}
 
 		super.state(isCorrectPercentage, "resolutionPercentage", "acme.validation.trackingLog.resolutionPercentage.message");
+		super.state(isPercentage100, "resolutionPercentage", "acme.validation.trackingLog.percentage100.message");
+		super.state(moreToCreate, "resolutionPercentage", "acme.validation.trackingLog.noMore.message");
 		super.state(isCorrectPercentageStatus, "status", "acme.validation.trackingLog.resolutionPercentageStatus.message");
 		super.state(!trackingLog.getClaim().isDraftMode(), "draftMode", "acme.validation.claim.draftMode.message");
 	}

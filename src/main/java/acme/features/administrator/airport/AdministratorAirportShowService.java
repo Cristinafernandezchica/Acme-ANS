@@ -24,13 +24,15 @@ public class AdministratorAirportShowService extends AbstractGuiService<Administ
 
 	@Override
 	public void authorise() {
-		boolean status;
-		int airportId;
+		boolean status = false;
+		Integer airportId;
 		Airport airport;
 
-		airportId = super.getRequest().getData("id", int.class);
-		airport = this.repository.findAirportById(airportId);
-		status = airport != null;
+		airportId = super.getRequest().getData("id", Integer.class);
+		if (airportId != null) {
+			airport = this.repository.findAirportById(airportId);
+			status = airport != null;
+		}
 
 		super.getResponse().setAuthorised(status);
 	}

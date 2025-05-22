@@ -31,9 +31,6 @@ public interface AssistanceAgentClaimRepository extends AbstractRepository {
 	@Query("SELECT l FROM Leg l WHERE l.draftMode = false AND l.scheduledArrival <= :now AND l.aircraft.airline.id = :agentAirlineId")
 	Collection<Leg> findAllPublishedLegs(Date now, int agentAirlineId);
 
-	@Query("SELECT l FROM Leg l")
-	Collection<Leg> findAllLegs();
-
 	@Query("SELECT t FROM TrackingLog t WHERE t.claim.id = :claimId ORDER BY t.lastUpdateMoment DESC")
 	Collection<TrackingLog> findTrackingLogsByClaimId(int claimId);
 
