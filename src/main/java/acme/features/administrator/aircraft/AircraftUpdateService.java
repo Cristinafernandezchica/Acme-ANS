@@ -1,6 +1,7 @@
 
 package acme.features.administrator.aircraft;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -31,7 +32,45 @@ public class AircraftUpdateService extends AbstractGuiService<Administrator, Air
 
 	@Override
 	public void authorise() {
-		super.getResponse().setAuthorised(true);
+		boolean auth;
+
+		Aircraft aircraftSelected;
+		boolean existingAircraft = false;
+		boolean hasAtributes = false;
+		boolean validAircraft = true;
+		boolean validStatus = true;
+
+		String metodo = super.getRequest().getMethod();
+
+		if (!super.getRequest().getData().isEmpty() && super.getRequest().getData() != null) {
+			Integer aircraftId = super.getRequest().getData("id", Integer.class);
+			if (aircraftId != null) {
+				List<Aircraft> allAircrafts = this.repository.findAllAircrafts();
+				aircraftSelected = this.repository.findAircraftById(aircraftId);
+				existingAircraft = aircraftSelected != null || allAircrafts.contains(aircraftSelected) && aircraftSelected != null;
+				hasAtributes = super.getRequest().hasData("model");
+			}
+			if (metodo.equals("POST")) {
+				Integer airlineId = super.getRequest().getData("airline", Integer.class);
+
+				if (airlineId == null)
+					validAircraft = false;
+				else {
+					Airline airline = this.repository.findAirlineById(airlineId);
+					List<Airline> allAirlines = this.repository.findAllAirlines();
+					if (airline == null && airlineId != 0 || !allAirlines.contains(airline) && airlineId != 0)
+						validAircraft = false;
+				}
+
+				String status = super.getRequest().getData("status", String.class);
+				if (status == null || status.trim().isEmpty() || Arrays.stream(Status.values()).noneMatch(tc -> tc.name().equals(status)) && !status.equals("0"))
+					validStatus = false;
+
+			}
+
+		}
+		auth = existingAircraft && hasAtributes && validStatus && validAircraft;
+		super.getResponse().setAuthorised(auth);
 	}
 
 	@Override
@@ -56,13 +95,15 @@ public class AircraftUpdateService extends AbstractGuiService<Administrator, Air
 
 		boolean isFlying = false;
 		List<Leg> legs = this.repository.findLegsByAircraft(aircraft.getId());
-		for (Leg l : legs)
-			if (l.getStatus().equals(LegStatus.ON_TIME) || l.getStatus().equals(LegStatus.DELAYED)) {
-				Date departureTime = l.getScheduledDeparture();
-				Date arrivalTime = l.getScheduledDeparture();
-				isFlying = MomentHelper.isInRange(MomentHelper.getCurrentMoment(), departureTime, arrivalTime);
-			}
-		super.state(!isFlying, "*", "acme.validation.legOnAir.message");
+		if (!legs.isEmpty()) {
+			for (Leg l : legs)
+				if (l.getStatus().equals(LegStatus.ON_TIME) || l.getStatus().equals(LegStatus.DELAYED)) {
+					Date departureTime = l.getScheduledDeparture();
+					Date arrivalTime = l.getScheduledDeparture();
+					isFlying = MomentHelper.isInRange(MomentHelper.getCurrentMoment(), departureTime, arrivalTime);
+				}
+			super.state(isFlying, "*", "acme.validation.legOnAir.message");
+		}
 
 		boolean confirmation;
 		confirmation = super.getRequest().getData("confirmation", boolean.class);

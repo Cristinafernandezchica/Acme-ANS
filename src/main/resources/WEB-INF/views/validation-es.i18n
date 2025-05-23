@@ -7,6 +7,8 @@ acme.validation.flight.published.delete = No se puede borrar un vuelo publicado
 acme.validation.flight.create.no.draftmode = No se puede crear un vuelo en modo no borrador
 acme.validation.manager.flights.publish.past.leg = No se puede publicar un vuelo con tramo/s en pasado
 
+acme.validation.legOnAir.message = No se puede actualizar, este avión está volando
+
 acme.validation.manager.flights.without.legs = El vuelo no tiene ningún tramos asignado
 acme.validation.manager.flights.no.published.leg = El vuelo tiene alguno/s tramo/s sin publicar
 acme.validation.manager.flights.currency.not.valid = La unidad monetaria no es válida
