@@ -47,14 +47,11 @@ public class FlightAssignmentDeleteService extends AbstractGuiService<FlightCrew
 				List<FlightAssignment> allFA = this.repository.findAllFlightAssignments();
 				faSelected = this.repository.findFlightAssignmentById(faId);
 				existingFA = faSelected != null || allFA.contains(faSelected) && faSelected != null;
-				if (existingFA)
+				if (existingFA) {
 					isFlightAssignmentOwner = faSelected.getFlightCrewMemberAssigned() == fcmLogged;
-				if (metodo.equals("GET")) {
-					faId = super.getRequest().getData("id", Integer.class);
-					faSelected = this.repository.findFlightAssignmentById(faId);
-					isPublished = !faSelected.isDraftMode();
+					if (metodo.equals("GET"))
+						isPublished = !faSelected.isDraftMode();
 				}
-
 			}
 		}
 
@@ -80,7 +77,9 @@ public class FlightAssignmentDeleteService extends AbstractGuiService<FlightCrew
 
 	@Override
 	public void validate(final FlightAssignment flightAssignment) {
-		;
+		boolean confirmation;
+		confirmation = super.getRequest().getData("confirmation", boolean.class);
+		super.state(confirmation, "confirmation", "acme.validation.confirmation.message");
 	}
 
 	@Override

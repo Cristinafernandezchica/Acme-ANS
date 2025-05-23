@@ -42,14 +42,11 @@ public class ActivityLogUpdateService extends AbstractGuiService<FlightCrewMembe
 				alSelected = this.repository.findActivityLogById(alId);
 				existingAL = alSelected != null || allFA.contains(alSelected) && alSelected != null;
 				hasRegistrationMoment = super.getRequest().hasData("registrationMoment");
-				if (existingAL)
+				if (existingAL) {
 					isFlightAssignmentOwner = alSelected.getFlightAssignmentRelated().getFlightCrewMemberAssigned() == fcmLogged;
-				if (metodo.equals("GET")) {
-					alId = super.getRequest().getData("id", Integer.class);
-					alSelected = this.repository.findActivityLogById(alId);
-					isPublished = !alSelected.isDraftMode();
+					if (metodo.equals("GET"))
+						isPublished = !alSelected.isDraftMode();
 				}
-
 			}
 		}
 
