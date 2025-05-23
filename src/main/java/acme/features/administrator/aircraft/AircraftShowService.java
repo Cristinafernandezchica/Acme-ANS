@@ -2,6 +2,7 @@
 package acme.features.administrator.aircraft;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -26,7 +27,20 @@ public class AircraftShowService extends AbstractGuiService<Administrator, Aircr
 
 	@Override
 	public void authorise() {
-		super.getResponse().setAuthorised(true);
+
+		Aircraft aircraftSelected;
+		boolean existingAircraft = false;
+
+		if (!super.getRequest().getData().isEmpty() && super.getRequest().getData() != null) {
+			Integer aircraftId = super.getRequest().getData("id", Integer.class);
+			if (aircraftId != null) {
+				List<Aircraft> allAircrafts = this.repository.findAllAircrafts();
+				aircraftSelected = this.repository.findAircraftById(aircraftId);
+				existingAircraft = aircraftSelected != null || allAircrafts.contains(aircraftSelected);
+			}
+
+		}
+		super.getResponse().setAuthorised(existingAircraft);
 	}
 
 	@Override

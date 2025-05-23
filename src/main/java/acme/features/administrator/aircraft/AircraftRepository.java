@@ -1,7 +1,6 @@
 
 package acme.features.administrator.aircraft;
 
-import java.util.Collection;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.Query;
@@ -25,7 +24,7 @@ public interface AircraftRepository extends AbstractRepository {
 	Aircraft findAircraftById(int id);
 
 	@Query("select a from Aircraft a")
-	Collection<Aircraft> findAllAircrafts();
+	List<Aircraft> findAllAircrafts();
 
 	@Query("select a from Airline a where a.id = :id")
 	Airline findAirlineById(int id);
