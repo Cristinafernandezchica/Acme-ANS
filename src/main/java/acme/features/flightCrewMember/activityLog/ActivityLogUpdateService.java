@@ -28,7 +28,7 @@ public class ActivityLogUpdateService extends AbstractGuiService<FlightCrewMembe
 
 		boolean existingAL = false;
 		boolean isFlightAssignmentOwner = false;
-		boolean isPublished = false;
+		boolean isPublished = true;
 		boolean hasRegistrationMoment = true;
 
 		String metodo = super.getRequest().getMethod();
