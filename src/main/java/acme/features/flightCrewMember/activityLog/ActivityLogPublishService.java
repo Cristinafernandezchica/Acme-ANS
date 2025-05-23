@@ -29,10 +29,7 @@ public class ActivityLogPublishService extends AbstractGuiService<FlightCrewMemb
 
 		boolean existingAL = false;
 		boolean isFlightAssignmentOwner = false;
-		boolean isPublished = false;
 		boolean hasRegistrationMoment = true;
-
-		String metodo = super.getRequest().getMethod();
 
 		int fcmIdLogged = super.getRequest().getPrincipal().getActiveRealm().getId();
 		if (!super.getRequest().getData().isEmpty() && super.getRequest().getData() != null) {
@@ -45,16 +42,11 @@ public class ActivityLogPublishService extends AbstractGuiService<FlightCrewMemb
 				hasRegistrationMoment = super.getRequest().hasData("registrationMoment");
 				if (existingAL)
 					isFlightAssignmentOwner = alSelected.getFlightAssignmentRelated().getFlightCrewMemberAssigned() == fcmLogged;
-				if (metodo.equals("GET")) {
-					alId = super.getRequest().getData("id", Integer.class);
-					alSelected = this.repository.findActivityLogById(alId);
-					isPublished = !alSelected.isDraftMode();
-				}
 
 			}
 		}
 
-		super.getResponse().setAuthorised(isFlightAssignmentOwner && isPublished && hasRegistrationMoment);
+		super.getResponse().setAuthorised(isFlightAssignmentOwner && hasRegistrationMoment);
 	}
 
 	@Override
