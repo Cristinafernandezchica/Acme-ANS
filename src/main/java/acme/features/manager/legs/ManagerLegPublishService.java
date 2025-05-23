@@ -33,7 +33,7 @@ public class ManagerLegPublishService extends AbstractGuiService<Manager, Leg> {
 	@Override
 	public void authorise() {
 		boolean status = false;
-		int masterId;
+		Integer masterId;
 		Leg leg;
 		Manager manager;
 		Airport depAirport = null;
@@ -43,51 +43,53 @@ public class ManagerLegPublishService extends AbstractGuiService<Manager, Leg> {
 
 		if (!super.getRequest().getData().isEmpty() && super.getRequest().getData() != null) {
 			int managerId = super.getRequest().getPrincipal().getActiveRealm().getId();
-			masterId = super.getRequest().getData("id", int.class);
-			leg = this.repository.findLegById(masterId);
-			boolean fN = super.getRequest().hasData("flightNumber");
-			manager = leg == null ? null : leg.getFlight().getManager();
-			status = leg != null && super.getRequest().getPrincipal().hasRealm(manager) && managerId == manager.getId() && fN;
-			// Validaciones
-			if (super.getRequest().getMethod().equals("POST")) {
-				// Departure airport and arrival airport
-				Integer airDepId = super.getRequest().getData("departureAirport", Integer.class);
-				Integer airArrId = super.getRequest().getData("arrivalAirport", Integer.class);
+			masterId = super.getRequest().getData("id", Integer.class);
+			if (masterId != null) {
+				leg = this.repository.findLegById(masterId);
+				boolean fN = super.getRequest().hasData("flightNumber");
+				manager = leg == null ? null : leg.getFlight().getManager();
+				status = leg != null && super.getRequest().getPrincipal().hasRealm(manager) && managerId == manager.getId() && fN;
+				// Validaciones
+				if (super.getRequest().getMethod().equals("POST")) {
+					// Departure airport and arrival airport
+					Integer airDepId = super.getRequest().getData("departureAirport", Integer.class);
+					Integer airArrId = super.getRequest().getData("arrivalAirport", Integer.class);
 
-				if (airDepId != null) {
-					depAirport = this.repository.findAirportById(airDepId);
-					if (depAirport == null)
+					if (airDepId != null) {
+						depAirport = this.repository.findAirportById(airDepId);
+						if (depAirport == null)
+							status = false;
+						if (airDepId == 0)
+							status = true;
+					} else
 						status = false;
-					if (airDepId == 0)
-						status = true;
-				} else
-					status = false;
 
-				if (airArrId != null) {
-					arrAirport = this.repository.findAirportById(airArrId);
-					if (arrAirport == null)
+					if (airArrId != null) {
+						arrAirport = this.repository.findAirportById(airArrId);
+						if (arrAirport == null)
+							status = false;
+						if (airArrId == 0)
+							status = true;
+					} else
 						status = false;
-					if (airArrId == 0)
-						status = true;
-				} else
-					status = false;
 
-				// Aircraft null
-				Integer aircraftId = super.getRequest().getData("aircraft", Integer.class);
-				if (aircraftId != null) {
-					validAircraft = this.repository.findAircraftById(aircraftId);
-					if (validAircraft == null)
+					// Aircraft null
+					Integer aircraftId = super.getRequest().getData("aircraft", Integer.class);
+					if (aircraftId != null) {
+						validAircraft = this.repository.findAircraftById(aircraftId);
+						if (validAircraft == null)
+							status = false;
+						if (aircraftId == 0)
+							status = true;
+					} else
 						status = false;
-					if (aircraftId == 0)
-						status = true;
-				} else
-					status = false;
 
-				// Status different of ON_TIME
-				legStatus = super.getRequest().getData("status", String.class);
-				if (legStatus != null && !legStatus.equals(LegStatus.ON_TIME.toString()))
-					status = false;
+					// Status different of ON_TIME
+					legStatus = super.getRequest().getData("status", String.class);
+					if (legStatus != null && !legStatus.equals(LegStatus.ON_TIME.toString()))
+						status = false;
 
+				}
 			}
 		}
 		super.getResponse().setAuthorised(status);
