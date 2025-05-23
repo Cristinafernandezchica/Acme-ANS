@@ -57,32 +57,32 @@ public class ManagerLegPublishService extends AbstractGuiService<Manager, Leg> {
 
 					if (airDepId != null) {
 						depAirport = this.repository.findAirportById(airDepId);
-						if (depAirport == null)
-							status = false;
 						if (airDepId == 0)
-							status = true;
+							status &= true;
+						else if (depAirport == null)
+							status &= false;
 					} else
-						status = false;
+						status &= false;
 
 					if (airArrId != null) {
 						arrAirport = this.repository.findAirportById(airArrId);
-						if (arrAirport == null)
-							status = false;
 						if (airArrId == 0)
-							status = true;
+							status &= true;
+						else if (arrAirport == null)
+							status &= false;
 					} else
-						status = false;
+						status &= false;
 
 					// Aircraft null
 					Integer aircraftId = super.getRequest().getData("aircraft", Integer.class);
 					if (aircraftId != null) {
 						validAircraft = this.repository.findAircraftById(aircraftId);
-						if (validAircraft == null)
-							status = false;
 						if (aircraftId == 0)
-							status = true;
+							status &= true;
+						else if (validAircraft == null)
+							status &= false;
 					} else
-						status = false;
+						status &= false;
 
 					// Status different of ON_TIME
 					legStatus = super.getRequest().getData("status", String.class);
@@ -204,15 +204,13 @@ public class ManagerLegPublishService extends AbstractGuiService<Manager, Leg> {
 		Dataset dataset;
 		Collection<Aircraft> aircrafts;
 		SelectChoices selectedAircrafts;
-		Collection<Aircraft> activeAircrafts;
 		Collection<Airport> airports;
 		SelectChoices selectedDepartureAirport;
 		SelectChoices selectedArrivalAirport;
 
 		statuses = SelectChoices.from(LegStatus.class, leg.getStatus());
 		aircrafts = this.repository.findAllAircrafts();
-		activeAircrafts = aircrafts.stream().filter(a -> a.getStatus().equals(Status.ACTIVE_SERVICE)).collect(Collectors.toList());
-		selectedAircrafts = SelectChoices.from(activeAircrafts, "aircraftLabel", leg.getAircraft());
+		selectedAircrafts = SelectChoices.from(aircrafts, "aircraftLabel", leg.getAircraft());
 
 		airports = this.repository.findAllAirports();
 		selectedDepartureAirport = SelectChoices.from(airports, "iataCode", leg.getDepartureAirport());

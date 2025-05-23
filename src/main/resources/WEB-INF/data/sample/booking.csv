@@ -1,7 +1,7 @@
 key,locatorCode,purchaseMoment,travelClass,price,lastCardNibble,key:customer,key:flight,draftMode
 # Money and Moment attribute
 booking-01,ID88888,2000/01/01 00:00,ECONOMY,EUR 0.00,2025,customer-01,null,true
-booking-02,ID12345,2000/01/01 00:01,ECONOMY,EUR 0.01,1708,customer-02,flight-36,false
+booking-02,ID12345,2000/01/01 00:01,ECONOMY,EUR 0.01,1708,customer-02,flight-36,true
 booking-17,ID77777,2024/12/31 23:59,BUSINESS,USD 5.00,2025,customer-01,flight-36,true
 booking-04,A00000,2025/01/01 00:00,ECONOMY,EUR 1000000.00,6789,customer-02,flight-37,true
 booking-06,ZZ999999,2004/05/05 19:45,ECONOMY,EUR 999999.99,9999,customer-02,flight-42,true
