@@ -2,7 +2,6 @@
 package acme.features.flightCrewMember.flightAssigment;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -100,14 +99,16 @@ public class FlightAssignmentUpdateService extends AbstractGuiService<FlightCrew
 	}
 	@Override
 	public void bind(final FlightAssignment flightAssignment) {
-		int flightCrewMemberId;
 		FlightCrewMember flightCrewMember;
 		int legId;
 		Leg leg;
-		flightCrewMemberId = super.getRequest().getData("flightCrewMemberAssigned", int.class);
-		flightCrewMember = this.repository.findFlighCrewMemberById(flightCrewMemberId);
+
+		int fcmIdLogged = super.getRequest().getPrincipal().getActiveRealm().getId();
+		flightCrewMember = this.repository.findFlighCrewMemberById(fcmIdLogged);
+
 		legId = super.getRequest().getData("legRelated", int.class);
 		leg = this.repository.findLegById(legId);
+
 		super.bindObject(flightAssignment, "flightCrewsDuty", "currentStatus", "remarks");
 		flightAssignment.setLastUpdate(MomentHelper.getCurrentMoment());
 		flightAssignment.setFlightCrewMemberAssigned(flightCrewMember);
@@ -126,7 +127,7 @@ public class FlightAssignmentUpdateService extends AbstractGuiService<FlightCrew
 			// Comprobación de que el FCM esté AVAILABLE
 			boolean fcmAvailable;
 			fcmAvailable = flightAssignment.getFlightCrewMemberAssigned().getAvailabilityStatus().equals(AvailabilityStatus.AVAILABLE);
-			super.state(fcmAvailable, "legRelated", "acme.validation.fcmAvailable.message");
+			super.state(fcmAvailable, "*", "acme.validation.fcmAvailable.message");
 			// Comprobación de leg no pasada
 			boolean legNotPast;
 			legNotPast = flightAssignment.getLegRelated().getScheduledArrival().before(MomentHelper.getCurrentMoment());
@@ -179,25 +180,31 @@ public class FlightAssignmentUpdateService extends AbstractGuiService<FlightCrew
 	@Override
 	public void unbind(final FlightAssignment flightAssignment) {
 		Dataset dataset;
+
 		SelectChoices statuses;
+
 		SelectChoices flightcrewsDuties;
+
 		SelectChoices legChoices;
 		List<Leg> legs;
-		SelectChoices flightCrewMemberChoices;
-		Collection<FlightCrewMember> availableFlightCrewMembers;
+
 		statuses = SelectChoices.from(CurrentStatus.class, flightAssignment.getCurrentStatus());
+
 		flightcrewsDuties = SelectChoices.from(FlightCrewsDuty.class, flightAssignment.getFlightCrewsDuty());
+
 		legs = this.repository.findAllLegs();
 		legChoices = SelectChoices.from(legs, "label", flightAssignment.getLegRelated());
-		availableFlightCrewMembers = this.repository.findAvailableFlightCrewMembers();
-		flightCrewMemberChoices = SelectChoices.from(availableFlightCrewMembers, "employeeCode", flightAssignment.getFlightCrewMemberAssigned());
+
+		int fcmIdLogged = super.getRequest().getPrincipal().getActiveRealm().getId();
+		FlightCrewMember flightCrewMember = this.repository.findFlighCrewMemberById(fcmIdLogged);
+
 		dataset = super.unbindObject(flightAssignment, "flightCrewsDuty", "lastUpdate", "currentStatus", "remarks", "draftMode");
 		dataset.put("statuses", statuses);
 		dataset.put("flightcrewsDuties", flightcrewsDuties);
 		dataset.put("legRelated", legChoices.getSelected().getKey());
 		dataset.put("legs", legChoices);
-		dataset.put("flightCrewMemberAssigned", flightCrewMemberChoices.getSelected().getKey());
-		dataset.put("availableFlightCrewMembers", flightCrewMemberChoices);
+		dataset.put("flightCrewMemberAssigned", flightCrewMember);
+		dataset.put("FCMname", flightCrewMember.getIdentity().getName() + " " + flightCrewMember.getIdentity().getSurname());
 		dataset.put("lastUpdate", MomentHelper.getCurrentMoment());
 		dataset.put("confirmation", false);
 		dataset.put("readonly", false);

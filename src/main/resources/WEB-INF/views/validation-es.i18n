@@ -52,7 +52,7 @@ acme.validation.legNotPublished.message = Este vuelo no está publicado
 acme.validation.legNotPast.message = Este vuelo no debe ser pasada
 acme.validation.legNotCompleted.message = Este vuelo no está completada
 acme.validation.legFromRightAirline.message = Este vuelo no opera con la aerolínea del asistente de vuelo
-acme.validation.fcmAvailable.message = El asistente de vuelo no está disponible
+acme.validation.fcmAvailable.message = No puedes actualizar la asignación si no estás disponible
 acme.validation.legCompatible.message = Este asistente de vuelo ya tiene un vuelo en esa fecha
 acme.validation.isConfirmedOrCancelled.message = La asignación del vuelo debe estar confirmada o denegada
 # Flight crew member - flight assignment's messages (antiHacking)

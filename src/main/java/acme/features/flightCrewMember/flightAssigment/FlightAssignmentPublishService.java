@@ -2,7 +2,6 @@
 package acme.features.flightCrewMember.flightAssigment;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -164,7 +163,7 @@ public class FlightAssignmentPublishService extends AbstractGuiService<FlightCre
 			// Comprobación de que el FCM esté AVAILABLE
 			boolean fcmAvailable;
 			fcmAvailable = flightAssignment.getFlightCrewMemberAssigned().getAvailabilityStatus().equals(AvailabilityStatus.AVAILABLE);
-			super.state(fcmAvailable, "legRelated", "acme.validation.fcmAvailable.message");
+			super.state(fcmAvailable, "*", "acme.validation.fcmAvailable.message");
 
 			// Comprobación de que el estado del FA sea CONFIRMED o CANCELLED
 			boolean isConfirmedOrCancelled;
@@ -228,9 +227,6 @@ public class FlightAssignmentPublishService extends AbstractGuiService<FlightCre
 		SelectChoices legChoices;
 		List<Leg> legs;
 
-		SelectChoices flightCrewMemberChoices;
-		Collection<FlightCrewMember> availableFlightCrewMembers;
-
 		statuses = SelectChoices.from(CurrentStatus.class, flightAssignment.getCurrentStatus());
 
 		flightcrewsDuties = SelectChoices.from(FlightCrewsDuty.class, flightAssignment.getFlightCrewsDuty());
@@ -238,17 +234,17 @@ public class FlightAssignmentPublishService extends AbstractGuiService<FlightCre
 		legs = this.repository.findAllLegs();
 		legChoices = SelectChoices.from(legs, "label", flightAssignment.getLegRelated());
 
-		availableFlightCrewMembers = this.repository.findAvailableFlightCrewMembers();
-		flightCrewMemberChoices = SelectChoices.from(availableFlightCrewMembers, "employeeCode", flightAssignment.getFlightCrewMemberAssigned());
+		int fcmIdLogged = super.getRequest().getPrincipal().getActiveRealm().getId();
+		FlightCrewMember flightCrewMember = this.repository.findFlighCrewMemberById(fcmIdLogged);
 
 		dataset = super.unbindObject(flightAssignment, "flightCrewsDuty", "lastUpdate", "currentStatus", "remarks", "draftMode");
 		dataset.put("statuses", statuses);
 		dataset.put("flightcrewsDuties", flightcrewsDuties);
 		dataset.put("legRelated", legChoices.getSelected().getKey());
 		dataset.put("legs", legChoices);
-		dataset.put("flightCrewMemberAssigned", flightCrewMemberChoices.getSelected().getKey());
-		dataset.put("availableFlightCrewMembers", flightCrewMemberChoices);
 		dataset.put("lastUpdate", MomentHelper.getCurrentMoment());
+		dataset.put("flightCrewMemberAssigned", flightCrewMember);
+		dataset.put("FCMname", flightCrewMember.getIdentity().getName() + " " + flightCrewMember.getIdentity().getSurname());
 
 		dataset.put("confirmation", false);
 		dataset.put("readonly", false);

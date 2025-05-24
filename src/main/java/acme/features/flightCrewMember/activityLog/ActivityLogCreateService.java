@@ -59,6 +59,8 @@ public class ActivityLogCreateService extends AbstractGuiService<FlightCrewMembe
 	@Override
 	public void validate(final ActivityLog activityLog) {
 
+		// COMPROBAR QUE LA LEG NO ESTE EN VUELO Y EL FLIGHT ASSIGNMENT
+
 		boolean confirmation;
 
 		confirmation = super.getRequest().getData("confirmation", boolean.class);
