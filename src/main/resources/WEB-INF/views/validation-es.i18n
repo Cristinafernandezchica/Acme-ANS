@@ -112,10 +112,12 @@ acme.validation.claim.draftMode.message = No se puede actualizar o borrar un rec
 acme.validation.claim.accepted.message = El valor aceptado del Reclamo no es el mismo que el estado de su último Registro de Seguimiento
 acme.validation.claim.legNull.message = No puedes publicar un reclamo sin pata
 
+acme.validation.trackingLog.nullStatus.message = El estado no puede ser nulo
+acme.validation.trackingLog.nullPercentage.message = El porcentaje de resolución no puede ser nulo
 acme.validation.trackingLog.resolutionPercentage.message = El porcentaje de resolución no es correcto
 acme.validation.trackingLog.status.message = Ese estado no es posible
 acme.validation.trackingLog.resolutionPercentageStatus.message = El estado solo puede ser distinto de pending si el porcentaje de resolución es 100.00
 acme.validation.trackingLog.draftMode.message = El registro de seguimiento debe estar en modo borrador
-acme.validation.trackingLog.publish.message = No puedes publicar un tracking log a 100, si los tracking logs anteriores no han sido publicados
-acme.validation.trackingLog.percentage100.message = Tracking log debe tener porcentaje de resolución 100 y estado igual al estado del anterior tracking log a 100
-acme.validation.trackingLog.noMore.message = No puede crear más tracking logs para este claim
+acme.validation.trackingLog.publish.message = No puedes publicar un registro de seguimiento a 100, si los registros de seguimiento anteriores no han sido publicados
+acme.validation.trackingLog.percentage100.message = El registro de seguimiento debe tener porcentaje de resolución 100, estado igual al estado del anterior tracking log a 100 y el último registro de seguimiento a 100 debe estar publicado
+acme.validation.trackingLog.noMore.message = No puede crear más registros de seguimiento para este reclamo

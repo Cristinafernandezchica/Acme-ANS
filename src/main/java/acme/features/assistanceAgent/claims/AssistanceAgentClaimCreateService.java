@@ -31,6 +31,7 @@ public class AssistanceAgentClaimCreateService extends AbstractGuiService<Assist
 		boolean isCorrectType = true;
 		boolean isCorrectLeg = true;
 		boolean hasLegs = true;
+		boolean isFakeUpdate = true;
 		String type;
 		Collection<Leg> legs;
 		int legId;
@@ -39,6 +40,12 @@ public class AssistanceAgentClaimCreateService extends AbstractGuiService<Assist
 		AssistanceAgent assistanceAgent;
 
 		isCorrectRole = super.getRequest().getPrincipal().hasRealmOfType(AssistanceAgent.class);
+
+		if (super.getRequest().hasData("id")) {
+			Integer id = super.getRequest().getData("id", Integer.class);
+			if (id != 0)
+				isFakeUpdate = false;
+		}
 
 		agentId = super.getRequest().getPrincipal().getActiveRealm().getId();
 		assistanceAgent = this.repository.findAssistanceAgentById(agentId);
@@ -61,7 +68,7 @@ public class AssistanceAgentClaimCreateService extends AbstractGuiService<Assist
 			}
 		}
 
-		status = isCorrectRole && hasLegs && isCorrectType && isCorrectLeg;
+		status = isCorrectRole && isFakeUpdate && hasLegs && isCorrectType && isCorrectLeg;
 		super.getResponse().setAuthorised(status);
 	}
 
@@ -124,7 +131,6 @@ public class AssistanceAgentClaimCreateService extends AbstractGuiService<Assist
 			dataset.put("legs", choices);
 		} else {
 			choices = SelectChoices.from(legs, "flightNumber", claim.getLeg());
-			// dataset.put("leg", choices.getSelected() != null && choices.getSelected().getKey() != null ? choices.getSelected().getKey() : "0");
 			dataset.put("leg", choices.getSelected().getKey());
 			dataset.put("legs", choices);
 		}
