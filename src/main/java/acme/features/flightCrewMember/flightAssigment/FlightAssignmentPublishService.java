@@ -101,14 +101,13 @@ public class FlightAssignmentPublishService extends AbstractGuiService<FlightCre
 
 	@Override
 	public void bind(final FlightAssignment flightAssignment) {
-		int flightCrewMemberId;
 		FlightCrewMember flightCrewMember;
 
 		int legId;
 		Leg leg;
 
-		flightCrewMemberId = super.getRequest().getData("flightCrewMemberAssigned", int.class);
-		flightCrewMember = this.repository.findFlighCrewMemberById(flightCrewMemberId);
+		int fcmIdLogged = super.getRequest().getPrincipal().getActiveRealm().getId();
+		flightCrewMember = this.repository.findFlighCrewMemberById(fcmIdLogged);
 
 		legId = super.getRequest().getData("legRelated", int.class);
 		leg = this.repository.findLegById(legId);
@@ -163,7 +162,7 @@ public class FlightAssignmentPublishService extends AbstractGuiService<FlightCre
 			// Comprobación de que el FCM esté AVAILABLE
 			boolean fcmAvailable;
 			fcmAvailable = flightAssignment.getFlightCrewMemberAssigned().getAvailabilityStatus().equals(AvailabilityStatus.AVAILABLE);
-			super.state(fcmAvailable, "*", "acme.validation.fcmAvailable.message");
+			super.state(fcmAvailable, "*", "acme.validation.fcmAvailable-publish.message");
 
 			// Comprobación de que el estado del FA sea CONFIRMED o CANCELLED
 			boolean isConfirmedOrCancelled;
@@ -242,13 +241,11 @@ public class FlightAssignmentPublishService extends AbstractGuiService<FlightCre
 		dataset.put("flightcrewsDuties", flightcrewsDuties);
 		dataset.put("legRelated", legChoices.getSelected().getKey());
 		dataset.put("legs", legChoices);
-		dataset.put("lastUpdate", MomentHelper.getCurrentMoment());
 		dataset.put("flightCrewMemberAssigned", flightCrewMember);
 		dataset.put("FCMname", flightCrewMember.getIdentity().getName() + " " + flightCrewMember.getIdentity().getSurname());
-
+		dataset.put("lastUpdate", MomentHelper.getCurrentMoment());
 		dataset.put("confirmation", false);
 		dataset.put("readonly", false);
-
 		super.getResponse().addData(dataset);
 	}
 
