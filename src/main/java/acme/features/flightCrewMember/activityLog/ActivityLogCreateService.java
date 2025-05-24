@@ -9,6 +9,7 @@ import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.activitylog.ActivityLog;
 import acme.entities.flightAssignment.FlightAssignment;
+import acme.entities.legs.LegStatus;
 import acme.realms.flightCrewMember.FlightCrewMember;
 
 @GuiService
@@ -59,10 +60,13 @@ public class ActivityLogCreateService extends AbstractGuiService<FlightCrewMembe
 	@Override
 	public void validate(final ActivityLog activityLog) {
 
-		// COMPROBAR QUE LA LEG NO ESTE EN VUELO Y EL FLIGHT ASSIGNMENT
+		boolean faCompleted = false;
+		FlightAssignment fa = this.repository.findFlightAssignmentById(super.getRequest().getData("faId", Integer.class));
+		if (fa.getLegRelated().getStatus().equals(LegStatus.LANDED) || fa.getLegRelated().getStatus().equals(LegStatus.CANCELLED))
+			faCompleted = true;
+		super.state(faCompleted, "*", "acme.validation.activityLog-faNotCompleted.message");
 
 		boolean confirmation;
-
 		confirmation = super.getRequest().getData("confirmation", boolean.class);
 		super.state(confirmation, "confirmation", "acme.validation.confirmation.message");
 	}

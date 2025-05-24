@@ -82,6 +82,8 @@ acme.validation.existedLeg.message = That leg doesn't exist
 
 # Activity log - activity log's messages (antiHacking)
 acme.validation.isOriginalRegistrationMoment.message = That's not the original registration moment
+# Activity log - activity log's messages (validate)
+acme.validation.activityLog-faNotCompleted.message = The assignment must be completed
 
 # Leg - legs messages
 acme.validation.leg.same.aircraft.message = The aircraft is used by other leg in the same schedule
