@@ -39,7 +39,6 @@ public class ManagerLegShowService extends AbstractGuiService<Manager, Leg> {
 				status = leg != null && super.getRequest().getPrincipal().hasRealm(manager) && managerId == manager.getId();
 			}
 		}
-
 		super.getResponse().setAuthorised(status);
 	}
 

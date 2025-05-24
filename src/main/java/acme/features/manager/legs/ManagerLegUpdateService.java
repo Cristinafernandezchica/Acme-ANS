@@ -99,15 +99,20 @@ public class ManagerLegUpdateService extends AbstractGuiService<Manager, Leg> {
 							posibleLegStatus.add(LegStatus.LANDED.toString());
 							if (!legStatus.equals("0") && !posibleLegStatus.contains(legStatus))
 								status = false;
-							SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
+							SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+							String newDepartureDate = super.getRequest().getData("scheduledDeparture", String.class);
+							String newArrivalDate = super.getRequest().getData("scheduledArrival", String.class);
+							String newFlightNumber = super.getRequest().getData("flightNumber", String.class);
+							Airport newDepartureAirport = super.getRequest().getData("departureAirport", Airport.class);
+							Airport newArrivalAirport = super.getRequest().getData("arrivalAirport", Airport.class);
+							Aircraft newAircraft = super.getRequest().getData("aircraft", Aircraft.class);
+
 							Leg originalLeg = this.repository.findLegById(leg.getId());
-							String departure = sdf.format(leg.getScheduledDeparture());
-							String arrival = sdf.format(leg.getScheduledArrival());
 							String originalDeparture = sdf.format(originalLeg.getScheduledDeparture());
 							String originalArrival = sdf.format(originalLeg.getScheduledArrival());
 
-							if (!departure.equals(originalDeparture) || !arrival.equals(originalArrival) || !originalLeg.getFlightNumber().equals(leg.getFlightNumber()) || !originalLeg.getDepartureAirport().equals(leg.getDepartureAirport())
-								|| !originalLeg.getArrivalAirport().equals(leg.getArrivalAirport()) || !originalLeg.getAircraft().equals(leg.getAircraft()))
+							if (!originalDeparture.equals(newDepartureDate) || !originalArrival.equals(newArrivalDate) || !originalLeg.getFlightNumber().equals(newFlightNumber) || !originalLeg.getDepartureAirport().equals(newDepartureAirport)
+								|| !originalLeg.getArrivalAirport().equals(newArrivalAirport) || !originalLeg.getAircraft().equals(newAircraft))
 								status = false;
 						}
 				}
