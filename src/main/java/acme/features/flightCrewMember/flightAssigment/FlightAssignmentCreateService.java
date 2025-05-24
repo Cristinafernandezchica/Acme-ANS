@@ -38,7 +38,6 @@ public class FlightAssignmentCreateService extends AbstractGuiService<FlightCrew
 
 		boolean validLeg = true;
 		boolean validDuty = true;
-		boolean noId = true;
 		boolean fakeUpdate = true;
 
 		if (super.getRequest().hasData("id")) {
@@ -65,7 +64,7 @@ public class FlightAssignmentCreateService extends AbstractGuiService<FlightCrew
 
 		}
 
-		authorised = validLeg && validDuty && fakeUpdate && noId;
+		authorised = validLeg && validDuty && fakeUpdate;
 
 		super.getResponse().setAuthorised(authorised);
 

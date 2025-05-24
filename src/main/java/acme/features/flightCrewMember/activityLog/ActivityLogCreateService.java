@@ -25,7 +25,6 @@ public class ActivityLogCreateService extends AbstractGuiService<FlightCrewMembe
 	@Override
 	public void authorise() {
 
-		boolean noId = true;
 		boolean fakeUpdate = true;
 
 		if (super.getRequest().hasData("id")) {
@@ -34,7 +33,7 @@ public class ActivityLogCreateService extends AbstractGuiService<FlightCrewMembe
 				fakeUpdate = false;
 		}
 
-		super.getResponse().setAuthorised(fakeUpdate && noId);
+		super.getResponse().setAuthorised(fakeUpdate);
 	}
 
 	@Override
