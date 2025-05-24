@@ -78,11 +78,6 @@ public class ManagerFlightDeleteService extends AbstractGuiService<Manager, Flig
 		Dataset dataset;
 
 		dataset = super.unbindObject(flight, "tag", "indication", "cost", "description", "draftMode");
-		dataset.put("scheduledDeparture", flight.getScheduledDeparture());
-		dataset.put("scheduledArrival", flight.getScheduledArrival());
-		dataset.put("originCity", flight.originCity());
-		dataset.put("destinationCity", flight.destinationCity());
-		dataset.put("layovers", flight.layovers());
 
 		super.getResponse().addData(dataset);
 	}
