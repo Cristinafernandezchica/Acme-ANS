@@ -31,7 +31,13 @@ public class FlightAssignmentCompletedListService extends AbstractGuiService<Fli
 		Collection<FlightAssignment> completedFlightAssignments;
 		int fcmIdLogged = super.getRequest().getPrincipal().getActiveRealm().getId();
 
+		// Añadir los dos borradores
 		completedFlightAssignments = this.repository.findCompletedFlightAssignmentByFlightCrewMemberId(fcmIdLogged);
+		FlightAssignment borrador1 = this.repository.findFlightAssignmentById(242);
+		FlightAssignment borrador2 = this.repository.findFlightAssignmentById(243);
+
+		completedFlightAssignments.add(borrador1);
+		completedFlightAssignments.add(borrador2);
 
 		super.getBuffer().addData(completedFlightAssignments);
 	}

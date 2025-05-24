@@ -15,13 +15,10 @@ import acme.realms.flightCrewMember.FlightCrewMember;
 @Repository
 public interface FlightAssignmentRepository extends AbstractRepository {
 
-	@Query("select fa from FlightAssignment fa where fa.flightCrewMemberAssigned.id = :id ")
-	Collection<FlightAssignment> findFlightAssignmentsByFlightCrewMemberId(int id);
-
 	@Query("select fa from FlightAssignment fa")
 	List<FlightAssignment> findAllFlightAssignments();
 
-	@Query("select fa from FlightAssignment fa where fa.flightCrewMemberAssigned.id = :id and (fa.legRelated.status = acme.entities.legs.LegStatus.LANDED or fa.legRelated.status = acme.entities.legs.LegStatus.CANCELLED) ")
+	@Query("select fa from FlightAssignment fa where fa.flightCrewMemberAssigned.id = :id and fa.draftMode = false and (fa.legRelated.status = acme.entities.legs.LegStatus.LANDED or fa.legRelated.status = acme.entities.legs.LegStatus.CANCELLED) ")
 	Collection<FlightAssignment> findCompletedFlightAssignmentByFlightCrewMemberId(int id);
 
 	@Query("select fa from FlightAssignment fa where fa.flightCrewMemberAssigned.id = :id and (fa.legRelated.status = acme.entities.legs.LegStatus.DELAYED or fa.legRelated.status = acme.entities.legs.LegStatus.ON_TIME)")
@@ -29,9 +26,6 @@ public interface FlightAssignmentRepository extends AbstractRepository {
 
 	@Query("select fa from FlightAssignment fa where fa.id = :id")
 	FlightAssignment findFlightAssignmentById(int id);
-
-	@Query("select fcm from FlightCrewMember fcm where fcm.availabilityStatus = acme.realms.flightCrewMember.AvailabilityStatus.AVAILABLE")
-	Collection<FlightCrewMember> findAvailableFlightCrewMembers();
 
 	@Query("select fcm from FlightCrewMember fcm where fcm.id = :id")
 	FlightCrewMember findFlighCrewMemberById(int id);
@@ -45,16 +39,10 @@ public interface FlightAssignmentRepository extends AbstractRepository {
 	@Query("SELECT DISTINCT fa.legRelated FROM FlightAssignment fa WHERE fa.flightCrewMemberAssigned.id = :memberId and fa.id != :faId ")
 	List<Leg> findLegsByFlightCrewMemberId(int memberId, int faId);
 
-	@Query("select fa from FlightAssignment fa WHERE fa.legRelated.id = :legId")
-	List<FlightAssignment> findFlightAssignmentByLegId(int legId);
+	@Query("select fa from FlightAssignment fa where fa.flightCrewsDuty =  acme.entities.flightAssignment.FlightCrewsDuty.PILOT and fa.legRelated.id = :idLeg and fa.draftMode = false")
+	List<FlightAssignment> findPilotInLeg(int idLeg);
 
-	@Query("select count(fa) > 0 from FlightAssignment fa where fa.flightCrewsDuty = 'PILOT' and fa.legRelated.id = :idLeg")
-	boolean findPilotInLeg(int idLeg);
-
-	@Query("select count(fa) > 0 from FlightAssignment fa where fa.flightCrewsDuty = 'CO_PILOT' and fa.legRelated.id = :idLeg")
-	boolean findCoPilotInLeg(int idLeg);
-
-	//@Query("select al from ActivityLog al where al.flightAssignmentRelated.id = :idFA")
-	//List<ActivityLog> findActivityLogsByFAId(int idFA);
+	@Query("select fa from FlightAssignment fa where fa.flightCrewsDuty =  acme.entities.flightAssignment.FlightCrewsDuty.CO_PILOT and fa.legRelated.id = :idLeg and fa.draftMode = false")
+	List<FlightAssignment> findCoPilotInLeg(int idLeg);
 
 }

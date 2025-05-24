@@ -53,13 +53,12 @@ public class FlightAssignmentCreateService extends AbstractGuiService<FlightCrew
 				validLeg = false;
 			else {
 				Leg leg = this.repository.findLegById(legId);
-				List<Leg> allLegs = this.repository.findAllLegs();
-				if (leg == null && legId != 0 || !allLegs.contains(leg) && legId != 0)
+				if (leg == null && legId != 0)
 					validLeg = false;
 			}
 
 			String duty = super.getRequest().getData("flightCrewsDuty", String.class);
-			if (duty == null || duty.trim().isEmpty() || Arrays.stream(FlightCrewsDuty.values()).noneMatch(tc -> tc.name().equals(duty)) && !duty.equals("0"))
+			if (duty == null || Arrays.stream(FlightCrewsDuty.values()).noneMatch(tc -> tc.name().equals(duty)) && !duty.equals("0"))
 				validDuty = false;
 
 		}
@@ -118,7 +117,7 @@ public class FlightAssignmentCreateService extends AbstractGuiService<FlightCrew
 			// Comprobación de leg no pasada
 			boolean legNotPast;
 			legNotPast = flightAssignment.getLegRelated().getScheduledArrival().before(MomentHelper.getCurrentMoment());
-			super.state(legNotPast, "legRelated", "acme.validation.legNotPast.message");
+			super.state(!legNotPast, "legRelated", "acme.validation.legNotPast.message");
 
 			// Comprobación de leg no completada
 			boolean legNotCompleted;

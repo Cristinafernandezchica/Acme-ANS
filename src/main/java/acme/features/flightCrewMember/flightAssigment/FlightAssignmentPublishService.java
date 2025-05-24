@@ -68,17 +68,16 @@ public class FlightAssignmentPublishService extends AbstractGuiService<FlightCre
 					validLeg = false;
 				else {
 					Leg leg = this.repository.findLegById(legId);
-					List<Leg> allLegs = this.repository.findAllLegs();
-					if (leg == null && legId != 0 || !allLegs.contains(leg) && legId != 0)
+					if (leg == null && legId != 0)
 						validLeg = false;
 				}
 
 				String duty = super.getRequest().getData("flightCrewsDuty", String.class);
-				if (duty == null || duty.trim().isEmpty() || Arrays.stream(FlightCrewsDuty.values()).noneMatch(tc -> tc.name().equals(duty)) && !duty.equals("0"))
+				if (duty == null || Arrays.stream(FlightCrewsDuty.values()).noneMatch(tc -> tc.name().equals(duty)) && !duty.equals("0"))
 					validDuty = false;
 
 				String currentStatus = super.getRequest().getData("currentStatus", String.class);
-				if (currentStatus == null || currentStatus.trim().isEmpty() || Arrays.stream(CurrentStatus.values()).noneMatch(cs -> cs.name().equals(currentStatus)) && !currentStatus.equals("0"))
+				if (currentStatus == null || Arrays.stream(CurrentStatus.values()).noneMatch(cs -> cs.name().equals(currentStatus)) && !currentStatus.equals("0"))
 					validStatus = false;
 
 			}
@@ -133,7 +132,7 @@ public class FlightAssignmentPublishService extends AbstractGuiService<FlightCre
 			// Comprobación de leg no pasada
 			boolean legNotPast;
 			legNotPast = flightAssignment.getLegRelated().getScheduledArrival().before(MomentHelper.getCurrentMoment());
-			super.state(legNotPast, "legRelated", "acme.validation.legNotPast.message");
+			super.state(!legNotPast, "legRelated", "acme.validation.legNotPast.message");
 
 			// Comprobación de leg no completada
 			boolean legNotCompleted;
@@ -172,13 +171,13 @@ public class FlightAssignmentPublishService extends AbstractGuiService<FlightCre
 			// Comprobación de 1 piloto y un copiloto
 			boolean pilotExceptionPassed = true;
 			boolean coPilotExceptionPassed = true;
-			boolean fAHasPilot = this.repository.findPilotInLeg(flightAssignment.getId());
-			boolean fAHasCoPilot = this.repository.findCoPilotInLeg(flightAssignment.getId());
+			Integer fAHasPilot = this.repository.findPilotInLeg(flightAssignment.getLegRelated().getId()).size();
+			Integer fAHasCoPilot = this.repository.findCoPilotInLeg(flightAssignment.getLegRelated().getId()).size();
 
 			FlightCrewsDuty flightCrewsDuty = flightAssignment.getFlightCrewsDuty();
-			if (flightCrewsDuty.equals(FlightCrewsDuty.PILOT) && fAHasPilot)
+			if (flightCrewsDuty.equals(FlightCrewsDuty.PILOT) && fAHasPilot >= 1)
 				pilotExceptionPassed = false;
-			if (flightCrewsDuty.equals(FlightCrewsDuty.CO_PILOT) && fAHasCoPilot)
+			else if (flightCrewsDuty.equals(FlightCrewsDuty.CO_PILOT) && fAHasCoPilot >= 1)
 				coPilotExceptionPassed = false;
 
 			super.state(pilotExceptionPassed, "legRelated", "acme.validation.pilotExceptionPassed.message");
