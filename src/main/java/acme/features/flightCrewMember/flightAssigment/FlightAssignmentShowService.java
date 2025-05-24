@@ -40,9 +40,9 @@ public class FlightAssignmentShowService extends AbstractGuiService<FlightCrewMe
 			Integer faId = super.getRequest().getData("id", Integer.class);
 			if (faId != null) {
 				fcmLogged = this.repository.findFlighCrewMemberById(fcmIdLogged);
-				List<FlightAssignment> allFA = this.repository.findAllFlightAssignments();
+
 				faSelected = this.repository.findFlightAssignmentById(faId);
-				existingFA = faSelected != null || allFA.contains(faSelected);
+				existingFA = faSelected != null;
 				if (faSelected != null)
 					isFlightAssignmentOwner = faSelected.getFlightCrewMemberAssigned() == fcmLogged;
 			}
