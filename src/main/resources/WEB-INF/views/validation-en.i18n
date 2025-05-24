@@ -63,7 +63,10 @@ acme.validation.legNotPublished.message = That leg is not published
 acme.validation.legNotPast.message = That leg is not past
 acme.validation.legNotCompleted.message = That leg is not completed
 acme.validation.legFromRightAirline.message = That leg doesn't operate with your airline
-acme.validation.fcmAvailable.message = You cannot update the assignment if you are not available
+acme.validation.fcmAvailable-update.message = You cannot update the assignment if you are not available
+acme.validation.fcmAvailable-create.message = You cannot create an assignment if you are not available
+acme.validation.fcmAvailable-publish.message = You cannot publish the assignment if you are not available
+acme.validation.fcmAvailable-delete.message = You cannot delete the assignment if you are not available
 acme.validation.legCompatible.message = The flight crew member already has a leg at that date
 acme.validation.isConfirmedOrCancelled.message = The flight assignment must be confirmed or cancelled
 # Flight crew member - flight assignment's messages (antiHacking)

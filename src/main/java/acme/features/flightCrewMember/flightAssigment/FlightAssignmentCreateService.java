@@ -139,7 +139,7 @@ public class FlightAssignmentCreateService extends AbstractGuiService<FlightCrew
 			// Comprobación de que el FCM esté AVAILABLE
 			boolean fcmAvailable;
 			fcmAvailable = flightAssignment.getFlightCrewMemberAssigned().getAvailabilityStatus().equals(AvailabilityStatus.AVAILABLE);
-			super.state(fcmAvailable, "*", "acme.validation.fcmAvailable.message");
+			super.state(fcmAvailable, "*", "acme.validation.fcmAvailable-create.message");
 
 			// Comprobación de leg asignadas al fcm no sea a la vez que otra
 			boolean legCompatible = true;

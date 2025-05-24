@@ -14,6 +14,7 @@ import acme.entities.flightAssignment.CurrentStatus;
 import acme.entities.flightAssignment.FlightAssignment;
 import acme.entities.flightAssignment.FlightCrewsDuty;
 import acme.entities.legs.Leg;
+import acme.realms.flightCrewMember.AvailabilityStatus;
 import acme.realms.flightCrewMember.FlightCrewMember;
 
 @GuiService
@@ -69,12 +70,18 @@ public class FlightAssignmentDeleteService extends AbstractGuiService<FlightCrew
 
 	@Override
 	public void bind(final FlightAssignment flightAssignment) {
-		super.bindObject(flightAssignment, "flightCrewsDuty", "lastUpdate", "currentStatus", "remarks", "legRelated", "flightCrewMemberAssigned");
+		super.bindObject(flightAssignment, "flightCrewsDuty", "lastUpdate", "currentStatus", "remarks", "legRelated");
 
 	}
 
 	@Override
 	public void validate(final FlightAssignment flightAssignment) {
+
+		// Comprobación de que el FCM esté AVAILABLE
+		boolean fcmAvailable;
+		fcmAvailable = flightAssignment.getFlightCrewMemberAssigned().getAvailabilityStatus().equals(AvailabilityStatus.AVAILABLE);
+		super.state(fcmAvailable, "*", "acme.validation.fcmAvailable-delete.message");
+
 		boolean confirmation;
 		confirmation = super.getRequest().getData("confirmation", boolean.class);
 		super.state(confirmation, "confirmation", "acme.validation.confirmation.message");
