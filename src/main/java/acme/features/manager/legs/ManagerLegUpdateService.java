@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -34,7 +33,7 @@ public class ManagerLegUpdateService extends AbstractGuiService<Manager, Leg> {
 	@Override
 	public void authorise() {
 		boolean status = false;
-		int masterId;
+		Integer masterId;
 		Leg leg;
 		Manager manager;
 		Airport depAirport = null;
@@ -45,71 +44,78 @@ public class ManagerLegUpdateService extends AbstractGuiService<Manager, Leg> {
 
 		if (!super.getRequest().getData().isEmpty() && super.getRequest().getData() != null) {
 			int managerId = super.getRequest().getPrincipal().getActiveRealm().getId();
-			masterId = super.getRequest().getData("id", int.class);
-			leg = this.repository.findLegById(masterId);
-			boolean fN = super.getRequest().hasData("flightNumber");
-			manager = leg == null ? null : leg.getFlight().getManager();
-			status = leg != null && super.getRequest().getPrincipal().hasRealm(manager) && managerId == manager.getId() && fN;
+			masterId = super.getRequest().getData("id", Integer.class);
+			if (masterId != null) {
+				leg = this.repository.findLegById(masterId);
+				boolean fN = super.getRequest().hasData("flightNumber");
+				manager = leg == null ? null : leg.getFlight().getManager();
+				status = leg != null && super.getRequest().getPrincipal().hasRealm(manager) && managerId == manager.getId() && fN;
 
-			if (super.getRequest().getMethod().equals("POST")) {
-				// Departure airport and arrival airport
-				Integer airDepId = super.getRequest().getData("departureAirport", Integer.class);
-				Integer airArrId = super.getRequest().getData("arrivalAirport", Integer.class);
+				if (super.getRequest().getMethod().equals("POST")) {
+					// Departure airport and arrival airport
+					Integer airDepId = super.getRequest().getData("departureAirport", Integer.class);
+					Integer airArrId = super.getRequest().getData("arrivalAirport", Integer.class);
 
-				if (airDepId != null) {
-					depAirport = this.repository.findAirportById(airDepId);
-					if (depAirport == null)
-						status = false;
-					if (airDepId == 0)
-						status = true;
-				} else
-					status = false;
+					if (airDepId != null) {
+						depAirport = this.repository.findAirportById(airDepId);
+						if (airDepId == 0)
+							status &= true;
+						else if (depAirport == null)
+							status &= false;
+					} else
+						status &= false;
 
-				if (airArrId != null) {
-					arrAirport = this.repository.findAirportById(airArrId);
-					if (arrAirport == null)
-						status = false;
-					if (airArrId == 0)
-						status = true;
-				} else
-					status = false;
+					if (airArrId != null) {
+						arrAirport = this.repository.findAirportById(airArrId);
+						if (airArrId == 0)
+							status &= true;
+						else if (arrAirport == null)
+							status &= false;
+					} else
+						status &= false;
 
-				// Aircraft null
-				Integer aircraftId = super.getRequest().getData("aircraft", Integer.class);
-				if (aircraftId != null) {
-					validAircraft = this.repository.findAircraftById(aircraftId);
-					if (validAircraft == null)
-						status = false;
-					if (aircraftId == 0)
-						status = true;
-				} else
-					status = false;
+					// Aircraft null
+					Integer aircraftId = super.getRequest().getData("aircraft", Integer.class);
+					if (aircraftId != null) {
+						validAircraft = this.repository.findAircraftById(aircraftId);
+						if (aircraftId == 0)
+							status &= true;
+						else if (validAircraft == null)
+							status &= false;
+					} else
+						status &= false;
 
-				// Validate status based on draftMode
-				if (leg != null)
-					if (leg.isDraftMode()) {
-						legStatus = super.getRequest().getData("status", String.class);
-						if (legStatus != null && !legStatus.equals(LegStatus.ON_TIME.toString()))
-							status = false;
-					} else {
-						legStatus = super.getRequest().getData("status", String.class);
-						posibleLegStatus.add(LegStatus.ON_TIME.toString());
-						posibleLegStatus.add(LegStatus.DELAYED.toString());
-						posibleLegStatus.add(LegStatus.CANCELLED.toString());
-						posibleLegStatus.add(LegStatus.LANDED.toString());
-						if (!legStatus.equals("0") && !posibleLegStatus.contains(legStatus))
-							status = false;
-						SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
-						Leg originalLeg = this.repository.findLegById(leg.getId());
-						String departure = sdf.format(leg.getScheduledDeparture());
-						String arrival = sdf.format(leg.getScheduledArrival());
-						String originalDeparture = sdf.format(originalLeg.getScheduledDeparture());
-						String originalArrival = sdf.format(originalLeg.getScheduledArrival());
+					// Validate status based on draftMode
+					if (leg != null)
+						if (leg.isDraftMode()) {
+							legStatus = super.getRequest().getData("status", String.class);
+							if (legStatus != null && !legStatus.equals(LegStatus.ON_TIME.toString()))
+								status = false;
+						} else {
+							legStatus = super.getRequest().getData("status", String.class);
+							posibleLegStatus.add(LegStatus.ON_TIME.toString());
+							posibleLegStatus.add(LegStatus.DELAYED.toString());
+							posibleLegStatus.add(LegStatus.CANCELLED.toString());
+							posibleLegStatus.add(LegStatus.LANDED.toString());
+							if (!legStatus.equals("0") && !posibleLegStatus.contains(legStatus))
+								status = false;
+							SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+							String newDepartureDate = super.getRequest().getData("scheduledDeparture", String.class);
+							String newArrivalDate = super.getRequest().getData("scheduledArrival", String.class);
+							String newFlightNumber = super.getRequest().getData("flightNumber", String.class);
+							Airport newDepartureAirport = super.getRequest().getData("departureAirport", Airport.class);
+							Airport newArrivalAirport = super.getRequest().getData("arrivalAirport", Airport.class);
+							Aircraft newAircraft = super.getRequest().getData("aircraft", Aircraft.class);
 
-						if (!departure.equals(originalDeparture) || !arrival.equals(originalArrival) || !originalLeg.getFlightNumber().equals(leg.getFlightNumber()) || !originalLeg.getDepartureAirport().equals(leg.getDepartureAirport())
-							|| !originalLeg.getArrivalAirport().equals(leg.getArrivalAirport()) || !originalLeg.getAircraft().equals(leg.getAircraft()))
-							status = false;
-					}
+							Leg originalLeg = this.repository.findLegById(leg.getId());
+							String originalDeparture = sdf.format(originalLeg.getScheduledDeparture());
+							String originalArrival = sdf.format(originalLeg.getScheduledArrival());
+
+							if (!originalDeparture.equals(newDepartureDate) || !originalArrival.equals(newArrivalDate) || !originalLeg.getFlightNumber().equals(newFlightNumber) || !originalLeg.getDepartureAirport().equals(newDepartureAirport)
+								|| !originalLeg.getArrivalAirport().equals(newArrivalAirport) || !originalLeg.getAircraft().equals(newAircraft))
+								status = false;
+						}
+				}
 			}
 		}
 		super.getResponse().setAuthorised(status);
@@ -134,7 +140,7 @@ public class ManagerLegUpdateService extends AbstractGuiService<Manager, Leg> {
 	@Override
 	public void validate(final Leg leg) {
 
-		if (leg.getScheduledDeparture() != null && MomentHelper.isBefore(leg.getScheduledDeparture(), MomentHelper.getCurrentMoment()))
+		if (leg.getScheduledDeparture() != null && MomentHelper.isBefore(leg.getScheduledDeparture(), MomentHelper.getCurrentMoment()) && leg.isDraftMode())
 			super.state(false, "scheduledDeparture", "acme.validation.leg.scheduledDeparture.past");
 
 		if (leg.getScheduledArrival() != null && leg.getScheduledDeparture() != null && MomentHelper.isBefore(leg.getScheduledArrival(), leg.getScheduledDeparture()))
@@ -142,7 +148,7 @@ public class ManagerLegUpdateService extends AbstractGuiService<Manager, Leg> {
 
 		if (leg.getScheduledArrival() != null && leg.getScheduledDeparture() != null) {
 			Date departureWithDelta = MomentHelper.deltaFromMoment(leg.getScheduledDeparture(), 5, ChronoUnit.MINUTES);
-			if (MomentHelper.isBefore(leg.getScheduledArrival(), MomentHelper.getCurrentMoment()))
+			if (MomentHelper.isBefore(leg.getScheduledArrival(), MomentHelper.getCurrentMoment()) && leg.isDraftMode())
 				super.state(false, "scheduledArrival", "acme.validation.leg.scheduledArrival.past");
 
 			if (MomentHelper.isBefore(leg.getScheduledArrival(), departureWithDelta))
@@ -182,15 +188,13 @@ public class ManagerLegUpdateService extends AbstractGuiService<Manager, Leg> {
 		Dataset dataset;
 		Collection<Aircraft> aircrafts;
 		SelectChoices selectedAircrafts;
-		Collection<Aircraft> activeAircrafts;
 		Collection<Airport> airports;
 		SelectChoices selectedDepartureAirport;
 		SelectChoices selectedArrivalAirport;
 
 		statuses = SelectChoices.from(LegStatus.class, leg.getStatus());
 		aircrafts = this.repository.findAllAircrafts();
-		activeAircrafts = aircrafts.stream().filter(a -> a.getStatus().equals(Status.ACTIVE_SERVICE)).collect(Collectors.toList());
-		selectedAircrafts = SelectChoices.from(activeAircrafts, "aircraftLabel", leg.getAircraft());
+		selectedAircrafts = SelectChoices.from(aircrafts, "aircraftLabel", leg.getAircraft());
 
 		airports = this.repository.findAllAirports();
 		selectedDepartureAirport = SelectChoices.from(airports, "iataCode", leg.getDepartureAirport());

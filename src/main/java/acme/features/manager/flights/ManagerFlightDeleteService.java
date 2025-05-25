@@ -24,17 +24,19 @@ public class ManagerFlightDeleteService extends AbstractGuiService<Manager, Flig
 	@Override
 	public void authorise() {
 		boolean status = false;
-		int masterId;
+		Integer masterId;
 		Flight flight;
 		Manager manager;
 
 		if (!super.getRequest().getData().isEmpty() && super.getRequest().getData() != null) {
 			int managerId = super.getRequest().getPrincipal().getActiveRealm().getId();
-			masterId = super.getRequest().getData("id", int.class);
-			flight = this.repository.findFlightById(masterId);
-			boolean tag = super.getRequest().hasData("tag");
-			manager = flight == null ? null : flight.getManager();
-			status = flight != null && flight.isDraftMode() && super.getRequest().getPrincipal().hasRealm(manager) && managerId == manager.getId() && tag;
+			masterId = super.getRequest().getData("id", Integer.class);
+			if (masterId != null) {
+				flight = this.repository.findFlightById(masterId);
+				boolean tag = super.getRequest().hasData("tag");
+				manager = flight == null ? null : flight.getManager();
+				status = flight != null && flight.isDraftMode() && super.getRequest().getPrincipal().hasRealm(manager) && managerId == manager.getId() && tag;
+			}
 		}
 
 		super.getResponse().setAuthorised(status);
@@ -76,11 +78,6 @@ public class ManagerFlightDeleteService extends AbstractGuiService<Manager, Flig
 		Dataset dataset;
 
 		dataset = super.unbindObject(flight, "tag", "indication", "cost", "description", "draftMode");
-		dataset.put("scheduledDeparture", flight.getScheduledDeparture());
-		dataset.put("scheduledArrival", flight.getScheduledArrival());
-		dataset.put("originCity", flight.originCity());
-		dataset.put("destinationCity", flight.destinationCity());
-		dataset.put("layovers", flight.layovers());
 
 		super.getResponse().addData(dataset);
 	}

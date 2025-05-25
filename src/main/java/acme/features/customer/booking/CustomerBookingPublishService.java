@@ -33,41 +33,46 @@ public class CustomerBookingPublishService extends AbstractGuiService<Customer, 
 	public void authorise() {
 		int bookingId;
 		int flightId;
+		Integer masterId;
 		Booking booking;
 		Customer customer;
 		Flight flight;
 		boolean status = false;
 
 		if (!super.getRequest().getData().isEmpty() && super.getRequest().getData() != null) {
-			bookingId = super.getRequest().getData("id", int.class);
-			booking = this.repository.findBookingById(bookingId);
-			customer = booking == null ? null : booking.getCustomer();
-			status = booking != null && super.getRequest().getPrincipal().hasRealm(customer) && booking.isDraftMode();
+			masterId = super.getRequest().getData("id", Integer.class);
+			if (masterId != null) {
+				bookingId = super.getRequest().getData("id", int.class);
+				booking = this.repository.findBookingById(bookingId);
+				customer = booking == null ? null : booking.getCustomer();
+				status = booking != null && super.getRequest().getPrincipal().hasRealm(customer) && booking.isDraftMode();
 
-			boolean hasFlightParam = super.getRequest().getData().containsKey("flight");
+				boolean hasFlightParam = super.getRequest().getData().containsKey("flight");
 
-			if (hasFlightParam) {
-				flightId = super.getRequest().getData("flight", int.class);
-				flight = this.repository.findFlightById(flightId);
-				Collection<Flight> validFlights = this.repository.findAllFlights().stream().filter(f -> f.getScheduledDeparture() != null && !f.isDraftMode() && f.getScheduledDeparture().after(MomentHelper.getCurrentMoment())
-					&& this.repository.findLegsByFlightId(f.getId()).stream().allMatch(leg -> leg.getScheduledDeparture().after(MomentHelper.getCurrentMoment()))).collect(Collectors.toList());
+				if (hasFlightParam) {
+					flightId = super.getRequest().getData("flight", int.class);
+					flight = this.repository.findFlightById(flightId);
+					Collection<Flight> validFlights = this.repository.findAllFlights().stream().filter(f -> f.getScheduledDeparture() != null && !f.isDraftMode() && f.getScheduledDeparture().after(MomentHelper.getCurrentMoment())
+						&& this.repository.findLegsByFlightId(f.getId()).stream().allMatch(leg -> leg.getScheduledDeparture().after(MomentHelper.getCurrentMoment()))).collect(Collectors.toList());
 
-				if (flight == null && flightId != 0)
-					status = false;
+					if (flight == null && flightId != 0)
+						status = false;
 
-				if (!validFlights.contains(flight) && flight != null)
-					status = false;
+					if (!validFlights.contains(flight) && flight != null)
+						status = false;
+				}
+
+				if (super.getRequest().hasData("travelClass")) {
+					String rawTravelClass = super.getRequest().getData("travelClass", String.class);
+
+					if (rawTravelClass != null && !rawTravelClass.trim().isEmpty() && !rawTravelClass.equals("0")) {
+						boolean travelClassValid = Arrays.stream(TravelClass.values()).anyMatch(tc -> tc.name().equals(rawTravelClass));
+
+						if (!travelClassValid)
+							status = false;
+					}
+				}
 			}
-
-			String rawTravelClass = super.getRequest().getData("travelClass", String.class);
-
-			if (rawTravelClass != null && !rawTravelClass.trim().isEmpty() && !rawTravelClass.equals("0")) {
-				boolean travelClassValid = Arrays.stream(TravelClass.values()).anyMatch(tc -> tc.name().equals(rawTravelClass));
-
-				if (!travelClassValid)
-					status = false;
-			}
-
 		}
 
 		super.getResponse().setAuthorised(status);
@@ -97,8 +102,7 @@ public class CustomerBookingPublishService extends AbstractGuiService<Customer, 
 			flight = this.repository.findFlightById(flightId);
 
 			booking.setFlight(flight);
-		} else
-			booking.setFlight(null);
+		}
 
 		super.bindObject(booking, "travelClass", "lastCardNibble");
 
