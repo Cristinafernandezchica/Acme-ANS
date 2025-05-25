@@ -50,12 +50,10 @@ leg-41,MAX0040,2024/12/26 14:30,2024/12/26 16:30,ON_TIME,airport-11,airport-01,f
 #Examples for flight assignments
 leg-42,MAX0042,2020/07/03 05:00,2020/07/03 05:45,LANDED,airport-01,airport-15,flight-42,aircraft-01,false
 leg-43,MAX0043,2020/08/03 05:00,2020/08/03 05:45,ON_TIME,airport-15,airport-01,flight-43,aircraft-01,false
-leg-44,MAX0044,2025/09/08 20:00,2025/09/08 21:00,ON_TIME,airport-08,airport-17,flight-39,aircraft-01,true
-leg-45,MAX0045,2025/02/02 01:00,2025/02/02 02:00,ON_TIME,airport-07,airport-09,flight-45,aircraft-01, false
-leg-46,RAX0046,2025/02/02 02:00,2025/02/02 03:00,ON_TIME,airport-07,airport-09,flight-46,aircraft-46, false
-leg-47,MAX0047,2025/02/02 00:01,2025/02/02 00:55,ON_TIME,airport-07,airport-09,flight-47,aircraft-01, false
-leg-48,MAX0048,2025/03/03 05:00,2025/03/03 05:45,ON_TIME,airport-01,airport-15,flight-42,aircraft-01,false
+leg-44,MAX0044,2019/09/08 20:00,2019/09/08 21:00,ON_TIME,airport-08,airport-17,flight-39,aircraft-01,true
+leg-45,MAX0045,2019/02/02 01:00,2019/02/02 02:00,ON_TIME,airport-07,airport-09,flight-45,aircraft-01, false
+leg-46,RAX0046,2019/02/02 02:00,2019/02/02 03:00,ON_TIME,airport-07,airport-09,flight-46,aircraft-46, false
+leg-47,MAX0047,2019/02/02 00:01,2019/02/02 00:55,ON_TIME,airport-07,airport-09,flight-47,aircraft-01, false
+leg-48,MAX0048,2019/03/03 05:00,2019/07/03 05:45,ON_TIME,airport-01,airport-15,flight-42,aircraft-01,false
 
 leg-49,MAX0049,2019/02/02 16:16,2019/02/02 17:17,LANDED,airport-07,airport-09,flight-48,aircraft-01, false
-
-
