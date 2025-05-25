@@ -73,6 +73,8 @@ acme.validation.existedLeg.message = El vuelo no existe
 acme.validation.isOriginalRegistrationMoment.message = No es la fecha de registro original
 # Activity log - activity log's messages (validate)
 acme.validation.activityLog-faNotCompleted.message = La asignacíon debe estar completada
+acme.validation.activityLog-faNotPublished.message = La asignacíon debe estar publicada
+acme.validation.activityLog-faNotCancelled.message = La asignacíon debe estar confirmada
 
 # Leg - leg's messages
 acme.validation.leg.same.aircraft.message = El avión es usado por otro tramo en el mismo horario

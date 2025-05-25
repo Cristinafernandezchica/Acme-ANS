@@ -10,11 +10,11 @@ import acme.client.components.views.SelectChoices;
 import acme.client.helpers.MomentHelper;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
+import acme.entities.activitylog.ActivityLog;
 import acme.entities.flightAssignment.CurrentStatus;
 import acme.entities.flightAssignment.FlightAssignment;
 import acme.entities.flightAssignment.FlightCrewsDuty;
 import acme.entities.legs.Leg;
-import acme.realms.flightCrewMember.AvailabilityStatus;
 import acme.realms.flightCrewMember.FlightCrewMember;
 
 @GuiService
@@ -77,11 +77,6 @@ public class FlightAssignmentDeleteService extends AbstractGuiService<FlightCrew
 	@Override
 	public void validate(final FlightAssignment flightAssignment) {
 
-		// Comprobación de que el FCM esté AVAILABLE
-		boolean fcmAvailable;
-		fcmAvailable = flightAssignment.getFlightCrewMemberAssigned().getAvailabilityStatus().equals(AvailabilityStatus.AVAILABLE);
-		super.state(fcmAvailable, "*", "acme.validation.fcmAvailable-delete.message");
-
 		boolean confirmation;
 		confirmation = super.getRequest().getData("confirmation", boolean.class);
 		super.state(confirmation, "confirmation", "acme.validation.confirmation.message");
@@ -89,6 +84,9 @@ public class FlightAssignmentDeleteService extends AbstractGuiService<FlightCrew
 
 	@Override
 	public void perform(final FlightAssignment flightAssignment) {
+		List<ActivityLog> logs = this.repository.findActivityLogsByFAId(flightAssignment.getId());
+		if (flightAssignment.isDraftMode() && !logs.isEmpty())
+			this.repository.deleteAll(logs);
 		this.repository.delete(flightAssignment);
 	}
 

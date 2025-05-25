@@ -2,7 +2,6 @@
 package acme.features.flightCrewMember.flightAssigment;
 
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -144,15 +143,6 @@ public class FlightAssignmentPublishService extends AbstractGuiService<FlightCre
 			legNotPublished = !flightAssignment.getLegRelated().isDraftMode();
 			super.state(legNotPublished, "legRelated", "acme.validation.legNotPublished.message");
 
-			//Comprobación de leg no en vuelo
-			boolean legOnAir = false;
-			if (flightAssignment.getLegRelated().getStatus().equals(LegStatus.ON_TIME) || flightAssignment.getLegRelated().getStatus().equals(LegStatus.DELAYED)) {
-				Date departureTime = flightAssignment.getLegRelated().getScheduledDeparture();
-				Date arrivalTime = flightAssignment.getLegRelated().getScheduledDeparture();
-				legOnAir = MomentHelper.isInRange(MomentHelper.getCurrentMoment(), departureTime, arrivalTime);
-			}
-			super.state(!legOnAir, "legRelated", "acme.validation.legOnAir.message");
-
 			// Comprobación de leg operada con la aerolínea del FCM
 			boolean legFromRightAirline;
 			legFromRightAirline = flightAssignment.getLegRelated().getAircraft().getAirline().equals(fcmLogged.getAirline());
@@ -164,24 +154,28 @@ public class FlightAssignmentPublishService extends AbstractGuiService<FlightCre
 			super.state(fcmAvailable, "*", "acme.validation.fcmAvailable-publish.message");
 
 			// Comprobación de que el estado del FA sea CONFIRMED o CANCELLED
-			boolean isConfirmedOrCancelled;
-			isConfirmedOrCancelled = flightAssignment.getCurrentStatus().equals(CurrentStatus.CONFIRMED) || flightAssignment.getCurrentStatus().equals(CurrentStatus.CANCELLED);
-			super.state(isConfirmedOrCancelled, "currentStatus", "acme.validation.isConfirmedOrCancelled.message");
+			boolean isConfirmedOrCancelled = true;
+			if (flightAssignment.getCurrentStatus() != null) {
+				isConfirmedOrCancelled = flightAssignment.getCurrentStatus().equals(CurrentStatus.CONFIRMED) || flightAssignment.getCurrentStatus().equals(CurrentStatus.CANCELLED);
+				super.state(isConfirmedOrCancelled, "currentStatus", "acme.validation.isConfirmedOrCancelled.message");
+			}
 
 			// Comprobación de 1 piloto y un copiloto
 			boolean pilotExceptionPassed = true;
 			boolean coPilotExceptionPassed = true;
-			Integer fAHasPilot = this.repository.findPilotInLeg(flightAssignment.getLegRelated().getId()).size();
-			Integer fAHasCoPilot = this.repository.findCoPilotInLeg(flightAssignment.getLegRelated().getId()).size();
+			if (flightAssignment.getFlightCrewsDuty() != null) {
+				Integer fAHasPilot = this.repository.findPilotInLeg(flightAssignment.getLegRelated().getId()).size();
+				Integer fAHasCoPilot = this.repository.findCoPilotInLeg(flightAssignment.getLegRelated().getId()).size();
 
-			FlightCrewsDuty flightCrewsDuty = flightAssignment.getFlightCrewsDuty();
-			if (flightCrewsDuty.equals(FlightCrewsDuty.PILOT) && fAHasPilot >= 1)
-				pilotExceptionPassed = false;
-			else if (flightCrewsDuty.equals(FlightCrewsDuty.CO_PILOT) && fAHasCoPilot >= 1)
-				coPilotExceptionPassed = false;
+				FlightCrewsDuty flightCrewsDuty = flightAssignment.getFlightCrewsDuty();
+				if (flightCrewsDuty.equals(FlightCrewsDuty.PILOT) && fAHasPilot >= 1 && !flightAssignment.getCurrentStatus().equals(CurrentStatus.CANCELLED))
+					pilotExceptionPassed = false;
+				else if (flightCrewsDuty.equals(FlightCrewsDuty.CO_PILOT) && fAHasCoPilot >= 1 && !flightAssignment.getCurrentStatus().equals(CurrentStatus.CANCELLED))
+					coPilotExceptionPassed = false;
 
-			super.state(pilotExceptionPassed, "legRelated", "acme.validation.pilotExceptionPassed.message");
-			super.state(coPilotExceptionPassed, "legRelated", "acme.validation.coPilotExceptionPassed.message");
+				super.state(pilotExceptionPassed, "legRelated", "acme.validation.pilotExceptionPassed.message");
+				super.state(coPilotExceptionPassed, "legRelated", "acme.validation.coPilotExceptionPassed.message");
+			}
 
 			// Comprobación de leg asignadas simultáneamente
 			boolean legCompatible = true;

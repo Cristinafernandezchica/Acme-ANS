@@ -31,16 +31,7 @@ public class FlightAssignmentCompletedListService extends AbstractGuiService<Fli
 		Collection<FlightAssignment> completedFlightAssignments;
 		int fcmIdLogged = super.getRequest().getPrincipal().getActiveRealm().getId();
 
-		// Añadir los dos borradores
 		completedFlightAssignments = this.repository.findCompletedFlightAssignmentByFlightCrewMemberId(fcmIdLogged);
-		if (fcmIdLogged == 237) {
-			FlightAssignment borrador1 = this.repository.findFlightAssignmentById(242);
-			completedFlightAssignments.add(borrador1);
-		}
-		if (fcmIdLogged == 238) {
-			FlightAssignment borrador2 = this.repository.findFlightAssignmentById(243);
-			completedFlightAssignments.add(borrador2);
-		}
 
 		super.getBuffer().addData(completedFlightAssignments);
 	}
@@ -49,7 +40,7 @@ public class FlightAssignmentCompletedListService extends AbstractGuiService<Fli
 	public void unbind(final FlightAssignment flightAssignment) {
 		Dataset dataset;
 
-		dataset = super.unbindObject(flightAssignment, "flightCrewsDuty", "lastUpdate", "currentStatus");
+		dataset = super.unbindObject(flightAssignment, "flightCrewsDuty", "lastUpdate", "currentStatus", "draftMode");
 
 		super.getResponse().addData(dataset);
 	}
