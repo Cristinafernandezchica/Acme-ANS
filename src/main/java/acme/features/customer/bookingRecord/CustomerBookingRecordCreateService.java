@@ -31,25 +31,40 @@ public class CustomerBookingRecordCreateService extends AbstractGuiService<Custo
 		Booking booking;
 		Customer customer;
 		boolean status = false;
+		boolean fakeUpdate = true;
 
-		bookingId = super.getRequest().getData("bookingId", int.class);
-		booking = this.repository.findBookingById(bookingId);
+		if (super.getRequest().hasData("id")) {
+			Integer id = super.getRequest().getData("id", Integer.class);
+			if (id != 0)
+				fakeUpdate = false;
+		}
 
-		customer = (Customer) super.getRequest().getPrincipal().getActiveRealm();
+		if (super.getRequest().hasData("bookingId")) {
+			bookingId = super.getRequest().getData("bookingId", int.class);
+			booking = this.repository.findBookingById(bookingId);
+			customer = (Customer) super.getRequest().getPrincipal().getActiveRealm();
 
-		if (booking != null && booking.getCustomer().equals(customer) && booking.isDraftMode()) {
-			status = true;
-			if (super.getRequest().getMethod().equals("POST")) {
-				int pId = super.getRequest().getData("passenger", int.class);
-				Passenger passenger = this.repository.findPassengerById(pId);
-				Collection<Passenger> availablePassengers = this.repository.findAvailablePassengersByBookingId(customer.getId(), booking.getId());
+			if (booking != null && booking.getCustomer().equals(customer) && booking.isDraftMode()) {
+				status = true;
 
-				if (passenger == null && pId != 0 || passenger != null && !availablePassengers.contains(passenger))
-					status = false;
+				if (super.getRequest().getMethod().equals("POST")) {
+					String passengerRaw = super.getRequest().getData("passenger", String.class);
+
+					if (passengerRaw == null || passengerRaw.trim().isEmpty())
+						status = false;
+					else {
+						int pId = Integer.parseInt(passengerRaw);
+						Passenger passenger = this.repository.findPassengerById(pId);
+						Collection<Passenger> availablePassengers = this.repository.findAvailablePassengersByBookingId(customer.getId(), booking.getId());
+
+						if (passenger == null && pId != 0 || passenger != null && !availablePassengers.contains(passenger))
+							status = false;
+					}
+				}
 			}
 		}
 
-		super.getResponse().setAuthorised(status);
+		super.getResponse().setAuthorised(fakeUpdate && status);
 	}
 
 	@Override
@@ -79,8 +94,7 @@ public class CustomerBookingRecordCreateService extends AbstractGuiService<Custo
 			passenger = this.repository.findPassengerById(passengerId);
 
 			bookingRecord.setPassenger(passenger);
-		} else
-			bookingRecord.setPassenger(null);
+		}
 
 	}
 

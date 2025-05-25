@@ -57,5 +57,3 @@ leg-47,MAX0047,2019/02/02 00:01,2019/02/02 00:55,ON_TIME,airport-07,airport-09,f
 leg-48,MAX0048,2019/03/03 05:00,2019/07/03 05:45,ON_TIME,airport-01,airport-15,flight-42,aircraft-01,false
 
 leg-49,MAX0049,2019/02/02 16:16,2019/02/02 17:17,LANDED,airport-07,airport-09,flight-48,aircraft-01, false
-
-
