@@ -55,17 +55,21 @@ public class AssistanceAgentClaimCreateService extends AbstractGuiService<Assist
 			hasLegs = false;
 
 		if (super.getRequest().getMethod().equals("POST")) {
-			type = super.getRequest().getData("type", String.class);
-			legId = super.getRequest().getData("leg", int.class);
+			boolean hasLegParam = super.getRequest().getData().containsKey("leg");
 
-			if (!Arrays.toString(ClaimType.values()).concat("0").contains(type) || type == null)
+			if (hasLegParam) {
+				legId = super.getRequest().getData("leg", int.class);
+				if (legId != 0) {
+					leg = this.repository.findLegById(legId);
+					if (!legs.contains(leg) || leg == null)
+						isCorrectLeg = false;
+				}
+			}
+
+			type = super.getRequest().getData("type", String.class);
+			if (type != null && !Arrays.toString(ClaimType.values()).concat("0").contains(type))
 				isCorrectType = false;
 
-			if (legId != 0) {
-				leg = this.repository.findLegById(legId);
-				if (!legs.contains(leg) || leg == null)
-					isCorrectLeg = false;
-			}
 		}
 
 		status = isCorrectRole && isFakeUpdate && hasLegs && isCorrectType && isCorrectLeg;

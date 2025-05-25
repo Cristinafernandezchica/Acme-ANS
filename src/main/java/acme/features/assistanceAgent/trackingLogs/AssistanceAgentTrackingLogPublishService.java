@@ -81,7 +81,6 @@ public class AssistanceAgentTrackingLogPublishService extends AbstractGuiService
 		Double percentage;
 		Double minPercentage;
 		Collection<TrackingLog> trackingLogs;
-		boolean isNullStatus = false;
 		boolean isCorrectPercentage = true;
 		boolean isCorrectPercentageStatus = true;
 		boolean isPossibleToPublish = true;
@@ -118,7 +117,6 @@ public class AssistanceAgentTrackingLogPublishService extends AbstractGuiService
 			}
 		}
 
-		super.state(isNullStatus, "status", "acme.validation.trackingLog.nullStatus.message");
 		super.state(isCorrectPercentage, "resolutionPercentage", "acme.validation.trackingLog.resolutionPercentage.message");
 		super.state(isCorrectPercentageStatus, "status", "acme.validation.trackingLog.resolutionPercentageStatus.message");
 		super.state(isPossibleToPublish, "resolutionPercentage", "acme.validation.trackingLog.publish.message");
