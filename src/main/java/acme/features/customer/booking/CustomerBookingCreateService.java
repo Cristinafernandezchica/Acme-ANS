@@ -36,6 +36,16 @@ public class CustomerBookingCreateService extends AbstractGuiService<Customer, B
 		int flightId;
 		Flight flight;
 		boolean status = true;
+		boolean noId = true;
+		boolean fakeUpdate = true;
+
+		if (super.getRequest().hasData("id")) {
+			Integer id = super.getRequest().getData("id", Integer.class);
+			if (id != 0)
+				fakeUpdate = false;
+		}
+
+		status = fakeUpdate && noId;
 
 		if (super.getRequest().getMethod().equals("POST")) {
 			boolean hasFlightParam = super.getRequest().getData().containsKey("flight");
@@ -53,15 +63,16 @@ public class CustomerBookingCreateService extends AbstractGuiService<Customer, B
 					status = false;
 			}
 
-			String rawTravelClass = super.getRequest().getData("travelClass", String.class);
+			if (super.getRequest().hasData("travelClass")) {
+				String rawTravelClass = super.getRequest().getData("travelClass", String.class);
 
-			if (rawTravelClass != null && !rawTravelClass.trim().isEmpty() && !rawTravelClass.equals("0")) {
-				boolean travelClassValid = Arrays.stream(TravelClass.values()).anyMatch(tc -> tc.name().equals(rawTravelClass));
+				if (rawTravelClass != null && !rawTravelClass.trim().isEmpty() && !rawTravelClass.equals("0")) {
+					boolean travelClassValid = Arrays.stream(TravelClass.values()).anyMatch(tc -> tc.name().equals(rawTravelClass));
 
-				if (!travelClassValid)
-					status = false;
+					if (!travelClassValid)
+						status = false;
+				}
 			}
-
 		}
 
 		super.getResponse().setAuthorised(status);
@@ -94,8 +105,7 @@ public class CustomerBookingCreateService extends AbstractGuiService<Customer, B
 			flight = this.repository.findFlightById(flightId);
 
 			booking.setFlight(flight);
-		} else
-			booking.setFlight(null);
+		}
 
 		super.bindObject(booking, "travelClass", "lastCardNibble");
 		booking.setLocatorCode(this.generateLocatorCode());

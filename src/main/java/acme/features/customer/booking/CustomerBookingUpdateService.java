@@ -34,40 +34,44 @@ public class CustomerBookingUpdateService extends AbstractGuiService<Customer, B
 		boolean status = false;
 		int bookingId;
 		int flightId;
+		Integer masterId;
 		Customer customer;
 		Booking booking;
 		Flight flight;
 
 		if (!super.getRequest().getData().isEmpty() && super.getRequest().getData() != null) {
-			bookingId = super.getRequest().getData("id", int.class);
-			booking = this.repository.findBookingById(bookingId);
-			customer = booking == null ? null : booking.getCustomer();
-			status = super.getRequest().getPrincipal().hasRealm(customer) && booking != null && booking.isDraftMode();
+			masterId = super.getRequest().getData("id", Integer.class);
+			if (masterId != null) {
+				bookingId = super.getRequest().getData("id", int.class);
+				booking = this.repository.findBookingById(bookingId);
+				customer = booking == null ? null : booking.getCustomer();
+				status = super.getRequest().getPrincipal().hasRealm(customer) && booking != null && booking.isDraftMode();
 
-			boolean hasFlightParam = super.getRequest().getData().containsKey("flight");
+				boolean hasFlightParam = super.getRequest().getData().containsKey("flight");
+				if (hasFlightParam) {
+					flightId = super.getRequest().getData("flight", int.class);
+					flight = this.repository.findFlightById(flightId);
+					Collection<Flight> validFlights = this.repository.findAllFlights().stream().filter(f -> f.getScheduledDeparture() != null && !f.isDraftMode() && f.getScheduledDeparture().after(MomentHelper.getCurrentMoment())
+						&& this.repository.findLegsByFlightId(f.getId()).stream().allMatch(leg -> leg.getScheduledDeparture().after(MomentHelper.getCurrentMoment()))).collect(Collectors.toList());
 
-			if (hasFlightParam) {
-				flightId = super.getRequest().getData("flight", int.class);
-				flight = this.repository.findFlightById(flightId);
-				Collection<Flight> validFlights = this.repository.findAllFlights().stream().filter(f -> f.getScheduledDeparture() != null && !f.isDraftMode() && f.getScheduledDeparture().after(MomentHelper.getCurrentMoment())
-					&& this.repository.findLegsByFlightId(f.getId()).stream().allMatch(leg -> leg.getScheduledDeparture().after(MomentHelper.getCurrentMoment()))).collect(Collectors.toList());
+					if (flight == null && flightId != 0)
+						status = false;
 
-				if (flight == null && flightId != 0)
-					status = false;
+					if (!validFlights.contains(flight) && flight != null)
+						status = false;
+				}
 
-				if (!validFlights.contains(flight) && flight != null)
-					status = false;
+				if (super.getRequest().hasData("travelClass")) {
+					String rawTravelClass = super.getRequest().getData("travelClass", String.class);
+
+					if (rawTravelClass != null && !rawTravelClass.trim().isEmpty() && !rawTravelClass.equals("0")) {
+						boolean travelClassValid = Arrays.stream(TravelClass.values()).anyMatch(tc -> tc.name().equals(rawTravelClass));
+
+						if (!travelClassValid)
+							status = false;
+					}
+				}
 			}
-
-			String rawTravelClass = super.getRequest().getData("travelClass", String.class);
-
-			if (rawTravelClass != null && !rawTravelClass.trim().isEmpty() && !rawTravelClass.equals("0")) {
-				boolean travelClassValid = Arrays.stream(TravelClass.values()).anyMatch(tc -> tc.name().equals(rawTravelClass));
-
-				if (!travelClassValid)
-					status = false;
-			}
-
 		}
 		super.getResponse().setAuthorised(status);
 	}
@@ -97,8 +101,7 @@ public class CustomerBookingUpdateService extends AbstractGuiService<Customer, B
 			flight = this.repository.findFlightById(flightId);
 
 			booking.setFlight(flight);
-		} else
-			booking.setFlight(null);
+		}
 
 		super.bindObject(booking, "locatorCode", "travelClass", "lastCardNibble");
 		booking.setPurchaseMoment(moment);
@@ -144,10 +147,7 @@ public class CustomerBookingUpdateService extends AbstractGuiService<Customer, B
 
 		dataset = super.unbindObject(booking, "locatorCode", "purchaseMoment", "travelClass", "price", "lastCardNibble", "draftMode");
 		dataset.put("flights", choices);
-		if (booking.isDraftMode() && (choices.getSelected() == null || choices.getSelected().getKey() == null))
-			dataset.put("flight", "0");
-		else
-			dataset.put("flight", booking.getFlight() != null ? choices.getSelected().getKey() : "0");
+		dataset.put("flight", booking.getFlight() != null ? choices.getSelected().getKey() : "0");
 		dataset.put("classes", classes);
 		dataset.put("travelClass", classes.getSelected().getKey());
 		dataset.put("bookingId", booking.getId());

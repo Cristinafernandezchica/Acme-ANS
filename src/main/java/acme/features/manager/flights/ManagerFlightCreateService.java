@@ -19,7 +19,17 @@ public class ManagerFlightCreateService extends AbstractGuiService<Manager, Flig
 	@Override
 	public void authorise() {
 		boolean status;
-		status = super.getRequest().getPrincipal().hasRealmOfType(Manager.class);
+		boolean isManager;
+		boolean existingFlight = true;
+
+		isManager = super.getRequest().getPrincipal().hasRealmOfType(Manager.class);
+		if (super.getRequest().getMethod().equals("POST")) {
+			Integer flightId = super.getRequest().getData("id", Integer.class);
+			Flight flight = this.repository.findFlightById(flightId);
+			if (flight != null)
+				existingFlight = false;
+		}
+		status = isManager && existingFlight;
 		super.getResponse().setAuthorised(status);
 	}
 

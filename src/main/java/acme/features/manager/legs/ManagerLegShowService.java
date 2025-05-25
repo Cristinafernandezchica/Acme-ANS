@@ -2,7 +2,6 @@
 package acme.features.manager.legs;
 
 import java.util.Collection;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -11,7 +10,6 @@ import acme.client.components.views.SelectChoices;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.aircrafts.Aircraft;
-import acme.entities.aircrafts.Status;
 import acme.entities.airports.Airport;
 import acme.entities.legs.Leg;
 import acme.entities.legs.LegStatus;
@@ -41,7 +39,6 @@ public class ManagerLegShowService extends AbstractGuiService<Manager, Leg> {
 				status = leg != null && super.getRequest().getPrincipal().hasRealm(manager) && managerId == manager.getId();
 			}
 		}
-
 		super.getResponse().setAuthorised(status);
 	}
 
@@ -62,15 +59,13 @@ public class ManagerLegShowService extends AbstractGuiService<Manager, Leg> {
 		Dataset dataset;
 		Collection<Aircraft> aircrafts;
 		SelectChoices selectedAircrafts;
-		Collection<Aircraft> activeAircrafts;
 		Collection<Airport> airports;
 		SelectChoices selectedDepartureAirport;
 		SelectChoices selectedArrivalAirport;
 
 		statuses = SelectChoices.from(LegStatus.class, leg.getStatus());
 		aircrafts = this.repository.findAllAircrafts();
-		activeAircrafts = aircrafts.stream().filter(a -> a.getStatus().equals(Status.ACTIVE_SERVICE)).collect(Collectors.toList());
-		selectedAircrafts = SelectChoices.from(activeAircrafts, "aircraftLabel", leg.getAircraft());
+		selectedAircrafts = SelectChoices.from(aircrafts, "aircraftLabel", leg.getAircraft());
 
 		airports = this.repository.findAllAirports();
 		selectedDepartureAirport = SelectChoices.from(airports, "iataCode", leg.getDepartureAirport());
