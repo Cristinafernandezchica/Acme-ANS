@@ -5,6 +5,8 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Index;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -24,6 +26,9 @@ import lombok.Setter;
 @Getter
 @Setter
 @ValidManager
+@Table(indexes = {
+	@Index(columnList = "yearsExperience")
+})
 public class Manager extends AbstractRole {
 
 	// Serialisation version --------------------------------------------------
