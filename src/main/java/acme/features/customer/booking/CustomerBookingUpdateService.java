@@ -147,10 +147,7 @@ public class CustomerBookingUpdateService extends AbstractGuiService<Customer, B
 
 		dataset = super.unbindObject(booking, "locatorCode", "purchaseMoment", "travelClass", "price", "lastCardNibble", "draftMode");
 		dataset.put("flights", choices);
-		if (booking.isDraftMode() && (choices.getSelected() == null || choices.getSelected().getKey() == null))
-			dataset.put("flight", "0");
-		else
-			dataset.put("flight", booking.getFlight() != null ? choices.getSelected().getKey() : "0");
+		dataset.put("flight", booking.getFlight() != null ? choices.getSelected().getKey() : "0");
 		dataset.put("classes", classes);
 		dataset.put("travelClass", classes.getSelected().getKey());
 		dataset.put("bookingId", booking.getId());
