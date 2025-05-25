@@ -85,7 +85,7 @@ acme.validation.isOriginalRegistrationMoment.message = That's not the original r
 # Activity log - activity log's messages (validate)
 acme.validation.activityLog-faNotCompleted.message = The assignment must be completed
 acme.validation.activityLog-faNotPublished.message = The assignment must be published
-acme.validation.activityLog-faNotPublished.message = The assignment must be confirmed
+acme.validation.activityLog-faNotCancelled.message = The assignment must be confirmed
 
 # Leg - legs messages
 acme.validation.leg.same.aircraft.message = The aircraft is used by other leg in the same schedule

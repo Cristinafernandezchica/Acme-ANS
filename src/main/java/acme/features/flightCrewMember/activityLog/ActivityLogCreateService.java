@@ -37,7 +37,7 @@ public class ActivityLogCreateService extends AbstractGuiService<FlightCrewMembe
 		boolean isPublished = false;
 
 		if (super.getRequest().hasData("id")) {
-			Integer id = super.getRequest().getData("id", Integer.class);
+			int id = super.getRequest().getData("id", int.class);
 			if (id != 0)
 				fakeUpdate = false;
 		}
@@ -52,7 +52,7 @@ public class ActivityLogCreateService extends AbstractGuiService<FlightCrewMembe
 				existingFA = faSelected != null || allFA.contains(faSelected) && faSelected != null;
 				if (existingFA) {
 					isFlightAssignmentOwner = faSelected.getFlightCrewMemberAssigned() == fcmLogged;
-					isPublished = faSelected.isDraftMode();
+					isPublished = !faSelected.isDraftMode();
 				}
 			}
 		}
@@ -85,13 +85,13 @@ public class ActivityLogCreateService extends AbstractGuiService<FlightCrewMembe
 		FlightAssignment fa = this.repository.findFlightAssignmentById(super.getRequest().getData("faId", Integer.class));
 
 		boolean faCompleted = false;
-		// and published, and flightAssignment no este cancelled
+
 		if (fa.getLegRelated().getStatus().equals(LegStatus.LANDED) || fa.getLegRelated().getStatus().equals(LegStatus.CANCELLED))
 			faCompleted = true;
 		super.state(faCompleted, "*", "acme.validation.activityLog-faNotCompleted.message");
 
 		boolean faNotCancelled = true;
-		if (fa.getCurrentStatus().equals(CurrentStatus.CANCELLED))
+		if (fa.getCurrentStatus().equals(CurrentStatus.CANCELLED) || fa.getCurrentStatus().equals(CurrentStatus.PENDING))
 			faNotCancelled = false;
 		super.state(faNotCancelled, "*", "acme.validation.activityLog-faNotCancelled.message");
 
