@@ -4,7 +4,6 @@ package acme.features.manager.flights;
 import java.util.Collection;
 
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import acme.client.repositories.AbstractRepository;
@@ -21,6 +20,6 @@ public interface ManagerFlightRepository extends AbstractRepository {
 	Flight findFlightById(int id);
 
 	@Query("select l from Leg l where l.flight.id = :flightId")
-	Collection<Leg> findLegsByFlightId(@Param("flightId") int flightId);
+	Collection<Leg> findLegsByFlightId(int flightId);
 
 }

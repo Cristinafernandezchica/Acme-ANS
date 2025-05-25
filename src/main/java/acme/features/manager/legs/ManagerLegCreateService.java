@@ -119,25 +119,28 @@ public class ManagerLegCreateService extends AbstractGuiService<Manager, Leg> {
 
 	@Override
 	public void bind(final Leg leg) {
-		super.bindObject(leg, "flightNumber", "scheduledDeparture", "scheduledArrival", "status", "departureAirport", "arrivalAirport", "aircraft");
+		super.bindObject(leg, "flightNumber", "scheduledDeparture", "scheduledArrival", "departureAirport", "arrivalAirport", "aircraft");
 	}
 
 	@Override
 	public void validate(final Leg leg) {
+		Date currentMoment = MomentHelper.getCurrentMoment();
 
-		if (leg.getScheduledDeparture() != null && MomentHelper.isBefore(leg.getScheduledDeparture(), MomentHelper.getCurrentMoment()))
-			super.state(false, "scheduledDeparture", "acme.validation.leg.scheduledDeparture.past");
+		if (leg.getScheduledDeparture() != null) {
+			if (MomentHelper.isBefore(leg.getScheduledDeparture(), currentMoment))
+				super.state(false, "scheduledDeparture", "acme.validation.leg.scheduledDeparture.past");
 
-		if (leg.getScheduledArrival() != null && leg.getScheduledDeparture() != null && MomentHelper.isBefore(leg.getScheduledArrival(), leg.getScheduledDeparture()))
-			super.state(false, "scheduledDeparture", "acme.validation.leg.departure.after.arrival.message");
+			if (leg.getScheduledArrival() != null) {
+				if (MomentHelper.isBefore(leg.getScheduledArrival(), leg.getScheduledDeparture()))
+					super.state(false, "scheduledDeparture", "acme.validation.leg.departure.after.arrival.message");
 
-		if (leg.getScheduledArrival() != null && leg.getScheduledDeparture() != null) {
-			Date departureWithDelta = MomentHelper.deltaFromMoment(leg.getScheduledDeparture(), 5, ChronoUnit.MINUTES);
-			if (MomentHelper.isBefore(leg.getScheduledArrival(), MomentHelper.getCurrentMoment()))
-				super.state(false, "scheduledArrival", "acme.validation.leg.scheduledArrival.past");
+				Date departureWithDelta = MomentHelper.deltaFromMoment(leg.getScheduledDeparture(), 5, ChronoUnit.MINUTES);
+				if (MomentHelper.isBefore(leg.getScheduledArrival(), currentMoment))
+					super.state(false, "scheduledArrival", "acme.validation.leg.scheduledArrival.past");
 
-			if (MomentHelper.isBefore(leg.getScheduledArrival(), departureWithDelta))
-				super.state(false, "scheduledArrival", "acme.validation.leg.departure.arrival.difference.message");
+				if (MomentHelper.isBefore(leg.getScheduledArrival(), departureWithDelta))
+					super.state(false, "scheduledArrival", "acme.validation.leg.departure.arrival.difference.message");
+			}
 		}
 
 		if (leg.getDepartureAirport() != null && leg.getDepartureAirport().equals(leg.getArrivalAirport())) {
@@ -150,7 +153,8 @@ public class ManagerLegCreateService extends AbstractGuiService<Manager, Leg> {
 			super.state(operativeAircraft, "aircraft", "acme.validation.leg.operative.aircraft.message");
 
 			Airline airline = leg.getAircraft().getAirline();
-			if (leg.getFlightNumber().length() == 7 && !leg.getFlightNumber().substring(0, 3).equals(airline.getIataCode())) {
+			String flightNumberPrefix = leg.getFlightNumber().substring(0, 3);
+			if (leg.getFlightNumber().length() == 7 && !flightNumberPrefix.equals(airline.getIataCode())) {
 				super.state(false, "flightNumber", "acme.validation.leg.invalid.iata.flightNumber");
 				super.state(false, "flightNumber", "The airline's IATA code: " + airline.getIataCode());
 			}
@@ -161,7 +165,6 @@ public class ManagerLegCreateService extends AbstractGuiService<Manager, Leg> {
 
 		if (leg.getFlight() != null && !leg.getFlight().isDraftMode())
 			super.state(false, "*", "acme.validation.leg.create.no.flight.draftmode");
-
 	}
 
 	@Override
@@ -171,28 +174,20 @@ public class ManagerLegCreateService extends AbstractGuiService<Manager, Leg> {
 
 	@Override
 	public void unbind(final Leg leg) {
-		Dataset dataset;
-		Collection<Aircraft> aircrafts;
-		SelectChoices selectedAircrafts;
-		Collection<Airport> airports;
-		SelectChoices selectedDepartureAirport;
-		SelectChoices selectedArrivalAirport;
+		Dataset dataset = super.unbindObject(leg, "scheduledDeparture", "scheduledArrival", "draftMode");
 
-		aircrafts = this.repository.findAllAircrafts();
-		selectedAircrafts = SelectChoices.from(aircrafts, "aircraftLabel", leg.getAircraft());
-
-		airports = this.repository.findAllAirports();
-		selectedDepartureAirport = SelectChoices.from(airports, "iataCode", leg.getDepartureAirport());
-		selectedArrivalAirport = SelectChoices.from(airports, "iataCode", leg.getArrivalAirport());
-
-		dataset = super.unbindObject(leg, "scheduledDeparture", "scheduledArrival", "draftMode");
 		dataset.put("flightNumber", leg.getFlightNumber());
 		dataset.put("status", LegStatus.ON_TIME);
 		dataset.put("flightId", leg.getFlight().getId());
-		dataset.put("departureAirports", selectedDepartureAirport);
-		dataset.put("arrivalAirports", selectedArrivalAirport);
 		dataset.put("flight", leg.getFlight().getTag());
-		dataset.put("aircrafts", selectedAircrafts);
+
+		Collection<Aircraft> aircrafts = this.repository.findAllAircrafts();
+		dataset.put("aircrafts", SelectChoices.from(aircrafts, "aircraftLabel", leg.getAircraft()));
+
+		Collection<Airport> airports = this.repository.findAllAirports();
+		dataset.put("departureAirports", SelectChoices.from(airports, "iataCode", leg.getDepartureAirport()));
+		dataset.put("arrivalAirports", SelectChoices.from(airports, "iataCode", leg.getArrivalAirport()));
+
 		if (leg.getScheduledDeparture() != null)
 			dataset.put("duration", leg.getDuration());
 

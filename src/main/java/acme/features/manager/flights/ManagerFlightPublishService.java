@@ -3,6 +3,7 @@ package acme.features.manager.flights;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -24,18 +25,19 @@ public class ManagerFlightPublishService extends AbstractGuiService<Manager, Fli
 	@Override
 	public void authorise() {
 		boolean status = false;
-		Integer masterId;
-		Flight flight;
-		Manager manager;
 
-		int managerId = super.getRequest().getPrincipal().getActiveRealm().getId();
 		if (!super.getRequest().getData().isEmpty()) {
-			masterId = super.getRequest().getData("id", Integer.class);
+			Integer masterId = super.getRequest().getData("id", Integer.class);
+
 			if (masterId != null) {
-				flight = this.repository.findFlightById(masterId);
-				boolean tag = super.getRequest().hasData("tag");
-				manager = flight == null ? null : flight.getManager();
-				status = flight != null && flight.isDraftMode() && super.getRequest().getPrincipal().hasRealm(manager) && managerId == manager.getId() && tag;
+				Flight flight = this.repository.findFlightById(masterId);
+
+				if (flight != null && flight.isDraftMode()) {
+					Manager manager = flight.getManager();
+					int managerId = super.getRequest().getPrincipal().getActiveRealm().getId();
+
+					status = super.getRequest().getPrincipal().hasRealm(manager) && managerId == manager.getId() && super.getRequest().hasData("tag");
+				}
 			}
 		}
 
@@ -61,7 +63,8 @@ public class ManagerFlightPublishService extends AbstractGuiService<Manager, Fli
 	@Override
 	public void validate(final Flight flight) {
 		if (flight.getCost() != null) {
-			boolean notAcceptedCurrency = flight.getCost().getCurrency().equals("EUR") || flight.getCost().getCurrency().equals("USD") || flight.getCost().getCurrency().equals("GBP");
+			Set<String> acceptedCurrencies = Set.of("EUR", "USD", "GBP");
+			boolean notAcceptedCurrency = acceptedCurrencies.contains(flight.getCost().getCurrency());
 			super.state(notAcceptedCurrency, "cost", "acme.validation.manager.flights.currency.not.valid");
 		}
 
@@ -69,16 +72,12 @@ public class ManagerFlightPublishService extends AbstractGuiService<Manager, Fli
 		Date currentDate = MomentHelper.getCurrentMoment();
 
 		boolean hasLegs = !legs.isEmpty();
-		boolean anyDraftMode = !legs.stream().anyMatch(Leg::isDraftMode);
-		boolean noPastLeg = true;
-		for (Leg leg : legs)
-			if (MomentHelper.isBefore(leg.getScheduledDeparture(), currentDate))
-				noPastLeg = false;
+		boolean allPublishedLegs = legs.stream().allMatch(leg -> !leg.isDraftMode());
+		boolean noPastLeg = legs.stream().noneMatch(leg -> MomentHelper.isBefore(leg.getScheduledDeparture(), currentDate));
 
 		super.state(hasLegs, "*", "acme.validation.manager.flights.without.legs");
-		super.state(anyDraftMode, "*", "acme.validation.manager.flights.no.published.leg");
+		super.state(allPublishedLegs, "*", "acme.validation.manager.flights.no.published.leg");
 		super.state(noPastLeg, "*", "acme.validation.manager.flights.publish.past.leg");
-
 	}
 
 	@Override
@@ -89,23 +88,19 @@ public class ManagerFlightPublishService extends AbstractGuiService<Manager, Fli
 
 	@Override
 	public void unbind(final Flight flight) {
-		Dataset dataset;
 		Collection<Leg> legs = this.repository.findLegsByFlightId(flight.getId());
-		dataset = super.unbindObject(flight, "tag", "indication", "cost", "description", "draftMode");
-		if (!legs.isEmpty()) {
-			dataset.put("originCity", flight.originCity());
-			dataset.put("destinationCity", flight.destinationCity());
-			dataset.put("scheduledDeparture", flight.getScheduledDeparture());
-			dataset.put("scheduledArrival", flight.getScheduledArrival());
-			dataset.put("layovers", flight.layovers());
+		Dataset dataset = super.unbindObject(flight, "tag", "indication", "cost", "description", "draftMode");
+
+		boolean hasLegs = !legs.isEmpty();
+		dataset.put("originCity", hasLegs ? flight.originCity() : null);
+		dataset.put("destinationCity", hasLegs ? flight.destinationCity() : null);
+		dataset.put("scheduledDeparture", hasLegs ? flight.getScheduledDeparture() : null);
+		dataset.put("scheduledArrival", hasLegs ? flight.getScheduledArrival() : null);
+		dataset.put("layovers", hasLegs ? flight.layovers() : null);
+
+		if (hasLegs)
 			dataset.put("flightId", flight.getId());
-		} else {
-			dataset.put("originCity", null);
-			dataset.put("destinationCity", null);
-			dataset.put("scheduledDeparture", null);
-			dataset.put("scheduledArrival", null);
-			dataset.put("layovers", null);
-		}
+
 		super.getResponse().addData(dataset);
 	}
 

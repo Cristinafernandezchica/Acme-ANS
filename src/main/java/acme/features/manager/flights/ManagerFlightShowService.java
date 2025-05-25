@@ -52,24 +52,18 @@ public class ManagerFlightShowService extends AbstractGuiService<Manager, Flight
 
 	@Override
 	public void unbind(final Flight flight) {
-		Dataset dataset;
-		Collection<Leg> legs;
-		legs = this.repository.findLegsByFlightId(flight.getId());
-		dataset = super.unbindObject(flight, "tag", "indication", "cost", "description", "draftMode");
-		if (!legs.isEmpty()) {
-			dataset.put("originCity", flight.originCity());
-			dataset.put("destinationCity", flight.destinationCity());
-			dataset.put("scheduledDeparture", flight.getScheduledDeparture());
-			dataset.put("scheduledArrival", flight.getScheduledArrival());
-			dataset.put("layovers", flight.layovers());
+		Collection<Leg> legs = this.repository.findLegsByFlightId(flight.getId());
+		Dataset dataset = super.unbindObject(flight, "tag", "indication", "cost", "description", "draftMode");
+
+		boolean hasLegs = !legs.isEmpty();
+		dataset.put("originCity", hasLegs ? flight.originCity() : null);
+		dataset.put("destinationCity", hasLegs ? flight.destinationCity() : null);
+		dataset.put("scheduledDeparture", hasLegs ? flight.getScheduledDeparture() : null);
+		dataset.put("scheduledArrival", hasLegs ? flight.getScheduledArrival() : null);
+		dataset.put("layovers", hasLegs ? flight.layovers() : null);
+
+		if (hasLegs)
 			dataset.put("flightId", flight.getId());
-		} else {
-			dataset.put("originCity", null);
-			dataset.put("destinationCity", null);
-			dataset.put("scheduledDeparture", null);
-			dataset.put("scheduledArrival", null);
-			dataset.put("layovers", null);
-		}
 
 		super.getResponse().addData(dataset);
 	}

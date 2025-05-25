@@ -139,42 +139,58 @@ public class ManagerLegUpdateService extends AbstractGuiService<Manager, Leg> {
 
 	@Override
 	public void validate(final Leg leg) {
+		final boolean isDraftMode = leg.isDraftMode();
+		final Date currentMoment = MomentHelper.getCurrentMoment();
+		final Date scheduledDeparture = leg.getScheduledDeparture();
+		final Date scheduledArrival = leg.getScheduledArrival();
 
-		if (leg.getScheduledDeparture() != null && MomentHelper.isBefore(leg.getScheduledDeparture(), MomentHelper.getCurrentMoment()) && leg.isDraftMode())
-			super.state(false, "scheduledDeparture", "acme.validation.leg.scheduledDeparture.past");
+		// Validaciones de tiempo
+		if (scheduledDeparture != null) {
+			if (isDraftMode && MomentHelper.isBefore(scheduledDeparture, currentMoment))
+				super.state(false, "scheduledDeparture", "acme.validation.leg.scheduledDeparture.past");
 
-		if (leg.getScheduledArrival() != null && leg.getScheduledDeparture() != null && MomentHelper.isBefore(leg.getScheduledArrival(), leg.getScheduledDeparture()))
-			super.state(false, "scheduledDeparture", "acme.validation.leg.departure.after.arrival.message");
+			if (scheduledArrival != null) {
+				if (MomentHelper.isBefore(scheduledArrival, scheduledDeparture))
+					super.state(false, "scheduledDeparture", "acme.validation.leg.departure.after.arrival.message");
 
-		if (leg.getScheduledArrival() != null && leg.getScheduledDeparture() != null) {
-			Date departureWithDelta = MomentHelper.deltaFromMoment(leg.getScheduledDeparture(), 5, ChronoUnit.MINUTES);
-			if (MomentHelper.isBefore(leg.getScheduledArrival(), MomentHelper.getCurrentMoment()) && leg.isDraftMode())
-				super.state(false, "scheduledArrival", "acme.validation.leg.scheduledArrival.past");
+				if (isDraftMode && MomentHelper.isBefore(scheduledArrival, currentMoment))
+					super.state(false, "scheduledArrival", "acme.validation.leg.scheduledArrival.past");
 
-			if (MomentHelper.isBefore(leg.getScheduledArrival(), departureWithDelta))
-				super.state(false, "scheduledArrival", "acme.validation.leg.departure.arrival.difference.message");
+				Date departureWithDelta = MomentHelper.deltaFromMoment(scheduledDeparture, 5, ChronoUnit.MINUTES);
+				if (MomentHelper.isBefore(scheduledArrival, departureWithDelta))
+					super.state(false, "scheduledArrival", "acme.validation.leg.departure.arrival.difference.message");
+			}
 		}
 
-		if (leg.getDepartureAirport() != null && leg.getDepartureAirport().equals(leg.getArrivalAirport())) {
+		// Validación de aeropuertos
+		final Airport departureAirport = leg.getDepartureAirport();
+		final Airport arrivalAirport = leg.getArrivalAirport();
+		if (departureAirport != null && departureAirport.equals(arrivalAirport)) {
 			super.state(false, "arrivalAirport", "acme.validation.leg.same.departure.arrival.airport");
 			super.state(false, "departureAirport", "acme.validation.leg.same.departure.arrival.airport");
 		}
 
-		if (leg.getAircraft() != null) {
-			boolean operativeAircraft = leg.getAircraft().getStatus().equals(Status.ACTIVE_SERVICE);
-			super.state(operativeAircraft, "aircraft", "acme.validation.leg.operative.aircraft.message");
-		}
+		// Validación de aeronave
+		final Aircraft aircraft = leg.getAircraft();
+		if (aircraft != null) {
+			super.state(aircraft.getStatus().equals(Status.ACTIVE_SERVICE), "aircraft", "acme.validation.leg.operative.aircraft.message");
 
-		if (leg.isDraftMode()) {
-			if (leg.getAircraft() != null) {
-				Airline airline = leg.getAircraft().getAirline();
-				if (leg.getFlightNumber().length() == 7 && !leg.getFlightNumber().substring(0, 3).equals(airline.getIataCode())) {
+			if (isDraftMode) {
+				Airline airline = aircraft.getAirline();
+				String flightNumber = leg.getFlightNumber();
+				if (flightNumber.length() == 7 && !flightNumber.substring(0, 3).equals(airline.getIataCode())) {
 					super.state(false, "flightNumber", "acme.validation.leg.invalid.iata.flightNumber");
 					super.state(false, "flightNumber", "The airline's IATA code: " + airline.getIataCode());
 				}
 			}
-		} else if (leg.getFlight().isDraftMode() && !leg.getStatus().equals(this.repository.findLegById(leg.getId()).getStatus()))
-			super.state(false, "status", "acme.validation.leg.change.status.no.published.flight");
+		}
+
+		// Validación de estado para vuelos publicados
+		if (!isDraftMode && leg.getFlight().isDraftMode()) {
+			LegStatus currentStatus = this.repository.findLegById(leg.getId()).getStatus();
+			if (!leg.getStatus().equals(currentStatus))
+				super.state(false, "status", "acme.validation.leg.change.status.no.published.flight");
+		}
 	}
 
 	@Override
