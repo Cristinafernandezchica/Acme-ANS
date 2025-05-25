@@ -56,12 +56,10 @@ public class FlightAssignmentUpdateService extends AbstractGuiService<FlightCrew
 				List<FlightAssignment> allFA = this.repository.findAllFlightAssignments();
 				faSelected = this.repository.findFlightAssignmentById(faId);
 				existingFA = faSelected != null || allFA.contains(faSelected) && faSelected != null;
-				if (existingFA)
+				if (existingFA) {
 					isFlightAssignmentOwner = faSelected.getFlightCrewMemberAssigned() == fcmLogged;
-				if (metodo.equals("GET")) {
-					faId = super.getRequest().getData("id", Integer.class);
-					faSelected = this.repository.findFlightAssignmentById(faId);
-					isPublished = !faSelected.isDraftMode();
+					if (metodo.equals("GET"))
+						isPublished = !faSelected.isDraftMode();
 				}
 			}
 			if (metodo.equals("POST")) {

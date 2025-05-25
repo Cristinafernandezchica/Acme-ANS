@@ -34,9 +34,16 @@ public class CustomerPassengerCreateService extends AbstractGuiService<Customer,
 
 		customer = (Customer) super.getRequest().getPrincipal().getActiveRealm();
 
+		boolean fakeUpdate = true;
+		if (super.getRequest().hasData("id")) {
+			Integer id = super.getRequest().getData("id", Integer.class);
+			if (id != 0)
+				fakeUpdate = false;
+		}
+
 		if (super.getRequest().getData().isEmpty() || super.getRequest().hasData("passportNumber"))
 			status = true;
-		else {
+		else if (super.getRequest().hasData("bookingId")) {
 			bookingId = super.getRequest().getData("bookingId", int.class);
 			booking = this.repository.findBookingById(bookingId);
 
@@ -44,7 +51,7 @@ public class CustomerPassengerCreateService extends AbstractGuiService<Customer,
 				status = true;
 		}
 
-		super.getResponse().setAuthorised(status);
+		super.getResponse().setAuthorised(status && fakeUpdate);
 	}
 
 	@Override
