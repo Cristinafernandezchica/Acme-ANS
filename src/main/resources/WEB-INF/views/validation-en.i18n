@@ -7,6 +7,8 @@ acme.validation.flight.published.delete = You can't delete a published flight
 acme.validation.flight.create.no.draftmode = You can't crate a flight with no draftmode
 acme.validation.manager.flights.publish.past.leg = Can't publish a flight with past leg(s)
 
+acme.validation.legOnAir.message = Cannot update, these aircraft is on air
+
 acme.validation.manager.flights.without.legs = The flight has no leg assigned
 acme.validation.manager.flights.no.published.leg = The flight has some unpublished leg(s)
 acme.validation.manager.flights.currency.not.valid = The currency is not valid

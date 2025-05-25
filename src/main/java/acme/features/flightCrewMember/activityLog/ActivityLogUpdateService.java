@@ -9,7 +9,6 @@ import acme.client.components.models.Dataset;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.activitylog.ActivityLog;
-import acme.entities.flightAssignment.FlightAssignment;
 import acme.realms.flightCrewMember.FlightCrewMember;
 
 @GuiService
@@ -29,21 +28,29 @@ public class ActivityLogUpdateService extends AbstractGuiService<FlightCrewMembe
 
 		boolean existingAL = false;
 		boolean isFlightAssignmentOwner = false;
+		boolean isPublished = true;
+		boolean hasRegistrationMoment = true;
+
+		String metodo = super.getRequest().getMethod();
 
 		int fcmIdLogged = super.getRequest().getPrincipal().getActiveRealm().getId();
-		if (!super.getRequest().getData().isEmpty()) {
+		if (!super.getRequest().getData().isEmpty() && super.getRequest().getData() != null) {
 			Integer alId = super.getRequest().getData("id", Integer.class);
 			if (alId != null) {
 				fcmLogged = this.repository.findFlighCrewMemberById(fcmIdLogged);
-				List<FlightAssignment> allFA = this.repository.findAllFlightAssignments();
+				List<ActivityLog> allFA = this.repository.findAllActivityLog();
 				alSelected = this.repository.findActivityLogById(alId);
-				existingAL = alSelected != null || allFA.contains(alSelected);
-				if (alSelected != null)
+				existingAL = alSelected != null || allFA.contains(alSelected) && alSelected != null;
+				hasRegistrationMoment = super.getRequest().hasData("registrationMoment");
+				if (existingAL) {
 					isFlightAssignmentOwner = alSelected.getFlightAssignmentRelated().getFlightCrewMemberAssigned() == fcmLogged;
+					if (metodo.equals("GET"))
+						isPublished = !alSelected.isDraftMode();
+				}
 			}
 		}
 
-		super.getResponse().setAuthorised(isFlightAssignmentOwner);
+		super.getResponse().setAuthorised(isFlightAssignmentOwner && isPublished && hasRegistrationMoment);
 	}
 
 	@Override

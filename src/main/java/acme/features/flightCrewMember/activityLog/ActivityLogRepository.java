@@ -39,4 +39,7 @@ public interface ActivityLogRepository extends AbstractRepository {
 	@Query("select fa from FlightAssignment fa")
 	List<FlightAssignment> findAllFlightAssignments();
 
+	@Query("select al from ActivityLog al")
+	List<ActivityLog> findAllActivityLog();
+
 }
