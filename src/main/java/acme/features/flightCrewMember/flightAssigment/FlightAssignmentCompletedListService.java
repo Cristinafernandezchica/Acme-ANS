@@ -33,11 +33,14 @@ public class FlightAssignmentCompletedListService extends AbstractGuiService<Fli
 
 		// Añadir los dos borradores
 		completedFlightAssignments = this.repository.findCompletedFlightAssignmentByFlightCrewMemberId(fcmIdLogged);
-		FlightAssignment borrador1 = this.repository.findFlightAssignmentById(242);
-		FlightAssignment borrador2 = this.repository.findFlightAssignmentById(243);
-
-		completedFlightAssignments.add(borrador1);
-		completedFlightAssignments.add(borrador2);
+		if (fcmIdLogged == 237) {
+			FlightAssignment borrador1 = this.repository.findFlightAssignmentById(242);
+			completedFlightAssignments.add(borrador1);
+		}
+		if (fcmIdLogged == 238) {
+			FlightAssignment borrador2 = this.repository.findFlightAssignmentById(243);
+			completedFlightAssignments.add(borrador2);
+		}
 
 		super.getBuffer().addData(completedFlightAssignments);
 	}

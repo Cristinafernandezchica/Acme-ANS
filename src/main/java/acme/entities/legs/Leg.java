@@ -96,7 +96,7 @@ public class Leg extends AbstractEntity {
 
 	@Transient
 	public String getLabel() {
-		SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+		SimpleDateFormat timeFormat = new SimpleDateFormat("dd/MM/YYYY HH:mm");
 
 		String departureCity = this.departureAirport.getCity();
 		String departureCountry = this.departureAirport.getCountry();
@@ -105,7 +105,7 @@ public class Leg extends AbstractEntity {
 		String departureTime = timeFormat.format(this.getScheduledDeparture());
 		String arrivalTime = timeFormat.format(this.getScheduledArrival());
 
-		return String.format("%s: %s - %s: %s %s-%s", departureCountry, departureCity, arrivalCountry, arrivalCity, departureTime, arrivalTime);
+		return String.format("%s: %s - %s: %s %s - %s", departureCountry, departureCity, arrivalCountry, arrivalCity, departureTime, arrivalTime);
 
 	}
 
