@@ -20,7 +20,7 @@ public class InvolvesDeleteService extends AbstractGuiService<Technician, Involv
 		boolean authored = false;
 		Involves involves;
 		int involvesId;
-		if (!super.getRequest().getData().isEmpty() && super.getRequest().getData() != null) {
+		if (!super.getRequest().getData().isEmpty() && super.getRequest().getData() != null && !(super.getRequest().getData().size() <= 1)) {
 			involvesId = super.getRequest().getData("id", int.class);
 			Technician technician = (Technician) super.getRequest().getPrincipal().getActiveRealm();
 			involves = this.repository.findInvolvesById(involvesId);
