@@ -1,6 +1,8 @@
 
 package acme.features.flightCrewMember.activityLog;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import acme.client.components.models.Dataset;
@@ -8,7 +10,9 @@ import acme.client.helpers.MomentHelper;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.activitylog.ActivityLog;
+import acme.entities.flightAssignment.CurrentStatus;
 import acme.entities.flightAssignment.FlightAssignment;
+import acme.entities.legs.LegStatus;
 import acme.realms.flightCrewMember.FlightCrewMember;
 
 @GuiService
@@ -24,16 +28,35 @@ public class ActivityLogCreateService extends AbstractGuiService<FlightCrewMembe
 	@Override
 	public void authorise() {
 
-		boolean noId = true;
 		boolean fakeUpdate = true;
 
+		FlightCrewMember fcmLogged;
+		FlightAssignment faSelected;
+		boolean existingFA = false;
+		boolean isFlightAssignmentOwner = false;
+		boolean isPublished = false;
+
 		if (super.getRequest().hasData("id")) {
-			Integer id = super.getRequest().getData("id", Integer.class);
+			int id = super.getRequest().getData("id", int.class);
 			if (id != 0)
 				fakeUpdate = false;
 		}
 
-		super.getResponse().setAuthorised(fakeUpdate && noId);
+		int fcmIdLogged = super.getRequest().getPrincipal().getActiveRealm().getId();
+		if (!super.getRequest().getData().isEmpty() && super.getRequest().getData() != null) {
+			Integer faId = super.getRequest().getData("faId", Integer.class);
+			if (faId != null) {
+				fcmLogged = this.repository.findFlighCrewMemberById(fcmIdLogged);
+				List<FlightAssignment> allFA = this.repository.findAllFlightAssignments();
+				faSelected = this.repository.findFlightAssignmentById(faId);
+				existingFA = faSelected != null || allFA.contains(faSelected) && faSelected != null;
+				if (existingFA) {
+					isFlightAssignmentOwner = faSelected.getFlightCrewMemberAssigned() == fcmLogged;
+					isPublished = !faSelected.isDraftMode();
+				}
+			}
+		}
+		super.getResponse().setAuthorised(fakeUpdate && isFlightAssignmentOwner && isPublished);
 	}
 
 	@Override
@@ -59,8 +82,20 @@ public class ActivityLogCreateService extends AbstractGuiService<FlightCrewMembe
 	@Override
 	public void validate(final ActivityLog activityLog) {
 
-		boolean confirmation;
+		FlightAssignment fa = this.repository.findFlightAssignmentById(super.getRequest().getData("faId", Integer.class));
 
+		boolean faCompleted = false;
+
+		if (fa.getLegRelated().getStatus().equals(LegStatus.LANDED) || fa.getLegRelated().getStatus().equals(LegStatus.CANCELLED))
+			faCompleted = true;
+		super.state(faCompleted, "*", "acme.validation.activityLog-faNotCompleted.message");
+
+		boolean faNotCancelled = true;
+		if (fa.getCurrentStatus().equals(CurrentStatus.CANCELLED) || fa.getCurrentStatus().equals(CurrentStatus.PENDING))
+			faNotCancelled = false;
+		super.state(faNotCancelled, "*", "acme.validation.activityLog-faNotCancelled.message");
+
+		boolean confirmation;
 		confirmation = super.getRequest().getData("confirmation", boolean.class);
 		super.state(confirmation, "confirmation", "acme.validation.confirmation.message");
 	}
