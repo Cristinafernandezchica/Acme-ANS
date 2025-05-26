@@ -19,4 +19,7 @@ public interface AdministratorRecommendationRepository extends AbstractRepositor
 
 	@Query("select r from Recommendation r where r.externalId = :externalId and r.providerName = :provider")
 	Optional<Recommendation> findByExternalIdAndProvider(@Param("externalId") String externalId, @Param("provider") String provider);
+
+	@Query("select r from Recommendation r where r.id = :id")
+	Recommendation findRecommedationById(int id);
 }

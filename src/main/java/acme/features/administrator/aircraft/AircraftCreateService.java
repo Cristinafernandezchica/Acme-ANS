@@ -1,6 +1,7 @@
 
 package acme.features.administrator.aircraft;
 
+import java.util.Arrays;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,39 @@ public class AircraftCreateService extends AbstractGuiService<Administrator, Air
 
 	@Override
 	public void authorise() {
-		super.getResponse().setAuthorised(true);
+		boolean status = true;
+		Integer aircraftId;
+		Aircraft aircraft;
+		Airline validAirline;
+		String aircraftStatus;
+		boolean existingAircraft = true;
+
+		if (super.getRequest().getMethod().equals("POST")) {
+			aircraftId = super.getRequest().getData("id", Integer.class);
+			aircraft = this.repository.findAircraftById(aircraftId);
+			existingAircraft = aircraft == null;
+
+			// Airline null
+			Integer airlineId = super.getRequest().getData("airline", Integer.class);
+			if (airlineId != null) {
+				validAirline = this.repository.findAirlineById(airlineId);
+				if (airlineId == 0)
+					status &= true;
+				else if (validAirline == null)
+					status &= false;
+			} else
+				status &= false;
+
+			// Invalid status
+
+			aircraftStatus = super.getRequest().getData("status", String.class);
+			if (!Arrays.toString(Status.values()).concat("0").contains(aircraftStatus) || aircraftStatus == null)
+				status = false;
+
+		}
+
+		super.getResponse().setAuthorised(status && existingAircraft);
+
 	}
 
 	@Override

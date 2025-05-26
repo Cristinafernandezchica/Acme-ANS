@@ -26,19 +26,20 @@ public class AdministratorPassengerListService extends AbstractGuiService<Admini
 
 	@Override
 	public void authorise() {
-		int bookingId;
+		Integer bookingId;
 		Booking booking;
 		boolean status = false;
 
 		if (!super.getRequest().getData().isEmpty()) {
-			bookingId = super.getRequest().getData("bookingId", int.class);
-			booking = this.repository.findBookingById(bookingId);
-
-			if (booking != null)
-				status = true;
+			bookingId = super.getRequest().getData("bookingId", Integer.class);
+			if (bookingId != null) {
+				booking = this.repository.findBookingById(bookingId);
+				status = booking != null;
+			}
 		}
 
 		super.getResponse().setAuthorised(status);
+
 	}
 
 	@Override

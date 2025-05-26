@@ -22,13 +22,17 @@ public class AdministratorPassengerShowService extends AbstractGuiService<Admini
 
 	@Override
 	public void authorise() {
-		int passengerId;
+		Integer passengerId;
 		Passenger passenger;
-		boolean status;
+		boolean status = false;
 
-		passengerId = super.getRequest().getData("id", int.class);
-		passenger = this.repository.findPassengerById(passengerId);
-		status = passenger != null && !passenger.isDraftMode() && this.repository.findPassengersWithBookingRecordAssigned().contains(passenger);
+		if (!super.getRequest().getData().isEmpty()) {
+			passengerId = super.getRequest().getData("id", Integer.class);
+			if (passengerId != null) {
+				passenger = this.repository.findPassengerById(passengerId);
+				status = passenger != null && !passenger.isDraftMode() && this.repository.findPassengersWithBookingRecordAssigned().contains(passenger);
+			}
+		}
 
 		super.getResponse().setAuthorised(status);
 	}
