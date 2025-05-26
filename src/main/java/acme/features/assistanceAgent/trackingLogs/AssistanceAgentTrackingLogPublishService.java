@@ -31,15 +31,17 @@ public class AssistanceAgentTrackingLogPublishService extends AbstractGuiService
 		String trackingLogStatus;
 		boolean isCorrectClaim = false;
 		Claim claim;
-		int id;
+		Integer id;
 		TrackingLog trackingLog;
 
 		if (!super.getRequest().getData().isEmpty() && super.getRequest().getData() != null) {
-			id = super.getRequest().getData("id", int.class);
-			trackingLog = this.repository.findTrackingLogById(id);
-			claim = this.repository.findClaimByTrackingLogId(id);
+			id = super.getRequest().getData("id", Integer.class);
+			if (id != null) {
+				trackingLog = this.repository.findTrackingLogById(id);
+				claim = this.repository.findClaimByTrackingLogId(id);
 
-			isCorrectClaim = claim != null && !claim.isDraftMode() && super.getRequest().getPrincipal().hasRealm(claim.getAssistanceAgent()) && trackingLog != null && trackingLog.isDraftMode();
+				isCorrectClaim = claim != null && !claim.isDraftMode() && super.getRequest().getPrincipal().hasRealm(claim.getAssistanceAgent()) && trackingLog != null && trackingLog.isDraftMode();
+			}
 		}
 
 		if (super.getRequest().getMethod().equals("POST")) {
@@ -72,6 +74,7 @@ public class AssistanceAgentTrackingLogPublishService extends AbstractGuiService
 
 	@Override
 	public void validate(final TrackingLog trackingLog) {
+		String statusString;
 		TrackingLogStatus status;
 		int trackingLogId;
 		TrackingLog oldTrackingLog;
@@ -84,32 +87,34 @@ public class AssistanceAgentTrackingLogPublishService extends AbstractGuiService
 		boolean isPercentage100 = true;
 		boolean moreToCreate = true;
 
-		status = super.getRequest().getData("status", TrackingLogStatus.class);
-		percentage = super.getRequest().getData("resolutionPercentage", Double.class);
+		if (trackingLog.getResolutionPercentage() != null && trackingLog.getStatus() != null) {
+			status = super.getRequest().getData("status", TrackingLogStatus.class);
+			percentage = super.getRequest().getData("resolutionPercentage", Double.class);
 
-		if (percentage.equals(100.00) && status.equals(TrackingLogStatus.PENDING) || !percentage.equals(100.00) && !status.equals(TrackingLogStatus.PENDING))
-			isCorrectPercentageStatus = false;
+			if (percentage.equals(100.00) && status.equals(TrackingLogStatus.PENDING) || !percentage.equals(100.00) && !status.equals(TrackingLogStatus.PENDING))
+				isCorrectPercentageStatus = false;
 
-		trackingLogId = super.getRequest().getData("id", int.class);
-		trackingLogs = this.repository.findTrackingLogsByClaimIdExcludingOne(trackingLog.getClaim().getId(), trackingLogId);
-		oldTrackingLog = this.repository.findTrackingLogById(trackingLogId);
+			trackingLogId = super.getRequest().getData("id", int.class);
+			trackingLogs = this.repository.findTrackingLogsByClaimIdExcludingOne(trackingLog.getClaim().getId(), trackingLogId);
+			oldTrackingLog = this.repository.findTrackingLogById(trackingLogId);
 
-		if (!trackingLogs.isEmpty()) {
-			minPercentage = trackingLogs.stream().findFirst().map(t -> t.getResolutionPercentage()).orElse(0.00);
-			Long maximumTrackingLogs = trackingLogs.stream().filter(t -> t.getResolutionPercentage().equals(100.00)).count();
-			if (Long.valueOf(0).equals(maximumTrackingLogs))
-				if (percentage.equals(100.00))
-					isPossibleToPublish = trackingLogs.stream().allMatch(t -> !t.isDraftMode());
-				else
-					isCorrectPercentage = percentage > minPercentage || percentage.equals(oldTrackingLog.getResolutionPercentage());
-			else if (Long.valueOf(1).equals(maximumTrackingLogs)) {
-				TrackingLog maximumTrackingLog = trackingLogs.stream().findFirst().get();
-				if (percentage.equals(100.00))
-					isPercentage100 = !maximumTrackingLog.isDraftMode() && status.equals(maximumTrackingLog.getStatus());
-				else
-					isCorrectPercentage = percentage.equals(oldTrackingLog.getResolutionPercentage());
-			} else if (Long.valueOf(2).equals(maximumTrackingLogs))
-				moreToCreate = percentage.equals(oldTrackingLog.getResolutionPercentage());
+			if (!trackingLogs.isEmpty()) {
+				minPercentage = trackingLogs.stream().findFirst().map(t -> t.getResolutionPercentage()).orElse(0.00);
+				Long maximumTrackingLogs = trackingLogs.stream().filter(t -> t.getResolutionPercentage().equals(100.00)).count();
+				if (Long.valueOf(0).equals(maximumTrackingLogs))
+					if (percentage.equals(100.00))
+						isPossibleToPublish = trackingLogs.stream().allMatch(t -> !t.isDraftMode());
+					else
+						isCorrectPercentage = percentage > minPercentage || percentage.equals(oldTrackingLog.getResolutionPercentage());
+				else if (Long.valueOf(1).equals(maximumTrackingLogs)) {
+					TrackingLog maximumTrackingLog = trackingLogs.stream().findFirst().get();
+					if (percentage.equals(100.00))
+						isPercentage100 = !maximumTrackingLog.isDraftMode() && status.equals(maximumTrackingLog.getStatus());
+					else
+						isCorrectPercentage = percentage.equals(oldTrackingLog.getResolutionPercentage());
+				} else if (Long.valueOf(2).equals(maximumTrackingLogs))
+					moreToCreate = percentage.equals(oldTrackingLog.getResolutionPercentage());
+			}
 		}
 
 		super.state(isCorrectPercentage, "resolutionPercentage", "acme.validation.trackingLog.resolutionPercentage.message");

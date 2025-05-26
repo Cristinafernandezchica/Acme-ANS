@@ -31,6 +31,7 @@ public class AssistanceAgentClaimCreateService extends AbstractGuiService<Assist
 		boolean isCorrectType = true;
 		boolean isCorrectLeg = true;
 		boolean hasLegs = true;
+		boolean isFakeUpdate = true;
 		String type;
 		Collection<Leg> legs;
 		int legId;
@@ -40,6 +41,12 @@ public class AssistanceAgentClaimCreateService extends AbstractGuiService<Assist
 
 		isCorrectRole = super.getRequest().getPrincipal().hasRealmOfType(AssistanceAgent.class);
 
+		if (super.getRequest().hasData("id")) {
+			Integer id = super.getRequest().getData("id", Integer.class);
+			if (id != 0)
+				isFakeUpdate = false;
+		}
+
 		agentId = super.getRequest().getPrincipal().getActiveRealm().getId();
 		assistanceAgent = this.repository.findAssistanceAgentById(agentId);
 		legs = this.repository.findAllPublishedLegs(MomentHelper.getCurrentMoment(), assistanceAgent.getAirline().getId());
@@ -48,20 +55,24 @@ public class AssistanceAgentClaimCreateService extends AbstractGuiService<Assist
 			hasLegs = false;
 
 		if (super.getRequest().getMethod().equals("POST")) {
-			type = super.getRequest().getData("type", String.class);
-			legId = super.getRequest().getData("leg", int.class);
+			boolean hasLegParam = super.getRequest().getData().containsKey("leg");
 
-			if (!Arrays.toString(ClaimType.values()).concat("0").contains(type) || type == null)
+			if (hasLegParam) {
+				legId = super.getRequest().getData("leg", int.class);
+				if (legId != 0) {
+					leg = this.repository.findLegById(legId);
+					if (!legs.contains(leg) || leg == null)
+						isCorrectLeg = false;
+				}
+			}
+
+			type = super.getRequest().getData("type", String.class);
+			if (type != null && !Arrays.toString(ClaimType.values()).concat("0").contains(type))
 				isCorrectType = false;
 
-			if (legId != 0) {
-				leg = this.repository.findLegById(legId);
-				if (!legs.contains(leg) || leg == null)
-					isCorrectLeg = false;
-			}
 		}
 
-		status = isCorrectRole && hasLegs && isCorrectType && isCorrectLeg;
+		status = isCorrectRole && isFakeUpdate && hasLegs && isCorrectType && isCorrectLeg;
 		super.getResponse().setAuthorised(status);
 	}
 
@@ -124,7 +135,6 @@ public class AssistanceAgentClaimCreateService extends AbstractGuiService<Assist
 			dataset.put("legs", choices);
 		} else {
 			choices = SelectChoices.from(legs, "flightNumber", claim.getLeg());
-			// dataset.put("leg", choices.getSelected() != null && choices.getSelected().getKey() != null ? choices.getSelected().getKey() : "0");
 			dataset.put("leg", choices.getSelected().getKey());
 			dataset.put("legs", choices);
 		}
