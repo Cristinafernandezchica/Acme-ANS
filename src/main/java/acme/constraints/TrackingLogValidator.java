@@ -26,12 +26,14 @@ public class TrackingLogValidator extends AbstractValidator<ValidTrackingLog, Tr
 			super.state(context, false, "*", "javax.validation.constraints.NotNull.message");
 			result = !super.hasErrors(context);
 		} else {
-			if (trackingLog.getStatus().equals(TrackingLogStatus.PENDING) && trackingLog.getResolutionPercentage() == 100.00)
-				super.state(context, false, "Status", "The status can be “PENDING” only when the resolution percentage is not 100%");
+			if (trackingLog.getStatus() == null || trackingLog.getResolutionPercentage() == null)
+				super.state(context, false, "status", "Neither the status nor the resolution percentage can be null");
+			else if (trackingLog.getStatus().equals(TrackingLogStatus.PENDING) && trackingLog.getResolutionPercentage() == 100.00)
+				super.state(context, false, "status", "The status can be “PENDING” only when the resolution percentage is not 100%");
 			else if (!trackingLog.getStatus().equals(TrackingLogStatus.PENDING) && trackingLog.getResolutionPercentage() != 100.00)
-				super.state(context, false, "Status", "The status can be “ACCEPTED” or “REJECTED” only when the resolution percentage gets to 100%");
+				super.state(context, false, "status", "The status can be “ACCEPTED” or “REJECTED” only when the resolution percentage gets to 100%");
 			else if (!trackingLog.getStatus().equals(TrackingLogStatus.PENDING) && (trackingLog.getResolution() == null || trackingLog.getResolution().isBlank()))
-				super.state(context, false, "Status", "If the status is not “PENDING”, then the resolution is mandatory");
+				super.state(context, false, "resolution", "If the status is not “PENDING”, then the resolution is mandatory");
 			else if (trackingLog.getClaim().isDraftMode())
 				super.state(context, false, "Claim", "We cannot associate a tracking log with a claim in draft mode.");
 			result = !super.hasErrors(context);
