@@ -36,3 +36,6 @@ Below we are going to provide the links referring to the dashboards of each team
 - **Student #3** Candela Jazmín Gutiérrez González: https://github.com/users/Cristinafernandezchica/projects/1/views/9
 - **Student #4** Marta Aguilar Morcillo: https://github.com/users/Cristinafernandezchica/projects/1/views/10
 - **Student #5** Luis Emmanuel Chavez Malave: https://github.com/users/Cristinafernandezchica/projects/1/views/11
+
+## Video testing requirements 8 and 9 from Student 1: https://uses0-my.sharepoint.com/:v:/g/personal/criferchi_alum_us_es/ERScnl-RqQZAqf21PQauBJ8BAO5o_G1IUoeCsuUGxGyyog?e=nSbtu8
+
