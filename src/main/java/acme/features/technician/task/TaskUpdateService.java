@@ -26,12 +26,12 @@ public class TaskUpdateService extends AbstractGuiService<Technician, Task> {
 		Technician technician;
 		int taskId;
 		boolean authored = false;
-		if (!super.getRequest().getData().isEmpty() && super.getRequest().getData() != null) {
+		if (!super.getRequest().getData().isEmpty() && super.getRequest().getData() != null && !(super.getRequest().getData().size() <= 1)) {
 			taskId = super.getRequest().getData("id", int.class);
 			task = this.repository.findByTaskId(taskId);
 
 			technician = (Technician) super.getRequest().getPrincipal().getActiveRealm();
-			if (technician.equals(task.getTechnician()) && task.isDraftMode())
+			if (task != null && technician.equals(task.getTechnician()) && task.isDraftMode())
 				authored = true;
 
 			if (super.getRequest().getMethod().equals("POST"))

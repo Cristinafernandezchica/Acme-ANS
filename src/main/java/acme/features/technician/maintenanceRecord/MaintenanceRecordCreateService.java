@@ -43,6 +43,9 @@ public class MaintenanceRecordCreateService extends AbstractGuiService<Technicia
 				if (newAircraft != 0 && (newAircraft == null || !listaDeAircraft.contains(newAircraft)))
 					authored = false;
 			}
+			if (authored)
+				if (super.getRequest().getData("id", int.class) != 0)
+					authored = false;
 
 		}
 		super.getResponse().setAuthorised(authored);

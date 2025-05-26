@@ -1,6 +1,7 @@
 authenticated.flight-crew-member.form.title = Flight crew member
 authenticated.flight-crew-member.form.label.phoneNumber = Phone number
 authenticated.flight-crew-member.form.label.languageSkills = Language skills
+authenticated.flight-crew-member.form.label.employeeCode = Employee code
 authenticated.flight-crew-member.form.label.availabilityStatus = Availability status
 authenticated.flight-crew-member.form.label.airline = Airline
 authenticated.flight-crew-member.form.label.salary = Salary

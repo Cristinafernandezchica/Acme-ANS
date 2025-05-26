@@ -31,13 +31,8 @@ import lombok.Setter;
 @Entity
 @ValidLeg
 @Table(indexes = {
-	@Index(columnList = "flight_id, scheduledDeparture"), 
-	@Index(columnList = "flight_id"), 
-	@Index(columnList = "flight_id, draftMode"), 
-	@Index(columnList = "draftMode, scheduledArrival, aircraft_id"),
-	@Index(columnList = "flight_id, arrival_airport_id"),	
-	@Index(columnList = "status, flight_id"),
-	@Index(columnList = "draftMode")
+	@Index(columnList = "flight_id, scheduledDeparture"), @Index(columnList = "flight_id"), @Index(columnList = "flight_id, draftMode"), @Index(columnList = "draftMode, scheduledArrival, aircraft_id"), @Index(columnList = "flight_id, arrival_airport_id"),
+	@Index(columnList = "status, flight_id"), @Index(columnList = "draftMode"), @Index(columnList = "id")
 
 })
 public class Leg extends AbstractEntity {
@@ -108,7 +103,7 @@ public class Leg extends AbstractEntity {
 
 	@Transient
 	public String getLabel() {
-		SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+		SimpleDateFormat timeFormat = new SimpleDateFormat("dd/MM/YYYY HH:mm");
 
 		String departureCity = this.departureAirport.getCity();
 		String departureCountry = this.departureAirport.getCountry();
@@ -117,7 +112,7 @@ public class Leg extends AbstractEntity {
 		String departureTime = timeFormat.format(this.getScheduledDeparture());
 		String arrivalTime = timeFormat.format(this.getScheduledArrival());
 
-		return String.format("%s: %s - %s: %s %s-%s", departureCountry, departureCity, arrivalCountry, arrivalCity, departureTime, arrivalTime);
+		return String.format("%s: %s - %s: %s %s - %s", departureCountry, departureCity, arrivalCountry, arrivalCity, departureTime, arrivalTime);
 
 	}
 

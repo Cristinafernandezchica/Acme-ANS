@@ -28,15 +28,18 @@ public class InvolvesShowService extends AbstractGuiService<Technician, Involves
 		Involves involves;
 		boolean showCreate;
 		int involvesId;
-		involvesId = super.getRequest().getData("id", int.class);
-		Technician technician = (Technician) super.getRequest().getPrincipal().getActiveRealm();
+		if (!super.getRequest().getData().isEmpty() && super.getRequest().getData() != null) {
+			involvesId = super.getRequest().getData("id", int.class);
+			Technician technician = (Technician) super.getRequest().getPrincipal().getActiveRealm();
 
-		involves = this.repository.findInvolvesById(involvesId);
-		showCreate = involves.getMaintenanceRecord().isDraftMode();
-		if (involves.getMaintenanceRecord().getTechnician().equals(technician))
-			authored = true;
-		super.getResponse().addGlobal("showCreate", showCreate);
-		super.getResponse().setAuthorised(authored);
+			involves = this.repository.findInvolvesById(involvesId);
+			showCreate = involves.getMaintenanceRecord().isDraftMode();
+			if (involves != null && involves.getMaintenanceRecord().getTechnician().equals(technician))
+				authored = true;
+			super.getResponse().addGlobal("showCreate", showCreate);
+			super.getResponse().setAuthorised(authored);
+
+		}
 
 	}
 

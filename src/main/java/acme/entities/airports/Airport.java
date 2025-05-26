@@ -24,7 +24,7 @@ import lombok.Setter;
 @Entity
 @ValidAirport
 @Table(indexes = {
-	@Index(columnList = "iataCode, id"), @Index(columnList = "city")
+	@Index(columnList = "iataCode"), @Index(columnList = "iataCode, id"), @Index(columnList = "city")
 })
 public class Airport extends AbstractEntity {
 

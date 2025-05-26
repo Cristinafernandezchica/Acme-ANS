@@ -20,7 +20,9 @@ public class MaintenanceRecordListService extends AbstractGuiService<Technician,
 
 	@Override
 	public void authorise() {
-		super.getResponse().setAuthorised(true);
+		boolean authored = false;
+		authored = super.getRequest().getPrincipal().hasRealmOfType(Technician.class);
+		super.getResponse().setAuthorised(authored);
 	}
 
 	@Override
