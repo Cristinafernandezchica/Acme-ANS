@@ -43,7 +43,7 @@ acme.validation.confirmation.message = This action must be confirm
 acme.validation.pilotExceptionPassed.message = That leg already has a pilot
 acme.validation.coPilotExceptionPassed.message = That leg already has a co-pilot
 acme.validation.legNotPublished.message = That leg is not published
-acme.validation.legNotPast.message = That leg must not be past
+acme.validation.legNotPast.message = That leg is not past
 acme.validation.legNotCompleted.message = That leg is not completed
 acme.validation.legFromRightAirline.message = That leg doesn't operate with your airline
 acme.validation.fcmAvailable.message = The flight crew member is not available
@@ -63,10 +63,7 @@ acme.validation.legNotPublished.message = That leg is not published
 acme.validation.legNotPast.message = That leg is not past
 acme.validation.legNotCompleted.message = That leg is not completed
 acme.validation.legFromRightAirline.message = That leg doesn't operate with your airline
-acme.validation.fcmAvailable-update.message = You cannot update the assignment if you are not available
-acme.validation.fcmAvailable-create.message = You cannot create an assignment if you are not available
-acme.validation.fcmAvailable-publish.message = You cannot publish the assignment if you are not available
-acme.validation.fcmAvailable-delete.message = You cannot delete the assignment if you are not available
+acme.validation.fcmAvailable.message = The flight crew member is not available
 acme.validation.legCompatible.message = The flight crew member already has a leg at that date
 acme.validation.isConfirmedOrCancelled.message = The flight assignment must be confirmed or cancelled
 # Flight crew member - flight assignment's messages (antiHacking)
@@ -82,10 +79,6 @@ acme.validation.existedLeg.message = That leg doesn't exist
 
 # Activity log - activity log's messages (antiHacking)
 acme.validation.isOriginalRegistrationMoment.message = That's not the original registration moment
-# Activity log - activity log's messages (validate)
-acme.validation.activityLog-faNotCompleted.message = The assignment must be completed
-acme.validation.activityLog-faNotPublished.message = The assignment must be published
-acme.validation.activityLog-faNotCancelled.message = The assignment must be confirmed
 
 # Leg - legs messages
 acme.validation.leg.same.aircraft.message = The aircraft is used by other leg in the same schedule

@@ -1,7 +1,6 @@
 authenticated.flight-crew-member.form.title = Asistente de vuelo
 authenticated.flight-crew-member.form.label.phoneNumber = Número de teléfono
 authenticated.flight-crew-member.form.label.languageSkills = Idiomas
-authenticated.flight-crew-member.form.label.employeeCode = Código de empleado
 authenticated.flight-crew-member.form.label.availabilityStatus = Disponibilidad
 authenticated.flight-crew-member.form.label.airline = Aerolínea
 authenticated.flight-crew-member.form.label.salary = Salario
