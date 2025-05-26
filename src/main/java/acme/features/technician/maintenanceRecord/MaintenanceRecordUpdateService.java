@@ -31,12 +31,12 @@ public class MaintenanceRecordUpdateService extends AbstractGuiService<Technicia
 		int mrId;
 		boolean authored = false;
 
-		if (!super.getRequest().getData().isEmpty() && super.getRequest().getData() != null) {
+		if (!super.getRequest().getData().isEmpty() && super.getRequest().getData() != null && !(super.getRequest().getData().size() <= 1)) {
 			mrId = super.getRequest().getData("id", int.class);
 			mr = this.repository.findMRById(mrId);
 
 			technician = (Technician) super.getRequest().getPrincipal().getActiveRealm();
-			if (technician.equals(mr.getTechnician()))
+			if (mr != null && technician.equals(mr.getTechnician()))
 				authored = true;
 
 			if (super.getRequest().getMethod().equals("POST")) {
