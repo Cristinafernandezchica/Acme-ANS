@@ -10,7 +10,7 @@ flight-crew-member.flight-assignment.list.label.remarks = Remarks
 flight-crew-member.flight-assignment.list.label.legs = Leg
 flight-crew-member.flight-assignment.list.label.availableFlightCrewMembers = Flight crew member
 flight-crew-member.flight-assignment.list.button.create = Create a Flight assignment
-flight-crew-member.flight-assignment.list.label.draftMode = In draftmode
+
 flight-crew-member.activity-log.form.title = Activity log
 flight-crew-member.activity-log.form.label.registrationMoment = Registration moment
 flight-crew-member.activity-log.form.label.typeOfIncident = Type of incident

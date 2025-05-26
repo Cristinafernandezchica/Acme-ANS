@@ -40,7 +40,7 @@ public class FlightAssignmentCompletedListService extends AbstractGuiService<Fli
 	public void unbind(final FlightAssignment flightAssignment) {
 		Dataset dataset;
 
-		dataset = super.unbindObject(flightAssignment, "flightCrewsDuty", "lastUpdate", "currentStatus", "draftMode");
+		dataset = super.unbindObject(flightAssignment, "flightCrewsDuty", "lastUpdate", "currentStatus");
 
 		super.getResponse().addData(dataset);
 	}
