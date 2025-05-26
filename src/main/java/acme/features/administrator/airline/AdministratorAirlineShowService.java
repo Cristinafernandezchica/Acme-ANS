@@ -24,16 +24,19 @@ public class AdministratorAirlineShowService extends AbstractGuiService<Administ
 
 	@Override
 	public void authorise() {
-		int airlineId;
+		boolean status = false;
+		Integer airlineId;
 		Airline airline;
-		boolean auth = true;
 
-		airlineId = super.getRequest().getData("id", int.class);
-		airline = this.repository.findAirlineById(airlineId);
-		if (airline == null)
-			auth = false;
+		if (!super.getRequest().getData().isEmpty()) {
+			airlineId = super.getRequest().getData("id", Integer.class);
+			if (airlineId != null) {
+				airline = this.repository.findAirlineById(airlineId);
+				status = airline != null;
+			}
+		}
 
-		super.getResponse().setAuthorised(auth);
+		super.getResponse().setAuthorised(status);
 	}
 
 	@Override
@@ -45,11 +48,6 @@ public class AdministratorAirlineShowService extends AbstractGuiService<Administ
 		airline = this.repository.findAirlineById(airlineId);
 
 		super.getBuffer().addData(airline);
-	}
-
-	@Override
-	public void validate(final Airline airline) {
-		;
 	}
 
 	@Override

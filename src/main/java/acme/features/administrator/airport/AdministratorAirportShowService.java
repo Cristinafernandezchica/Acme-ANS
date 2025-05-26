@@ -28,10 +28,12 @@ public class AdministratorAirportShowService extends AbstractGuiService<Administ
 		Integer airportId;
 		Airport airport;
 
-		airportId = super.getRequest().getData("id", Integer.class);
-		if (airportId != null) {
-			airport = this.repository.findAirportById(airportId);
-			status = airport != null;
+		if (!super.getRequest().getData().isEmpty()) {
+			airportId = super.getRequest().getData("id", Integer.class);
+			if (airportId != null) {
+				airport = this.repository.findAirportById(airportId);
+				status = airport != null;
+			}
 		}
 
 		super.getResponse().setAuthorised(status);
