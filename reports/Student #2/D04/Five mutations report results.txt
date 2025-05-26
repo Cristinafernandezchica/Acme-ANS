@@ -1,0 +1,108 @@
+En este reporte se pretenden enumerar las cinco mutaciones realizadas en el código de mi estudiante (Student #2) y si los test han sido capaces de detectarlas o no .
+ 
+Primer mutante: En el método authorise de la feature CustomerBookingUpdateService se cambió un operador lógico AND por otro OR:
+				status = super.getRequest().getPrincipal().hasRealm(customer) && booking != null && booking.isDraftMode();
+por
+				status = super.getRequest().getPrincipal().hasRealm(customer) || booking != null && booking.isDraftMode();
+ 
+Resultado primer mutante: Ha fallado el test relacionado con los intentos de hacking en relacion al borrado de registros de mantenimientos:
+  
+  	- /customer/booking/update-mine.hack
+  	
+Este resultado es correcto, pues al cambiar el primer operador && a ||, estamos autorizando todas las peticiones de actualización de reservas a cualquier cliente que introduzca un id de registro que exista. El tester#replay espera errores 500 de desautorización, pero recibe peticiones aceptadas con estado 200.
+ 
+Podemos considerar que este segundo mutante ha sido captado con éxito.
+
+
+
+-----------------------------------------------
+
+
+Segundo mutante: Cambiar el valor superior (cota) del atributo "fullName" de la entidad Passenger a 256 en vez de 255.
+
+Resultado segundo mutante: Han fallado los test relacionados con la creacion, actualización y publicación de pasajeros, en concreto:
+	- customer/passenger/create-mine.safe
+ 	- customer/passenger/create-mine02.safe
+ 	- customer/passenger/update-mine.safe
+ 	- customer/passenger/publish-mine.safe
+ 	- customer/passenger/publish-mine02.safe
+
+Podemos considerar que este segundo mutante ha sido captado con éxito.
+
+
+-----------------------------------------------
+
+
+
+Tercer mutante: En el método findAvailablePassengersByBookingId de la interfaz CustomerBookingRecordRepository se cambió en la query el tipo booleano
+de AND a OR, es decir, cambiamos:
+ 
+		@Query("SELECT p FROM Passenger p JOIN Booking b ON b.customer.id = p.customer.id LEFT JOIN BookingRecord br ON br.passenger.id = p.id AND br.booking.id = b.id WHERE p.customer.id = :customerId AND b.id = :bookingId AND br.id IS NULL")
+
+por:
+
+	@Query("SELECT p FROM Passenger p JOIN Booking b ON b.customer.id = p.customer.id LEFT JOIN BookingRecord br ON br.passenger.id = p.id AND br.booking.id = b.id WHERE p.customer.id = :customerId OR b.id = :bookingId OR br.id IS NULL")
+
+Resultado del tercer mutante: Han fallado los siguientes test:
+
+	- \customer\bookingRecord\create-mine.safe
+	- \customer\bookingRecord\create-mine02.safe
+	- \customer\bookingRecord\create-mine.hack... 
+
+	
+Este resultado es esperado, pues cuando se ha desplegado a la hora de asignar un pasajero a una booking se puede observar que hay más pasajeros de los que se esperaban al cumplirse más condiciones. Por lo tanto, el resultado es el esperado
+
+Podemos considerar que este tercer mutante ha sido captado con éxito.
+
+
+
+-----------------------------------------------
+
+
+
+Cuarto mutante: En la interfaz CustomerBookingShowService, en el método unbind(), se cambiará la condición de si el vuelo está publicado a que no lo esté:
+
+				flights = this.repository.findAllFlights().stream().filter(flight -> flight.getScheduledDeparture() != null && !flight.isDraftMode() && flight.getScheduledDeparture().after(MomentHelper.getCurrentMoment())
+			&& this.repository.findLegsByFlightId(flight.getId()).stream().allMatch(leg -> leg.getScheduledDeparture().after(MomentHelper.getCurrentMoment()))).collect(Collectors.toList());
+
+
+por:
+				flights = this.repository.findAllFlights().stream().filter(flight -> flight.getScheduledDeparture() != null && flight.isDraftMode() && flight.getScheduledDeparture().after(MomentHelper.getCurrentMoment())
+			&& this.repository.findLegsByFlightId(flight.getId()).stream().allMatch(leg -> leg.getScheduledDeparture().after(MomentHelper.getCurrentMoment()))).collect(Collectors.toList());
+
+
+Resultado del cuarto mutante: Han fallado los siguientes test:
+ 
+ 	- \customer\bookingRecord\create-mine.safe
+ 	- \customer\booking\publish-mine.safe... 
+	- \customer\booking\publish-mine02.hack... 
+ 	- \customer\booking\show-mine.safe... 
+	- \customer\booking\update-mine.hack... 
+	- \customer\booking\update-mine02.hack... 
+ 	- \customer\booking\show-mine02.safe... 
+	- \customer\booking\update-mine.safe... 
+ 	
+Este resultado es esperado, pues intenta buscar los vuelos y los selects van a ser distintos, ya que para crear el booking-record va a hacer falta listar los vuelos y todos aquellos que pasen por show o muestren el select (casi todas las de booking y el record)
+
+Podemos considerar que este cuarto mutante ha sido captado con éxito.
+
+-----------------------------------------------
+
+
+Quinto mutante: En la interfaz CustomerPassengerPublishService, en el método authorise(), se cambio el operador lógico AND por un OR:
+
+		if (!super.getRequest().getData().isEmpty() && super.getRequest().getData() != null) {
+
+	
+ por:
+		if (!super.getRequest().getData().isEmpty() || super.getRequest().getData() != null) {
+
+ 	
+ 
+Resultado del quinto mutante: Han fallado el siguiente test:
+
+	- /customer/passenger/publish-mine.hack
+	
+Este resultado es esperado, ya que esta función es la que controlaba todas las peticiones de actualización de reservas, ahora es posible hacer /publish sin estar en un pasajero y que de error de WorkArea. El tester#replay espera errores 500 de desautorización, pero recibe peticiones de error workarea con estado 500.
+ 
+Podemos considerar que este quinto mutante ha sido captado con éxito.
