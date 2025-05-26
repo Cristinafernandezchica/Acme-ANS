@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="15.1">
-  <zoom_level>1</zoom_level>
+  <zoom_level>5</zoom_level>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>118</x>
-      <y>488</y>
-      <w>85</w>
-      <h>19</h>
+      <x>0</x>
+      <y>105</y>
+      <w>425</w>
+      <h>95</h>
     </coordinates>
     <panel_attributes>&lt;&lt;AbstractEntity&gt;&gt;
 @ValidBooking
@@ -26,10 +26,10 @@ booking::Booking
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>142</x>
-      <y>467</y>
-      <w>16</w>
-      <h>8</h>
+      <x>120</x>
+      <y>0</y>
+      <w>80</w>
+      <h>40</h>
     </coordinates>
     <panel_attributes>&lt;&lt;AbstractEntity&gt;&gt;
 flights::Flight
@@ -40,10 +40,10 @@ flights::Flight
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>138</x>
-      <y>517</y>
-      <w>41</w>
-      <h>10</h>
+      <x>100</x>
+      <y>250</y>
+      <w>205</w>
+      <h>50</h>
     </coordinates>
     <panel_attributes>&lt;&lt;AbstractEntity&gt;&gt;
 @ValidBookingRecord
@@ -56,13 +56,12 @@ bookingRecord::BookingRecord
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>123</x>
-      <y>542</y>
-      <w>80</w>
-      <h>17</h>
+      <x>25</x>
+      <y>375</y>
+      <w>400</w>
+      <h>85</h>
     </coordinates>
     <panel_attributes>&lt;&lt;AbstractEntity&gt;&gt;
-@ValidPassenger
 passenger::Passenger
 --
 + fullName: String {Mandatory, ValidString(min=1, max = 255), Automapped}
@@ -76,10 +75,10 @@ passenger::Passenger
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>179</x>
-      <y>472</y>
-      <w>17</w>
-      <h>8</h>
+      <x>305</x>
+      <y>25</y>
+      <w>85</w>
+      <h>40</h>
     </coordinates>
     <panel_attributes>&lt;&lt;Enumeration&gt;&gt;
 booking::TravelClass
@@ -91,10 +90,10 @@ BUSINESS</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>144</x>
-      <y>474</y>
-      <w>9</w>
-      <h>16</h>
+      <x>130</x>
+      <y>35</y>
+      <w>45</w>
+      <h>80</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=0..1
@@ -105,10 +104,10 @@ flying at &gt;</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>221</x>
-      <y>488</y>
-      <w>63</w>
-      <h>17</h>
+      <x>515</x>
+      <y>105</y>
+      <w>315</w>
+      <h>85</h>
     </coordinates>
     <panel_attributes>&lt;&lt;AbstractRole&gt;&gt;
 @ValidCustomer
@@ -125,10 +124,10 @@ realms::Customer
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>144</x>
-      <y>526</y>
-      <w>11</w>
-      <h>18</h>
+      <x>130</x>
+      <y>295</y>
+      <w>55</w>
+      <h>90</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=0..n
@@ -139,10 +138,10 @@ booked by &gt;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>144</x>
-      <y>506</y>
-      <w>12</w>
-      <h>13</h>
+      <x>130</x>
+      <y>195</y>
+      <w>60</w>
+      <h>65</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=0..1
@@ -153,10 +152,10 @@ registered to &gt;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>202</x>
-      <y>495</y>
-      <w>21</w>
-      <h>5</h>
+      <x>420</x>
+      <y>140</y>
+      <w>105</w>
+      <h>25</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=0..n
@@ -167,10 +166,10 @@ bought by &gt;</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>202</x>
-      <y>504</y>
-      <w>34</w>
-      <h>49</h>
+      <x>420</x>
+      <y>185</y>
+      <w>170</w>
+      <h>245</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=0..n
@@ -181,10 +180,10 @@ m2=0..1
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>243</x>
-      <y>521</y>
-      <w>39</w>
-      <h>32</h>
+      <x>625</x>
+      <y>270</y>
+      <w>195</w>
+      <h>160</h>
     </coordinates>
     <panel_attributes>&lt;&lt;AbstractForm&gt;&gt;
 form::CustomerDashboard
@@ -208,5 +207,74 @@ form::CustomerDashboard
 + bookingCostsLastFiveYears(): List&lt;Money&gt;
 </panel_attributes>
     <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>190</x>
+      <y>550</y>
+      <w>270</w>
+      <h>115</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;AbstractEntity&gt;&gt;
+realms::Recommendation
+--
++ title: String {Mandatory, ValidString(min = 1, max = 100), Automapped}
++ description: String {Mandatory, ValidString(min = 1, max = 500), Automapped}
++ startDate: Date {Mandatory, ValidMoment(past = false), Automapped}
+- endDate: Date {Optional, ValidMoment(past = false), Automapped}
++ category: Category {Mandatory, Automapped}
++ estimatedCost: Money {Mandatory, ValidMoney(min = 0), Automapped}
++ link: String {Mandatory, ValidUrl, Automapped}
++ airport: Airport {Mandatory, Valid, ManyToOne(optional = false)}
+- externalId: String
+- providerName: String</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>650</x>
+      <y>580</y>
+      <w>80</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;AbstractEntity&gt;&gt;
+airports::
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>55</x>
+      <y>560</y>
+      <w>95</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Enumeration&gt;&gt;
+recommendation::Category
+--
+EXPERIENCE
+ACTIVITY
+RESTAURANT
+ACCOMMODATION
+OTHER</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>455</x>
+      <y>605</y>
+      <w>245</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=0..n
+m2=0..1
+booked by &gt;</panel_attributes>
+    <additional_attributes>10.0;20.0;470.0;30.0</additional_attributes>
   </element>
 </diagram>

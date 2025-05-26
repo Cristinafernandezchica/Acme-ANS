@@ -49,10 +49,13 @@ acme.validation.confirmation.message = Esta acción debe ser confirmada
 acme.validation.pilotExceptionPassed.message = Este vuelo ya tiene un piloto
 acme.validation.coPilotExceptionPassed.message = Este vuelo ya tiene un copiloto
 acme.validation.legNotPublished.message = Este vuelo no está publicado
-acme.validation.legNotPast.message = Este vuelo no es pasada
+acme.validation.legNotPast.message = Este vuelo no debe ser pasada
 acme.validation.legNotCompleted.message = Este vuelo no está completada
 acme.validation.legFromRightAirline.message = Este vuelo no opera con la aerolínea del asistente de vuelo
-acme.validation.fcmAvailable.message = El asistente de vuelo no está disponible
+acme.validation.fcmAvailable-update.message = No puedes actualizar la asignación si no estás disponible
+acme.validation.fcmAvailable-delete.message = No puedes elimminar la asignación si no estás disponible
+acme.validation.fcmAvailable-create.message = No puedes crear una asignación si no estás disponible
+acme.validation.fcmAvailable-publish.message = No puedes publicar la asignación si no estás disponible
 acme.validation.legCompatible.message = Este asistente de vuelo ya tiene un vuelo en esa fecha
 acme.validation.isConfirmedOrCancelled.message = La asignación del vuelo debe estar confirmada o denegada
 # Flight crew member - flight assignment's messages (antiHacking)
@@ -68,7 +71,10 @@ acme.validation.existedLeg.message = El vuelo no existe
 
 # Activity log - activity log's messages (antiHacking)
 acme.validation.isOriginalRegistrationMoment.message = No es la fecha de registro original
-
+# Activity log - activity log's messages (validate)
+acme.validation.activityLog-faNotCompleted.message = La asignacíon debe estar completada
+acme.validation.activityLog-faNotPublished.message = La asignacíon debe estar publicada
+acme.validation.activityLog-faNotCancelled.message = La asignacíon debe estar confirmada
 
 # Leg - leg's messages
 acme.validation.leg.same.aircraft.message = El avión es usado por otro tramo en el mismo horario
