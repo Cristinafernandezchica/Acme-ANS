@@ -28,15 +28,20 @@ public class AdministratorAirportCreateService extends AbstractGuiService<Admini
 	public void authorise() {
 		boolean status = true;
 		String operationalScope;
+		boolean existingAirport = true;
 
 		if (super.getRequest().getMethod().equals("POST")) {
 			operationalScope = super.getRequest().getData("operationalScope", String.class);
 
 			if (!Arrays.toString(OperationalScopeType.values()).concat("0").contains(operationalScope) || operationalScope == null)
 				status = false;
+			Integer airportId = super.getRequest().getData("id", Integer.class);
+			Airport airport = this.repository.findAirportById(airportId);
+			existingAirport = airport == null;
+
 		}
 
-		super.getResponse().setAuthorised(status);
+		super.getResponse().setAuthorised(status && existingAirport);
 	}
 
 	@Override

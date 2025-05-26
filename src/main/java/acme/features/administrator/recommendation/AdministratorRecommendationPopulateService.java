@@ -35,27 +35,32 @@ public class AdministratorRecommendationPopulateService extends AbstractGuiServi
 	@Override
 	public void authorise() {
 		boolean status = true;
+		Integer airportId;
+		Airport airport;
+		Integer recommendationId;
+		Recommendation recommendation;
+		boolean existingRecom = true;
 
 		if (super.getRequest().getMethod().equals("POST")) {
-			int airportId;
-			Airport airport;
+			recommendationId = super.getRequest().getData("id", Integer.class);
+			recommendation = this.repository.findRecommedationById(recommendationId);
+			existingRecom = recommendation == null;
 
-			airportId = super.getRequest().getData("airport", int.class);
-			airport = this.airportRepository.findAirportById(airportId);
-
-			if (airport == null && airportId != 0)
-				status = false;
+			airportId = super.getRequest().getData("airport", Integer.class);
+			if (airportId != null) {
+				airport = this.airportRepository.findAirportById(airportId);
+				if (airportId == 0)
+					status &= true;
+				else if (airport == null)
+					status &= false;
+			} else
+				status &= false;
 
 			String rawCategory = super.getRequest().getData("category", String.class);
-
-			if (rawCategory != null && !rawCategory.trim().isEmpty() && !rawCategory.equals("0")) {
-				boolean categoryValid = Arrays.stream(Category.values()).anyMatch(tc -> tc.name().equals(rawCategory));
-
-				if (!categoryValid)
-					status = false;
-			}
+			if (!Arrays.toString(Category.values()).concat("0").contains(rawCategory) || rawCategory == null || rawCategory == "")
+				status = false;
 		}
-		super.getResponse().setAuthorised(status);
+		super.getResponse().setAuthorised(status && existingRecom);
 	}
 
 	@Override

@@ -28,17 +28,18 @@ public class AdministratorAirportUpdateService extends AbstractGuiService<Admini
 	public void authorise() {
 		boolean status;
 		boolean isCorrectAirport = false;
-		int id;
+		Integer id;
 		Airport airport;
 
 		boolean isCorrectOperationalScope = true;
 		String operationalScope;
 
 		if (!super.getRequest().getData().isEmpty() && super.getRequest().getData() != null) {
-			id = super.getRequest().getData("id", int.class);
-			airport = this.repository.findAirportById(id);
-			isCorrectAirport = airport != null;
-
+			id = super.getRequest().getData("id", Integer.class);
+			if (id != null) {
+				airport = this.repository.findAirportById(id);
+				isCorrectAirport = airport != null;
+			}
 			if (super.getRequest().getMethod().equals("POST")) {
 				operationalScope = super.getRequest().getData("operationalScope", String.class);
 

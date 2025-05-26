@@ -1,16 +1,11 @@
 
 package acme.features.technician.involves;
 
-import java.util.Collection;
-
 import org.springframework.beans.factory.annotation.Autowired;
 
-import acme.client.components.models.Dataset;
-import acme.client.components.views.SelectChoices;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.involves.Involves;
-import acme.entities.tasks.Task;
 import acme.realms.Technician;
 
 @GuiService
@@ -25,11 +20,11 @@ public class InvolvesDeleteService extends AbstractGuiService<Technician, Involv
 		boolean authored = false;
 		Involves involves;
 		int involvesId;
-		if (!super.getRequest().getData().isEmpty() && super.getRequest().getData() != null) {
+		if (!super.getRequest().getData().isEmpty() && super.getRequest().getData() != null && !(super.getRequest().getData().size() <= 1)) {
 			involvesId = super.getRequest().getData("id", int.class);
 			Technician technician = (Technician) super.getRequest().getPrincipal().getActiveRealm();
 			involves = this.repository.findInvolvesById(involvesId);
-			if (involves.getMaintenanceRecord().getTechnician().equals(technician) && involves.getMaintenanceRecord().isDraftMode())
+			if (involves != null && involves.getMaintenanceRecord().getTechnician().equals(technician) && involves.getMaintenanceRecord().isDraftMode())
 				authored = true;
 		}
 		super.getResponse().setAuthorised(authored);
@@ -63,19 +58,6 @@ public class InvolvesDeleteService extends AbstractGuiService<Technician, Involv
 
 	@Override
 	public void unbind(final Involves involves) {
-		SelectChoices selectTask;
-
-		Collection<Task> tasks;
-		Dataset dataset;
-
-		tasks = this.repository.findAllTasks();
-
-		selectTask = SelectChoices.from(tasks, "taskLabel", involves.getTask());
-
-		dataset = super.unbindObject(involves, "task");
-		dataset.put("tasks", selectTask);
-		dataset.put("task", selectTask.getSelected().getKey());
-
-		super.getResponse().addData(dataset);
+		;
 	}
 }

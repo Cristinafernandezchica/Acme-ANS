@@ -34,11 +34,12 @@ public class AircraftUpdateService extends AbstractGuiService<Administrator, Air
 	public void authorise() {
 		boolean auth;
 
-		Aircraft aircraftSelected;
+		Aircraft aircraftSelected = null;
 		boolean existingAircraft = false;
 		boolean hasAtributes = false;
 		boolean validAircraft = true;
 		boolean validStatus = true;
+		boolean invalidChange = true;
 
 		String metodo = super.getRequest().getMethod();
 
@@ -66,10 +67,18 @@ public class AircraftUpdateService extends AbstractGuiService<Administrator, Air
 				if (status == null || status.trim().isEmpty() || Arrays.stream(Status.values()).noneMatch(tc -> tc.name().equals(status)) && !status.equals("0"))
 					validStatus = false;
 
+				String newModel = super.getRequest().getData("model", String.class);
+				String newRegNum = super.getRequest().getData("registrationNumber", String.class);
+				Integer newCapacity = super.getRequest().getData("numberPassengers", Integer.class);
+				Integer newCargoW = super.getRequest().getData("cargoWeight", Integer.class);
+				if (aircraftSelected != null
+					&& (!aircraftSelected.getModel().equals(newModel) || !aircraftSelected.getRegistrationNumber().equals(newRegNum) || !aircraftSelected.getNumberPassengers().equals(newCapacity) || !aircraftSelected.getCargoWeight().equals(newCargoW)))
+					invalidChange = false;
+
 			}
 
 		}
-		auth = existingAircraft && hasAtributes && validStatus && validAircraft;
+		auth = existingAircraft && hasAtributes && validStatus && validAircraft && invalidChange;
 		super.getResponse().setAuthorised(auth);
 	}
 

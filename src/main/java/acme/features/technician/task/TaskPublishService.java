@@ -23,7 +23,7 @@ public class TaskPublishService extends AbstractGuiService<Technician, Task> {
 		int taskId;
 		boolean authored = false;
 
-		if (!super.getRequest().getData().isEmpty() && super.getRequest().getData() != null) {
+		if (!super.getRequest().getData().isEmpty() && super.getRequest().getData() != null && !(super.getRequest().getData().size() <= 1)) {
 			taskId = super.getRequest().getData("id", int.class);
 			task = this.repository.findByTaskId(taskId);
 

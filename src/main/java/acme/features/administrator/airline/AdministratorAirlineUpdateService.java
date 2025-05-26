@@ -1,6 +1,7 @@
 
 package acme.features.administrator.airline;
 
+import java.util.Arrays;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +29,20 @@ public class AdministratorAirlineUpdateService extends AbstractGuiService<Admini
 	@Override
 	public void authorise() {
 		boolean auth = false;
-		if (!super.getRequest().getData().isEmpty() && super.getRequest().getData() != null)
+		if (!super.getRequest().getData().isEmpty() && super.getRequest().getData() != null) {
 			auth = true;
+			Integer id = super.getRequest().getData("id", Integer.class);
+			if (id != null) {
+				Airline a = this.repository.findAirlineById(id);
+				auth = a != null;
+			}
+			if (super.getRequest().getMethod().equals("POST")) {
+				String type = super.getRequest().getData("type", String.class);
+
+				if (!Arrays.toString(AirlineType.values()).concat("0").contains(type) || type == null)
+					auth = false;
+			}
+		}
 		super.getResponse().setAuthorised(auth);
 	}
 
