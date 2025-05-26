@@ -32,7 +32,7 @@ public class AssistanceAgentClaimPublishService extends AbstractGuiService<Assis
 		boolean isCorrectType = true;
 		boolean isCorrectLeg = true;
 		boolean hasLegs = true;
-		int id;
+		Integer id;
 		Claim claim;
 		AssistanceAgent assistanceAgent;
 		String type;
@@ -42,10 +42,12 @@ public class AssistanceAgentClaimPublishService extends AbstractGuiService<Assis
 		int agentId;
 
 		if (!super.getRequest().getData().isEmpty() && super.getRequest().getData() != null) {
-			id = super.getRequest().getData("id", int.class);
-			claim = this.repository.findClaimById(id);
-			assistanceAgent = claim == null ? null : claim.getAssistanceAgent();
-			isCorrectClaim = super.getRequest().getPrincipal().hasRealm(assistanceAgent) && claim != null && claim.isDraftMode();
+			id = super.getRequest().getData("id", Integer.class);
+			if (id != null) {
+				claim = this.repository.findClaimById(id);
+				assistanceAgent = claim == null ? null : claim.getAssistanceAgent();
+				isCorrectClaim = super.getRequest().getPrincipal().hasRealm(assistanceAgent) && claim != null && claim.isDraftMode();
+			}
 		}
 
 		agentId = super.getRequest().getPrincipal().getActiveRealm().getId();
