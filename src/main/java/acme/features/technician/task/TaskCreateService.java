@@ -30,6 +30,9 @@ public class TaskCreateService extends AbstractGuiService<Technician, Task> {
 				List<String> listaDeStatus = List.of(Type.INSPECTION.name(), Type.MAINTENANCE.name(), Type.REPAIR.name(), Type.SYSTEMCHECK.name());
 				if (!newType.equals("0") && (newType == null || !listaDeStatus.contains(newType)))
 					authored = false;
+				if (authored)
+					if (super.getRequest().getData("id", int.class) != 0)
+						authored = false;
 			}
 		super.getResponse().setAuthorised(authored);
 	}

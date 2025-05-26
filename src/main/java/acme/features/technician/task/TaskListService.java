@@ -20,7 +20,9 @@ public class TaskListService extends AbstractGuiService<Technician, Task> {
 
 	@Override
 	public void authorise() {
-		super.getResponse().setAuthorised(true);
+		boolean authored = false;
+		authored = super.getRequest().getPrincipal().hasRealmOfType(Technician.class);
+		super.getResponse().setAuthorised(authored);
 	}
 
 	@Override

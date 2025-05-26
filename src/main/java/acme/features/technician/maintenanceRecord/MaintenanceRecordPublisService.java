@@ -27,7 +27,7 @@ public class MaintenanceRecordPublisService extends AbstractGuiService<Technicia
 		Technician technician;
 		int mrId;
 		boolean authored = false;
-		if (!super.getRequest().getData().isEmpty() && super.getRequest().getData() != null) {
+		if (!super.getRequest().getData().isEmpty() && super.getRequest().getData() != null && !(super.getRequest().getData().size() <= 1)) {
 			mrId = super.getRequest().getData("id", int.class);
 			mr = this.repository.findMRById(mrId);
 
