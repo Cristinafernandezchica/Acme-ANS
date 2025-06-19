@@ -35,32 +35,33 @@ public class TrackingLog extends AbstractEntity {
 	private static final long	serialVersionUID	= 1L;
 
 	@Mandatory
-	@ManyToOne(optional = false)
 	@Valid
+	@ManyToOne(optional = false)
 	private Claim				claim;
 
 	@Mandatory
-	@ValidMoment(min = "2000/01/01 00:00", past = true)
 	@Temporal(TemporalType.TIMESTAMP)
+	@ValidMoment(min = "2000/01/01 00:00", past = true)
 	private Date				lastUpdateMoment;
 
 	@Mandatory
-	@ValidString(min = 1, max = 50)
 	@Automapped
+	@ValidString(min = 1, max = 50)
 	private String				step;
 
 	@Mandatory
-	@ValidScore
 	@Automapped
+	@ValidScore
 	private Double				resolutionPercentage;
 
 	@Mandatory
 	@Automapped
+	@Valid
 	private TrackingLogStatus	status;
 
 	@Optional
-	@ValidString(max = 255)
 	@Automapped
+	@ValidString(max = 255)
 	private String				resolution;
 
 	@Mandatory

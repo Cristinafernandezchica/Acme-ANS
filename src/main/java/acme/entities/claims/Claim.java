@@ -38,32 +38,33 @@ public class Claim extends AbstractEntity {
 	private static final long	serialVersionUID	= 1L;
 
 	@Mandatory
-	@ManyToOne(optional = false)
 	@Valid
+	@ManyToOne(optional = false)
 	private AssistanceAgent		assistanceAgent;
 
 	@Mandatory
-	@ValidMoment(min = "2000/01/01 00:00", past = true)
 	@Temporal(TemporalType.TIMESTAMP)
+	@ValidMoment(min = "2000/01/01 00:00", past = true)
 	private Date				registrationMoment;
 
 	@Mandatory
-	@ValidEmail
 	@Automapped
+	@ValidEmail
 	private String				passengerEmail;
 
 	@Mandatory
-	@ValidString(min = 1, max = 255)
 	@Automapped
+	@ValidString(min = 1, max = 255)
 	private String				description;
 
 	@Mandatory
 	@Automapped
+	@Valid
 	private ClaimType			type;
 
 	@Mandatory
-	@ManyToOne(optional = false)
 	@Valid
+	@ManyToOne(optional = false)
 	private Leg					leg;
 
 	@Mandatory

@@ -38,37 +38,37 @@ public class AssistanceAgent extends AbstractRole {
 	private static final long	serialVersionUID	= 1L;
 
 	@Mandatory
-	@ValidString(min = 8, max = 9, pattern = "^[A-Z]{2,3}\\d{6}$")
 	@Column(unique = true)
+	@ValidString(min = 8, max = 9, pattern = "^[A-Z]{2,3}\\d{6}$")
 	private String				employeeCode;
 
 	@Mandatory
-	@ValidString(min = 1, max = 255)
 	@Automapped
+	@ValidString(min = 1, max = 255)
 	private String				spokenLanguages;
 
 	@Mandatory
-	@ManyToOne(optional = false)
 	@Valid
+	@ManyToOne(optional = false)
 	private Airline				airline;
 
 	@Mandatory
-	@ValidMoment(past = true)
 	@Temporal(TemporalType.TIMESTAMP)
+	@ValidMoment(past = true)
 	private Date				moment;
 
 	@Optional
-	@ValidString(max = 255)
 	@Automapped
+	@ValidString(max = 255)
 	private String				briefBio;
 
 	@Optional
-	@ValidMoney(min = 0, max = 30000)
 	@Automapped
+	@ValidMoney(min = 0, max = 30000)
 	private Money				salary;
 
 	@Optional
-	@ValidUrl
 	@Automapped
+	@ValidUrl
 	private String				picture;
 }

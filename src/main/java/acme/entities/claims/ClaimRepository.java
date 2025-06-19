@@ -12,7 +12,7 @@ import acme.entities.trackingLogs.TrackingLog;
 @Repository
 public interface ClaimRepository extends AbstractRepository {
 
-	@Query("SELECT t FROM TrackingLog t WHERE t.claim.id = :claimId AND t.draftMode = false ORDER BY t.lastUpdateMoment DESC")
+	@Query("SELECT t FROM TrackingLog t WHERE t.claim.id = :claimId AND t.draftMode = false ORDER BY t.resolutionPercentage DESC")
 	Collection<TrackingLog> findTrackingLogsByClaimId(int claimId);
 
 }
