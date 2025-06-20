@@ -123,21 +123,15 @@ public class AssistanceAgentClaimCreateService extends AbstractGuiService<Assist
 		int agentId;
 		AssistanceAgent assistanceAgent;
 
-		agentId = super.getRequest().getPrincipal().getActiveRealm().getId();
-		assistanceAgent = this.repository.findAssistanceAgentById(agentId);
-		legs = this.repository.findAllPublishedLegs(MomentHelper.getCurrentMoment(), assistanceAgent.getAirline().getId());
 		dataset = super.unbindObject(claim, "registrationMoment", "passengerEmail", "description", "draftMode");
 		dataset.put("accepted", claim.getAccepted());
 
-		if (legs.isEmpty()) {
-			choices = new SelectChoices();
-			dataset.put("leg", choices.getSelected() != null && choices.getSelected().getKey() != null ? choices.getSelected().getKey() : "0");
-			dataset.put("legs", choices);
-		} else {
-			choices = SelectChoices.from(legs, "flightNumber", claim.getLeg());
-			dataset.put("leg", choices.getSelected().getKey());
-			dataset.put("legs", choices);
-		}
+		agentId = super.getRequest().getPrincipal().getActiveRealm().getId();
+		assistanceAgent = this.repository.findAssistanceAgentById(agentId);
+		legs = this.repository.findAllPublishedLegs(MomentHelper.getCurrentMoment(), assistanceAgent.getAirline().getId());
+		choices = SelectChoices.from(legs, "flightNumber", claim.getLeg());
+		dataset.put("leg", choices.getSelected().getKey());
+		dataset.put("legs", choices);
 
 		types = SelectChoices.from(ClaimType.class, claim.getType());
 		dataset.put("types", types);

@@ -29,11 +29,14 @@ public class AssistanceAgentClaimShowService extends AbstractGuiService<Assistan
 		Claim claim;
 		AssistanceAgent assistanceAgent;
 
-		id = super.getRequest().getData("id", Integer.class);
-		if (id != null) {
-			claim = this.repository.findClaimById(id);
-			assistanceAgent = claim == null ? null : claim.getAssistanceAgent();
-			status = claim != null && super.getRequest().getPrincipal().hasRealm(assistanceAgent);
+		int assistanceAgentId = super.getRequest().getPrincipal().getActiveRealm().getId();
+		if (!super.getRequest().getData().isEmpty()) {
+			id = super.getRequest().getData("id", Integer.class);
+			if (id != null) {
+				claim = this.repository.findClaimById(id);
+				assistanceAgent = claim == null ? null : claim.getAssistanceAgent();
+				status = claim != null && super.getRequest().getPrincipal().hasRealm(assistanceAgent) && assistanceAgentId == assistanceAgent.getId();
+			}
 		}
 
 		super.getResponse().setAuthorised(status);
@@ -59,21 +62,16 @@ public class AssistanceAgentClaimShowService extends AbstractGuiService<Assistan
 		int agentId;
 		AssistanceAgent assistanceAgent;
 
+		dataset = super.unbindObject(claim, "registrationMoment", "passengerEmail", "description", "draftMode");
+
+		dataset.put("accepted", claim.getAccepted());
+
 		agentId = super.getRequest().getPrincipal().getActiveRealm().getId();
 		assistanceAgent = this.repository.findAssistanceAgentById(agentId);
 		legs = this.repository.findAllPublishedLegs(MomentHelper.getCurrentMoment(), assistanceAgent.getAirline().getId());
-		dataset = super.unbindObject(claim, "registrationMoment", "passengerEmail", "description", "draftMode");
-		dataset.put("accepted", claim.getAccepted());
-
-		if (legs.isEmpty()) {
-			choices = new SelectChoices();
-			dataset.put("leg", choices.getSelected() != null && choices.getSelected().getKey() != null ? choices.getSelected().getKey() : "0");
-			dataset.put("legs", choices);
-		} else {
-			choices = SelectChoices.from(legs, "flightNumber", claim.getLeg());
-			dataset.put("leg", choices.getSelected().getKey());
-			dataset.put("legs", choices);
-		}
+		choices = SelectChoices.from(legs, "flightNumber", claim.getLeg());
+		dataset.put("leg", choices.getSelected().getKey());
+		dataset.put("legs", choices);
 
 		types = SelectChoices.from(ClaimType.class, claim.getType());
 		dataset.put("types", types);
