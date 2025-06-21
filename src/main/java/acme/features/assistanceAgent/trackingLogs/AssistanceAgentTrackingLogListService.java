@@ -71,7 +71,7 @@ public class AssistanceAgentTrackingLogListService extends AbstractGuiService<As
 		if (trackingLogs.isEmpty())
 			showCreate = !claim.isDraftMode() && super.getRequest().getPrincipal().hasRealm(claim.getAssistanceAgent());
 		else {
-			Long maximumTrackingLogs = trackingLogs.stream().filter(t -> t.getResolutionPercentage().equals(100.00)).count();
+			Integer maximumTrackingLogs = this.repository.findTrackingLogs100PercentageByClaimId(claimId).size();
 			showCreate = !claim.isDraftMode() && super.getRequest().getPrincipal().hasRealm(claim.getAssistanceAgent()) && maximumTrackingLogs < 2;
 		}
 

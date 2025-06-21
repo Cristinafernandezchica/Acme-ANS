@@ -30,6 +30,7 @@ public class AssistanceAgentTrackingLogCreateService extends AbstractGuiService<
 		boolean isCorrectClaim = false;
 		boolean isCorrectStatus = true;
 		boolean isFakeUpdate = true;
+		boolean isCompletedClaim = true;
 		String trackingLogStatus;
 		Integer claimId;
 		Claim claim;
@@ -46,6 +47,10 @@ public class AssistanceAgentTrackingLogCreateService extends AbstractGuiService<
 			isCorrectClaim = claim != null && !claim.isDraftMode() && super.getRequest().getPrincipal().hasRealm(claim.getAssistanceAgent());
 		}
 
+		Integer maximumTrackingLogs = this.repository.findTrackingLogs100PercentageByClaimId(claimId).size();
+		if (maximumTrackingLogs >= 2)
+			isCompletedClaim = false;
+
 		if (super.getRequest().getMethod().equals("POST")) {
 			trackingLogStatus = super.getRequest().getData("status", String.class);
 
@@ -53,7 +58,7 @@ public class AssistanceAgentTrackingLogCreateService extends AbstractGuiService<
 				isCorrectStatus = false;
 		}
 
-		status = isCorrectClaim && isFakeUpdate && isCorrectStatus;
+		status = isCorrectClaim && isFakeUpdate && isCompletedClaim && isCorrectStatus;
 		super.getResponse().setAuthorised(status);
 	}
 
