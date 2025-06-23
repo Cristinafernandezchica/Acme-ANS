@@ -41,15 +41,17 @@ public class AssistanceAgentTrackingLogCreateService extends AbstractGuiService<
 				isFakeUpdate = false;
 		}
 
-		claimId = super.getRequest().getData("claimId", Integer.class);
-		if (claimId != null) {
-			claim = this.repository.findClaimById(claimId);
-			isCorrectClaim = claim != null && !claim.isDraftMode() && super.getRequest().getPrincipal().hasRealm(claim.getAssistanceAgent());
-		}
+		if (super.getRequest().hasData("claimId")) {
+			claimId = super.getRequest().getData("claimId", Integer.class);
+			if (claimId != null) {
+				claim = this.repository.findClaimById(claimId);
+				isCorrectClaim = claim != null && !claim.isDraftMode() && super.getRequest().getPrincipal().hasRealm(claim.getAssistanceAgent());
 
-		Integer maximumTrackingLogs = this.repository.findTrackingLogs100PercentageByClaimId(claimId).size();
-		if (maximumTrackingLogs >= 2)
-			isCompletedClaim = false;
+				Integer maximumTrackingLogs = this.repository.findTrackingLogs100PercentageByClaimId(claimId).size();
+				if (maximumTrackingLogs >= 2)
+					isCompletedClaim = false;
+			}
+		}
 
 		if (super.getRequest().getMethod().equals("POST")) {
 			trackingLogStatus = super.getRequest().getData("status", String.class);
@@ -97,38 +99,37 @@ public class AssistanceAgentTrackingLogCreateService extends AbstractGuiService<
 		Double minPercentage;
 		Collection<TrackingLog> trackingLogs;
 		boolean isCorrectPercentage = true;
-		boolean isCorrectPercentageStatus = true;
 		boolean isPercentage100 = true;
-		boolean moreToCreate = true;
+		boolean isPreviousTrackingLogDraftMode = true;
+		boolean isPreviousTrackingLogStatus = true;
 
 		if (trackingLog.getResolutionPercentage() != null && trackingLog.getStatus() != null) {
 			percentage = super.getRequest().getData("resolutionPercentage", Double.class);
 			status = super.getRequest().getData("status", TrackingLogStatus.class);
-
-			if (percentage.equals(100.00) && status.equals(TrackingLogStatus.PENDING) || !percentage.equals(100.00) && !status.equals(TrackingLogStatus.PENDING))
-				isCorrectPercentageStatus = false;
-
 			claimId = super.getRequest().getData("claimId", int.class);
 			trackingLogs = this.repository.findTrackingLogsByClaimId(claimId);
 
 			if (!trackingLogs.isEmpty()) {
 				minPercentage = trackingLogs.stream().findFirst().map(t -> t.getResolutionPercentage()).orElse(0.00);
-				Long maximumTrackingLogs = trackingLogs.stream().filter(t -> t.getResolutionPercentage().equals(100.00)).count();
-				if (Long.valueOf(0).equals(maximumTrackingLogs))
+				Integer maximumTrackingLogs = this.repository.findTrackingLogs100PercentageByClaimId(claimId).size();
+				if (maximumTrackingLogs.equals(0))
 					isCorrectPercentage = percentage > minPercentage;
-				else if (Long.valueOf(1).equals(maximumTrackingLogs)) {
+				else if (maximumTrackingLogs.equals(1)) {
 					TrackingLog maximumTrackingLog = trackingLogs.stream().findFirst().get();
-					isPercentage100 = !maximumTrackingLog.isDraftMode() && percentage.equals(100.00) && status.equals(maximumTrackingLog.getStatus());
-				} else if (Long.valueOf(2).equals(maximumTrackingLogs))
-					moreToCreate = false;
+					if (!percentage.equals(100.00))
+						isPercentage100 = false;
+					else if (maximumTrackingLog.isDraftMode())
+						isPreviousTrackingLogDraftMode = false;
+					else if (!status.equals(maximumTrackingLog.getStatus()))
+						isPreviousTrackingLogStatus = false;
+				}
 			}
 		}
 
 		super.state(isCorrectPercentage, "resolutionPercentage", "acme.validation.trackingLog.resolutionPercentage.message");
+		super.state(isPreviousTrackingLogDraftMode, "*", "acme.validation.trackingLog.previousDraftMode.message");
 		super.state(isPercentage100, "resolutionPercentage", "acme.validation.trackingLog.percentage100.message");
-		super.state(moreToCreate, "resolutionPercentage", "acme.validation.trackingLog.noMore.message");
-		super.state(isCorrectPercentageStatus, "status", "acme.validation.trackingLog.resolutionPercentageStatus.message");
-		super.state(!trackingLog.getClaim().isDraftMode(), "draftMode", "acme.validation.claim.draftMode.message");
+		super.state(isPreviousTrackingLogStatus, "status", "acme.validation.trackingLog.previousStatus.message");
 	}
 
 	@Override

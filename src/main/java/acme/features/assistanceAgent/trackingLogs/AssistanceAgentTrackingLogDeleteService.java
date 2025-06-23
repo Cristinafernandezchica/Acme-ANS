@@ -35,7 +35,7 @@ public class AssistanceAgentTrackingLogDeleteService extends AbstractGuiService<
 
 				claim = this.repository.findClaimByTrackingLogId(id);
 
-				status = claim != null && !claim.isDraftMode() && super.getRequest().getPrincipal().hasRealm(claim.getAssistanceAgent()) && trackingLog != null && trackingLog.isDraftMode();
+				status = trackingLog != null && trackingLog.isDraftMode() && claim != null && !claim.isDraftMode() && super.getRequest().getPrincipal().hasRealm(claim.getAssistanceAgent());
 			}
 		}
 
@@ -60,7 +60,7 @@ public class AssistanceAgentTrackingLogDeleteService extends AbstractGuiService<
 
 	@Override
 	public void validate(final TrackingLog trackingLog) {
-		super.state(trackingLog.isDraftMode(), "draftMode", "acme.validation.trackingLog.draftMode.message");
+		;
 	}
 
 	@Override
