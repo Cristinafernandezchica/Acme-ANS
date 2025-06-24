@@ -29,9 +29,9 @@ public class TrackingLogValidator extends AbstractValidator<ValidTrackingLog, Tr
 		} else if (trackingLog.getClaim().isDraftMode()) {
 			super.state(context, false, "claim", "We cannot associate a tracking log with a claim in draft mode.");
 			result = !super.hasErrors(context);
-			//} else if (!trackingLog.getClaim().getRegistrationMoment().before(trackingLog.getLastUpdateMoment())) {
-			//super.state(context, false, "lastUpdateMoment", "We cannot associate a tracking log with a claim whose registration moment is later than the tracking log update moment.");
-			//result = !super.hasErrors(context);
+		} else if (trackingLog.getClaim().getRegistrationMoment().after(trackingLog.getLastUpdateMoment())) {
+			super.state(context, false, "lastUpdateMoment", "We cannot associate a tracking log with a claim whose registration moment is later than the tracking log update moment.");
+			result = !super.hasErrors(context);
 		} else {
 			if (trackingLog.getResolutionPercentage() != null && trackingLog.getStatus() != null)
 				if (trackingLog.getResolutionPercentage() < 100.00) {
