@@ -34,6 +34,7 @@ public class AssistanceAgentTrackingLogCreateService extends AbstractGuiService<
 		String trackingLogStatus;
 		Integer claimId;
 		Claim claim;
+		AssistanceAgent assistanceAgent;
 
 		if (super.getRequest().hasData("id")) {
 			Integer id = super.getRequest().getData("id", Integer.class);
@@ -45,7 +46,8 @@ public class AssistanceAgentTrackingLogCreateService extends AbstractGuiService<
 			claimId = super.getRequest().getData("claimId", Integer.class);
 			if (claimId != null) {
 				claim = this.repository.findClaimById(claimId);
-				isCorrectClaim = claim != null && !claim.isDraftMode() && super.getRequest().getPrincipal().hasRealm(claim.getAssistanceAgent());
+				assistanceAgent = claim == null ? null : claim.getAssistanceAgent();
+				isCorrectClaim = claim != null && !claim.isDraftMode() && super.getRequest().getPrincipal().hasRealm(assistanceAgent);
 
 				Integer maximumTrackingLogs = this.repository.findTrackingLogs100PercentageByClaimId(claimId).size();
 				if (maximumTrackingLogs >= 2)

@@ -31,6 +31,7 @@ public class AssistanceAgentTrackingLogUpdateService extends AbstractGuiService<
 		String trackingLogStatus;
 		boolean isCorrectTrackingLog = false;
 		Claim claim;
+		AssistanceAgent assistanceAgent;
 		Integer id;
 		TrackingLog trackingLog;
 
@@ -39,8 +40,8 @@ public class AssistanceAgentTrackingLogUpdateService extends AbstractGuiService<
 			if (id != null) {
 				trackingLog = this.repository.findTrackingLogById(id);
 				claim = this.repository.findClaimByTrackingLogId(id);
-
-				isCorrectTrackingLog = trackingLog != null && trackingLog.isDraftMode() && claim != null && !claim.isDraftMode() && super.getRequest().getPrincipal().hasRealm(claim.getAssistanceAgent());
+				assistanceAgent = trackingLog == null ? null : trackingLog.getClaim().getAssistanceAgent();
+				isCorrectTrackingLog = trackingLog != null && trackingLog.isDraftMode() && claim != null && !claim.isDraftMode() && super.getRequest().getPrincipal().hasRealm(assistanceAgent);
 			}
 		}
 
