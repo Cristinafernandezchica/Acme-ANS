@@ -27,10 +27,11 @@ public interface AssistanceAgentClaimRepository extends AbstractRepository {
 	@Query("SELECT c FROM Claim c WHERE c.assistanceAgent.id = :assistanceAgentId AND NOT EXISTS (SELECT tr FROM TrackingLog tr WHERE tr.claim = c AND tr.resolutionPercentage = 100.00 AND tr.draftMode = false)")
 	Collection<Claim> findAllUndergoingClaimsByAssistanceAgentId(int assistanceAgentId);
 
-	@Query("select distinct tr.claim from TrackingLog tr WHERE tr.claim.assistanceAgent.id = :assistanceAgentId AND tr.resolutionPercentage = 100.00 AND tr.draftMode = false")
+	@Query("select distinct tr.claim from TrackingLog tr WHERE tr.claim.assistanceAgent.id = :assistanceAgentId AND tr.resolutionPercentage = 100.00 AND tr.draftMode = false ORDER BY tr.claim.id DESC")
 	Collection<Claim> findAllCompletedClaimsByAssistanceAgentId(int assistanceAgentId);
 
-	@Query("SELECT l FROM Leg l WHERE l.draftMode = false AND l.scheduledArrival <= :now AND l.aircraft.airline.id = :agentAirlineId")
+	//@Query("SELECT l FROM Leg l WHERE l.draftMode = false AND l.scheduledArrival <= :now AND l.aircraft.airline.id = :agentAirlineId")
+	@Query("SELECT l FROM Leg l WHERE l.draftMode = false AND l.scheduledArrival <= :now AND l.aircraft.airline.id = :agentAirlineId ORDER BY l.id ASC")
 	Collection<Leg> findAllPublishedLegs(Date now, int agentAirlineId);
 
 }
