@@ -78,7 +78,8 @@ master.menu.user-account.become-manager = Become a manager
 master.menu.user-account.manager-profile = Manager profile
 master.menu.user-account.flight-crew-member-profile = Flight crew member profile
 master.menu.user-account.become-flight-crew-member = Become a flight crew member
-
+master.menu.user-account.become-assistance-agent = Become an assistance agent
+master.menu.user-account.assistance-agent-profile = Assistance Agent profile
 
 # master.menu.technician ##########################################################
 

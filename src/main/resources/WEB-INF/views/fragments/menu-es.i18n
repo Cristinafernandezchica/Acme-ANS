@@ -78,6 +78,8 @@ master.menu.user-account.become-manager = Hacerse manager
 master.menu.user-account.manager-profile = Perfil de manager
 master.menu.user-account.flight-crew-member-profile = Perfil de asistente de vuelo
 master.menu.user-account.become-flight-crew-member = Hacerse asistente de vuelo
+master.menu.user-account.become-assistance-agent = Convertirse en agente de asistencia
+master.menu.user-account.assistance-agent-profile = Perfil de agente de asistencia
 
 
 # master.menu.technician ##########################################################

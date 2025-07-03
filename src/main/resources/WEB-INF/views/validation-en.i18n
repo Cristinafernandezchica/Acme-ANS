@@ -125,6 +125,9 @@ acme.validation.claim.leg.message = You can just choose one of the legs from the
 acme.validation.service.aircraftDraftMode.message = you can't modify the aircraft if is published state
 acme.validation.service.estimatedCostDraftMode.message = you can't modify the estimated cost if is published state
 
+acme.validation.assistanceAgent.employeeCode = Invalid employee code
+acme.validation.assistanceAgent.salary.not.valid = Not valid salary
+
 acme.validation.claim.leg.message =  You can just choose one of the legs from the selection
 acme.validation.claim.type.message = You can just choose one of the types from the selection
 acme.validation.claim.draftMode.message = You can not update o delete a claim if it is not in draft mode

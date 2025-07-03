@@ -112,6 +112,9 @@ acme.validation.technician.maintenance-record.unpublished-tasks.message = No pue
 acme.validation.technician.maintenance-record.published-tasks.message = Necesitas al menos 1 tarea publicada
 acme.validation.maintenanceRecords.costs.message = Necesita ser una moneda aceptadaacme.validation.claim.leg.message = Solo puede elegir una de las patas de la selección
 
+acme.validation.assistanceAgent.employeeCode = Código de empleado no válido
+acme.validation.assistanceAgent.salary.not.valid = Salario no válido
+
 acme.validation.claim.leg.message =  Puedes elegir simplemente una de las patas de la selección
 acme.validation.claim.type.message = Solo puede elegir uno de los tipos de la selección
 acme.validation.claim.draftMode.message = No se puede actualizar o borrar un reclamo si no está en modo borrador
