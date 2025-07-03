@@ -1,25 +1,32 @@
 key,registration_moment,passenger_email,description,type,key:leg,key:assistance_agent,draftMode
+# base entity
 claim-00,2011/04/16 00:00,acme@lorem-ipsum.org,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",FLIGHTISSUES,leg-01,agent-01,true
+# registration_moment - variations
 claim-01,2000/01/01 00:00,acme@lorem-ipsum.org,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",FLIGHTISSUES,leg-01,agent-01,true
 claim-02,2000/01/01 00:01,acme@lorem-ipsum.org,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",FLIGHTISSUES,leg-49,agent-01,true
 claim-03,2022/07/29 23:59,acme@lorem-ipsum.org,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",FLIGHTISSUES,leg-49,agent-01,true
 claim-04,2022/07/30 00:00,acme@lorem-ipsum.org,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",FLIGHTISSUES,leg-49,agent-01,true
+# passenger_email - variations
 claim-05,2011/04/16 00:00,a@b.e,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",FLIGHTISSUES,leg-08,agent-01,true
 claim-06,2011/04/16 00:00,a@b.es,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",FLIGHTISSUES,leg-08,agent-01,true
 claim-07,2011/04/16 00:00,a@b.esx,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",FLIGHTISSUES,leg-01,agent-01,true
 claim-08,2011/04/16 00:00,lorem-ipsum@dolor.sit.amet.consectetur.adipiscing.elit.sed.do.eiusmod.tempor.incididunt.ut.labore.et.dolore.magna.aliqua.Ut.enim.ad.minim.veniam.quis.nostrud.exercitation.ullamco.laboris.nisi.ut.aliquip.ex.ea.commodo.consequat.duis.aute.irure.doloris.edu,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",FLIGHTISSUES,leg-01,agent-01,true
 claim-09,2011/04/16 00:00,lorem-ipsum@dolor.sit.amet.consectetur.adipiscing.elit.sed.do.eiusmod.tempor.incididunt.ut.labore.et.dolore.magna.aliqua.Ut.enim.ad.minim.veniam.quis.nostrud.exercitation.ullamco.laboris.nisi.ut.aliquip.ex.ea.commodo.consequat.duis.aute.irure.dolor.es.org,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",FLIGHTISSUES,leg-49,agent-01,true
-claim-10,2011/04/16 00:00,acme@lorem-ipsum.org,L,FLIGHTISSUES,leg-05,agent-01,true
+# description - variations
+claim-10,2011/04/16 00:00,acme@lorem-ipsum.org,L,FLIGHTISSUES,leg-01,agent-01,true
 claim-11,2011/04/16 00:00,acme@lorem-ipsum.org,Lo,FLIGHTISSUES,leg-49,agent-01,true
 claim-12,2011/04/16 00:00,acme@lorem-ipsum.org,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut enim ad minim veniam? Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor",FLIGHTISSUES,leg-49,agent-01,true
 claim-13,2011/04/16 00:00,acme@lorem-ipsum.org,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut enim ad minim veniam? Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor*",FLIGHTISSUES,leg-08,agent-01,true
+# type - variations
 claim-14,2011/04/16 00:00,acme@lorem-ipsum.org,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",LUGGAGEISSUES,leg-01,agent-01,true
 claim-15,2011/04/16 00:00,acme@lorem-ipsum.org,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",SECURITYINCIDENT,leg-01,agent-01,true
 claim-16,2011/04/16 00:00,acme@lorem-ipsum.org,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",OTHERISSUES,leg-49,agent-01,true
 claim-17,2011/04/16 00:00,acme@lorem-ipsum.org,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",FLIGHTISSUES,leg-49,agent-01,true
-claim-18,2011/04/16 00:00,acme@lorem-ipsum.org,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",FLIGHTISSUES,leg-08,agent-01,true
+# Examples for Tracking Logs tries
+claim-18,2011/04/16 00:00,acme@lorem-ipsum.org,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",FLIGHTISSUES,leg-08,agent-01,false
 claim-19,2011/04/16 00:00,acme@lorem-ipsum.org,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",FLIGHTISSUES,leg-01,agent-01,false
-claim-20,2011/04/16 00:00,acme@lorem-ipsum.org,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",FLIGHTISSUES,leg-49,agent-01,false
-claim-21,2011/04/16 00:00,acme@lorem-ipsum.org,Claim sin Tracking Logs,FLIGHTISSUES,leg-49,agent-02,false
+claim-20,2000/01/01 00:00,acme@lorem-ipsum.org,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",FLIGHTISSUES,leg-49,agent-01,false
+claim-21,2011/04/16 00:00,acme@lorem-ipsum.org,Claim con dos Tracking Logs a 100,FLIGHTISSUES,leg-49,agent-01,false
 claim-22,2011/04/16 00:00,acme@lorem-ipsum.org,Claim con un Tracking Log a 100,FLIGHTISSUES,leg-49,agent-01,false
-claim-23,2011/04/16 00:00,acme@lorem-ipsum.org,Claim con dos Tracking Logs a 100,FLIGHTISSUES,leg-49,agent-01,false
+# Example of claim for agent 2
+claim-23,2011/04/16 00:00,acme@lorem-ipsum.org,Claim sin Tracking Logs,FLIGHTISSUES,leg-49,agent-02,false

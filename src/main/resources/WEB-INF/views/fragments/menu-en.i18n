@@ -33,6 +33,7 @@ master.menu.administrator.list-aircraft = List of aircrafts
 master.menu.administrator.list-airports = List of airports
 master.menu.administrator.list-airlines = List of airlines
 master.menu.administrator.list-bookings = List of bookings
+master.menu.administrator.list-claims = List of claims
 master.menu.administrator.show-dashboard = Show dashboard
 master.menu.administrator.populate-recommendations= Populate recommendations
 master.menu.administrator.populate-db-initial = Populate DB (initial)
@@ -78,7 +79,8 @@ master.menu.user-account.become-manager = Become a manager
 master.menu.user-account.manager-profile = Manager profile
 master.menu.user-account.flight-crew-member-profile = Flight crew member profile
 master.menu.user-account.become-flight-crew-member = Become a flight crew member
-
+master.menu.user-account.become-assistance-agent = Become an assistance agent
+master.menu.user-account.assistance-agent-profile = Assistance Agent profile
 
 # master.menu.technician ##########################################################
 
@@ -95,3 +97,4 @@ master.menu.manager.show-dashboard = Show dashboard
 master.menu.assistance-agent = Assistance Agent
 master.menu.assistance-agent.listCompleted = List Completed Claims
 master.menu.assistance-agent.listUndergoing = List Undergoing Claims
+master.menu.assistance-agent.show-dashboard = Show dashboard

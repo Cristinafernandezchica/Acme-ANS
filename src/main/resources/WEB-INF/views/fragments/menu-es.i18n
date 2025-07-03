@@ -33,6 +33,7 @@ master.menu.administrator.list-aircraft = Lista de aviones
 master.menu.administrator.list-airports = Lista de aeropuertos
 master.menu.administrator.list-airlines = Lista de aerolíneas
 master.menu.administrator.list-bookings = Lista de reservas
+master.menu.administrator.list-claims = Lista de reclamos
 master.menu.administrator.show-dashboard = Mostrar tabla de estadísticas
 master.menu.administrator.populate-recommendations= Poblar recomendaciones
 master.menu.administrator.populate-db-initial = Poblar BD (inicial)
@@ -78,6 +79,8 @@ master.menu.user-account.become-manager = Hacerse manager
 master.menu.user-account.manager-profile = Perfil de manager
 master.menu.user-account.flight-crew-member-profile = Perfil de asistente de vuelo
 master.menu.user-account.become-flight-crew-member = Hacerse asistente de vuelo
+master.menu.user-account.become-assistance-agent = Convertirse en agente de asistencia
+master.menu.user-account.assistance-agent-profile = Perfil de agente de asistencia
 
 
 # master.menu.technician ##########################################################
@@ -95,3 +98,4 @@ master.menu.manager.show-dashboard = Mostrar dashboard
 master.menu.assistance-agent = Agente de Asistencia
 master.menu.assistance-agent.listCompleted = Lista Reclamos Completados
 master.menu.assistance-agent.listUndergoing = Lista Reclamaciones en Curso
+master.menu.assistance-agent.show-dashboard = Mostrar dashboard

@@ -1,6 +1,6 @@
 # Acme-ANS
 
-This project was developed for educational purposes by group C1.050. Acme-ANS is a web application focused on flight management.
+This project was developed for educational purposes by group C2.050. Acme-ANS is a web application focused on flight management.
 
 ## Project Structure
 

@@ -1,9 +1,7 @@
 
 package acme.features.assistanceAgent.claims;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -11,7 +9,6 @@ import acme.client.components.models.Dataset;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.claims.Claim;
-import acme.entities.trackingLogs.TrackingLogStatus;
 import acme.realms.assistanceAgents.AssistanceAgent;
 
 @GuiService
@@ -23,18 +20,18 @@ public class AssistanceAgentUndergoingClaimListService extends AbstractGuiServic
 
 	@Override
 	public void authorise() {
-		super.getResponse().setAuthorised(true);
+		boolean status;
+		status = super.getRequest().getPrincipal().hasRealmOfType(AssistanceAgent.class);
+		super.getResponse().setAuthorised(status);
 	}
 
 	@Override
 	public void load() {
-		Collection<Claim> claims;
 		Collection<Claim> undergoingClaims;
 		int assistanceAgentId;
 
 		assistanceAgentId = super.getRequest().getPrincipal().getActiveRealm().getId();
-		claims = this.repository.findAllClaimsByAssistanceAgentId(assistanceAgentId);
-		undergoingClaims = claims.stream().filter(c -> c.getAccepted() == TrackingLogStatus.PENDING).collect(Collectors.toCollection(ArrayList::new));
+		undergoingClaims = this.repository.findAllUndergoingClaimsByAssistanceAgentId(assistanceAgentId);
 
 		super.getBuffer().addData(undergoingClaims);
 

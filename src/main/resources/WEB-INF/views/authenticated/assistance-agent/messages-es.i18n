@@ -1,0 +1,10 @@
+authenticated.assistance-agent.form.title = Agente de Asistencia
+authenticated.assistance-agent.form.label.employeeCode = Código de empleado
+authenticated.assistance-agent.form.label.moment = Momento
+authenticated.assistance-agent.form.label.spokenLanguages ​​= Idiomas hablados
+authenticated.assistance-agent.form.label.briefBio = Biografía breve
+authenticated.assistance-agent.form.label.airline = Aerolínea
+authenticated.assistance-agent.form.label.salary = Salario
+authenticated.assistance-agent.form.label.picture = Imagen
+authenticated.assistance-agent.form.button.create = Crear
+authenticated.assistance-agent.form.button.update = Actualizar

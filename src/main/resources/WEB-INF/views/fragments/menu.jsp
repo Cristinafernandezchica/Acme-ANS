@@ -39,6 +39,7 @@
 			<acme:menu-suboption code="master.menu.administrator.list-airlines" action="/administrator/airline/list"/>
 			<acme:menu-suboption code="master.menu.administrator.list-aircraft" action="/administrator/aircraft/list"/>
 			<acme:menu-suboption code="master.menu.administrator.list-bookings" action="/administrator/booking/list"/>
+			<acme:menu-suboption code="master.menu.administrator.list-claims" action="/administrator/claim/list"/>
 			<acme:menu-separator/>
   			<acme:menu-suboption code="master.menu.administrator.show-dashboard" action="/administrator/administrator-dashboard/show"/>			
 			<acme:menu-separator/>
@@ -85,6 +86,7 @@
 		<acme:menu-option code="master.menu.assistance-agent" access="hasRealm('AssistanceAgent')">
  			<acme:menu-suboption code="master.menu.assistance-agent.listCompleted" action="/assistance-agent/claim/listCompleted"/>
  			<acme:menu-suboption code="master.menu.assistance-agent.listUndergoing" action="/assistance-agent/claim/listUndergoing"/>
+ 			<acme:menu-suboption code="master.menu.assistance-agent.show-dashboard" action="/assistance-agent/assistance-agent-dashboard/show"/>
  		</acme:menu-option>
 
 	</acme:menu-left>
@@ -102,6 +104,8 @@
 			<acme:menu-suboption code="master.menu.user-account.manager-profile" action="/authenticated/manager/update" access="hasRealm('Manager')"/>
 			<acme:menu-suboption code="master.menu.user-account.become-flight-crew-member" action="/authenticated/flight-crew-member/create" access="!hasRealm('FlightCrewMember')"/>
 			<acme:menu-suboption code="master.menu.user-account.flight-crew-member-profile" action="/authenticated/flight-crew-member/update" access="hasRealm('FlightCrewMember')"/>
+			<acme:menu-suboption code="master.menu.user-account.become-assistance-agent" action="/authenticated/assistance-agent/create" access="!hasRealm('AssistanceAgent')"/>
+			<acme:menu-suboption code="master.menu.user-account.assistance-agent-profile" action="/authenticated/assistance-agent/update" access="hasRealm('AssistanceAgent')"/>
 		</acme:menu-option>
 	</acme:menu-right>
 </acme:menu-bar>

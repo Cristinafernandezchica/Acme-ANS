@@ -19,7 +19,7 @@ public interface AssistanceAgentTrackingLogRepository extends AbstractRepository
 	@Query("select c from Claim c where c.id = :id")
 	Claim findClaimById(int id);
 
-	@Query("SELECT t FROM TrackingLog t WHERE t.claim.id = :claimId ORDER BY t.resolutionPercentage DESC")
+	@Query("SELECT t FROM TrackingLog t WHERE t.claim.id = :claimId ORDER BY t.resolutionPercentage DESC, t.id ASC")
 	Collection<TrackingLog> findTrackingLogsByClaimId(int claimId);
 
 	@Query("SELECT t FROM TrackingLog t WHERE t.claim.id = :claimId AND t.id <> :trackingLogId ORDER BY t.resolutionPercentage DESC")
@@ -27,5 +27,11 @@ public interface AssistanceAgentTrackingLogRepository extends AbstractRepository
 
 	@Query("select t.claim from TrackingLog t where t.id = :id")
 	Claim findClaimByTrackingLogId(int id);
+
+	@Query("select tr from TrackingLog tr where tr.claim.id = :claimId AND tr.resolutionPercentage = 100.00")
+	Collection<TrackingLog> findTrackingLogs100PercentageByClaimId(int claimId);
+
+	@Query("SELECT t FROM TrackingLog t WHERE t.claim.id = :claimId AND t.id <> :trackingLogId AND t.resolutionPercentage = 100.00")
+	Collection<TrackingLog> findTrackingLogs100PercentageByClaimIdExcludingOne(int claimId, int trackingLogId);
 
 }

@@ -32,11 +32,12 @@ public class AssistanceAgentClaimDeleteService extends AbstractGuiService<Assist
 		AssistanceAgent assistanceAgent;
 
 		if (!super.getRequest().getData().isEmpty() && super.getRequest().getData() != null) {
+			int assistanceAgentId = super.getRequest().getPrincipal().getActiveRealm().getId();
 			id = super.getRequest().getData("id", Integer.class);
 			if (id != null) {
 				claim = this.repository.findClaimById(id);
 				assistanceAgent = claim == null ? null : claim.getAssistanceAgent();
-				status = super.getRequest().getPrincipal().hasRealm(assistanceAgent) && claim != null && claim.isDraftMode();
+				status = claim != null && super.getRequest().getPrincipal().hasRealm(assistanceAgent) && assistanceAgentId == assistanceAgent.getId() && claim.isDraftMode();
 			}
 		}
 
@@ -67,7 +68,7 @@ public class AssistanceAgentClaimDeleteService extends AbstractGuiService<Assist
 
 	@Override
 	public void validate(final Claim claim) {
-		super.state(claim.isDraftMode(), "draftMode", "acme.validation.claim.draftMode.message");
+		;
 	}
 
 	@Override
@@ -84,21 +85,15 @@ public class AssistanceAgentClaimDeleteService extends AbstractGuiService<Assist
 		int agentId;
 		AssistanceAgent assistanceAgent;
 
-		agentId = super.getRequest().getPrincipal().getActiveRealm().getId();
-		assistanceAgent = this.repository.findAssistanceAgentById(agentId);
-		legs = this.repository.findAllPublishedLegs(MomentHelper.getCurrentMoment(), assistanceAgent.getAirline().getId());
 		dataset = super.unbindObject(claim, "registrationMoment", "passengerEmail", "description", "draftMode");
 		dataset.put("accepted", claim.getAccepted());
 
-		if (legs.isEmpty()) {
-			choices = new SelectChoices();
-			dataset.put("leg", choices.getSelected() != null && choices.getSelected().getKey() != null ? choices.getSelected().getKey() : "0");
-			dataset.put("legs", choices);
-		} else {
-			choices = SelectChoices.from(legs, "flightNumber", claim.getLeg());
-			dataset.put("leg", choices.getSelected().getKey());
-			dataset.put("legs", choices);
-		}
+		agentId = super.getRequest().getPrincipal().getActiveRealm().getId();
+		assistanceAgent = this.repository.findAssistanceAgentById(agentId);
+		legs = this.repository.findAllPublishedLegs(MomentHelper.getCurrentMoment(), assistanceAgent.getAirline().getId());
+		choices = SelectChoices.from(legs, "flightNumber", claim.getLeg());
+		dataset.put("leg", choices.getSelected().getKey());
+		dataset.put("legs", choices);
 
 		types = SelectChoices.from(ClaimType.class, claim.getType());
 		dataset.put("types", types);

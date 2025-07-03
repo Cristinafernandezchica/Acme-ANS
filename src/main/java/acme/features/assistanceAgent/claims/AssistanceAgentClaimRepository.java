@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
 import acme.client.repositories.AbstractRepository;
 import acme.entities.claims.Claim;
 import acme.entities.legs.Leg;
-import acme.entities.trackingLogs.TrackingLog;
 import acme.realms.assistanceAgents.AssistanceAgent;
 
 @Repository
@@ -25,13 +24,13 @@ public interface AssistanceAgentClaimRepository extends AbstractRepository {
 	@Query("select a from AssistanceAgent a where a.id = :id")
 	AssistanceAgent findAssistanceAgentById(int id);
 
-	@Query("SELECT c FROM Claim c WHERE c.assistanceAgent.id = :assistanceAgentId")
-	Collection<Claim> findAllClaimsByAssistanceAgentId(int assistanceAgentId);
+	@Query("SELECT c FROM Claim c WHERE c.assistanceAgent.id = :assistanceAgentId AND NOT EXISTS (SELECT tr FROM TrackingLog tr WHERE tr.claim = c AND tr.resolutionPercentage = 100.00 AND tr.draftMode = false)")
+	Collection<Claim> findAllUndergoingClaimsByAssistanceAgentId(int assistanceAgentId);
 
-	@Query("SELECT l FROM Leg l WHERE l.draftMode = false AND l.scheduledArrival <= :now AND l.aircraft.airline.id = :agentAirlineId")
+	@Query("select distinct tr.claim from TrackingLog tr WHERE tr.claim.assistanceAgent.id = :assistanceAgentId AND tr.resolutionPercentage = 100.00 AND tr.draftMode = false ORDER BY tr.claim.id DESC")
+	Collection<Claim> findAllCompletedClaimsByAssistanceAgentId(int assistanceAgentId);
+
+	@Query("SELECT l FROM Leg l WHERE l.draftMode = false AND l.scheduledArrival <= :now AND l.aircraft.airline.id = :agentAirlineId ORDER BY l.id ASC")
 	Collection<Leg> findAllPublishedLegs(Date now, int agentAirlineId);
-
-	@Query("SELECT t FROM TrackingLog t WHERE t.claim.id = :claimId ORDER BY t.lastUpdateMoment DESC")
-	Collection<TrackingLog> findTrackingLogsByClaimId(int claimId);
 
 }

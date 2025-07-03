@@ -1,0 +1,12 @@
+assistance-agent.assistance-agent-dashboard.form.title = Assistance Agent Dashboard
+assistance-agent.dashboard.form.label.ratioAcceptedClaims = Ratio Accepted Claims
+assistance-agent.dashboard.form.label.ratioRejectedClaims = Ratio Rejected Claims
+assistance-agent.dashboard.form.label.top3MonthsWithMostClaims = Top 3 Months With Most Claims
+assistance-agent.dashboard.form.label.averageTrackingLogsPerClaim = Average Tracking Logs Per Claim
+assistance-agent.dashboard.form.label.maxTrackingLogsPerClaim = Max Tracking Logs Per Claim
+assistance-agent.dashboard.form.label.minTrackingLogsPerClaim = Min Tracking Logs Per Claim
+assistance-agent.dashboard.form.label.standardDeviationOfTrackingLogsPerClaim = Standard Deviation Of Tracking Logs Per Claim
+assistance-agent.dashboard.form.label.averageClaimsPerAssistanceAgentForLastMonth = Average Claims For Last Month
+assistance-agent.dashboard.form.label.maxClaimsPerAssistanceAgentForLastMonth = Max Claims For Last Month
+assistance-agent.dashboard.form.label.minClaimsPerAssistanceAgentForLastMonth = Min Claims For Last Month
+assistance-agent.dashboard.form.label.standardDeviationClaimsPerAssistanceAgentForLastMonth = Standard Deviation Of Claims For Last Month
