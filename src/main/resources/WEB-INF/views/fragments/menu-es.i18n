@@ -33,6 +33,7 @@ master.menu.administrator.list-aircraft = Lista de aviones
 master.menu.administrator.list-airports = Lista de aeropuertos
 master.menu.administrator.list-airlines = Lista de aerolíneas
 master.menu.administrator.list-bookings = Lista de reservas
+master.menu.administrator.list-claims = Lista de reclamos
 master.menu.administrator.show-dashboard = Mostrar tabla de estadísticas
 master.menu.administrator.populate-recommendations= Poblar recomendaciones
 master.menu.administrator.populate-db-initial = Poblar BD (inicial)
