@@ -97,3 +97,4 @@ master.menu.manager.show-dashboard = Show dashboard
 master.menu.assistance-agent = Assistance Agent
 master.menu.assistance-agent.listCompleted = List Completed Claims
 master.menu.assistance-agent.listUndergoing = List Undergoing Claims
+master.menu.assistance-agent.show-dashboard = Show dashboard

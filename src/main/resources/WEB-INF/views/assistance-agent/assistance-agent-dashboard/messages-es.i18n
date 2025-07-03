@@ -1,0 +1,12 @@
+assistance-agent.assistance-agent-dashboard.form.title = Panel de control del agente de asistencia
+assistance-agent.dashboard.form.label.ratioAcceptedClaims = Proporción de reclamaciones aceptadas
+assistance-agent.dashboard.form.label.ratioRejectedClaims = Proporción de reclamaciones rechazadas
+assistance-agent.dashboard.form.label.top3MonthsWithMostClaims = Los 3 meses con más reclamaciones
+assistance-agent.dashboard.form.label.averageTrackingLogsPerClaim = Promedio de registros de seguimiento por reclamación
+assistance-agent.dashboard.form.label.maxTrackingLogsPerClaim = Máximo de registros de seguimiento por reclamación
+assistance-agent.dashboard.form.label.minTrackingLogsPerClaim = Mínimo de registros de seguimiento por Reclamación
+assistance-agent.dashboard.form.label.standardDeviationOfTrackingLogsPerClaim = Desviación estándar de los registros de seguimiento por reclamación
+assistance-agent.dashboard.form.label.averageClaimsPerAssistanceAgentForLastMonth = Promedio de reclamaciones del último mes
+assistance-agent.dashboard.form.label.maxClaimsPerAssistanceAgentForLastMonth = Máximo de reclamaciones del último mes
+assistance-agent.dashboard.form.label.minClaimsPerAssistanceAgentForLastMonth = Mínimo de reclamaciones del último mes
+assistance-agent.dashboard.form.label.standardDeviationClaimsPerAssistanceAgentForLastMonth = Desviación estándar de las reclamaciones del último mes

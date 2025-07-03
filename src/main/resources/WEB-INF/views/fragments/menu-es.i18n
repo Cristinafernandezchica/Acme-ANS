@@ -98,3 +98,4 @@ master.menu.manager.show-dashboard = Mostrar dashboard
 master.menu.assistance-agent = Agente de Asistencia
 master.menu.assistance-agent.listCompleted = Lista Reclamos Completados
 master.menu.assistance-agent.listUndergoing = Lista Reclamaciones en Curso
+master.menu.assistance-agent.show-dashboard = Mostrar dashboard

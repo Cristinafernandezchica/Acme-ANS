@@ -21,7 +21,7 @@ public class AssistanceAgentDashboard extends AbstractForm {
 
 	private Double				ratioRejectedClaims;
 
-	private List<Integer>		top3MonthsWithMostClaims;
+	private List<String>		top3MonthsWithMostClaims;
 
 	private Double				averageTrackingLogsPerClaim;
 	private Long				maxTrackingLogsPerClaim;
