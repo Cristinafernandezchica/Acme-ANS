@@ -46,7 +46,7 @@ trackingLogs::TrackingLogStatus
       <x>60</x>
       <y>300</y>
       <w>210</w>
-      <h>180</h>
+      <h>190</h>
     </coordinates>
     <panel_attributes>&lt;&lt;AbstractEntity&gt;&gt;
 trackingLogs::TrackingLog
@@ -58,7 +58,8 @@ trackingLogs::TrackingLog
 -step: String
 -resolutionPercentage: Double
 -resolution: String
--status: TrackingLogStatus</panel_attributes>
+-status: TrackingLogStatus
+-draftMode: boolean</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -67,7 +68,7 @@ trackingLogs::TrackingLog
       <x>410</x>
       <y>360</y>
       <w>230</w>
-      <h>200</h>
+      <h>210</h>
     </coordinates>
     <panel_attributes>&lt;&lt;AbstractEntity&gt;&gt;
 claims::Claim
@@ -80,8 +81,10 @@ claims::Claim
 -description: String
 -type: ClaimType
 -leg: Leg
+-draftMode: boolean
 --
-#getAccepted(): Boolean</panel_attributes>
+#getAccepted(): TrackingLogStatus
+</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
